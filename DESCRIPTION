@@ -11,7 +11,7 @@ Authors@R:
     person("Daianna", "Gonzalez-Padilla", email = "glezdaianna@gmail.com",
     role = c("aut"), comment = c(ORCID = "0009-0005-8348-3195")),
     person("Melissa", "Mayén Quiroz", email = "yuukiakiamano@gmail.com",
-    role = c("aut"), comment = c(ORCID = "0009-0005-8348-3195"))
+    role = c("aut"), comment = c(ORCID = "0009-0006-5985-1397"))
     )
 Description: This contains information for the portion taught by Leonardo
     Collado Torres, Daianna Gonzalez Padilla, and Melissa Mayén Quiroz. It
