@@ -17,7 +17,9 @@ output:
 
 # Overview {-}
 
-Here you can find the files for the July 2023 _Statistical Analysis of Genome Scale Data_ course at [CSHL](https://meetings.cshl.edu/courses.aspx?course=C-DATA&year=23) portion taught by Leo and his team (July 3rd to July 6th). See [CSHLData2023](https://seandavi.github.io/CSHLData2023/) for a list of all instructors and related materials.
+Here you can find the files for the June 2024 _Statistical Analysis of Genome Scale Data_ course at [CSHL](https://meetings.cshl.edu/courses.aspx?course=C-DATA&year=24) portion taught by Leo and his team (June 9-11).
+
+<!-- See [CSHLData2023](https://seandavi.github.io/CSHLData2023/) for a list of all instructors and related materials. -->
 
 Instructor:
 
@@ -34,20 +36,20 @@ Teach assistants:
 
 ## Download course materials {-}
 
-Download the materials for this course with `usethis::use_course('lcolladotor/cshl_rstats_genome_scale_2023')` or view online at [**lcolladotor.github.io/cshl_rstats_genome_scale_2023**](http://lcolladotor.github.io/cshl_rstats_genome_scale_2023). This command downloads a static version of the course materials. 
+Download the materials for this course with `usethis::use_course('lcolladotor/cshl_rstats_genome_scale_2024')` or view online at [**lcolladotor.github.io/cshl_rstats_genome_scale_2024**](http://lcolladotor.github.io/cshl_rstats_genome_scale_2024). This command downloads a static version of the course materials. 
 
 If you want to be able to easily download updates, we recommend using `Git`. [_Happy Git and GitHub for the useR_](https://happygitwithr.com/) is great for getting your computer ready to use `Git` and `GitHub`. If you already have a `GitHub` account, you can instead use this command to download the course:
 
 ```bash
 ## Download it the first time
-git clone https://github.com/lcolladotor/cshl_rstats_genome_scale_2023.git
+git clone https://github.com/lcolladotor/cshl_rstats_genome_scale_2024.git
 
 ## To update the contents, use:
-cd cshl_rstats_genome_scale_2023
+cd cshl_rstats_genome_scale_2024
 git pull
 ```
 
-Or you could use the [GitHub Desktop application](x-github-client://openRepo/https://github.com/lcolladotor/cshl_rstats_genome_scale_2023).
+Or you could use the [GitHub Desktop application](x-github-client://openRepo/https://github.com/lcolladotor/cshl_rstats_genome_scale_2024).
 
 ## Code of Conduct {-}
 
@@ -68,9 +70,9 @@ See [CSHLData2023](https://docs.google.com/document/d/1pdvZFjJBwRUpA_VJOAFu4z-0E
   
 ## External links {-}
 
-* [CSHL course](https://meetings.cshl.edu/courses.aspx?course=C-DATA&year=23)
-* [CSHLData2023](https://seandavi.github.io/CSHLData2023/)
-* [GitHub source code](https://github.com/lcolladotor/cshl_rstats_genome_scale_2023)
+<!-- * [CSHLData2023](https://seandavi.github.io/CSHLData2023/) -->
+* [CSHL course](https://meetings.cshl.edu/courses.aspx?course=C-DATA&year=24)
+* [GitHub source code](https://github.com/lcolladotor/cshl_rstats_genome_scale_2024)
 * [Slack](https://cshldata-2023.slack.com)
 * Example real project (by Daianna): [LieberInstitute/smokingMouse_Indirects](https://github.com/LieberInstitute/smokingMouse_Indirects)
 * `SPEAQeasyWorkshop2023` for BioC2023 (by Daianna and Renee): [LieberInstitute/SPEAQeasyWorkshop2023](https://github.com/LieberInstitute/SPEAQeasyWorkshop2023)
@@ -135,7 +137,7 @@ You will also need to install [RStudio](https://rstudio.com/products/rstudio/dow
 
 ## R session information {-}
 
-Details on the R version used for making this book. The source code is available at [`lcolladotor/cshl_rstats_genome_scale_2023`](https://github.com/lcolladotor/cshl_rstats_genome_scale_2023).
+Details on the R version used for making this book. The source code is available at [`lcolladotor/cshl_rstats_genome_scale_2024`](https://github.com/lcolladotor/cshl_rstats_genome_scale_2024).
 
 ```{r session_packages, eval = TRUE, message = FALSE}
 ## Load the package at the top of your script
