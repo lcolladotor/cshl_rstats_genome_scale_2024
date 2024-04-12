@@ -1,0 +1,201 @@
+---
+title: "Statistical Analysis of Genome Scale Data 2023"
+author: "Leonardo Collado-Torres"
+site: bookdown::bookdown_site
+apple-touch-sin: "icon_192.png"
+apple-touch-icon-size: 192
+favicon: "icon_32.png"
+github-repo: "lcolladotor/cshl_rstats_genome_scale_2023"
+documentclass: book
+output:
+  bookdown::gitbook:
+    includes:
+      after_body: map_and_ga.html
+    css: "style.css"
+    
+---
+
+# Overview {-}
+
+Here you can find the files for the July 2023 _Statistical Analysis of Genome Scale Data_ course at [CSHL](https://meetings.cshl.edu/courses.aspx?course=C-DATA&year=23) portion taught by Leo and his team (July 3rd to July 6th). See [CSHLData2023](https://seandavi.github.io/CSHLData2023/) for a list of all instructors and related materials.
+
+Instructor:
+
+* [**Leonardo Collado-Torres**](http://lcolladotor.github.io/), [Twitter](https://twitter.com/lcolladotor)
+
+Teach assistants:
+
+* [Daianna González Padilla](https://daianna21.github.io/), [Twitter](https://twitter.com/daianna_glez)
+* [Fernanda Renee García Flores](https://reneegf.github.io/), [Twitter](https://twitter.com/SubmarineGene)
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Happy to welcome <a href="https://twitter.com/lcolladotor?ref_src=twsrc%5Etfw">@lcolladotor</a>, <a href="https://twitter.com/SubmarineGene?ref_src=twsrc%5Etfw">@SubmarineGene</a>, and <a href="https://twitter.com/daianna_glez?ref_src=twsrc%5Etfw">@daianna_glez</a> to <a href="https://twitter.com/cshlcourses?ref_src=twsrc%5Etfw">@cshlcourses</a> on Statistical Analysis of Genome Scale Data. Materials here:<a href="https://t.co/0JGzEEf3Yx">https://t.co/0JGzEEf3Yx</a></p>&mdash; Sean Davis (@seandavis12) <a href="https://twitter.com/seandavis12/status/1675926879826485253?ref_src=twsrc%5Etfw">July 3, 2023</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Interested in learning R/<a href="https://twitter.com/Bioconductor?ref_src=twsrc%5Etfw">@Bioconductor</a> for <a href="https://twitter.com/hashtag/RNAseq?src=hash&amp;ref_src=twsrc%5Etfw">#RNAseq</a> data analysis?<br><br>Check <a href="https://t.co/jcNWOq7VWD">https://t.co/jcNWOq7VWD</a> that <a href="https://twitter.com/daianna_glez?ref_src=twsrc%5Etfw">@daianna_glez</a> <a href="https://twitter.com/SubmarineGene?ref_src=twsrc%5Etfw">@SubmarineGene</a> and I built for a CSHL course organized by <a href="https://twitter.com/seandavis12?ref_src=twsrc%5Etfw">@seandavis12</a> &amp; Vincent Carey<a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> <a href="https://twitter.com/LieberInstitute?ref_src=twsrc%5Etfw">@LieberInstitute</a> <a href="https://twitter.com/cshlcourses?ref_src=twsrc%5Etfw">@cshlcourses</a> <br><br>Source at <a href="https://t.co/aQ8kLMadSl">https://t.co/aQ8kLMadSl</a> ⭐️</p>&mdash; 🇲🇽 Leonardo Collado-Torres (@lcolladotor) <a href="https://twitter.com/lcolladotor/status/1678488349307461632?ref_src=twsrc%5Etfw">July 10, 2023</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+## Download course materials {-}
+
+Download the materials for this course with `usethis::use_course('lcolladotor/cshl_rstats_genome_scale_2023')` or view online at [**lcolladotor.github.io/cshl_rstats_genome_scale_2023**](http://lcolladotor.github.io/cshl_rstats_genome_scale_2023). This command downloads a static version of the course materials. 
+
+If you want to be able to easily download updates, we recommend using `Git`. [_Happy Git and GitHub for the useR_](https://happygitwithr.com/) is great for getting your computer ready to use `Git` and `GitHub`. If you already have a `GitHub` account, you can instead use this command to download the course:
+
+```bash
+## Download it the first time
+git clone https://github.com/lcolladotor/cshl_rstats_genome_scale_2023.git
+
+## To update the contents, use:
+cd cshl_rstats_genome_scale_2023
+git pull
+```
+
+Or you could use the [GitHub Desktop application](x-github-client://openRepo/https://github.com/lcolladotor/cshl_rstats_genome_scale_2023).
+
+## Code of Conduct {-}
+
+We'll follow the CSHL code of conduct as well as version 1.2.0 of the Bioconductor code of conduct [bioconductor.github.io/bioc_coc_multilingual/](https://bioconductor.github.io/bioc_coc_multilingual/). 
+
+For reporting any violations of the code of conduct, report them to the Instructor and/or Course Coordinators.
+
+## Course Schedule {-}
+
+_Local times in US Eastern_
+
+See [CSHLData2023](https://docs.google.com/document/d/1pdvZFjJBwRUpA_VJOAFu4z-0Eys6Wv2iRAh84T6_yF4/edit?usp=sharing) for the detailed schedule. Below is a list of the key packages we will use each day:
+
+* Monday July 3rd: `SummarizedExperiment`, `iSEE`, `smokingMouse`, `biocthis`
+* Tuesday July 4th: `recount3`, `ExploreModelMatrix`, `limma`
+* Wednesday July 5th: `variancePartition`, `ComplexHeatmap`
+* Thursday July 6th: `spatialLIBD`
+  
+## External links {-}
+
+* [CSHL course](https://meetings.cshl.edu/courses.aspx?course=C-DATA&year=23)
+* [CSHLData2023](https://seandavi.github.io/CSHLData2023/)
+* [GitHub source code](https://github.com/lcolladotor/cshl_rstats_genome_scale_2023)
+* [Slack](https://cshldata-2023.slack.com)
+* Example real project (by Daianna): [LieberInstitute/smokingMouse_Indirects](https://github.com/LieberInstitute/smokingMouse_Indirects)
+* `SPEAQeasyWorkshop2023` for BioC2023 (by Daianna and Renee): [LieberInstitute/SPEAQeasyWorkshop2023](https://github.com/LieberInstitute/SPEAQeasyWorkshop2023)
+* [LieberInstitute/template_project](https://github.com/LieberInstitute/template_project)
+* [LIBD rstats club](http://research.libd.org/rstatsclub/): check the [public schedule](https://docs.google.com/spreadsheets/d/1is8dZSd0FZ9Qi1Zvq1uRhm-P1McnJRd_zxdAfCRoMfA/edit?usp=sharing)
+  
+
+## Course Prerequisites {-}
+
+Install R 4.3.x from [CRAN](https://cran.r-project.org/) then install the following R packages:
+
+```{r install, eval = FALSE}
+## For installing Bioconductor packages
+if (!requireNamespace("BiocManager", quietly = TRUE)) {
+    install.packages("BiocManager")
+}
+
+## Install required packages
+BiocManager::install(
+    c(
+        "usethis", ## Utilities
+        "BiocFileCache",
+        "RefManageR",
+        "here",
+        "Hmisc",
+        "biocthis",
+        "lobstr",
+        "postcards",
+        "scater",
+        "sessioninfo",
+        "smokingMouse",
+        "stringr",
+        "SummarizedExperiment", ## Main containers / vis
+        "iSEE",
+        "edgeR", ## RNA-seq
+        "ExploreModelMatrix",
+        "limma",
+        "recount3",
+        "rlang",
+        "pheatmap", ## Visualization
+        "ggplot2",
+        "ggrepel",
+        "patchwork",
+        "RColorBrewer",
+        "ComplexHeatmap",
+        "cowplot",
+        "Polychrome",
+        "spatialLIBD", ## Advanced
+        "variancePartition"
+    )
+)
+
+## Install smokingMouse, which is currently under review at Bioconductor
+## at https://github.com/Bioconductor/Contributions/issues/3024.
+BiocManager::install("LieberInstitute/smokingMouse")
+
+## Required to access some recent bug fixes on biocthis
+BiocManager::install("lcolladotor/biocthis")
+```
+
+You will also need to install [RStudio](https://rstudio.com/products/rstudio/download/#download) version 2023.06.0+421 or newer.
+
+## R session information {-}
+
+Details on the R version used for making this book. The source code is available at [`lcolladotor/cshl_rstats_genome_scale_2023`](https://github.com/lcolladotor/cshl_rstats_genome_scale_2023).
+
+```{r session_packages, eval = TRUE, message = FALSE}
+## Load the package at the top of your script
+library("sessioninfo")
+
+## Utilities
+library("BiocFileCache")
+library("BiocStyle")
+library("biocthis")
+library("here")
+library("lobstr")
+library("postcards")
+library("usethis")
+library("sessioninfo")
+
+## Data
+library("smokingMouse")
+
+## Main containers / vis
+library("SummarizedExperiment")
+library("iSEE")
+
+## RNA-seq
+library("edgeR")
+library("ExploreModelMatrix")
+library("limma")
+library("recount3")
+
+## QCA
+library("scater")
+
+## Variance Partition
+library("variancePartition")
+
+## Visualization: plots & text
+library("ComplexHeatmap")
+library("ggplot2")
+library("patchwork")
+library("pheatmap")
+library("RColorBrewer")
+library("Hmisc")
+library("stringr")
+library("cowplot")
+library("rlang")
+library("ggrepel")
+library("Polychrome")
+
+## Spatial transcriptomics
+library("spatialLIBD")
+```
+
+```{r session_info}
+## Reproducibility information
+options(width = 120)
+session_info()
+proc.time()
+```
+
+This interactive book was last updated at `r Sys.time()`.
+
+## License  {-}
+
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.

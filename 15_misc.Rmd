@@ -1,0 +1,78 @@
+# Miscellaneous
+
+Instructor: Leo
+
+## postcards
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Q6eRD8Nyxfk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/0S_tRne5UNk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+_The above video is in Spanish._
+
+* Similar to https://pages.github.com/
+* `postcards` has 5 templates https://github.com/seankross/postcards
+* Your website should ideally say something about you, your interests, your projects, and how to contact you. Here are some examples with their source code:
+  - https://amy-peterson.github.io/ + https://github.com/amy-peterson/amy-peterson.github.com
+  - http://jtleek.com/ + https://github.com/jtleek/jtleek.github.io
+  - http://aejaffe.com/ + https://github.com/andrewejaffe/andrewejaffe.github.io
+  - https://hadley.nz/ + https://github.com/hadley/hadley.github.com
+  - https://emarquezz.github.io/ + https://github.com/emarquezz/emarquezz.github.io
+  - https://bpardo99.github.io/ + https://github.com/bpardo99/bpardo99.github.io
+  - https://daianna21.github.io/ + https://github.com/daianna21/daianna21.github.io
+  - https://reneegf.github.io/ + https://github.com/reneegf/reneegf.github.io
+
+
+```{r postcards_proj, eval = FALSE}
+## Create an RStudio project first with this particular name
+usethis::create_project("~/Desktop/YourGitHubUsername.github.io")
+
+## Configure Git and GitHub
+## If you don't have git, check "Happy Git and GitHub for the useR" available
+## at https://happygitwithr.com/
+usethis::use_git()
+usethis::use_github()
+```
+
+Create your website template using `postcards` by choosing one of the options below. This will create an `index.Rmd` file.
+
+```{r postcards_create, eval = FALSE}
+## Choose only one of these options, whichever you liked the most
+postcards::create_postcard(template = "jolla")
+postcards::create_postcard(template = "jolla-blue")
+postcards::create_postcard(template = "trestles")
+postcards::create_postcard(template = "onofre")
+postcards::create_postcard(template = "solana")
+```
+
+* Fill out your information using `Markdown` syntax. For example: https://github.com/andrewejaffe/andrewejaffe.github.io/blob/819141c6dca6205d04eabb3d15f36cdd79742766/index.Rmd#L17-L33.
+* Add links to your own profiles like at https://github.com/andrewejaffe/andrewejaffe.github.io/blob/819141c6dca6205d04eabb3d15f36cdd79742766/index.Rmd#L4-L12.
+* Click the `knit` blue button on RStudio. This is the same as running `rmarkdown::render("index.Rmd")` on the console. This will create the `index.html` file.
+* Make a `git commit` to save your new files including `index.html` and then `git push` to upload your files to GitHub.
+* You will soon have a publicly website available at https://YourGitHubUsername.github.io/
+* Feel free to keep editing your website. Remember to `knit`, then `git add` + `git commit` the new versions of your files, then `git push` to upload them to GitHub.
+  - If you want to, use `fontawesome` like at https://github.com/emarquezz/emarquezz.github.io/blob/c49eae75d53efa623e5d3bbbb29d77a3f1678a1c/index.Rmd#L7 or emojis like at https://github.com/emarquezz/emarquezz.github.io/blob/c49eae75d53efa623e5d3bbbb29d77a3f1678a1c/index.Rmd#L24.
+* Share your website and source code through the [`random`](https://cshldata-2023.slack.com/archives/C058SB8TB1C) Slack channel.
+* (optional) Announce your new website using the `#rstats` hasthag and/or the author of `postcards` https://twitter.com/seankross.
+
+## Organizing your work
+
+* https://here.r-lib.org/
+  - `here` is a great package for avoiding hard coded (full paths) to files.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/XTuJ8vGnzBU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+[_LIBD rstats club notes_](https://docs.google.com/document/d/1oAW3z9eo0LRAPeEqqm4VyPfOz8NF0vhfd76jwcJkkog/edit)
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/-GdqCf0dFPU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+
+* https://lcolladotor.github.io/bioc_team_ds/organizing-your-work.html
+  - My team's documentation on how to organize our work.
+* https://github.com/LieberInstitute/template_project
+  - Here's our template for how to organize code in a new project. By using a uniform organization, we make it easier for all of us to understand where code lives. This in turn makes it easier to adapt and re-use code across projects.
+  
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Along the way we figured out how to organize our code <a href="https://t.co/1KuhHGxLGC">https://t.co/1KuhHGxLGC</a><br><br>This structure helped collaborators join the project within the last months, understand our code base, and make 🤩 contributions<a href="https://t.co/IbjHZUi92d">https://t.co/IbjHZUi92d</a></p>&mdash; 🇲🇽 Leonardo Collado-Torres (@lcolladotor) <a href="https://twitter.com/lcolladotor/status/1626687327333683201?ref_src=twsrc%5Etfw">February 17, 2023</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+* https://lcolladotor.github.io/bioc_team_ds/how-to-ask-for-help.html
+  - Some of my team's guidelines for _how to ask for help_
