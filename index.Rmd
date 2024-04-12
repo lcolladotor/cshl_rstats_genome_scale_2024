@@ -1,11 +1,11 @@
 ---
-title: "Statistical Analysis of Genome Scale Data 2023"
+title: "Statistical Analysis of Genome Scale Data 2024"
 author: "Leonardo Collado-Torres"
 site: bookdown::bookdown_site
 apple-touch-sin: "icon_192.png"
 apple-touch-icon-size: 192
 favicon: "icon_32.png"
-github-repo: "lcolladotor/cshl_rstats_genome_scale_2023"
+github-repo: "lcolladotor/cshl_rstats_genome_scale_2024"
 documentclass: book
 output:
   bookdown::gitbook:
@@ -26,7 +26,7 @@ Instructor:
 Teach assistants:
 
 * [Daianna González Padilla](https://daianna21.github.io/), [Twitter](https://twitter.com/daianna_glez)
-* [Fernanda Renee García Flores](https://reneegf.github.io/), [Twitter](https://twitter.com/SubmarineGene)
+* [Melissa Mayén Quiroz](http://Melii99.github.io/), [Twitter](http://twitter.com/meli_mq99)
 
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Happy to welcome <a href="https://twitter.com/lcolladotor?ref_src=twsrc%5Etfw">@lcolladotor</a>, <a href="https://twitter.com/SubmarineGene?ref_src=twsrc%5Etfw">@SubmarineGene</a>, and <a href="https://twitter.com/daianna_glez?ref_src=twsrc%5Etfw">@daianna_glez</a> to <a href="https://twitter.com/cshlcourses?ref_src=twsrc%5Etfw">@cshlcourses</a> on Statistical Analysis of Genome Scale Data. Materials here:<a href="https://t.co/0JGzEEf3Yx">https://t.co/0JGzEEf3Yx</a></p>&mdash; Sean Davis (@seandavis12) <a href="https://twitter.com/seandavis12/status/1675926879826485253?ref_src=twsrc%5Etfw">July 3, 2023</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
