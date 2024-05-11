@@ -17,13 +17,14 @@ Below a classic workflow for DGE is depicted. It takes as input the gene express
 <b> 1. RNA-seq data processing</b>: raw counts are normalized and log-scaled (lognorm-counts) and the lowly-expressed genes are filtered out.
 
 <b> 2. Exploratory Data Analysis</b>: quality metrics of the samples are compared across groups, the poor-quality samples are filtered and both sample-level and gene-level effects of sample variables are explored to identify those that are main drivers of gene expression variation to include in the models for DGE.
- 
-<b> 3. Differential Expression Analysis</b>: the expression of each gene is linearly modeled by the selected variables in the previous step; after fitting the model gene-wise log2-fold changes (log2FC) and *p*-values are obtained for the variable of interest and other statistics of differential expression are also computed and compared. Here DEGs are determined based on the significance threshold (controlling for the False Discovery Rate or FDR). 
+
+<b> 3. Differential Expression Analysis</b>: the expression of each gene is linearly modeled by the selected variables in the previous step; after fitting the model gene-wise log2-fold changes (log2FC) and *p*-values are obtained for the variable of interest and other statistics of differential expression are also computed and compared. Here DEGs are determined based on the significance threshold (controlling for the False Discovery Rate or FDR).
 
 <b> 4. Functional Enrichment Analysis</b>: an overrepresentation analysis (ORA) is performed to find statistically significant associations between our groups of DEGs and gene sets annotated in GO terms and KEGG pathways; here we identify biological processes, cellular functions and components, and pathways potentially affected or involved in the experimental condition under study.   
 
-<b> 5. DE visualization</b>: heatmaps are created to visually contrast gene expression levels of DEGs in the experimental groups. </font>
-            <font size="0.8"> 
+<b> 5. DE visualization</b>: heatmaps are created to visually contrast gene expression levels of DEGs in the experimental groups. 
+            </font>
+                <font size="0.8"> 
             
 Abbreviations: CPM: counts per million; QC: quality control; PC: principal component; 
 DEG(s): differentially expressed gene(s); Ctrl: control; Expt: experimental; GO: Gene Ontology; KEGG: Kyoto Encyclopedia of Genes and Genomes.
@@ -40,7 +41,7 @@ More details of this pipeline are provided in the [original manuscript](https://
 
 
 ### RNA-seq data processing
-Once the gene expression matrix has been generated we can proceed to process the read counts. Raw counts are typically zero-enriched and not normally-distributed, which is required for the application of several statistical methods. Also gene expression . Therefore raw counts must be normalized and lowly-expressed genes filtered out.
+Once the gene expression matrix has been generated we can proceed to process the read counts. Raw counts are typically zero-enriched and not normally-distributed, which is required for the application of several statistical methods. Also raw gene expression values may reflect methodological and biological factors other than the one of interest. Therefore raw counts must be normalized and lowly-expressed genes filtered out.
 
 #### Data normalization
 Differences between samples such as library sizes (sequencing depths) and RNA composition, as well as different gene lengths and GC contents make raw gene expression data not comparable between samples. Several normalization strategies can be applied to surpass such differences; commonly counts-per-million (cpm) are used. In addition to count normalization, a log-transformation is required to make cpm follow an approximately normal distribution. 
@@ -68,34 +69,63 @@ More details about normalization and filtering can be consulted in the course ma
 </figure>
 
 ### Exploratory Data Analysis
-The Exploratory Data Analysis (EDA) is a primordial step in which, as the name refers, we explore relevant aspects of the RNA-seq data. Particularly, the quality of the samples regarding RNA contents and read mapping rates has to be compared to identify punctual samples or groups of samples of bad quality that may have arisen by technical causes during experimental steps. Also, high biological variability can be detected and subsequently guide data partition to perform subanalyses of the data.  
+The Exploratory Data Analysis (EDA) is a primordial step in which, as the name refers, we explore relevant aspects of the RNA-seq data. 
+In this process we basically create tons of plots, charts and graphs to visualize the data, assess their quality and inspect their variability. This clearly exposes low-quality samples and relationships and contributions in gene expression variance of sample-level variables. This allows to draw valuable information from our data that could impact on posterior analyses, including DGE. Thus EDA guides filtering steps, the execution of additional analyses, the selection of covariates for DGE models and of statistical tests based on data features, and could also aid in more accurate interpretations of the results. 
 
-Further, we are also interested in investigating trends and relationships between sample variables to hypothesize possible causes 
-
-Sample gene expression profiles can be analyzed and compared after dimensionality reduction procedures such as Principal Component Analysis (PCA) and Multidimensional-Scaling (MDS). These analyses are useful to potentially detect samples with outlier transcriptomic profiles to further remove and to identify sample variables driving gene expression variations.
-
-In this process we basically create tons of plots, charts and graphs to visualize the data that allow us to clearly uncover patterns and differences in the data. This allows to extract relevant information that could impact on posterior analysis, including DGE. 
-
-
-
-
-
-Answering these questions we may be able to formulate **hypothesis** that could guide future analysis or experiments.
-
-
-Now, the EDA is not a well defined process that can be followed by concrete instructions or series of steps, it is not a “linear path from start to finish”. What you do, what you plot depends on the particular questions you're trying to answer, what you want to know about your data and of course, it completely depends on your own datasets. “The process is iterative, with each new discovery informing the next. And as you go, you’ll gain a deeper understanding of the data’s underlying structure and potential.” [1]
-
-After this process (and the obvious reason why this is important) you'll have solid foundations to move forward making informed and justified decisions, test hypothesis and to draw meaningful conclusions from the analyses. At the end, all the gained insights will guide unveiling the true hidden values in the data.
-
+Although here we describe EDA as being comprised by QCA, dimensionality reduction to explore sample-level effects, and variance partition analysis to explore gene-level effects, EDA is not a well defined process that can be followed by concrete instructions or steps. The analyses you run and what you plot depends on the particular questions you're trying to answer, what you would like to know about your data and of course, it completely depends on the specific characteristics of your own dataset.
 
 
 #### Quality Control Analysis (QCA)
+First, the quality of the samples regarding RNA contents and read mapping rates has to be compared to (**Figure 2**: step 1):
+
+ 1) Identify punctual samples or groups of samples of poor quality that may have arisen by technical causes during experimental steps.  
+ 2) Evaluate if samples from the groups of interest for DGE (diagnostic, treatment, etc.) differ in their quality metrics as these can represent confounding factors for differential expression. 
+ 3) Detect high biological variability to subsequently guide data partition to perform subanalyses of the data.  
+
+Further, we are also interested in investigating trends and relationships between sample variables to unveil underlying technical and biological aspects of the observed data (**Figure 2**: step 2). 
+
+After having identified poor-quality samples, we have to remove them to not include the unreliable expression data they provide in downstream analyses. Cutoffs can be defined for specific QC metrics to decide which samples to keep; this however, is not strongly recommended as no consolidated references exist to define them and therefore rather represent arbitrary values. 
+Other approaches include identifying outlier QC metrics (**Figure 2**: step 3), but again, caution must be taken as outlier definition is also arbitrary and could be discarding good-quality samples.  
+
+<figure>
+    <img src="Figures/QCA.png" width="700px" align=center />
+        <figcaption style="color: gray; line-height: 0.9; text-align: justify">
+            <font size="-1.8">
+                <b>Figure 2</b>: <b> Quality Control Analysis steps. </b> 
+
+<b> 1. Evaluate QC metrics for groups of samples</b>: sample QC metrics such as the fraction of reads that mapped to the mitochondrial chromosome (`mitoRate`) and to the reference genome (`overallMapRate`) are compared between sample groups given by the variable of interest (`Group` in this example), technical variables (e.g. `plate` for sample library preparation), and biological variables (e.g. `Age`). 
+
+<b> 2. Examine relationships between sample variables</b>: pairs of QC metrics are compared; here `mitoRate` and the fraction of reads assigned to rRNA genes (`rRNA_rate`), as well as the library size (`sum`) and the number of expressed genes (`detected`) are plotted to explore the relationships they present with each other and with other sample metadata variables. (`Group` and `Age`). 
+
+<b> 3. QC-based sample filtering</b>: outlier QC metrics (red) are detected based on +/- 3 median-absolute-deviations (MADs) away (dotted lines) from the median (solid line). 
+            </font>
+        </figcaption>
+</figure> 
+
+
+See more details about QCA in [Statistical Analysis of Genome Scale Data 2023: Quality Control Analysis](https://lcolladotor.github.io/cshl_rstats_genome_scale_2023/rse-plotting-basics-with-smokingmouse.html#quality-control-analysis).
+
 
 #### Exploration of sample-level effects
 
-All so-far mentioned steps are discussed and further explained in detail in the course material from last year.
+Sample gene expression profiles can be analyzed and compared after dimensionality reduction procedures such as Principal Component Analysis (PCA) and Multidimensional-Scaling (MDS). These analyses are useful to potentially detect samples with outlier transcriptomic profiles to further remove and to identify sample variables driving gene expression variations (**Figure 3**).
+
+<figure>
+    <img src="Figures/PCA.png" width="700px" align=center />
+        <figcaption style="color: gray; line-height: 0.9; text-align: justify">
+            <font size="-1.8">
+                <b>Figure 2</b>: <b>  Exploration of sample-level effects through PCA</b> 
+
+<b> 1. Detection of atypical samples (manual PCA-based sample filtering)</b>: PCx vs PCy plots can expose outlier samples that appear segregated from the rest (purple-squared sample) or samples of a particular group (`Sex`: `F` or `M`) closer to samples from the other group (blue-squared sample). These should be further examined to evalute if they can be kept or must be discarded. In this case, after removing them, PC2 that explains a higher % of variance in gene expression, separates samples by sex. 
+
+<b> 2. Identification of drivers of sample gene expression variation</b>: reducing the dimensionality of our data enables to recognize sample variables explaining differences in the gene expression of the samples (`Age`), ascertain technical variables and batch effects are not impacting on the transcriptome (`plate`), and inquire to what extent our variable of interest is contributing to changes in gene expression (`Group`). 
+            </font>
+        </figcaption>
+</figure> 
+
 
 #### Model building: covariate selection for limma-voom 
+
 
 
 ## Differential Gene Expression 
