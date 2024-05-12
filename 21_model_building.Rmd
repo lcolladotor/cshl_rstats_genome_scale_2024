@@ -1,0 +1,5 @@
+
+# Model builidng for DGE with variance partition analysis
+
+Instructor: Daianna
+

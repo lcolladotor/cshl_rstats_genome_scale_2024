@@ -3,9 +3,9 @@
 
 Instructor: Daianna
 
-Differential Gene Expression (DGE) analyses are common statistical analyses of gene expression data that aim to discover genes significantly altered in their expression levels between experimental groups, which can be given by a condition, treatment, experimental procedure/exposure, diagnostic, by biological origins (e.g. differences in sex, tissue, age), and even by different technical methodologies. These genes are known as Differentially Expressed Genes (DEGs) and can be either up- or down-regulated if their expression is greater or less in one group with respect to the other(s), respectively. Diverse methods exist to perform DGE and multiple downstream analyses can be applied on DEGs, but a series of non-skippable preliminary steps exists which are necessary to correctly perform previous to any statistical testing. 
+Differential Gene Expression (DGE) analyses are common statistical analyses of gene expression data that aim to discover genes significantly altered in their expression levels between experimental groups, which can be given by a condition, treatment, experimental procedure/exposure, diagnostic, time points, by biological origins (e.g. differences in sex, tissue, age, species), and even by different technical methodologies. These genes are known as Differentially Expressed Genes (DEGs) and can be either up- or down-regulated if their expression is greater or less in one group with respect to the other(s), respectively. Diverse methods exist to perform DGE and multiple downstream analyses can be applied on DEGs, but a series of non-skippable preliminary steps exists which are necessary to correctly perform previous to any statistical testing. 
 
-Below a classic workflow for DGE is depicted. It takes as input the gene expression matrix with raw read counts for each gene (as rows) across all samples (as columns). Among the preliminary steps, there is an initial data processing step encompassing count normalization and filtering of lowly-expressed genes. Secondly, Exploratory Data Analysis (EDA) involves assessment of Quality Control (QC) metrics of the study samples and filtering of poor-quality ones, as well as an examination of the gene expression profiles between sample groups, potential detection of additional atypical samples to remove, and the exploration of the correlations between sample-level variables and their contributions in the expression variance of each gene to guide the covariate selection for DGE models. 
+Below a classic workflow for DGE is depicted. It takes as input the gene expression matrix with raw read counts for genes (as rows) across all samples (as columns). Among the preliminary steps, there is an initial data processing step encompassing count normalization and filtering of lowly-expressed genes. Secondly, Exploratory Data Analysis (EDA) involves assessment of Quality Control (QC) metrics of the samples and filtering of poor-quality ones, as well as an examination of the gene expression profiles between sample groups, potential detection of additional atypical samples to remove, and the exploration of the correlations between sample-level variables and their contributions in the expression variance of each gene to guide the covariate selection for DGE models. 
 
 
 <figure>
@@ -18,7 +18,7 @@ Below a classic workflow for DGE is depicted. It takes as input the gene express
 
 <b> 2. Exploratory Data Analysis</b>: quality metrics of the samples are compared across groups, the poor-quality samples are filtered and both sample-level and gene-level effects of sample variables are explored to identify those that are main drivers of gene expression variation to include in the models for DGE.
 
-<b> 3. Differential Expression Analysis</b>: the expression of each gene is linearly modeled by the selected variables in the previous step; after fitting the model gene-wise log2-fold changes (log2FC) and *p*-values are obtained for the variable of interest and other statistics of differential expression are also computed and compared. Here DEGs are determined based on the significance threshold (controlling for the False Discovery Rate or FDR).
+<b> 3. Differential Expression Analysis</b>: under the *limma*-*voom* pipeline the expression of each gene is linearly modeled by the selected variables in the previous step; after fitting the model gene-wise log2-fold changes (log2FC) and *p*-values are obtained for the variable of interest and other statistics of differential expression are also computed and compared. Here DEGs are determined based on the significance threshold (controlling for the False Discovery Rate or FDR).
 
 <b> 4. Functional Enrichment Analysis</b>: an overrepresentation analysis (ORA) is performed to find statistically significant associations between our groups of DEGs and gene sets annotated in GO terms and KEGG pathways; here we identify biological processes, cellular functions and components, and pathways potentially affected or involved in the experimental condition under study.   
 
@@ -35,16 +35,16 @@ DEG(s): differentially expressed gene(s); Ctrl: control; Expt: experimental; GO:
 
 ## Preliminary steps
 
-Evident computational steps right after sequencing involve raw sequencing reads Quality Control (QC) analysis and read alignment to a reference genome for the subsequent gene expression quantification, generating the input for DGE. Comprehensive pipelines have been developed for these purposes, such as the RNA-seq processing pipeline [*SPEAQeasy*](http://research.libd.org/SPEAQeasy/) (Eagles, N.J. *et al*. 2021) that provides a flexible, user-friendly, and reproducible pipeline to perform all suxh analyses through the implementation of a single workflow, liberating from the need of performing each step individually. 
+Evident computational steps right after sequencing involve raw sequencing reads Quality Control (QC) analysis and read alignment to a reference genome for the subsequent gene expression quantification, generating the input for DGE. Comprehensive pipelines have been developed for these purposes, such as the RNA-seq processing pipeline [*SPEAQeasy*](http://research.libd.org/SPEAQeasy/) (Eagles, N.J. *et al*. 2021) that provides a flexible, user-friendly, and reproducible pipeline to perform all such analyses through the implementation of a single workflow, liberating from the need of performing each step individually. 
 
 More details of this pipeline are provided in the [original manuscript](https://doi.org/10.1186/s12859-021-04142-3), the [documentation website](http://research.libd.org/SPEAQeasy/index.html), and other in [created resources](http://research.libd.org/SPEAQeasy-example/).
 
 
 ### RNA-seq data processing
-Once the gene expression matrix has been generated we can proceed to process the read counts. Raw counts are typically zero-enriched and not normally-distributed, which is required for the application of several statistical methods. Also raw gene expression values may reflect methodological and biological factors other than the one of interest. Therefore raw counts must be normalized and lowly-expressed genes filtered out.
+Once the gene expression matrix has been generated we can proceed to process the read counts. Raw counts are typically zero-enriched and not normally-distributed, which is required for the application of several statistical methods. Furthermore, raw gene expression values may reflect protocol-specific biases and biological factors other than the one of interest. Therefore raw counts must be normalized and lowly-expressed genes filtered out.
 
 #### Data normalization
-Differences between samples such as library sizes (sequencing depths) and RNA composition, as well as different gene lengths and GC contents make raw gene expression data not comparable between samples. Several normalization strategies can be applied to surpass such differences; commonly counts-per-million (cpm) are used. In addition to count normalization, a log-transformation is required to make cpm follow an approximately normal distribution. 
+Differences between samples such as library sizes (sequencing depths), and RNA composition, as well as different gene lengths and GC contents make raw gene expression data not comparable between samples. Several normalization strategies can be applied to surpass such differences; commonly counts-per-million (cpm) are used. In addition to count normalization, a log-transformation is required to make cpm follow an approximately normal distribution. 
 
 #### Gene filtering 
 Often the expression profiling platform (microarray or RNA-seq) includes genes that **do not appear to be expressed** to a worthwhile degree in any or most of the samples. This might occur, for instance, in cases where genes are not expressed in any of the cell types being experimentally profiled [1]. We want to remove those genes prior to posterior analyses, which is justified on both biological and statistical grounds [2]:
@@ -70,22 +70,22 @@ More details about normalization and filtering can be consulted in the course ma
 
 ### Exploratory Data Analysis
 The Exploratory Data Analysis (EDA) is a primordial step in which, as the name refers, we explore relevant aspects of the RNA-seq data. 
-In this process we basically create tons of plots, charts and graphs to visualize the data, assess their quality and inspect their variability. This clearly exposes low-quality samples and relationships and contributions in gene expression variance of sample-level variables. This allows to draw valuable information from our data that could impact on posterior analyses, including DGE. Thus EDA guides filtering steps, the execution of additional analyses, the selection of covariates for DGE models and of statistical tests based on data features, and could also aid in more accurate interpretations of the results. 
+In this process we basically create tons of plots, charts and graphs to visualize the data, assess their quality and inspect their variability. This clearly exposes low-quality samples and relationships and contributions in gene expression variance of sample-level variables. This allows to draw valuable information from our data that could impact posterior analyses, including DGE. Thus EDA guides filtering steps, the execution of additional analyses, the selection of covariates for DGE models and of statistical tests based on data features, and could also aid in more accurate interpretations of the results. 
 
 Although here we describe EDA as being comprised by QCA, dimensionality reduction to explore sample-level effects, and variance partition analysis to explore gene-level effects, EDA is not a well defined process that can be followed by concrete instructions or steps. The analyses you run and what you plot depends on the particular questions you're trying to answer, what you would like to know about your data and of course, it completely depends on the specific characteristics of your own dataset.
 
 
 #### Quality Control Analysis (QCA)
-First, the quality of the samples regarding RNA contents and read mapping rates has to be compared to (**Figure 2**: step 1):
+First, the quality metrics of the samples regarding read and RNA contents, and read mapping rates have to be compared to (**Figure 2**: step 1):
 
  1) Identify punctual samples or groups of samples of poor quality that may have arisen by technical causes during experimental steps.  
  2) Evaluate if samples from the groups of interest for DGE (diagnostic, treatment, etc.) differ in their quality metrics as these can represent confounding factors for differential expression. 
- 3) Detect high biological variability to subsequently guide data partition to perform subanalyses of the data.  
+ 3) Detect high biological variability to subsequently support data partition to perform subanalyses of the data.  
 
 Further, we are also interested in investigating trends and relationships between sample variables to unveil underlying technical and biological aspects of the observed data (**Figure 2**: step 2). 
 
 After having identified poor-quality samples, we have to remove them to not include the unreliable expression data they provide in downstream analyses. Cutoffs can be defined for specific QC metrics to decide which samples to keep; this however, is not strongly recommended as no consolidated references exist to define them and therefore rather represent arbitrary values. 
-Other approaches include identifying outlier QC metrics (**Figure 2**: step 3), but again, caution must be taken as outlier definition is also arbitrary and could be discarding good-quality samples.  
+Other approaches include identifying outlier QC metrics (**Figure 2**: step 3), but again, caution must be taken as outlier definition is also arbitrary and we could be discarding good-quality samples.  
 
 <figure>
     <img src="Figures/QCA.png" width="700px" align=center />
@@ -98,6 +98,7 @@ Other approaches include identifying outlier QC metrics (**Figure 2**: step 3), 
 <b> 2. Examine relationships between sample variables</b>: pairs of QC metrics are compared; here `mitoRate` and the fraction of reads assigned to rRNA genes (`rRNA_rate`), as well as the library size (`sum`) and the number of expressed genes (`detected`) are plotted to explore the relationships they present with each other and with other sample metadata variables. (`Group` and `Age`). 
 
 <b> 3. QC-based sample filtering</b>: outlier QC metrics (red) are detected based on +/- 3 median-absolute-deviations (MADs) away (dotted lines) from the median (solid line). 
+
             </font>
         </figcaption>
 </figure> 

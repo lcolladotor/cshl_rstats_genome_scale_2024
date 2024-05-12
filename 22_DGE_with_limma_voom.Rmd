@@ -1,0 +1,202 @@
+
+# Differential Gene Expression analysis with *limma*-*voom*
+
+Instructor: Daianna
+
+In this chapter you'll learn how DGE analysis is performed under the empirical Bayes framework of the popular *limma*-*voom* pipeline, highlighting key assumptions and concepts, and main differences with other methodologies.
+
+## NB-based DGE methods?
+
+An initial central point of discussion around DGE method development is how to model the distribution of the reads. Many methods model the read counts ($y_{k,ij}$, non-negative integers) of a gene $i$ in the $j$ samples of condition $k$ through the Poisson or the Negative Binomial (NB) distribution. Of these, NB is often preferred as it allows the mean ($\mu$) and the variance ($\sigma$) of the reads to be different, compared to the Poisson distribution where $\mu$=$\sigma$. This is of particular importance as controlling the variance allows to account for variability in the gene expression levels across biological samples [1]. 
+
+<figure>
+    <img src="Figures/NB_DGE_methods.png" width="800px" align=center />
+        <figcaption style="color: gray; line-height: 0.9; text-align: justify">
+            <font size="-1.8">
+                <b>Figure 1</b>: <b> NB-distributed read counts. </b> Modeling of read counts for gene $i$ in the samples of the first and second conditions based on the NB model. Modified from [Li, W. V., & Li, J. J. (2018)](https://pubmed.ncbi.nlm.nih.gov/31456901/). 
+                
+            </font>
+        </figcaption>
+</figure>
+
+
+Estimating the NB distribution parameters is necessary to assess DE of each gene $i$ between any two conditions $k=1,2$ (**Figure 1**). Bayesian models are used defining prior distributions and relationships of such parameters. Briefly, after 1) estimating gene-wise NB parameters, 2) the mean-variance relationship across all genes can be used to shrink the gene variance estimations borrowing information from all genes or incorporating prior knowledge, something advantageous when sample sizes are small (**Figure 2**). 3) A statistical test is used to assess for each gene $i$ if its true expression in the first and second condition ($\theta_{1i}$ and $\theta_{2i}$) is the same (null hypothesis) or differs (alternative hypothesis):
+
+* $H_0: \theta_{1i}=\theta_{2i}$
+* $H_1: \theta_{1i}≠\theta_{2i}$, where the $\theta_{i}$'s are parameters included in the mean of the NB distributions ($\mu$). 
+
+4\) The test statistic is computed for each gene and 5) its associated *p*-value is calculated based on the null distribution. 6) Finally, *p*-values are corrected for multiple-testing and DEGs are determined based on an adjusted *p*-values cutoff [1].
+
+Examples of popular methods based on the NB distribution are [*edgeR*](https://bioconductor.org/packages/release/bioc/html/edgeR.html) and [*DESeq2*](https://bioconductor.org/packages/release/bioc/html/DESeq2.html). 
+
+Nevertheless, one problem NB-based methods for differential expression face is that they set dispersion of the data as a known and global parameter, ignoring observation-specific variation and importantly, there's a reduced number of statistical methods for count distributions compared to the normal distribution [1,2]. Here, we'll focus on [*limma*](https://bioconductor.org/packages/release/bioc/html/limma.html) that does not rely on a certain distribution but rather works on $log_2(cpm)$ and fits linear models for DGE enabling the incorporation of additional predictors to model gene expression, specially useful in complex experimental settings.   
+
+
+ 
+## *limma*-*voom* pipeline
+
+[*limma*](https://bioconductor.org/packages/release/bioc/html/limma.html) is a package for the analysis of gene expression data arising from microarray or RNA-seq technologies. It has features that make the analyses stable even for experiments with small number of arrays —this is achieved by borrowing information across genes. It is specially designed for analyzing complex experiments with a variety of experimental conditions and predictors [3].
+
+Usually, *limma* DGE analysis is carried out in five main steps, the last four of them completed by *limma* `R` functions, as described below. We'll use bulk RNA-seq data from the [`smokingMouse()`](https://bioconductor.org/packages/release/data/experiment/html/smokingMouse.html) package to exemplify the steps. 
+
+```{r download_data, warning=FALSE,message=FALSE}
+
+## Load the container package for this type of data
+library("SummarizedExperiment")
+
+## Connect to ExperimentHub
+library("ExperimentHub")
+eh <- ExperimentHub::ExperimentHub()
+
+## Load the datasets of the package
+myfiles <- query(eh, "smokingMouse")
+
+## Download the mouse gene data
+rse_gene <- myfiles[["EH8313"]]
+
+## Keep samples from nicotine experiment and pups only
+rse_gene_nic <- rse_gene[, which(rse_gene$Expt == "Nicotine" & rse_gene$Age=='Pup')]
+
+## Only expressed genes (passed the filtering step)
+rse_gene_filt <- rse_gene_nic[rowData(rse_gene_nic)$retained_after_feature_filtering == TRUE, ]
+
+```
+
+Let's explore a little the data.
+```{r explore_data}
+## Data dimensions: number of genes and samples
+dim(rse_gene_filt)
+
+## Raw counts for first 3 genes in the first 5 samples
+assays(rse_gene_filt)$counts[1:3, 1:5]
+
+## Log-normalized counts for first 3 genes in the first 5 samples
+assays(rse_gene_filt)$logcounts[1:3, 1:5]
+
+## Data for the first 2 samples
+head(colData(rse_gene_filt), 2)
+```
+
+### `model.matrix()`
+
+*limma* fits a linear model to the expression data of each gene (response variable), modeling the systematic part of the data by sample-level covariates (predictors). 
+
+<style>
+p.comment {
+background-color: #F0F0F0;
+padding: 10px;
+border: 0px solid black;
+margin-left: 0px;
+border-radius: 1px;
+font-family: sans-serif;
+}
+
+</style>
+
+<p class="comment">
+💡 A model is a specification of how a set of variables relate to each other. In the case of a linear model, it is a linear equation that describes how the dependent or response variable is explained by the independent variables, also called predictors. A regression analysis with more than one independent variable is called **multiple regression**. Regression with only one independent variable is called **simple regression**. There are many variations but what they all have in common is that all of them aim to predict one dependent variable from one or more predictors through a linear equation [4].
+</p>
+
+The *limma* model is specified with a **design matrix**, also known as **model matrix** or **regressor matrix**, often denoted by $X$. This is a matrix of values for explanatory variables of the samples: rows correspond to samples and columns to sample variables. 
+
+Say that the values the $i$th sample take in the $h$ covariates are $X_{ih}$'s and their coefficients are $\beta_{h}$'s. The predicted expression of a gene in the  $i$th sample is given by $\hat y_i =\beta_0 + \sum_{1}^h\beta_{h}X_{ih}$. 
+
+$$
+\hat y = X\beta=\displaystyle {\begin{bmatrix} \hat y_{1}\\ \hat y
+_{2}\\ \hat y_{3}\\...\\ \hat y_{n-1}\\ \hat y_{n}\end{bmatrix}}={\begin{bmatrix}1&X_{11}&X_{12}&X_{13}&\cdots&X_{1,h-1}&X_{1h}\\1&X_{21}&X_{22}&X_{23}&\cdots&X_{2,h-1}&X_{2h}\\1&X_{31}&X_{32}&X_{33}&\cdots&X_{3,h-1}&X_{3h} \\ \vdots & \vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\1&X_{n-1,1}&X_{n-1,2}&X_{n-1,3}&\cdots&X_{n-1,h-1}&X_{n-1,h} \\1&X_{n,1}&X_{n,2}&X_{n,3}&\cdots&X_{n,h-1}&X_{n,h} \end{bmatrix}}{\begin{bmatrix}\beta _{0}\\\beta _{1}\\\beta _{2}\\\beta_{3}\\...\\\beta_{h-1}\\\beta_{h}\end{bmatrix}}
+$$
+where $n$ is the number of samples. 
+
+In the first step we create this matrix using `model.matrix()` that receives a formula with the variables to include in the models and the sample data.
+
+```{r model.matrix()}
+
+## Define formula
+formula <- ~ Group + Sex + plate + mitoRate + rRNA_rate + sum + detected 
+
+## Model matrix
+model <- model.matrix(formula, data = colData(rse_gene_filt))
+head(model)
+
+```
+
+<p class="comment">
+❓ **Which variables to include as covariates in the models?** A straightforward strategy is to keep the model as **simple as possible** and after fitting the model extract the variables of interest [3]. In chapter XX we have discussed how correlation and variance partition analyses can help us to set up the best models.
+ </p>
+
+<p class="comment">
+⚠️ **Very important**: always check which condition group is set as the reference in you model for the coefficient/contrast of interest (column named as `[Coefficient_name][Reference_Group]`) as this determines if a DEG is up or downregulated in the given condition compared to the other.</p>
+```{r coeff}
+## Comparison of interest: Group 
+coef <- "GroupExperimental"
+
+```
+
+
+### `voom()`
+
+Compared to NB-based methods, *limma* works with $log(cpm)$ which are approximately normally distributed (as we have seen) and thus, opens the possibility to leverage a wide range of normal-based statistical tools not available for count distributions, including methods developed for microarray data. However, *limma* doesn't assume nor require data to follow a normal distribution, but it does apply normal-based microarray-like statistical methods to RNA-seq read counts [2].
+
+>  "... limma does not make any assumption that the data appears normal in a histogram."
+     \- Gordon Smyth, author of *limma*, in the [Bioconductor support website](https://support.bioconductor.org/p/9140296/#9156131) 2021.
+
+The benefit of using $log(cpm)$, however, is not immediate. One limitation for the direct application of normal-based methods to log-counts is that reads counts have unequal variabilities even after a log-transformation depending on the count sizes: probability distributions for counts are naturally heteroscedastic, with log-cpm not having constant variances (larger variances for larger counts) [2]. It has been proposed that to design powerful statistical analysis for RNA-seq, it is more important to model the relationship between the mean and the variance in the data than to specify which probabilistic distribution to use for the counts [2]. And importantly, converting count data taking such relationship into account does open up access to their analysis with normal-based methods. That’s why we use `voom()`. 
+
+What `voom()` does is:
+
+1. First, to compute log-cpm. Log-normalized expression for gene $g$ in sample $i$ ($y_{gi}$) is given by  
+$$
+y_{gi}=log_2(\frac{r_{gi} + 0.5}{R_i + 1.0} \times 10^6)
+$$
+    where $r_{gi}$ is the raw count for the gene in the sample and $R_i$ the library size of the sample.
+    We add +0.5 to the counts to avoid log of zero and +1 to the library size to 
+ensure that $\frac{r_{gi}+0.5}{R_i+1}$ is strictly less than 1 (if $r_{gi} = R_i$).
+
+2. A linear model is fitted to gene log-cpm values by ordinary least squares as:
+$$ E(y_{gi})=\mu_{gi}=X_i\beta_g $$
+    where $E(y_{gi})$ is the expected expression of gene $g$ in sample $i$, $X_i$ is the vector with the sample values for the covariates and $\beta_g$ the vector of covariate coefficients for the gene. As a result, we have the estimated $\hat\beta_g$, the fitted log-cpm’s $\hat\mu_{gi}=X_i\hat\beta_g$ and the residual standard deviations $s_g$.
+
+3. Then it estimates the mean-variance trend of the data by fitting a smooth curve to the $\sqrt s_g$ of the genes presented as a function of the average gene         expression (in log-counts, not log-cpm). The $\sqrt s_g$‘s are used because they are symmetrically distributed. Log-counts typically show a decreasing mean-variance trend.
+
+4. `voom()` then predicts the standard deviation of each individual normalized observation $y_{gi}$ (*limma*-trend does that at the gene level) using this trend curve: the fitted log-count of each observation is mapped to the curve and its $\sqrt s_{gi}$value is obtained. The observation weights are $w_{gi}=\frac{1}{s_{gi}^2}$.
+
+<figure>
+    <img src="Figures/voom.png" width="800px" align=center />
+        <figcaption style="color: gray; line-height: 0.9; text-align: justify">
+            <font size="-1.8">
+                <b>Figure 2</b>: <b> `voom()` procedure to estimate observation-level variance weights for *limma*. </b> Extracted from the original voom publication ( [Law, C. W. *et al*. 2018](https://genomebiology.biomedcentral.com/articles/10.1186/gb-2014-15-2-r29)). 
+                
+            </font>
+        </figcaption>
+</figure>
+
+5. Log-cpm ($y_{gi}$) and associated weights ($w_{gi}$) can then be entered into the limma framework for linear modeling [3]. These weights are used in the linear modeling to adjust for count heteroscedasticity.
+
+
+
+## CODEEEEE
+
+
+
+### `lmFit()`
+
+
+### `eBayes()`
+
+### `topTable()`
+
+
+
+
+
+
+
+## References
+
+1. Li, W. V., & Li, J. J. (2018). Modeling and analysis of RNA‐seq data: a review from a statistical perspective. Quantitative Biology, 6(3), 195-209.
+
+2. Law, C. W., Chen, Y., Shi, W., & Smyth, G. K. (2014). voom: Precision weights unlock linear model analysis tools for RNA-seq read counts. Genome biology, 15(2), 1-17.
+
+3. Smyth, G. K., Ritchie, M., Thorne, N., Wettenhall, J., Shi, W., & Hu, Y. (2002). limma: linear models for microarray and RNA-Seq data user’s guide. Bioinformatics Division, The Walter and Eliza Hall Institute of Medical Research, Melbourne, Australia.
+
+4. van den Berg, S. M. (2022). Analysing data using linear models. Web site: https://bookdown.org/pingapang9/linear_models_bookdown/
