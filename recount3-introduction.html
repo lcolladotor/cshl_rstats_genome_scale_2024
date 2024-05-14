@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>8 recount3 introduction | Statistical Analysis of Genome Scale Data 2024</title>
+  <meta name="description" content="8 recount3 introduction | Statistical Analysis of Genome Scale Data 2024" />
+  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="8 recount3 introduction | Statistical Analysis of Genome Scale Data 2024" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta name="github-repo" content="lcolladotor/cshl_rstats_genome_scale_2024" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="8 recount3 introduction | Statistical Analysis of Genome Scale Data 2024" />
+  
+  
+  
+
+<meta name="author" content="Leonardo Collado-Torres" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  <link rel="shortcut icon" href="icon_32.png" type="image/x-icon" />
+<link rel="prev" href="biocthis-introduction.html"/>
+<link rel="next" href="interpreting-model-coefficients-with-exploremodelmatrix.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Overview</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#download-course-materials"><i class="fa fa-check"></i>Download course materials</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#code-of-conduct"><i class="fa fa-check"></i>Code of Conduct</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#course-schedule"><i class="fa fa-check"></i>Course Schedule</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#external-links"><i class="fa fa-check"></i>External links</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#course-prerequisites"><i class="fa fa-check"></i>Course Prerequisites</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#r-session-information"><i class="fa fa-check"></i>R session information</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#license"><i class="fa fa-check"></i>License</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="speaqeasy-introduction.html"><a href="speaqeasy-introduction.html"><i class="fa fa-check"></i><b>1</b> SPEAQeasy introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="speaqeasy-introduction.html"><a href="speaqeasy-introduction.html#overview-slides"><i class="fa fa-check"></i><b>1.1</b> 2022-04-20 overview slides</a></li>
+<li class="chapter" data-level="1.2" data-path="speaqeasy-introduction.html"><a href="speaqeasy-introduction.html#speaqeasy-main-links"><i class="fa fa-check"></i><b>1.2</b> SPEAQeasy main links</a></li>
+<li class="chapter" data-level="1.3" data-path="speaqeasy-introduction.html"><a href="speaqeasy-introduction.html#pipeline-outputs"><i class="fa fa-check"></i><b>1.3</b> Pipeline outputs</a></li>
+<li class="chapter" data-level="1.4" data-path="speaqeasy-introduction.html"><a href="speaqeasy-introduction.html#exercises"><i class="fa fa-check"></i><b>1.4</b> Exercises</a></li>
+<li class="chapter" data-level="1.5" data-path="speaqeasy-introduction.html"><a href="speaqeasy-introduction.html#solutions"><i class="fa fa-check"></i><b>1.5</b> Solutions</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="smokingmouse-study.html"><a href="smokingmouse-study.html"><i class="fa fa-check"></i><b>2</b> smokingMouse study</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="smokingmouse-study.html"><a href="smokingmouse-study.html#introduction"><i class="fa fa-check"></i><b>2.1</b> Introduction</a></li>
+<li class="chapter" data-level="2.2" data-path="smokingmouse-study.html"><a href="smokingmouse-study.html#overview-1"><i class="fa fa-check"></i><b>2.2</b> Overview</a></li>
+<li class="chapter" data-level="2.3" data-path="smokingmouse-study.html"><a href="smokingmouse-study.html#goals"><i class="fa fa-check"></i><b>2.3</b> Goals</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="smokingmouse-study.html"><a href="smokingmouse-study.html#main-objective"><i class="fa fa-check"></i><b>2.3.1</b> Main objective</a></li>
+<li class="chapter" data-level="2.3.2" data-path="smokingmouse-study.html"><a href="smokingmouse-study.html#secondary-objectives"><i class="fa fa-check"></i><b>2.3.2</b> Secondary objectives</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="smokingmouse-study.html"><a href="smokingmouse-study.html#study-design"><i class="fa fa-check"></i><b>2.4</b> Study design</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="summarizedexperiment-review.html"><a href="summarizedexperiment-review.html"><i class="fa fa-check"></i><b>3</b> SummarizedExperiment review</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="summarizedexperiment-review.html"><a href="summarizedexperiment-review.html#overview-2"><i class="fa fa-check"></i><b>3.1</b> Overview</a></li>
+<li class="chapter" data-level="3.2" data-path="summarizedexperiment-review.html"><a href="summarizedexperiment-review.html#quiz"><i class="fa fa-check"></i><b>3.2</b> Quiz</a></li>
+<li class="chapter" data-level="3.3" data-path="summarizedexperiment-review.html"><a href="summarizedexperiment-review.html#exercises-1"><i class="fa fa-check"></i><b>3.3</b> Exercises</a></li>
+<li class="chapter" data-level="3.4" data-path="summarizedexperiment-review.html"><a href="summarizedexperiment-review.html#solutions-1"><i class="fa fa-check"></i><b>3.4</b> Solutions</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="smokingmouse-rse.html"><a href="smokingmouse-rse.html"><i class="fa fa-check"></i><b>4</b> smokingMouse RSE</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="smokingmouse-rse.html"><a href="smokingmouse-rse.html#download-data"><i class="fa fa-check"></i><b>4.1</b> Download data</a></li>
+<li class="chapter" data-level="4.2" data-path="smokingmouse-rse.html"><a href="smokingmouse-rse.html#data-overview"><i class="fa fa-check"></i><b>4.2</b> Data overview</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="smokingmouse-rse.html"><a href="smokingmouse-rse.html#assays"><i class="fa fa-check"></i><b>4.2.1</b> Assays</a></li>
+<li class="chapter" data-level="4.2.2" data-path="smokingmouse-rse.html"><a href="smokingmouse-rse.html#sample-data"><i class="fa fa-check"></i><b>4.2.2</b> Sample data</a></li>
+<li class="chapter" data-level="4.2.3" data-path="smokingmouse-rse.html"><a href="smokingmouse-rse.html#gene-information"><i class="fa fa-check"></i><b>4.2.3</b> Gene Information</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="isee-introduction.html"><a href="isee-introduction.html"><i class="fa fa-check"></i><b>5</b> iSEE introduction</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="isee-introduction.html"><a href="isee-introduction.html#toy-rse-data"><i class="fa fa-check"></i><b>5.1</b> Toy RSE data</a></li>
+<li class="chapter" data-level="5.2" data-path="isee-introduction.html"><a href="isee-introduction.html#isee"><i class="fa fa-check"></i><b>5.2</b> iSEE</a></li>
+<li class="chapter" data-level="5.3" data-path="isee-introduction.html"><a href="isee-introduction.html#exercise-with-data-from-spatiallibd"><i class="fa fa-check"></i><b>5.3</b> Exercise with data from spatialLIBD</a></li>
+<li class="chapter" data-level="5.4" data-path="isee-introduction.html"><a href="isee-introduction.html#community"><i class="fa fa-check"></i><b>5.4</b> Community</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html"><i class="fa fa-check"></i><b>6</b> RSE plotting basics with smokingMouse</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#download-the-smokingmouse-data"><i class="fa fa-check"></i><b>6.1</b> Download the smokingMouse data</a></li>
+<li class="chapter" data-level="6.2" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#data-preparation"><i class="fa fa-check"></i><b>6.2</b> Data preparation</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#data-normalization"><i class="fa fa-check"></i><b>6.2.1</b> Data normalization</a></li>
+<li class="chapter" data-level="6.2.2" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#gene-filtering"><i class="fa fa-check"></i><b>6.2.2</b> Gene filtering</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#exploratory-data-analysis"><i class="fa fa-check"></i><b>6.3</b> Exploratory Data Analysis</a></li>
+<li class="chapter" data-level="6.4" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#quality-control-analysis"><i class="fa fa-check"></i><b>6.4</b> Quality Control Analysis</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#evaluate-qc-metrics-for-groups-of-samples"><i class="fa fa-check"></i><b>6.4.1</b> Evaluate QC metrics for groups of samples</a></li>
+<li class="chapter" data-level="6.4.2" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#examine-relationships-between-qc-metrics-of-samples"><i class="fa fa-check"></i><b>6.4.2</b> Examine relationships between QC metrics of samples</a></li>
+<li class="chapter" data-level="6.4.3" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#qc-sample-filtering"><i class="fa fa-check"></i><b>6.4.3</b> QC sample filtering</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#miscellaneous-about-cpm-values"><i class="fa fa-check"></i><b>6.5</b> Miscellaneous about CPM values</a></li>
+<li class="chapter" data-level="" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#references"><i class="fa fa-check"></i>References</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="biocthis-introduction.html"><a href="biocthis-introduction.html"><i class="fa fa-check"></i><b>7</b> biocthis introduction</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="biocthis-introduction.html"><a href="biocthis-introduction.html#related-past-materials"><i class="fa fa-check"></i><b>7.1</b> Related past materials</a></li>
+<li class="chapter" data-level="7.2" data-path="biocthis-introduction.html"><a href="biocthis-introduction.html#biocthis-main-commands"><i class="fa fa-check"></i><b>7.2</b> biocthis main commands</a></li>
+<li class="chapter" data-level="7.3" data-path="biocthis-introduction.html"><a href="biocthis-introduction.html#live-demo"><i class="fa fa-check"></i><b>7.3</b> Live demo</a></li>
+<li class="chapter" data-level="7.4" data-path="biocthis-introduction.html"><a href="biocthis-introduction.html#community-1"><i class="fa fa-check"></i><b>7.4</b> Community</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="recount3-introduction.html"><a href="recount3-introduction.html"><i class="fa fa-check"></i><b>8</b> recount3 introduction</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="recount3-introduction.html"><a href="recount3-introduction.html#recount-projects"><i class="fa fa-check"></i><b>8.1</b> recount projects</a></li>
+<li class="chapter" data-level="8.2" data-path="recount3-introduction.html"><a href="recount3-introduction.html#using-recount3"><i class="fa fa-check"></i><b>8.2</b> Using recount3</a></li>
+<li class="chapter" data-level="8.3" data-path="recount3-introduction.html"><a href="recount3-introduction.html#exercise"><i class="fa fa-check"></i><b>8.3</b> Exercise</a></li>
+<li class="chapter" data-level="8.4" data-path="recount3-introduction.html"><a href="recount3-introduction.html#community-2"><i class="fa fa-check"></i><b>8.4</b> Community</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="interpreting-model-coefficients-with-exploremodelmatrix.html"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html"><i class="fa fa-check"></i><b>9</b> Interpreting model coefficients with ExploreModelMatrix</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="interpreting-model-coefficients-with-exploremodelmatrix.html"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#model-objects-in-r"><i class="fa fa-check"></i><b>9.1</b> Model objects in R</a></li>
+<li class="chapter" data-level="9.2" data-path="interpreting-model-coefficients-with-exploremodelmatrix.html"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#exploremodelmatrix"><i class="fa fa-check"></i><b>9.2</b> ExploreModelMatrix</a></li>
+<li class="chapter" data-level="9.3" data-path="interpreting-model-coefficients-with-exploremodelmatrix.html"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#example-1"><i class="fa fa-check"></i><b>9.3</b> Example 1</a></li>
+<li class="chapter" data-level="9.4" data-path="interpreting-model-coefficients-with-exploremodelmatrix.html"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#example-2"><i class="fa fa-check"></i><b>9.4</b> Example 2</a></li>
+<li class="chapter" data-level="9.5" data-path="interpreting-model-coefficients-with-exploremodelmatrix.html"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#example-3"><i class="fa fa-check"></i><b>9.5</b> Example 3</a></li>
+<li class="chapter" data-level="9.6" data-path="interpreting-model-coefficients-with-exploremodelmatrix.html"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#exercise-1"><i class="fa fa-check"></i><b>9.6</b> Exercise</a></li>
+<li class="chapter" data-level="9.7" data-path="interpreting-model-coefficients-with-exploremodelmatrix.html"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#to-learn-more"><i class="fa fa-check"></i><b>9.7</b> To learn more</a></li>
+<li class="chapter" data-level="9.8" data-path="interpreting-model-coefficients-with-exploremodelmatrix.html"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#community-3"><i class="fa fa-check"></i><b>9.8</b> Community</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="differential-gene-expression-analysis-with-limma.html"><a href="differential-gene-expression-analysis-with-limma.html"><i class="fa fa-check"></i><b>10</b> Differential gene expression analysis with limma</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="differential-gene-expression-analysis-with-limma.html"><a href="differential-gene-expression-analysis-with-limma.html#srp045638-data"><i class="fa fa-check"></i><b>10.1</b> SRP045638 data</a></li>
+<li class="chapter" data-level="10.2" data-path="differential-gene-expression-analysis-with-limma.html"><a href="differential-gene-expression-analysis-with-limma.html#data-normalization-1"><i class="fa fa-check"></i><b>10.2</b> Data normalization</a></li>
+<li class="chapter" data-level="10.3" data-path="differential-gene-expression-analysis-with-limma.html"><a href="differential-gene-expression-analysis-with-limma.html#differential-expression"><i class="fa fa-check"></i><b>10.3</b> Differential expression</a></li>
+<li class="chapter" data-level="10.4" data-path="differential-gene-expression-analysis-with-limma.html"><a href="differential-gene-expression-analysis-with-limma.html#visualizing-degs"><i class="fa fa-check"></i><b>10.4</b> Visualizing DEGs</a></li>
+<li class="chapter" data-level="10.5" data-path="differential-gene-expression-analysis-with-limma.html"><a href="differential-gene-expression-analysis-with-limma.html#community-4"><i class="fa fa-check"></i><b>10.5</b> Community</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="differential-gene-expression-exercise.html"><a href="differential-gene-expression-exercise.html"><i class="fa fa-check"></i><b>11</b> Differential gene expression exercise</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="differential-gene-expression-exercise.html"><a href="differential-gene-expression-exercise.html#recap"><i class="fa fa-check"></i><b>11.1</b> Recap</a></li>
+<li class="chapter" data-level="11.2" data-path="differential-gene-expression-exercise.html"><a href="differential-gene-expression-exercise.html#exercise-2"><i class="fa fa-check"></i><b>11.2</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html"><i class="fa fa-check"></i><b>12</b> DE model building with variancePartition</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#download-the-smokingmouse-data-and-subset-it"><i class="fa fa-check"></i><b>12.1</b> Download the smokingMouse data and subset it</a></li>
+<li class="chapter" data-level="12.2" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#explore-gene-level-effects"><i class="fa fa-check"></i><b>12.2</b> Explore gene-level effects</a></li>
+<li class="chapter" data-level="12.3" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#variance-partition-analysis"><i class="fa fa-check"></i><b>12.3</b> Variance Partition Analysis</a>
+<ul>
+<li class="chapter" data-level="12.3.1" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#canonical-correlation-analysis"><i class="fa fa-check"></i><b>12.3.1</b> Canonical Correlation Analysis</a></li>
+<li class="chapter" data-level="12.3.2" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#fit-model-and-extract-fraction-of-variance-explained"><i class="fa fa-check"></i><b>12.3.2</b> Fit model and extract fraction of variance explained</a></li>
+<li class="chapter" data-level="12.3.3" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#examine-expression-of-most-affected-genes-by-each-sample-variable"><i class="fa fa-check"></i><b>12.3.3</b> Examine expression of most affected genes by each sample variable</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#solutions-2"><i class="fa fa-check"></i><b>12.4</b> Solutions</a>
+<ul>
+<li class="chapter" data-level="12.4.1" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#exercise-1-1"><i class="fa fa-check"></i><b>12.4.1</b> Exercise 1</a></li>
+<li class="chapter" data-level="12.4.2" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#exercise-2-1"><i class="fa fa-check"></i><b>12.4.2</b> Exercise 2</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#references-1"><i class="fa fa-check"></i>References</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="expression-heatmaps-with-complexheatmap.html"><a href="expression-heatmaps-with-complexheatmap.html"><i class="fa fa-check"></i><b>13</b> Expression heatmaps with ComplexHeatmap</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="expression-heatmaps-with-complexheatmap.html"><a href="expression-heatmaps-with-complexheatmap.html#introduction-1"><i class="fa fa-check"></i><b>13.1</b> Introduction</a></li>
+<li class="chapter" data-level="13.2" data-path="expression-heatmaps-with-complexheatmap.html"><a href="expression-heatmaps-with-complexheatmap.html#complexheatmap"><i class="fa fa-check"></i><b>13.2</b> ComplexHeatmap</a></li>
+<li class="chapter" data-level="13.3" data-path="expression-heatmaps-with-complexheatmap.html"><a href="expression-heatmaps-with-complexheatmap.html#heatmap-with-expression-data"><i class="fa fa-check"></i><b>13.3</b> Heatmap with expression data</a>
+<ul>
+<li class="chapter" data-level="13.3.1" data-path="expression-heatmaps-with-complexheatmap.html"><a href="expression-heatmaps-with-complexheatmap.html#download-data-1"><i class="fa fa-check"></i><b>13.3.1</b> Download data</a></li>
+<li class="chapter" data-level="13.3.2" data-path="expression-heatmaps-with-complexheatmap.html"><a href="expression-heatmaps-with-complexheatmap.html#prepare-the-data"><i class="fa fa-check"></i><b>13.3.2</b> Prepare the data</a></li>
+<li class="chapter" data-level="13.3.3" data-path="expression-heatmaps-with-complexheatmap.html"><a href="expression-heatmaps-with-complexheatmap.html#create-annotations"><i class="fa fa-check"></i><b>13.3.3</b> Create annotations</a></li>
+<li class="chapter" data-level="13.3.4" data-path="expression-heatmaps-with-complexheatmap.html"><a href="expression-heatmaps-with-complexheatmap.html#plot-our-heatmap"><i class="fa fa-check"></i><b>13.3.4</b> Plot our heatmap</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="complexheatmap-exercise-solution.html"><a href="complexheatmap-exercise-solution.html"><i class="fa fa-check"></i><b>14</b> ComplexHeatmap exercise solution</a></li>
+<li class="chapter" data-level="15" data-path="exercise-with-variancepartition-and-complexheatmap.html"><a href="exercise-with-variancepartition-and-complexheatmap.html"><i class="fa fa-check"></i><b>15</b> Exercise with variancePartition and ComplexHeatmap</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="exercise-with-variancepartition-and-complexheatmap.html"><a href="exercise-with-variancepartition-and-complexheatmap.html#steps"><i class="fa fa-check"></i><b>15.1</b> Steps:</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="miscellaneous.html"><a href="miscellaneous.html"><i class="fa fa-check"></i><b>16</b> Miscellaneous</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="miscellaneous.html"><a href="miscellaneous.html#postcards"><i class="fa fa-check"></i><b>16.1</b> postcards</a></li>
+<li class="chapter" data-level="16.2" data-path="miscellaneous.html"><a href="miscellaneous.html#organizing-your-work"><i class="fa fa-check"></i><b>16.2</b> Organizing your work</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="introduction-to-the-world-of-spatially-resolved-transcriptomics-with-visium-data.html"><a href="introduction-to-the-world-of-spatially-resolved-transcriptomics-with-visium-data.html"><i class="fa fa-check"></i><b>17</b> Introduction to the world of spatially-resolved transcriptomics with Visium data</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="introduction-to-the-world-of-spatially-resolved-transcriptomics-with-visium-data.html"><a href="introduction-to-the-world-of-spatially-resolved-transcriptomics-with-visium-data.html#community-5"><i class="fa fa-check"></i><b>17.1</b> Community</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html"><i class="fa fa-check"></i><b>18</b> Downloading public Visium spatial data and visualizing it with spatialLIBD</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#download-data-from-10x-genomics"><i class="fa fa-check"></i><b>18.1</b> Download data from 10x Genomics</a></li>
+<li class="chapter" data-level="18.2" data-path="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#add-gene-annotation-information"><i class="fa fa-check"></i><b>18.2</b> Add gene annotation information</a>
+<ul>
+<li class="chapter" data-level="18.2.1" data-path="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#from-10x"><i class="fa fa-check"></i><b>18.2.1</b> From 10x</a></li>
+<li class="chapter" data-level="18.2.2" data-path="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#from-gencode"><i class="fa fa-check"></i><b>18.2.2</b> From Gencode</a></li>
+</ul></li>
+<li class="chapter" data-level="18.3" data-path="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#wrapper-functions-for-reading-the-data"><i class="fa fa-check"></i><b>18.3</b> Wrapper functions for reading the data</a></li>
+<li class="chapter" data-level="18.4" data-path="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#visualize-spatial-plots"><i class="fa fa-check"></i><b>18.4</b> Visualize spatial plots</a></li>
+<li class="chapter" data-level="18.5" data-path="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#exercise-3"><i class="fa fa-check"></i><b>18.5</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="re-use-of-bulk-rna-seq-methods-for-spatial-data-exercise.html"><a href="re-use-of-bulk-rna-seq-methods-for-spatial-data-exercise.html"><i class="fa fa-check"></i><b>19</b> Re-use of bulk RNA-seq methods for spatial data exercise</a>
+<ul>
+<li class="chapter" data-level="19.1" data-path="re-use-of-bulk-rna-seq-methods-for-spatial-data-exercise.html"><a href="re-use-of-bulk-rna-seq-methods-for-spatial-data-exercise.html#spatial-registration"><i class="fa fa-check"></i><b>19.1</b> Spatial registration</a></li>
+<li class="chapter" data-level="19.2" data-path="re-use-of-bulk-rna-seq-methods-for-spatial-data-exercise.html"><a href="re-use-of-bulk-rna-seq-methods-for-spatial-data-exercise.html#exercise-4"><i class="fa fa-check"></i><b>19.2</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="final-r-session.html"><a href="final-r-session.html"><i class="fa fa-check"></i>Final R Session</a></li>
+<li class="chapter" data-level="20" data-path="differential-gene-expression-analysis-overview.html"><a href="differential-gene-expression-analysis-overview.html"><i class="fa fa-check"></i><b>20</b> Differential Gene Expression analysis overview</a>
+<ul>
+<li class="chapter" data-level="20.1" data-path="differential-gene-expression-analysis-overview.html"><a href="differential-gene-expression-analysis-overview.html#preliminary-steps"><i class="fa fa-check"></i><b>20.1</b> Preliminary steps</a>
+<ul>
+<li class="chapter" data-level="20.1.1" data-path="differential-gene-expression-analysis-overview.html"><a href="differential-gene-expression-analysis-overview.html#rna-seq-data-processing"><i class="fa fa-check"></i><b>20.1.1</b> RNA-seq data processing</a></li>
+<li class="chapter" data-level="20.1.2" data-path="differential-gene-expression-analysis-overview.html"><a href="differential-gene-expression-analysis-overview.html#exploratory-data-analysis-1"><i class="fa fa-check"></i><b>20.1.2</b> Exploratory Data Analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="20.2" data-path="differential-gene-expression-analysis-overview.html"><a href="differential-gene-expression-analysis-overview.html#differential-gene-expression"><i class="fa fa-check"></i><b>20.2</b> Differential Gene Expression</a></li>
+<li class="chapter" data-level="20.3" data-path="differential-gene-expression-analysis-overview.html"><a href="differential-gene-expression-analysis-overview.html#downstream-analyses"><i class="fa fa-check"></i><b>20.3</b> Downstream analyses</a></li>
+<li class="chapter" data-level="20.4" data-path="differential-gene-expression-analysis-overview.html"><a href="differential-gene-expression-analysis-overview.html#references-2"><i class="fa fa-check"></i><b>20.4</b> References</a></li>
+</ul></li>
+<li class="chapter" data-level="21" data-path="differential-gene-expression-analysis-with-limma-voom.html"><a href="differential-gene-expression-analysis-with-limma-voom.html"><i class="fa fa-check"></i><b>21</b> Differential Gene Expression analysis with <em>limma</em>-<em>voom</em></a>
+<ul>
+<li class="chapter" data-level="21.1" data-path="differential-gene-expression-analysis-with-limma-voom.html"><a href="differential-gene-expression-analysis-with-limma-voom.html#nb-based-dge-methods"><i class="fa fa-check"></i><b>21.1</b> NB-based DGE methods?</a></li>
+<li class="chapter" data-level="21.2" data-path="differential-gene-expression-analysis-with-limma-voom.html"><a href="differential-gene-expression-analysis-with-limma-voom.html#limma-voom-pipeline"><i class="fa fa-check"></i><b>21.2</b> <em>limma</em>-<em>voom</em> pipeline</a>
+<ul>
+<li class="chapter" data-level="21.2.1" data-path="differential-gene-expression-analysis-with-limma-voom.html"><a href="differential-gene-expression-analysis-with-limma-voom.html#model.matrix"><i class="fa fa-check"></i><b>21.2.1</b> <code>model.matrix()</code></a></li>
+<li class="chapter" data-level="21.2.2" data-path="differential-gene-expression-analysis-with-limma-voom.html"><a href="differential-gene-expression-analysis-with-limma-voom.html#voom"><i class="fa fa-check"></i><b>21.2.2</b> <code>voom()</code></a></li>
+<li class="chapter" data-level="21.2.3" data-path="differential-gene-expression-analysis-with-limma-voom.html"><a href="differential-gene-expression-analysis-with-limma-voom.html#lmfit"><i class="fa fa-check"></i><b>21.2.3</b> <code>lmFit()</code></a></li>
+<li class="chapter" data-level="21.2.4" data-path="differential-gene-expression-analysis-with-limma-voom.html"><a href="differential-gene-expression-analysis-with-limma-voom.html#ebayes"><i class="fa fa-check"></i><b>21.2.4</b> <code>eBayes()</code></a></li>
+<li class="chapter" data-level="21.2.5" data-path="differential-gene-expression-analysis-with-limma-voom.html"><a href="differential-gene-expression-analysis-with-limma-voom.html#toptable"><i class="fa fa-check"></i><b>21.2.5</b> <code>topTable()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="21.3" data-path="differential-gene-expression-analysis-with-limma-voom.html"><a href="differential-gene-expression-analysis-with-limma-voom.html#references-3"><i class="fa fa-check"></i><b>21.3</b> References</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Statistical Analysis of Genome Scale Data 2024</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="recount3-introduction" class="section level1 hasAnchor" number="8">
+<h1><span class="header-section-number">8</span> recount3 introduction<a href="recount3-introduction.html#recount3-introduction" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Instructor: Leo</p>
+<p><em>Don’t let useful data go to waste</em> by Franziska Denk <a href="https://doi.org/10.1038/543007a" class="uri">https://doi.org/10.1038/543007a</a></p>
+<script defer class="speakerdeck-embed" data-slide="22" data-id="4cc4e8d972824502b14f3b4273050048" data-ratio="1.77725118483412" src="//speakerdeck.com/assets/embed.js"></script>
+<div id="recount-projects" class="section level2 hasAnchor" number="8.1">
+<h2><span class="header-section-number">8.1</span> recount projects<a href="recount3-introduction.html#recount-projects" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li><code>ReCount</code>: data from 20 studies
+<ul>
+<li><a href="http://bowtie-bio.sourceforge.net/recount/index.shtml" class="uri">http://bowtie-bio.sourceforge.net/recount/index.shtml</a></li>
+<li>Paper from 2011 <a href="https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-12-449" class="uri">https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-12-449</a></li>
+</ul></li>
+<li><code>recount</code>: over 70k human bulk RNA-seq samples uniformly processed
+<ul>
+<li><a href="https://jhubiostatistics.shinyapps.io/recount/" class="uri">https://jhubiostatistics.shinyapps.io/recount/</a></li>
+<li><code>pkgdown</code> documentation website: <a href="http://leekgroup.github.io/recount/" class="uri">http://leekgroup.github.io/recount/</a></li>
+<li>Bioconductor documentation website: <a href="http://bioconductor.org/packages/recount" class="uri">http://bioconductor.org/packages/recount</a></li>
+<li>Main paper (2017) <a href="http://www.nature.com/nbt/journal/v35/n4/full/nbt.3838.html" class="uri">http://www.nature.com/nbt/journal/v35/n4/full/nbt.3838.html</a></li>
+<li>Paper that explains why the counts are different from the usual ones <a href="https://f1000research.com/articles/6-1558/v1" class="uri">https://f1000research.com/articles/6-1558/v1</a></li>
+<li>Example analyses we did and provided as a companion website for the 2017 paper <a href="http://leekgroup.github.io/recount-analyses/" class="uri">http://leekgroup.github.io/recount-analyses/</a></li>
+</ul></li>
+<li><code>recount3</code>: over 700k bulk RNA-seq samples from human and mouse
+<ul>
+<li><a href="http://rna.recount.bio/" class="uri">http://rna.recount.bio/</a></li>
+<li><code>pkgdown</code> documentation website: <a href="http://research.libd.org/recount3/" class="uri">http://research.libd.org/recount3/</a></li>
+<li>Bioconductor documentation website: <a href="http://bioconductor.org/packages/recount3" class="uri">http://bioconductor.org/packages/recount3</a></li>
+<li>Pre-print: May 2021 <a href="https://doi.org/10.1101/2021.05.21.445138" class="uri">https://doi.org/10.1101/2021.05.21.445138</a></li>
+<li>Paper: November 2021 <a href="https://doi.org/10.1186/s13059-021-02533-6" class="uri">https://doi.org/10.1186/s13059-021-02533-6</a></li>
+</ul></li>
+<li>These projects help such that anyone, particularly those without access to a <em>high performance computing</em> (HPC) system (aka a compute cluster), can access these datasets.</li>
+<li>It’s like democratizing access to the gene expression data ^^.</li>
+</ul>
+</div>
+<div id="using-recount3" class="section level2 hasAnchor" number="8.2">
+<h2><span class="header-section-number">8.2</span> Using recount3<a href="recount3-introduction.html#using-recount3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><em>Check the original documentation <a href="http://rna.recount.bio/docs/quick-access.html#quick-recount3">here</a> and <a href="http://rna.recount.bio/docs/bioconductor.html#recount3">here</a>.</em></p>
+<p>Let’s first load <code>recount3</code> which will load all the required dependencies including <code>SummarizedExperiment</code>.</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="recount3-introduction.html#cb63-1" tabindex="-1"></a><span class="do">## Load recount3 R package</span></span>
+<span id="cb63-2"><a href="recount3-introduction.html#cb63-2" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;recount3&quot;</span>)</span></code></pre></div>
+<p>Next we need to identify a study of interest as well as choose whether we want the data at the gene, exon, or some other feature level. Once we have identified our study of interest, we can download the files and build a <code>SummarizedExperiment</code> object using <code>recount3::create_rse()</code> as we’ll show next. <code>create_rse()</code> has arguments through which we can control what <em>annotation</em> we want to use (they are organism-dependent).</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="recount3-introduction.html#cb64-1" tabindex="-1"></a><span class="do">## Lets download all the available projects</span></span>
+<span id="cb64-2"><a href="recount3-introduction.html#cb64-2" tabindex="-1"></a>human_projects <span class="ot">&lt;-</span> <span class="fu">available_projects</span>()</span>
+<span id="cb64-3"><a href="recount3-introduction.html#cb64-3" tabindex="-1"></a><span class="co">#&gt; 2024-05-14 19:19:14.356109 caching file sra.recount_project.MD.gz.</span></span>
+<span id="cb64-4"><a href="recount3-introduction.html#cb64-4" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;http://duffel.rail.bio/recount3/human/data_sources/sra/metadata/sra.recount_project.MD.gz&#39;</span></span>
+<span id="cb64-5"><a href="recount3-introduction.html#cb64-5" tabindex="-1"></a><span class="co">#&gt; 2024-05-14 19:19:15.297049 caching file gtex.recount_project.MD.gz.</span></span>
+<span id="cb64-6"><a href="recount3-introduction.html#cb64-6" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;http://duffel.rail.bio/recount3/human/data_sources/gtex/metadata/gtex.recount_project.MD.gz&#39;</span></span>
+<span id="cb64-7"><a href="recount3-introduction.html#cb64-7" tabindex="-1"></a><span class="co">#&gt; 2024-05-14 19:19:16.059474 caching file tcga.recount_project.MD.gz.</span></span>
+<span id="cb64-8"><a href="recount3-introduction.html#cb64-8" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;http://duffel.rail.bio/recount3/human/data_sources/tcga/metadata/tcga.recount_project.MD.gz&#39;</span></span>
+<span id="cb64-9"><a href="recount3-introduction.html#cb64-9" tabindex="-1"></a></span>
+<span id="cb64-10"><a href="recount3-introduction.html#cb64-10" tabindex="-1"></a><span class="do">## Find your project of interest. Here we&#39;ll use</span></span>
+<span id="cb64-11"><a href="recount3-introduction.html#cb64-11" tabindex="-1"></a><span class="do">## SRP009615 as an example</span></span>
+<span id="cb64-12"><a href="recount3-introduction.html#cb64-12" tabindex="-1"></a>proj_info <span class="ot">&lt;-</span> <span class="fu">subset</span>(</span>
+<span id="cb64-13"><a href="recount3-introduction.html#cb64-13" tabindex="-1"></a>    human_projects,</span>
+<span id="cb64-14"><a href="recount3-introduction.html#cb64-14" tabindex="-1"></a>    project <span class="sc">==</span> <span class="st">&quot;SRP009615&quot;</span> <span class="sc">&amp;</span> project_type <span class="sc">==</span> <span class="st">&quot;data_sources&quot;</span></span>
+<span id="cb64-15"><a href="recount3-introduction.html#cb64-15" tabindex="-1"></a>)</span>
+<span id="cb64-16"><a href="recount3-introduction.html#cb64-16" tabindex="-1"></a><span class="do">## Build a RangedSummarizedExperiment (RSE) object</span></span>
+<span id="cb64-17"><a href="recount3-introduction.html#cb64-17" tabindex="-1"></a><span class="do">## with the information at the gene level</span></span>
+<span id="cb64-18"><a href="recount3-introduction.html#cb64-18" tabindex="-1"></a>rse_gene_SRP009615 <span class="ot">&lt;-</span> <span class="fu">create_rse</span>(proj_info)</span>
+<span id="cb64-19"><a href="recount3-introduction.html#cb64-19" tabindex="-1"></a><span class="co">#&gt; 2024-05-14 19:19:18.783554 downloading and reading the metadata.</span></span>
+<span id="cb64-20"><a href="recount3-introduction.html#cb64-20" tabindex="-1"></a><span class="co">#&gt; 2024-05-14 19:19:18.993535 caching file sra.sra.SRP009615.MD.gz.</span></span>
+<span id="cb64-21"><a href="recount3-introduction.html#cb64-21" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;http://duffel.rail.bio/recount3/human/data_sources/sra/metadata/15/SRP009615/sra.sra.SRP009615.MD.gz&#39;</span></span>
+<span id="cb64-22"><a href="recount3-introduction.html#cb64-22" tabindex="-1"></a><span class="co">#&gt; 2024-05-14 19:19:19.816189 caching file sra.recount_project.SRP009615.MD.gz.</span></span>
+<span id="cb64-23"><a href="recount3-introduction.html#cb64-23" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;http://duffel.rail.bio/recount3/human/data_sources/sra/metadata/15/SRP009615/sra.recount_project.SRP009615.MD.gz&#39;</span></span>
+<span id="cb64-24"><a href="recount3-introduction.html#cb64-24" tabindex="-1"></a><span class="co">#&gt; 2024-05-14 19:19:20.510162 caching file sra.recount_qc.SRP009615.MD.gz.</span></span>
+<span id="cb64-25"><a href="recount3-introduction.html#cb64-25" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;http://duffel.rail.bio/recount3/human/data_sources/sra/metadata/15/SRP009615/sra.recount_qc.SRP009615.MD.gz&#39;</span></span>
+<span id="cb64-26"><a href="recount3-introduction.html#cb64-26" tabindex="-1"></a><span class="co">#&gt; 2024-05-14 19:19:21.283054 caching file sra.recount_seq_qc.SRP009615.MD.gz.</span></span>
+<span id="cb64-27"><a href="recount3-introduction.html#cb64-27" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;http://duffel.rail.bio/recount3/human/data_sources/sra/metadata/15/SRP009615/sra.recount_seq_qc.SRP009615.MD.gz&#39;</span></span>
+<span id="cb64-28"><a href="recount3-introduction.html#cb64-28" tabindex="-1"></a><span class="co">#&gt; 2024-05-14 19:19:22.031943 caching file sra.recount_pred.SRP009615.MD.gz.</span></span>
+<span id="cb64-29"><a href="recount3-introduction.html#cb64-29" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;http://duffel.rail.bio/recount3/human/data_sources/sra/metadata/15/SRP009615/sra.recount_pred.SRP009615.MD.gz&#39;</span></span>
+<span id="cb64-30"><a href="recount3-introduction.html#cb64-30" tabindex="-1"></a><span class="co">#&gt; 2024-05-14 19:19:22.556143 downloading and reading the feature information.</span></span>
+<span id="cb64-31"><a href="recount3-introduction.html#cb64-31" tabindex="-1"></a><span class="co">#&gt; 2024-05-14 19:19:22.775745 caching file human.gene_sums.G026.gtf.gz.</span></span>
+<span id="cb64-32"><a href="recount3-introduction.html#cb64-32" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;http://duffel.rail.bio/recount3/human/annotations/gene_sums/human.gene_sums.G026.gtf.gz&#39;</span></span>
+<span id="cb64-33"><a href="recount3-introduction.html#cb64-33" tabindex="-1"></a><span class="co">#&gt; 2024-05-14 19:19:23.810291 downloading and reading the counts: 12 samples across 63856 features.</span></span>
+<span id="cb64-34"><a href="recount3-introduction.html#cb64-34" tabindex="-1"></a><span class="co">#&gt; 2024-05-14 19:19:24.011827 caching file sra.gene_sums.SRP009615.G026.gz.</span></span>
+<span id="cb64-35"><a href="recount3-introduction.html#cb64-35" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;http://duffel.rail.bio/recount3/human/data_sources/sra/gene_sums/15/SRP009615/sra.gene_sums.SRP009615.G026.gz&#39;</span></span>
+<span id="cb64-36"><a href="recount3-introduction.html#cb64-36" tabindex="-1"></a><span class="co">#&gt; 2024-05-14 19:19:24.729106 constructing the RangedSummarizedExperiment (rse) object.</span></span>
+<span id="cb64-37"><a href="recount3-introduction.html#cb64-37" tabindex="-1"></a><span class="do">## Explore the resulting object</span></span>
+<span id="cb64-38"><a href="recount3-introduction.html#cb64-38" tabindex="-1"></a>rse_gene_SRP009615</span>
+<span id="cb64-39"><a href="recount3-introduction.html#cb64-39" tabindex="-1"></a><span class="co">#&gt; class: RangedSummarizedExperiment </span></span>
+<span id="cb64-40"><a href="recount3-introduction.html#cb64-40" tabindex="-1"></a><span class="co">#&gt; dim: 63856 12 </span></span>
+<span id="cb64-41"><a href="recount3-introduction.html#cb64-41" tabindex="-1"></a><span class="co">#&gt; metadata(8): time_created recount3_version ... annotation recount3_url</span></span>
+<span id="cb64-42"><a href="recount3-introduction.html#cb64-42" tabindex="-1"></a><span class="co">#&gt; assays(1): raw_counts</span></span>
+<span id="cb64-43"><a href="recount3-introduction.html#cb64-43" tabindex="-1"></a><span class="co">#&gt; rownames(63856): ENSG00000278704.1 ENSG00000277400.1 ... ENSG00000182484.15_PAR_Y ENSG00000227159.8_PAR_Y</span></span>
+<span id="cb64-44"><a href="recount3-introduction.html#cb64-44" tabindex="-1"></a><span class="co">#&gt; rowData names(10): source type ... havana_gene tag</span></span>
+<span id="cb64-45"><a href="recount3-introduction.html#cb64-45" tabindex="-1"></a><span class="co">#&gt; colnames(12): SRR387777 SRR387778 ... SRR389077 SRR389078</span></span>
+<span id="cb64-46"><a href="recount3-introduction.html#cb64-46" tabindex="-1"></a><span class="co">#&gt; colData names(175): rail_id external_id ... recount_pred.curated.cell_line BigWigURL</span></span>
+<span id="cb64-47"><a href="recount3-introduction.html#cb64-47" tabindex="-1"></a></span>
+<span id="cb64-48"><a href="recount3-introduction.html#cb64-48" tabindex="-1"></a><span class="do">## How large is it?</span></span>
+<span id="cb64-49"><a href="recount3-introduction.html#cb64-49" tabindex="-1"></a>lobstr<span class="sc">::</span><span class="fu">obj_size</span>(rse_gene_SRP009615)</span>
+<span id="cb64-50"><a href="recount3-introduction.html#cb64-50" tabindex="-1"></a><span class="co">#&gt; 24.81 MB</span></span></code></pre></div>
+<p>We can also interactively choose our study of interest using the following code or through the <a href="http://rna.recount.bio/docs/index.html#study-explorer">recount3 study explorer</a>.</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="recount3-introduction.html#cb65-1" tabindex="-1"></a><span class="do">## Explore available human projects interactively</span></span>
+<span id="cb65-2"><a href="recount3-introduction.html#cb65-2" tabindex="-1"></a>proj_info_interactive <span class="ot">&lt;-</span> interactiveDisplayBase<span class="sc">::</span><span class="fu">display</span>(human_projects)</span>
+<span id="cb65-3"><a href="recount3-introduction.html#cb65-3" tabindex="-1"></a><span class="do">## Choose only 1 row in the table, then click on &quot;send&quot;.</span></span>
+<span id="cb65-4"><a href="recount3-introduction.html#cb65-4" tabindex="-1"></a></span>
+<span id="cb65-5"><a href="recount3-introduction.html#cb65-5" tabindex="-1"></a><span class="do">## Lets double check that you indeed selected only 1 row in the table</span></span>
+<span id="cb65-6"><a href="recount3-introduction.html#cb65-6" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="fu">nrow</span>(proj_info_interactive) <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb65-7"><a href="recount3-introduction.html#cb65-7" tabindex="-1"></a><span class="do">## Now we can build the RSE object</span></span>
+<span id="cb65-8"><a href="recount3-introduction.html#cb65-8" tabindex="-1"></a>rse_gene_interactive <span class="ot">&lt;-</span> <span class="fu">create_rse</span>(proj_info_interactive)</span></code></pre></div>
+<p>Now that we have the data, we can use <code>recount3::transform_counts()</code> or <code>recount3::compute_read_counts()</code> to convert the raw counts into a format expected by downstream tools. For more details, check the <code>recountWorkflow</code> <a href="https://f1000research.com/articles/6-1558/v1">paper</a>.</p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="recount3-introduction.html#cb66-1" tabindex="-1"></a><span class="do">## We&#39;ll compute read counts, which is what most downstream software</span></span>
+<span id="cb66-2"><a href="recount3-introduction.html#cb66-2" tabindex="-1"></a><span class="do">## uses.</span></span>
+<span id="cb66-3"><a href="recount3-introduction.html#cb66-3" tabindex="-1"></a><span class="do">## For other types of transformations such as RPKM and TPM, use</span></span>
+<span id="cb66-4"><a href="recount3-introduction.html#cb66-4" tabindex="-1"></a><span class="do">## transform_counts().</span></span>
+<span id="cb66-5"><a href="recount3-introduction.html#cb66-5" tabindex="-1"></a><span class="fu">assay</span>(rse_gene_SRP009615, <span class="st">&quot;counts&quot;</span>) <span class="ot">&lt;-</span> <span class="fu">compute_read_counts</span>(rse_gene_SRP009615)</span></code></pre></div>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="recount3-introduction.html#cb67-1" tabindex="-1"></a><span class="do">## Lets make it easier to use the information available for this study</span></span>
+<span id="cb67-2"><a href="recount3-introduction.html#cb67-2" tabindex="-1"></a><span class="do">## that was provided by the original authors of the study.</span></span>
+<span id="cb67-3"><a href="recount3-introduction.html#cb67-3" tabindex="-1"></a>rse_gene_SRP009615 <span class="ot">&lt;-</span> <span class="fu">expand_sra_attributes</span>(rse_gene_SRP009615)</span>
+<span id="cb67-4"><a href="recount3-introduction.html#cb67-4" tabindex="-1"></a><span class="fu">colData</span>(rse_gene_SRP009615)[</span>
+<span id="cb67-5"><a href="recount3-introduction.html#cb67-5" tabindex="-1"></a>    ,</span>
+<span id="cb67-6"><a href="recount3-introduction.html#cb67-6" tabindex="-1"></a>    <span class="fu">grepl</span>(<span class="st">&quot;^sra_attribute&quot;</span>, <span class="fu">colnames</span>(<span class="fu">colData</span>(rse_gene_SRP009615)))</span>
+<span id="cb67-7"><a href="recount3-introduction.html#cb67-7" tabindex="-1"></a>]</span>
+<span id="cb67-8"><a href="recount3-introduction.html#cb67-8" tabindex="-1"></a><span class="co">#&gt; DataFrame with 12 rows and 4 columns</span></span>
+<span id="cb67-9"><a href="recount3-introduction.html#cb67-9" tabindex="-1"></a><span class="co">#&gt;           sra_attribute.cells sra_attribute.shRNA_expression sra_attribute.source_name sra_attribute.treatment</span></span>
+<span id="cb67-10"><a href="recount3-introduction.html#cb67-10" tabindex="-1"></a><span class="co">#&gt;                   &lt;character&gt;                    &lt;character&gt;               &lt;character&gt;             &lt;character&gt;</span></span>
+<span id="cb67-11"><a href="recount3-introduction.html#cb67-11" tabindex="-1"></a><span class="co">#&gt; SRR387777                K562                             no                    SL2933               Puromycin</span></span>
+<span id="cb67-12"><a href="recount3-introduction.html#cb67-12" tabindex="-1"></a><span class="co">#&gt; SRR387778                K562             yes, targeting SRF                    SL2934  Puromycin, doxycycline</span></span>
+<span id="cb67-13"><a href="recount3-introduction.html#cb67-13" tabindex="-1"></a><span class="co">#&gt; SRR387779                K562                             no                    SL5265               Puromycin</span></span>
+<span id="cb67-14"><a href="recount3-introduction.html#cb67-14" tabindex="-1"></a><span class="co">#&gt; SRR387780                K562              yes targeting SRF                    SL3141  Puromycin, doxycycline</span></span>
+<span id="cb67-15"><a href="recount3-introduction.html#cb67-15" tabindex="-1"></a><span class="co">#&gt; SRR389079                K562            no shRNA expression                    SL6485               Puromycin</span></span>
+<span id="cb67-16"><a href="recount3-introduction.html#cb67-16" tabindex="-1"></a><span class="co">#&gt; ...                       ...                            ...                       ...                     ...</span></span>
+<span id="cb67-17"><a href="recount3-introduction.html#cb67-17" tabindex="-1"></a><span class="co">#&gt; SRR389082                K562         expressing shRNA tar..                    SL2592  Puromycin, doxycycline</span></span>
+<span id="cb67-18"><a href="recount3-introduction.html#cb67-18" tabindex="-1"></a><span class="co">#&gt; SRR389083                K562            no shRNA expression                    SL4337               Puromycin</span></span>
+<span id="cb67-19"><a href="recount3-introduction.html#cb67-19" tabindex="-1"></a><span class="co">#&gt; SRR389084                K562         expressing shRNA tar..                    SL4326  Puromycin, doxycycline</span></span>
+<span id="cb67-20"><a href="recount3-introduction.html#cb67-20" tabindex="-1"></a><span class="co">#&gt; SRR389077                K562            no shRNA expression                    SL1584               Puromycin</span></span>
+<span id="cb67-21"><a href="recount3-introduction.html#cb67-21" tabindex="-1"></a><span class="co">#&gt; SRR389078                K562         expressing shRNA tar..                    SL1583  Puromycin, doxycycline</span></span></code></pre></div>
+<p>We are now ready to use other bulk RNA-seq data analysis software tools.</p>
+</div>
+<div id="exercise" class="section level2 hasAnchor" number="8.3">
+<h2><span class="header-section-number">8.3</span> Exercise<a href="recount3-introduction.html#exercise" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<style>
+p.exercise  {
+background-color: #E4EDE2;
+padding: 9px;
+border: 1px solid black;
+border-radius: 10px;
+font-family: sans-serif;
+}
+</style>
+<p class="exercise">
+<strong>Exercise 1</strong>:
+Use <code>iSEE</code> to reproduce the following image
+</p>
+<p><img src="images/iSEE_SRP009615.PNG" width="500px" /></p>
+<ul>
+<li>Hints:
+<ul>
+<li>Use <em>dynamic feature selection</em></li>
+<li>Use information from columns (samples) for the X axis</li>
+<li>Use information from columns (samples) for the colors</li>
+</ul></li>
+<li>(optional) Create your free account at <a href="https://www.shinyapps.io/" class="uri">https://www.shinyapps.io/</a> and share your <code>iSEE</code> app with the world.
+<ul>
+<li>Real examples used on a paper: <a href="https://github.com/LieberInstitute/10xPilot_snRNAseq-human#explore-the-data-interactively" class="uri">https://github.com/LieberInstitute/10xPilot_snRNAseq-human#explore-the-data-interactively</a>.</li>
+<li>Example from another course: <a href="https://libd.shinyapps.io/SRP009615/" class="uri">https://libd.shinyapps.io/SRP009615/</a>. It was created with <a href="https://github.com/lcolladotor/rnaseq_2023_notas_en_vivo/blob/main/app.R" class="uri">https://github.com/lcolladotor/rnaseq_2023_notas_en_vivo/blob/main/app.R</a>.</li>
+</ul></li>
+</ul>
+</div>
+<div id="community-2" class="section level2 hasAnchor" number="8.4">
+<h2><span class="header-section-number">8.4</span> Community<a href="recount3-introduction.html#community-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li>recount2 and 3 authors on Twitter:
+<ul>
+<li><a href="https://twitter.com/chrisnwilks" class="uri">https://twitter.com/chrisnwilks</a></li>
+<li><a href="https://twitter.com/BenLangmead" class="uri">https://twitter.com/BenLangmead</a></li>
+<li><a href="https://twitter.com/KasperDHansen" class="uri">https://twitter.com/KasperDHansen</a></li>
+<li><a href="https://twitter.com/AbhiNellore" class="uri">https://twitter.com/AbhiNellore</a></li>
+<li><a href="https://twitter.com/Shannon_E_Ellis" class="uri">https://twitter.com/Shannon_E_Ellis</a></li>
+<li><a href="https://twitter.com/jtleek" class="uri">https://twitter.com/jtleek</a></li>
+</ul></li>
+<li>More about the different types of counts:</li>
+</ul>
+<blockquote class="twitter-tweet">
+<p lang="en" dir="ltr">
+If I'm using recount2 data for a differential analysis in DEseq2, should I be using the original counts, or the scaled counts?<a href="https://twitter.com/mikelove?ref_src=twsrc%5Etfw"><span class="citation">@mikelove</span></a> <a href="https://twitter.com/lcolladotor?ref_src=twsrc%5Etfw"><span class="citation">@lcolladotor</span></a> <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> <a href="https://twitter.com/hashtag/Bioconductor?src=hash&amp;ref_src=twsrc%5Etfw">#Bioconductor</a>
+</p>
+— Dr. Robert M Flight, PhD (<span class="citation">@rmflight</span>) <a href="https://twitter.com/rmflight/status/1354981737525366786?ref_src=twsrc%5Etfw">January 29, 2021</a>
+</blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<ul>
+<li>Tweets from the community</li>
+</ul>
+<p>From a student in the LCG-UNAM 2021 course:</p>
+<blockquote class="twitter-tweet">
+<p lang="en" dir="ltr">
+<a href="https://twitter.com/lcolladotor?ref_src=twsrc%5Etfw"><span class="citation">@lcolladotor</span></a> <br>Earlier I was looking for some data to analyze in recount, they have so much, I seriously can't decide what to use! <a href="https://t.co/fIJwXq46Tz">https://t.co/fIJwXq46Tz</a><br><br>Thanks for such an useful package!<a href="https://twitter.com/chrisnwilks?ref_src=twsrc%5Etfw"><span class="citation">@chrisnwilks</span></a> <a href="https://twitter.com/BenLangmead?ref_src=twsrc%5Etfw"><span class="citation">@BenLangmead</span></a> <a href="https://twitter.com/KasperDHansen?ref_src=twsrc%5Etfw"><span class="citation">@KasperDHansen</span></a> <a href="https://twitter.com/AbhiNellore?ref_src=twsrc%5Etfw"><span class="citation">@AbhiNellore</span></a> <a href="https://twitter.com/Shannon_E_Ellis?ref_src=twsrc%5Etfw"><span class="citation">@Shannon_E_Ellis</span></a> <a href="https://twitter.com/jtleek?ref_src=twsrc%5Etfw"><span class="citation">@jtleek</span></a>
+</p>
+— Axel Zagal Norman (<span class="citation">@NormanZagal</span>) <a href="https://twitter.com/NormanZagal/status/1364762134014398467?ref_src=twsrc%5Etfw">February 25, 2021</a>
+</blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p>Exploring the possibility of using <code>recount3</code> data for an analysis (January 2022):</p>
+<blockquote class="twitter-tweet">
+<p lang="en" dir="ltr">
+I have found a novel exon expressed in a cancer sample. I would like to search TCGA/SRA to identify other samples with the same/similar exon. It will be rare. Can I use Recount3, megadepth for this? <a href="https://twitter.com/jtleek?ref_src=twsrc%5Etfw"><span class="citation">@jtleek</span></a> <a href="https://twitter.com/lcolladotor?ref_src=twsrc%5Etfw"><span class="citation">@lcolladotor</span></a> <a href="https://twitter.com/BenLangmead?ref_src=twsrc%5Etfw"><span class="citation">@BenLangmead</span></a>
+</p>
+— Alicia Oshlack (<span class="citation">@AliciaOshlack</span>) <a href="https://twitter.com/AliciaOshlack/status/1478518895166119937?ref_src=twsrc%5Etfw">January 5, 2022</a>
+</blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p>Others discussing meta analyses publicly on Twitter:</p>
+<blockquote class="twitter-tweet">
+<p lang="en" dir="ltr">
+Thinking on this a bit it is strange how few people are doing “medium-sized” meta analyses of transcriptiomics. One on end you have <a href="https://twitter.com/BenLangmead?ref_src=twsrc%5Etfw"><span class="citation">@BenLangmead</span></a> <a href="https://twitter.com/lcolladotor?ref_src=twsrc%5Etfw"><span class="citation">@lcolladotor</span></a> reprocessing (with a touch of analysis) most of SRA. And you see papers pulling an dataset or two to corroborate.
+</p>
+— David McGaughey (<span class="citation">@David_McGaughey</span>) <a href="https://twitter.com/David_McGaughey/status/1488596806313431044?ref_src=twsrc%5Etfw">February 1, 2022</a>
+</blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+</div>
+</div>
+<div class="container">
+    <footer class="site-footer">
+
+      <center>
+<p class="powered-by">
+© 2011-2023. All thoughts and opinions here are my own. The icon was designed by <a href="https://www.linkedin.com/in/mauricio-guzman-6529b551/">Mauricio Guzmán</a> and is inspired by <a href="https://en.wikipedia.org/wiki/Huichol">Huichol culture</a>; it represents my community building interests.
+</p>
+
+<p class="powered-by copyright-license-text">
+This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0" rel="noopener noreferrer" target="_blank">CC BY NC SA 4.0</a>
+</p>
+
+<p class="powered-by footer-license-icons">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0" rel="noopener noreferrer" target="_blank">
+      <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="CC icon" width="32px">
+      <img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="CC by icon" width="32px">
+      <img src="https://mirrors.creativecommons.org/presskit/icons/nc.svg" alt="CC NC icon" width="32px">
+      <img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="CC SA icon" width="32px">
+    </a>
+</p>
+
+<div id="clustrmaps-widget"></div><script type='text/javascript' id='clustrmaps' src='//cdn.clustrmaps.com/map_v2.js?cl=ffffff&w=300&t=m&d=Zo-deincaJGsqhqjIWsujtdoNOMJsnnZLefKmxDKVv8&co=124b73&cmo=dd53ff&cmn=4ec724'></script>
+
+<p class="powered-by">
+Published with <a href="https://bookdown.org/" target="_blank" rel="noopener">Bookdown</a>
+</p>
+
+</center>
+
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-45299226-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-45299226-1');
+</script>
+
+</footer>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="biocthis-introduction.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="interpreting-model-coefficients-with-exploremodelmatrix.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

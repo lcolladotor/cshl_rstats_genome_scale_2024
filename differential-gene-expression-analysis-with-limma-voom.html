@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>21 Differential Gene Expression analysis with limma-voom | Statistical Analysis of Genome Scale Data 2024</title>
+  <meta name="description" content="21 Differential Gene Expression analysis with limma-voom | Statistical Analysis of Genome Scale Data 2024" />
+  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="21 Differential Gene Expression analysis with limma-voom | Statistical Analysis of Genome Scale Data 2024" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta name="github-repo" content="lcolladotor/cshl_rstats_genome_scale_2024" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="21 Differential Gene Expression analysis with limma-voom | Statistical Analysis of Genome Scale Data 2024" />
+  
+  
+  
+
+<meta name="author" content="Leonardo Collado-Torres" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  <link rel="shortcut icon" href="icon_32.png" type="image/x-icon" />
+<link rel="prev" href="differential-gene-expression-analysis-overview.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Overview</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#download-course-materials"><i class="fa fa-check"></i>Download course materials</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#code-of-conduct"><i class="fa fa-check"></i>Code of Conduct</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#course-schedule"><i class="fa fa-check"></i>Course Schedule</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#external-links"><i class="fa fa-check"></i>External links</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#course-prerequisites"><i class="fa fa-check"></i>Course Prerequisites</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#r-session-information"><i class="fa fa-check"></i>R session information</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#license"><i class="fa fa-check"></i>License</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="speaqeasy-introduction.html"><a href="speaqeasy-introduction.html"><i class="fa fa-check"></i><b>1</b> SPEAQeasy introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="speaqeasy-introduction.html"><a href="speaqeasy-introduction.html#overview-slides"><i class="fa fa-check"></i><b>1.1</b> 2022-04-20 overview slides</a></li>
+<li class="chapter" data-level="1.2" data-path="speaqeasy-introduction.html"><a href="speaqeasy-introduction.html#speaqeasy-main-links"><i class="fa fa-check"></i><b>1.2</b> SPEAQeasy main links</a></li>
+<li class="chapter" data-level="1.3" data-path="speaqeasy-introduction.html"><a href="speaqeasy-introduction.html#pipeline-outputs"><i class="fa fa-check"></i><b>1.3</b> Pipeline outputs</a></li>
+<li class="chapter" data-level="1.4" data-path="speaqeasy-introduction.html"><a href="speaqeasy-introduction.html#exercises"><i class="fa fa-check"></i><b>1.4</b> Exercises</a></li>
+<li class="chapter" data-level="1.5" data-path="speaqeasy-introduction.html"><a href="speaqeasy-introduction.html#solutions"><i class="fa fa-check"></i><b>1.5</b> Solutions</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="smokingmouse-study.html"><a href="smokingmouse-study.html"><i class="fa fa-check"></i><b>2</b> smokingMouse study</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="smokingmouse-study.html"><a href="smokingmouse-study.html#introduction"><i class="fa fa-check"></i><b>2.1</b> Introduction</a></li>
+<li class="chapter" data-level="2.2" data-path="smokingmouse-study.html"><a href="smokingmouse-study.html#overview-1"><i class="fa fa-check"></i><b>2.2</b> Overview</a></li>
+<li class="chapter" data-level="2.3" data-path="smokingmouse-study.html"><a href="smokingmouse-study.html#goals"><i class="fa fa-check"></i><b>2.3</b> Goals</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="smokingmouse-study.html"><a href="smokingmouse-study.html#main-objective"><i class="fa fa-check"></i><b>2.3.1</b> Main objective</a></li>
+<li class="chapter" data-level="2.3.2" data-path="smokingmouse-study.html"><a href="smokingmouse-study.html#secondary-objectives"><i class="fa fa-check"></i><b>2.3.2</b> Secondary objectives</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="smokingmouse-study.html"><a href="smokingmouse-study.html#study-design"><i class="fa fa-check"></i><b>2.4</b> Study design</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="summarizedexperiment-review.html"><a href="summarizedexperiment-review.html"><i class="fa fa-check"></i><b>3</b> SummarizedExperiment review</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="summarizedexperiment-review.html"><a href="summarizedexperiment-review.html#overview-2"><i class="fa fa-check"></i><b>3.1</b> Overview</a></li>
+<li class="chapter" data-level="3.2" data-path="summarizedexperiment-review.html"><a href="summarizedexperiment-review.html#quiz"><i class="fa fa-check"></i><b>3.2</b> Quiz</a></li>
+<li class="chapter" data-level="3.3" data-path="summarizedexperiment-review.html"><a href="summarizedexperiment-review.html#exercises-1"><i class="fa fa-check"></i><b>3.3</b> Exercises</a></li>
+<li class="chapter" data-level="3.4" data-path="summarizedexperiment-review.html"><a href="summarizedexperiment-review.html#solutions-1"><i class="fa fa-check"></i><b>3.4</b> Solutions</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="smokingmouse-rse.html"><a href="smokingmouse-rse.html"><i class="fa fa-check"></i><b>4</b> smokingMouse RSE</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="smokingmouse-rse.html"><a href="smokingmouse-rse.html#download-data"><i class="fa fa-check"></i><b>4.1</b> Download data</a></li>
+<li class="chapter" data-level="4.2" data-path="smokingmouse-rse.html"><a href="smokingmouse-rse.html#data-overview"><i class="fa fa-check"></i><b>4.2</b> Data overview</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="smokingmouse-rse.html"><a href="smokingmouse-rse.html#assays"><i class="fa fa-check"></i><b>4.2.1</b> Assays</a></li>
+<li class="chapter" data-level="4.2.2" data-path="smokingmouse-rse.html"><a href="smokingmouse-rse.html#sample-data"><i class="fa fa-check"></i><b>4.2.2</b> Sample data</a></li>
+<li class="chapter" data-level="4.2.3" data-path="smokingmouse-rse.html"><a href="smokingmouse-rse.html#gene-information"><i class="fa fa-check"></i><b>4.2.3</b> Gene Information</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="isee-introduction.html"><a href="isee-introduction.html"><i class="fa fa-check"></i><b>5</b> iSEE introduction</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="isee-introduction.html"><a href="isee-introduction.html#toy-rse-data"><i class="fa fa-check"></i><b>5.1</b> Toy RSE data</a></li>
+<li class="chapter" data-level="5.2" data-path="isee-introduction.html"><a href="isee-introduction.html#isee"><i class="fa fa-check"></i><b>5.2</b> iSEE</a></li>
+<li class="chapter" data-level="5.3" data-path="isee-introduction.html"><a href="isee-introduction.html#exercise-with-data-from-spatiallibd"><i class="fa fa-check"></i><b>5.3</b> Exercise with data from spatialLIBD</a></li>
+<li class="chapter" data-level="5.4" data-path="isee-introduction.html"><a href="isee-introduction.html#community"><i class="fa fa-check"></i><b>5.4</b> Community</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html"><i class="fa fa-check"></i><b>6</b> RSE plotting basics with smokingMouse</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#download-the-smokingmouse-data"><i class="fa fa-check"></i><b>6.1</b> Download the smokingMouse data</a></li>
+<li class="chapter" data-level="6.2" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#data-preparation"><i class="fa fa-check"></i><b>6.2</b> Data preparation</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#data-normalization"><i class="fa fa-check"></i><b>6.2.1</b> Data normalization</a></li>
+<li class="chapter" data-level="6.2.2" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#gene-filtering"><i class="fa fa-check"></i><b>6.2.2</b> Gene filtering</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#exploratory-data-analysis"><i class="fa fa-check"></i><b>6.3</b> Exploratory Data Analysis</a></li>
+<li class="chapter" data-level="6.4" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#quality-control-analysis"><i class="fa fa-check"></i><b>6.4</b> Quality Control Analysis</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#evaluate-qc-metrics-for-groups-of-samples"><i class="fa fa-check"></i><b>6.4.1</b> Evaluate QC metrics for groups of samples</a></li>
+<li class="chapter" data-level="6.4.2" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#examine-relationships-between-qc-metrics-of-samples"><i class="fa fa-check"></i><b>6.4.2</b> Examine relationships between QC metrics of samples</a></li>
+<li class="chapter" data-level="6.4.3" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#qc-sample-filtering"><i class="fa fa-check"></i><b>6.4.3</b> QC sample filtering</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#miscellaneous-about-cpm-values"><i class="fa fa-check"></i><b>6.5</b> Miscellaneous about CPM values</a></li>
+<li class="chapter" data-level="" data-path="rse-plotting-basics-with-smokingmouse.html"><a href="rse-plotting-basics-with-smokingmouse.html#references"><i class="fa fa-check"></i>References</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="biocthis-introduction.html"><a href="biocthis-introduction.html"><i class="fa fa-check"></i><b>7</b> biocthis introduction</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="biocthis-introduction.html"><a href="biocthis-introduction.html#related-past-materials"><i class="fa fa-check"></i><b>7.1</b> Related past materials</a></li>
+<li class="chapter" data-level="7.2" data-path="biocthis-introduction.html"><a href="biocthis-introduction.html#biocthis-main-commands"><i class="fa fa-check"></i><b>7.2</b> biocthis main commands</a></li>
+<li class="chapter" data-level="7.3" data-path="biocthis-introduction.html"><a href="biocthis-introduction.html#live-demo"><i class="fa fa-check"></i><b>7.3</b> Live demo</a></li>
+<li class="chapter" data-level="7.4" data-path="biocthis-introduction.html"><a href="biocthis-introduction.html#community-1"><i class="fa fa-check"></i><b>7.4</b> Community</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="recount3-introduction.html"><a href="recount3-introduction.html"><i class="fa fa-check"></i><b>8</b> recount3 introduction</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="recount3-introduction.html"><a href="recount3-introduction.html#recount-projects"><i class="fa fa-check"></i><b>8.1</b> recount projects</a></li>
+<li class="chapter" data-level="8.2" data-path="recount3-introduction.html"><a href="recount3-introduction.html#using-recount3"><i class="fa fa-check"></i><b>8.2</b> Using recount3</a></li>
+<li class="chapter" data-level="8.3" data-path="recount3-introduction.html"><a href="recount3-introduction.html#exercise"><i class="fa fa-check"></i><b>8.3</b> Exercise</a></li>
+<li class="chapter" data-level="8.4" data-path="recount3-introduction.html"><a href="recount3-introduction.html#community-2"><i class="fa fa-check"></i><b>8.4</b> Community</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="interpreting-model-coefficients-with-exploremodelmatrix.html"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html"><i class="fa fa-check"></i><b>9</b> Interpreting model coefficients with ExploreModelMatrix</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="interpreting-model-coefficients-with-exploremodelmatrix.html"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#model-objects-in-r"><i class="fa fa-check"></i><b>9.1</b> Model objects in R</a></li>
+<li class="chapter" data-level="9.2" data-path="interpreting-model-coefficients-with-exploremodelmatrix.html"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#exploremodelmatrix"><i class="fa fa-check"></i><b>9.2</b> ExploreModelMatrix</a></li>
+<li class="chapter" data-level="9.3" data-path="interpreting-model-coefficients-with-exploremodelmatrix.html"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#example-1"><i class="fa fa-check"></i><b>9.3</b> Example 1</a></li>
+<li class="chapter" data-level="9.4" data-path="interpreting-model-coefficients-with-exploremodelmatrix.html"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#example-2"><i class="fa fa-check"></i><b>9.4</b> Example 2</a></li>
+<li class="chapter" data-level="9.5" data-path="interpreting-model-coefficients-with-exploremodelmatrix.html"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#example-3"><i class="fa fa-check"></i><b>9.5</b> Example 3</a></li>
+<li class="chapter" data-level="9.6" data-path="interpreting-model-coefficients-with-exploremodelmatrix.html"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#exercise-1"><i class="fa fa-check"></i><b>9.6</b> Exercise</a></li>
+<li class="chapter" data-level="9.7" data-path="interpreting-model-coefficients-with-exploremodelmatrix.html"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#to-learn-more"><i class="fa fa-check"></i><b>9.7</b> To learn more</a></li>
+<li class="chapter" data-level="9.8" data-path="interpreting-model-coefficients-with-exploremodelmatrix.html"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#community-3"><i class="fa fa-check"></i><b>9.8</b> Community</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="differential-gene-expression-analysis-with-limma.html"><a href="differential-gene-expression-analysis-with-limma.html"><i class="fa fa-check"></i><b>10</b> Differential gene expression analysis with limma</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="differential-gene-expression-analysis-with-limma.html"><a href="differential-gene-expression-analysis-with-limma.html#srp045638-data"><i class="fa fa-check"></i><b>10.1</b> SRP045638 data</a></li>
+<li class="chapter" data-level="10.2" data-path="differential-gene-expression-analysis-with-limma.html"><a href="differential-gene-expression-analysis-with-limma.html#data-normalization-1"><i class="fa fa-check"></i><b>10.2</b> Data normalization</a></li>
+<li class="chapter" data-level="10.3" data-path="differential-gene-expression-analysis-with-limma.html"><a href="differential-gene-expression-analysis-with-limma.html#differential-expression"><i class="fa fa-check"></i><b>10.3</b> Differential expression</a></li>
+<li class="chapter" data-level="10.4" data-path="differential-gene-expression-analysis-with-limma.html"><a href="differential-gene-expression-analysis-with-limma.html#visualizing-degs"><i class="fa fa-check"></i><b>10.4</b> Visualizing DEGs</a></li>
+<li class="chapter" data-level="10.5" data-path="differential-gene-expression-analysis-with-limma.html"><a href="differential-gene-expression-analysis-with-limma.html#community-4"><i class="fa fa-check"></i><b>10.5</b> Community</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="differential-gene-expression-exercise.html"><a href="differential-gene-expression-exercise.html"><i class="fa fa-check"></i><b>11</b> Differential gene expression exercise</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="differential-gene-expression-exercise.html"><a href="differential-gene-expression-exercise.html#recap"><i class="fa fa-check"></i><b>11.1</b> Recap</a></li>
+<li class="chapter" data-level="11.2" data-path="differential-gene-expression-exercise.html"><a href="differential-gene-expression-exercise.html#exercise-2"><i class="fa fa-check"></i><b>11.2</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html"><i class="fa fa-check"></i><b>12</b> DE model building with variancePartition</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#download-the-smokingmouse-data-and-subset-it"><i class="fa fa-check"></i><b>12.1</b> Download the smokingMouse data and subset it</a></li>
+<li class="chapter" data-level="12.2" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#explore-gene-level-effects"><i class="fa fa-check"></i><b>12.2</b> Explore gene-level effects</a></li>
+<li class="chapter" data-level="12.3" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#variance-partition-analysis"><i class="fa fa-check"></i><b>12.3</b> Variance Partition Analysis</a>
+<ul>
+<li class="chapter" data-level="12.3.1" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#canonical-correlation-analysis"><i class="fa fa-check"></i><b>12.3.1</b> Canonical Correlation Analysis</a></li>
+<li class="chapter" data-level="12.3.2" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#fit-model-and-extract-fraction-of-variance-explained"><i class="fa fa-check"></i><b>12.3.2</b> Fit model and extract fraction of variance explained</a></li>
+<li class="chapter" data-level="12.3.3" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#examine-expression-of-most-affected-genes-by-each-sample-variable"><i class="fa fa-check"></i><b>12.3.3</b> Examine expression of most affected genes by each sample variable</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#solutions-2"><i class="fa fa-check"></i><b>12.4</b> Solutions</a>
+<ul>
+<li class="chapter" data-level="12.4.1" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#exercise-1-1"><i class="fa fa-check"></i><b>12.4.1</b> Exercise 1</a></li>
+<li class="chapter" data-level="12.4.2" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#exercise-2-1"><i class="fa fa-check"></i><b>12.4.2</b> Exercise 2</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="de-model-building-with-variancepartition.html"><a href="de-model-building-with-variancepartition.html#references-1"><i class="fa fa-check"></i>References</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="expression-heatmaps-with-complexheatmap.html"><a href="expression-heatmaps-with-complexheatmap.html"><i class="fa fa-check"></i><b>13</b> Expression heatmaps with ComplexHeatmap</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="expression-heatmaps-with-complexheatmap.html"><a href="expression-heatmaps-with-complexheatmap.html#introduction-1"><i class="fa fa-check"></i><b>13.1</b> Introduction</a></li>
+<li class="chapter" data-level="13.2" data-path="expression-heatmaps-with-complexheatmap.html"><a href="expression-heatmaps-with-complexheatmap.html#complexheatmap"><i class="fa fa-check"></i><b>13.2</b> ComplexHeatmap</a></li>
+<li class="chapter" data-level="13.3" data-path="expression-heatmaps-with-complexheatmap.html"><a href="expression-heatmaps-with-complexheatmap.html#heatmap-with-expression-data"><i class="fa fa-check"></i><b>13.3</b> Heatmap with expression data</a>
+<ul>
+<li class="chapter" data-level="13.3.1" data-path="expression-heatmaps-with-complexheatmap.html"><a href="expression-heatmaps-with-complexheatmap.html#download-data-1"><i class="fa fa-check"></i><b>13.3.1</b> Download data</a></li>
+<li class="chapter" data-level="13.3.2" data-path="expression-heatmaps-with-complexheatmap.html"><a href="expression-heatmaps-with-complexheatmap.html#prepare-the-data"><i class="fa fa-check"></i><b>13.3.2</b> Prepare the data</a></li>
+<li class="chapter" data-level="13.3.3" data-path="expression-heatmaps-with-complexheatmap.html"><a href="expression-heatmaps-with-complexheatmap.html#create-annotations"><i class="fa fa-check"></i><b>13.3.3</b> Create annotations</a></li>
+<li class="chapter" data-level="13.3.4" data-path="expression-heatmaps-with-complexheatmap.html"><a href="expression-heatmaps-with-complexheatmap.html#plot-our-heatmap"><i class="fa fa-check"></i><b>13.3.4</b> Plot our heatmap</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="complexheatmap-exercise-solution.html"><a href="complexheatmap-exercise-solution.html"><i class="fa fa-check"></i><b>14</b> ComplexHeatmap exercise solution</a></li>
+<li class="chapter" data-level="15" data-path="exercise-with-variancepartition-and-complexheatmap.html"><a href="exercise-with-variancepartition-and-complexheatmap.html"><i class="fa fa-check"></i><b>15</b> Exercise with variancePartition and ComplexHeatmap</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="exercise-with-variancepartition-and-complexheatmap.html"><a href="exercise-with-variancepartition-and-complexheatmap.html#steps"><i class="fa fa-check"></i><b>15.1</b> Steps:</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="miscellaneous.html"><a href="miscellaneous.html"><i class="fa fa-check"></i><b>16</b> Miscellaneous</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="miscellaneous.html"><a href="miscellaneous.html#postcards"><i class="fa fa-check"></i><b>16.1</b> postcards</a></li>
+<li class="chapter" data-level="16.2" data-path="miscellaneous.html"><a href="miscellaneous.html#organizing-your-work"><i class="fa fa-check"></i><b>16.2</b> Organizing your work</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="introduction-to-the-world-of-spatially-resolved-transcriptomics-with-visium-data.html"><a href="introduction-to-the-world-of-spatially-resolved-transcriptomics-with-visium-data.html"><i class="fa fa-check"></i><b>17</b> Introduction to the world of spatially-resolved transcriptomics with Visium data</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="introduction-to-the-world-of-spatially-resolved-transcriptomics-with-visium-data.html"><a href="introduction-to-the-world-of-spatially-resolved-transcriptomics-with-visium-data.html#community-5"><i class="fa fa-check"></i><b>17.1</b> Community</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html"><i class="fa fa-check"></i><b>18</b> Downloading public Visium spatial data and visualizing it with spatialLIBD</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#download-data-from-10x-genomics"><i class="fa fa-check"></i><b>18.1</b> Download data from 10x Genomics</a></li>
+<li class="chapter" data-level="18.2" data-path="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#add-gene-annotation-information"><i class="fa fa-check"></i><b>18.2</b> Add gene annotation information</a>
+<ul>
+<li class="chapter" data-level="18.2.1" data-path="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#from-10x"><i class="fa fa-check"></i><b>18.2.1</b> From 10x</a></li>
+<li class="chapter" data-level="18.2.2" data-path="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#from-gencode"><i class="fa fa-check"></i><b>18.2.2</b> From Gencode</a></li>
+</ul></li>
+<li class="chapter" data-level="18.3" data-path="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#wrapper-functions-for-reading-the-data"><i class="fa fa-check"></i><b>18.3</b> Wrapper functions for reading the data</a></li>
+<li class="chapter" data-level="18.4" data-path="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#visualize-spatial-plots"><i class="fa fa-check"></i><b>18.4</b> Visualize spatial plots</a></li>
+<li class="chapter" data-level="18.5" data-path="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html"><a href="downloading-public-visium-spatial-data-and-visualizing-it-with-spatiallibd.html#exercise-3"><i class="fa fa-check"></i><b>18.5</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="re-use-of-bulk-rna-seq-methods-for-spatial-data-exercise.html"><a href="re-use-of-bulk-rna-seq-methods-for-spatial-data-exercise.html"><i class="fa fa-check"></i><b>19</b> Re-use of bulk RNA-seq methods for spatial data exercise</a>
+<ul>
+<li class="chapter" data-level="19.1" data-path="re-use-of-bulk-rna-seq-methods-for-spatial-data-exercise.html"><a href="re-use-of-bulk-rna-seq-methods-for-spatial-data-exercise.html#spatial-registration"><i class="fa fa-check"></i><b>19.1</b> Spatial registration</a></li>
+<li class="chapter" data-level="19.2" data-path="re-use-of-bulk-rna-seq-methods-for-spatial-data-exercise.html"><a href="re-use-of-bulk-rna-seq-methods-for-spatial-data-exercise.html#exercise-4"><i class="fa fa-check"></i><b>19.2</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="final-r-session.html"><a href="final-r-session.html"><i class="fa fa-check"></i>Final R Session</a></li>
+<li class="chapter" data-level="20" data-path="differential-gene-expression-analysis-overview.html"><a href="differential-gene-expression-analysis-overview.html"><i class="fa fa-check"></i><b>20</b> Differential Gene Expression analysis overview</a>
+<ul>
+<li class="chapter" data-level="20.1" data-path="differential-gene-expression-analysis-overview.html"><a href="differential-gene-expression-analysis-overview.html#preliminary-steps"><i class="fa fa-check"></i><b>20.1</b> Preliminary steps</a>
+<ul>
+<li class="chapter" data-level="20.1.1" data-path="differential-gene-expression-analysis-overview.html"><a href="differential-gene-expression-analysis-overview.html#rna-seq-data-processing"><i class="fa fa-check"></i><b>20.1.1</b> RNA-seq data processing</a></li>
+<li class="chapter" data-level="20.1.2" data-path="differential-gene-expression-analysis-overview.html"><a href="differential-gene-expression-analysis-overview.html#exploratory-data-analysis-1"><i class="fa fa-check"></i><b>20.1.2</b> Exploratory Data Analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="20.2" data-path="differential-gene-expression-analysis-overview.html"><a href="differential-gene-expression-analysis-overview.html#differential-gene-expression"><i class="fa fa-check"></i><b>20.2</b> Differential Gene Expression</a></li>
+<li class="chapter" data-level="20.3" data-path="differential-gene-expression-analysis-overview.html"><a href="differential-gene-expression-analysis-overview.html#downstream-analyses"><i class="fa fa-check"></i><b>20.3</b> Downstream analyses</a></li>
+<li class="chapter" data-level="20.4" data-path="differential-gene-expression-analysis-overview.html"><a href="differential-gene-expression-analysis-overview.html#references-2"><i class="fa fa-check"></i><b>20.4</b> References</a></li>
+</ul></li>
+<li class="chapter" data-level="21" data-path="differential-gene-expression-analysis-with-limma-voom.html"><a href="differential-gene-expression-analysis-with-limma-voom.html"><i class="fa fa-check"></i><b>21</b> Differential Gene Expression analysis with <em>limma</em>-<em>voom</em></a>
+<ul>
+<li class="chapter" data-level="21.1" data-path="differential-gene-expression-analysis-with-limma-voom.html"><a href="differential-gene-expression-analysis-with-limma-voom.html#nb-based-dge-methods"><i class="fa fa-check"></i><b>21.1</b> NB-based DGE methods?</a></li>
+<li class="chapter" data-level="21.2" data-path="differential-gene-expression-analysis-with-limma-voom.html"><a href="differential-gene-expression-analysis-with-limma-voom.html#limma-voom-pipeline"><i class="fa fa-check"></i><b>21.2</b> <em>limma</em>-<em>voom</em> pipeline</a>
+<ul>
+<li class="chapter" data-level="21.2.1" data-path="differential-gene-expression-analysis-with-limma-voom.html"><a href="differential-gene-expression-analysis-with-limma-voom.html#model.matrix"><i class="fa fa-check"></i><b>21.2.1</b> <code>model.matrix()</code></a></li>
+<li class="chapter" data-level="21.2.2" data-path="differential-gene-expression-analysis-with-limma-voom.html"><a href="differential-gene-expression-analysis-with-limma-voom.html#voom"><i class="fa fa-check"></i><b>21.2.2</b> <code>voom()</code></a></li>
+<li class="chapter" data-level="21.2.3" data-path="differential-gene-expression-analysis-with-limma-voom.html"><a href="differential-gene-expression-analysis-with-limma-voom.html#lmfit"><i class="fa fa-check"></i><b>21.2.3</b> <code>lmFit()</code></a></li>
+<li class="chapter" data-level="21.2.4" data-path="differential-gene-expression-analysis-with-limma-voom.html"><a href="differential-gene-expression-analysis-with-limma-voom.html#ebayes"><i class="fa fa-check"></i><b>21.2.4</b> <code>eBayes()</code></a></li>
+<li class="chapter" data-level="21.2.5" data-path="differential-gene-expression-analysis-with-limma-voom.html"><a href="differential-gene-expression-analysis-with-limma-voom.html#toptable"><i class="fa fa-check"></i><b>21.2.5</b> <code>topTable()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="21.3" data-path="differential-gene-expression-analysis-with-limma-voom.html"><a href="differential-gene-expression-analysis-with-limma-voom.html#references-3"><i class="fa fa-check"></i><b>21.3</b> References</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Statistical Analysis of Genome Scale Data 2024</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="differential-gene-expression-analysis-with-limma-voom" class="section level1 hasAnchor" number="21">
+<h1><span class="header-section-number">21</span> Differential Gene Expression analysis with <em>limma</em>-<em>voom</em><a href="differential-gene-expression-analysis-with-limma-voom.html#differential-gene-expression-analysis-with-limma-voom" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Instructor: Daianna</p>
+<p>In this chapter you’ll learn how DGE analysis is performed under the empirical Bayes framework of the popular <em>limma</em>-<em>voom</em> pipeline, highlighting key assumptions and concepts, and main differences with other methodologies.</p>
+<div id="nb-based-dge-methods" class="section level2 hasAnchor" number="21.1">
+<h2><span class="header-section-number">21.1</span> NB-based DGE methods?<a href="differential-gene-expression-analysis-with-limma-voom.html#nb-based-dge-methods" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>An initial central point of discussion around DGE method development is how to model the distribution of the reads. Many methods model the read counts (<span class="math inline">\(y_{k,ij}\)</span>, non-negative integers) of a gene <span class="math inline">\(i\)</span> in the <span class="math inline">\(j\)</span> samples of condition <span class="math inline">\(k\)</span> through the Poisson or the Negative Binomial (NB) distribution. Of these, NB is often preferred as it allows the mean (<span class="math inline">\(\mu\)</span>) and the variance (<span class="math inline">\(\sigma\)</span>) of the reads to be different, compared to the Poisson distribution where <span class="math inline">\(\mu\)</span>=<span class="math inline">\(\sigma\)</span>. This is of particular importance as controlling the variance allows to account for variability in the gene expression levels across biological samples [1].</p>
+<figure>
+<img src="Figures/NB_DGE_methods.png" width="800px" align=center />
+<figcaption style="color: gray; line-height: 0.9; text-align: justify">
+<p><font size="-1.8">
+<b>Figure 1</b>: <b> NB-distributed read counts. </b> Modeling of read counts for gene <span class="math inline">\(i\)</span> in the samples of the first and second conditions based on the NB model. Modified from <a href="https://pubmed.ncbi.nlm.nih.gov/31456901/">Li, W. V., &amp; Li, J. J. (2018)</a>.</p>
+</font>
+</figcaption>
+</figure>
+<p>Estimating the NB distribution parameters is necessary to assess DE of each gene <span class="math inline">\(i\)</span> between any two conditions <span class="math inline">\(k=1,2\)</span> (<strong>Figure 1</strong>). Bayesian models are used defining prior distributions and relationships of such parameters. Briefly, after 1) estimating gene-wise NB parameters, 2) the mean-variance relationship across all genes can be used to shrink the gene variance estimations borrowing information from all genes or incorporating prior knowledge, something advantageous when sample sizes are small (<strong>Figure 2</strong>). 3) A statistical test is used to assess for each gene <span class="math inline">\(i\)</span> if its true expression in the first and second condition (<span class="math inline">\(\theta_{1i}\)</span> and <span class="math inline">\(\theta_{2i}\)</span>) is the same (null hypothesis) or differs (alternative hypothesis):</p>
+<ul>
+<li><span class="math inline">\(H_0: \theta_{1i}=\theta_{2i}\)</span></li>
+<li><span class="math inline">\(H_1: \theta_{1i}≠\theta_{2i}\)</span>, where the <span class="math inline">\(\theta_{i}\)</span>’s are parameters included in the mean of the NB distributions (<span class="math inline">\(\mu\)</span>).</li>
+</ul>
+<p>4) The test statistic is computed for each gene and 5) its associated <em>p</em>-value is calculated based on the null distribution. 6) Finally, <em>p</em>-values are corrected for multiple-testing and DEGs are determined based on an adjusted <em>p</em>-values cutoff [1].</p>
+<p>Examples of popular methods based on the NB distribution are <a href="https://bioconductor.org/packages/release/bioc/html/edgeR.html"><em>edgeR</em></a> and <a href="https://bioconductor.org/packages/release/bioc/html/DESeq2.html"><em>DESeq2</em></a>.</p>
+<p>Nevertheless, one problem NB-based methods face is that they set dispersion of the data as a known and global parameter, ignoring observation-specific variation and importantly, there’s a reduced number of statistical methods for count distributions compared to the normal distribution [1,2]. Here, we’ll focus on <a href="https://bioconductor.org/packages/release/bioc/html/limma.html"><em>limma</em></a> that does not rely on a certain distribution but rather works on <span class="math inline">\(log_2(cpm)\)</span> and fits linear models for DGE enabling the incorporation of additional predictors to model gene expression, a feature specially valuable for complex experimental settings.</p>
+</div>
+<div id="limma-voom-pipeline" class="section level2 hasAnchor" number="21.2">
+<h2><span class="header-section-number">21.2</span> <em>limma</em>-<em>voom</em> pipeline<a href="differential-gene-expression-analysis-with-limma-voom.html#limma-voom-pipeline" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><a href="https://bioconductor.org/packages/release/bioc/html/limma.html"><em>limma</em></a> is a package for the analysis of gene expression data arising from microarray or RNA-seq technologies. It has features that make the analyses stable even for experiments with small number of arrays or samples —this is achieved by borrowing information across genes. It is specially designed for analyzing complex experiments with a variety of experimental conditions and predictors [3].</p>
+<p>Usually, <em>limma</em> DGE analysis is carried out in five main steps, the last four of them completed by <em>limma</em> <code>R</code> functions, as described below. We’ll use bulk RNA-seq data from the <a href="https://bioconductor.org/packages/release/data/experiment/html/smokingMouse.html"><code>smokingMouse()</code></a> package to exemplify the steps.</p>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb140-1" tabindex="-1"></a></span>
+<span id="cb140-2"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb140-2" tabindex="-1"></a><span class="do">## Load the container package for this type of data</span></span>
+<span id="cb140-3"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb140-3" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;SummarizedExperiment&quot;</span>)</span>
+<span id="cb140-4"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb140-4" tabindex="-1"></a></span>
+<span id="cb140-5"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb140-5" tabindex="-1"></a><span class="do">## Connect to ExperimentHub</span></span>
+<span id="cb140-6"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb140-6" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;ExperimentHub&quot;</span>)</span>
+<span id="cb140-7"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb140-7" tabindex="-1"></a>eh <span class="ot">&lt;-</span> ExperimentHub<span class="sc">::</span><span class="fu">ExperimentHub</span>()</span>
+<span id="cb140-8"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb140-8" tabindex="-1"></a></span>
+<span id="cb140-9"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb140-9" tabindex="-1"></a><span class="do">## Load the datasets of the package</span></span>
+<span id="cb140-10"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb140-10" tabindex="-1"></a>myfiles <span class="ot">&lt;-</span> <span class="fu">query</span>(eh, <span class="st">&quot;smokingMouse&quot;</span>)</span>
+<span id="cb140-11"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb140-11" tabindex="-1"></a></span>
+<span id="cb140-12"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb140-12" tabindex="-1"></a><span class="do">## Download the mouse gene data</span></span>
+<span id="cb140-13"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb140-13" tabindex="-1"></a>rse_gene <span class="ot">&lt;-</span> myfiles[[<span class="st">&quot;EH8313&quot;</span>]]</span>
+<span id="cb140-14"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb140-14" tabindex="-1"></a></span>
+<span id="cb140-15"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb140-15" tabindex="-1"></a><span class="do">## Keep samples from nicotine experiment and pups only</span></span>
+<span id="cb140-16"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb140-16" tabindex="-1"></a>rse_gene_nic <span class="ot">&lt;-</span> rse_gene[, <span class="fu">which</span>(rse_gene<span class="sc">$</span>Expt <span class="sc">==</span> <span class="st">&quot;Nicotine&quot;</span> <span class="sc">&amp;</span> rse_gene<span class="sc">$</span>Age<span class="sc">==</span><span class="st">&#39;Pup&#39;</span>)]</span>
+<span id="cb140-17"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb140-17" tabindex="-1"></a></span>
+<span id="cb140-18"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb140-18" tabindex="-1"></a><span class="do">## Only expressed genes (passed the filtering step)</span></span>
+<span id="cb140-19"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb140-19" tabindex="-1"></a>rse_gene_filt <span class="ot">&lt;-</span> rse_gene_nic[<span class="fu">rowData</span>(rse_gene_nic)<span class="sc">$</span>retained_after_feature_filtering <span class="sc">==</span> <span class="cn">TRUE</span>, ]</span></code></pre></div>
+<p>Let’s explore a little the data.</p>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb141-1" tabindex="-1"></a><span class="do">## Data dimensions: number of genes and samples</span></span>
+<span id="cb141-2"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb141-2" tabindex="-1"></a><span class="fu">dim</span>(rse_gene_filt)</span>
+<span id="cb141-3"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb141-3" tabindex="-1"></a><span class="co">#&gt; [1] 19974    42</span></span>
+<span id="cb141-4"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb141-4" tabindex="-1"></a></span>
+<span id="cb141-5"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb141-5" tabindex="-1"></a><span class="do">## Raw counts for first 3 genes in the first 5 samples</span></span>
+<span id="cb141-6"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb141-6" tabindex="-1"></a><span class="fu">assays</span>(rse_gene_filt)<span class="sc">$</span>counts[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span>
+<span id="cb141-7"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb141-7" tabindex="-1"></a><span class="co">#&gt;                       [,1] [,2] [,3] [,4] [,5]</span></span>
+<span id="cb141-8"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb141-8" tabindex="-1"></a><span class="co">#&gt; ENSMUSG00000051951.5  2652 2107 1978 2691 1833</span></span>
+<span id="cb141-9"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb141-9" tabindex="-1"></a><span class="co">#&gt; ENSMUSG00000102331.1    15   15    9   15   13</span></span>
+<span id="cb141-10"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb141-10" tabindex="-1"></a><span class="co">#&gt; ENSMUSG00000025900.13   10    7   28   11    8</span></span>
+<span id="cb141-11"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb141-11" tabindex="-1"></a></span>
+<span id="cb141-12"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb141-12" tabindex="-1"></a><span class="do">## Log-normalized counts for first 3 genes in the first 5 samples</span></span>
+<span id="cb141-13"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb141-13" tabindex="-1"></a><span class="fu">assays</span>(rse_gene_filt)<span class="sc">$</span>logcounts[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span>
+<span id="cb141-14"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb141-14" tabindex="-1"></a><span class="co">#&gt;                            [,1]      [,2]       [,3]      [,4]      [,5]</span></span>
+<span id="cb141-15"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb141-15" tabindex="-1"></a><span class="co">#&gt; ENSMUSG00000051951.5   5.639967  5.953457  5.4923034  5.903313  5.800879</span></span>
+<span id="cb141-16"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb141-16" tabindex="-1"></a><span class="co">#&gt; ENSMUSG00000102331.1  -1.747878 -1.130265 -2.1809593 -1.517393 -1.282590</span></span>
+<span id="cb141-17"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb141-17" tabindex="-1"></a><span class="co">#&gt; ENSMUSG00000025900.13 -2.295096 -2.173926 -0.6153596 -1.941338 -1.948814</span></span>
+<span id="cb141-18"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb141-18" tabindex="-1"></a></span>
+<span id="cb141-19"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb141-19" tabindex="-1"></a><span class="do">## Data for the first 2 samples</span></span>
+<span id="cb141-20"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb141-20" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">colData</span>(rse_gene_filt), <span class="dv">2</span>)</span>
+<span id="cb141-21"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb141-21" tabindex="-1"></a><span class="co">#&gt; DataFrame with 2 rows and 71 columns</span></span>
+<span id="cb141-22"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb141-22" tabindex="-1"></a><span class="co">#&gt;           SAMPLE_ID FQCbasicStats perBaseQual perTileQual  perSeqQual perBaseContent   GCcontent    Ncontent</span></span>
+<span id="cb141-23"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb141-23" tabindex="-1"></a><span class="co">#&gt;   SeqLengthDist SeqDuplication OverrepSeqs AdapterContent KmerContent SeqLength_R1 percentGC_R1 phred15-19_R1</span></span>
+<span id="cb141-24"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb141-24" tabindex="-1"></a><span class="co">#&gt;   phred65-69_R1 phred115-119_R1 phred150-151_R1 phredGT30_R1 phredGT35_R1 Adapter65-69_R1 Adapter100-104_R1</span></span>
+<span id="cb141-25"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb141-25" tabindex="-1"></a><span class="co">#&gt;   Adapter140_R1 SeqLength_R2 percentGC_R2 phred15-19_R2 phred65-69_R2 phred115-119_R2 phred150-151_R2 phredGT30_R2</span></span>
+<span id="cb141-26"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb141-26" tabindex="-1"></a><span class="co">#&gt;   phredGT35_R2 Adapter65-69_R2 Adapter100-104_R2 Adapter140_R2 ERCCsumLogErr                bamFile   trimmed  numReads</span></span>
+<span id="cb141-27"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb141-27" tabindex="-1"></a><span class="co">#&gt;   numMapped numUnmapped overallMapRate concordMapRate totalMapped mitoMapped  mitoRate totalAssignedGene  rRNA_rate</span></span>
+<span id="cb141-28"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb141-28" tabindex="-1"></a><span class="co">#&gt;        Tissue         Age         Sex        Expt        Group    Pregnant       plate    location concentration</span></span>
+<span id="cb141-29"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb141-29" tabindex="-1"></a><span class="co">#&gt;        medium        date   Pregnancy    flowcell       sum  detected subsets_Mito_sum subsets_Mito_detected</span></span>
+<span id="cb141-30"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb141-30" tabindex="-1"></a><span class="co">#&gt;   subsets_Mito_percent subsets_Ribo_sum subsets_Ribo_detected subsets_Ribo_percent retained_after_QC_sample_filtering</span></span>
+<span id="cb141-31"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb141-31" tabindex="-1"></a><span class="co">#&gt;   retained_after_manual_sample_filtering</span></span>
+<span id="cb141-32"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb141-32" tabindex="-1"></a><span class="co">#&gt;  [ reached getOption(&quot;max.print&quot;) -- omitted 3 rows ]</span></span></code></pre></div>
+<div id="model.matrix" class="section level3 hasAnchor" number="21.2.1">
+<h3><span class="header-section-number">21.2.1</span> <code>model.matrix()</code><a href="differential-gene-expression-analysis-with-limma-voom.html#model.matrix" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><em>limma</em> fits a linear model to the expression data of each gene (response variable), modeling the systematic part of the data by sample-level covariates (predictors).</p>
+<style>
+p.info {
+background-color: #FFFFF0;
+padding: 20px;
+border: 1px solid black;
+margin-left: 0px;
+border-radius: 1px;
+font-family: sans-serif;
+}
+</style>
+<style>
+p.conclusion {
+background-color: #EEE9E9;
+padding: 20px;
+border: 1px solid black;
+margin-left: 0px;
+border-radius: 1px;
+font-family: sans-serif;
+}
+
+</style>
+<style>
+p.question{
+background-color: #E3E3E3;
+padding: 20px;
+border: 1px solid black;
+margin-left: 0px;
+border-radius: 1px;
+font-family: sans-serif;
+}
+</style>
+<style>
+p.comment {
+background-color: #F0F0F0;
+padding: 20px;
+border: 0px solid black;
+margin-left: 0px;
+border-radius: 1px;
+font-family: sans-serif;
+}
+</style>
+<style>
+p.alert {
+background-color: #FFE4E1;
+padding: 20px;
+border: 0px solid black;
+margin-left: 0px;
+border-radius: 1px;
+font-family: sans-serif;
+}
+</style>
+<style>
+p.success {
+background-color: #E0EEE0;
+padding: 20px;
+border: 0px solid black;
+margin-left: 0px;
+border-radius: 1px;
+font-family: sans-serif;
+}
+</style>
+<p class="info">
+💡 A model is a specification of how a set of variables relate to each other. In the case of a linear model, it is a linear equation that describes how the dependent or response variable is explained by the independent variables, also called predictors. A regression analysis with more than one independent variable is called <strong>multiple regression</strong>. Regression with only one independent variable is called <strong>simple regression</strong>. There are many variations but what they all have in common is that all of them aim to predict one dependent variable from one or more predictors through a linear equation [4].
+</p>
+<p>The <em>limma</em> model is specified with a <strong>design matrix</strong>, also known as <strong>model matrix</strong> or <strong>regressor matrix</strong>, often denoted by <span class="math inline">\(X\)</span>. This is a matrix of values for explanatory variables of the samples: rows correspond to samples and columns to sample variables.</p>
+<p>Say that the values the <span class="math inline">\(i\)</span>th sample take in the <span class="math inline">\(h\)</span> covariates are <span class="math inline">\(X_{ih}\)</span>’s and their coefficients are <span class="math inline">\(\beta_{h}\)</span>’s. The predicted expression of a gene in the <span class="math inline">\(i\)</span>th sample is given by <span class="math inline">\(\hat y_i =\beta_0 + \sum_{1}^h\beta_{h}X_{ih}\)</span>.</p>
+<p><span class="math display">\[
+\hat y = X\beta=\displaystyle {\begin{bmatrix} \hat y_{1}\\ \hat y
+_{2}\\ \hat y_{3}\\...\\ \hat y_{n-1}\\ \hat y_{n}\end{bmatrix}}={\begin{bmatrix}1&amp;X_{11}&amp;X_{12}&amp;X_{13}&amp;\cdots&amp;X_{1,h-1}&amp;X_{1h}\\1&amp;X_{21}&amp;X_{22}&amp;X_{23}&amp;\cdots&amp;X_{2,h-1}&amp;X_{2h}\\1&amp;X_{31}&amp;X_{32}&amp;X_{33}&amp;\cdots&amp;X_{3,h-1}&amp;X_{3h} \\ \vdots &amp; \vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots &amp; \vdots \\1&amp;X_{n-1,1}&amp;X_{n-1,2}&amp;X_{n-1,3}&amp;\cdots&amp;X_{n-1,h-1}&amp;X_{n-1,h} \\1&amp;X_{n,1}&amp;X_{n,2}&amp;X_{n,3}&amp;\cdots&amp;X_{n,h-1}&amp;X_{n,h} \end{bmatrix}}{\begin{bmatrix}\beta _{0}\\\beta _{1}\\\beta _{2}\\\beta_{3}\\...\\\beta_{h-1}\\\beta_{h}\end{bmatrix}}
+\]</span>
+where <span class="math inline">\(n\)</span> is the number of samples.</p>
+<p>In the first step we create this matrix using <code>model.matrix()</code> that receives a formula with the variables to include in the models and the sample data.</p>
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb142-1" tabindex="-1"></a></span>
+<span id="cb142-2"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb142-2" tabindex="-1"></a><span class="do">## Define formula</span></span>
+<span id="cb142-3"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb142-3" tabindex="-1"></a>formula <span class="ot">&lt;-</span> <span class="er">~</span> Group <span class="sc">+</span> Sex <span class="sc">+</span> flowcell <span class="sc">+</span> mitoRate <span class="sc">+</span> overallMapRate <span class="sc">+</span> totalAssignedGene <span class="sc">+</span> detected <span class="sc">+</span> ERCCsumLogErr</span>
+<span id="cb142-4"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb142-4" tabindex="-1"></a></span>
+<span id="cb142-5"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb142-5" tabindex="-1"></a><span class="do">## Model matrix</span></span>
+<span id="cb142-6"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb142-6" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(formula, <span class="at">data =</span> <span class="fu">colData</span>(rse_gene_filt))</span>
+<span id="cb142-7"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb142-7" tabindex="-1"></a><span class="fu">head</span>(model)</span>
+<span id="cb142-8"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb142-8" tabindex="-1"></a><span class="co">#&gt;   (Intercept) GroupExperimental SexM flowcellHKCMHDSXX flowcellHKCNKDSXX flowcellHKCTMDSXX   mitoRate overallMapRate</span></span>
+<span id="cb142-9"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb142-9" tabindex="-1"></a><span class="co">#&gt; 1           1                 0    0                 0                 1                 0 0.03876995         0.9811</span></span>
+<span id="cb142-10"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb142-10" tabindex="-1"></a><span class="co">#&gt; 2           1                 1    0                 0                 1                 0 0.03337699         0.9791</span></span>
+<span id="cb142-11"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb142-11" tabindex="-1"></a><span class="co">#&gt; 3           1                 0    1                 0                 1                 0 0.03606147         0.9825</span></span>
+<span id="cb142-12"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb142-12" tabindex="-1"></a><span class="co">#&gt; 4           1                 1    1                 1                 0                 0 0.03962591         0.9855</span></span>
+<span id="cb142-13"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb142-13" tabindex="-1"></a><span class="co">#&gt;   totalAssignedGene detected ERCCsumLogErr</span></span>
+<span id="cb142-14"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb142-14" tabindex="-1"></a><span class="co">#&gt; 1         0.7715862    26545     -67.33211</span></span>
+<span id="cb142-15"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb142-15" tabindex="-1"></a><span class="co">#&gt; 2         0.7778447    24545     -66.38868</span></span>
+<span id="cb142-16"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb142-16" tabindex="-1"></a><span class="co">#&gt; 3         0.7870034    25640     -58.89350</span></span>
+<span id="cb142-17"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb142-17" tabindex="-1"></a><span class="co">#&gt; 4         0.7786461    25905     -84.91929</span></span>
+<span id="cb142-18"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb142-18" tabindex="-1"></a><span class="co">#&gt;  [ reached getOption(&quot;max.print&quot;) -- omitted 2 rows ]</span></span></code></pre></div>
+<p class="question">
+❓ <strong>Which variables to include as covariates in the models?</strong> A straightforward strategy is to keep the model as <strong>simple as possible</strong> and after fitting the model extract the variables of interest [3]. In chapter XX we have discussed how correlation and variance partition analyses can help us to set up the best models.
+</p>
+<p class="alert">
+⚠️ <strong>Very important</strong>: always check which condition group is set as the reference in you model for the coefficient/contrast of interest (column named as <code>[Coefficient_name][Reference_Group]</code>) as this determines if a DEG is up or downregulated in the given condition compared to the other.
+</p>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb143-1" tabindex="-1"></a><span class="do">## Comparison of interest: Group </span></span>
+<span id="cb143-2"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb143-2" tabindex="-1"></a>coef <span class="ot">&lt;-</span> <span class="st">&quot;GroupExperimental&quot;</span></span></code></pre></div>
+</div>
+<div id="voom" class="section level3 hasAnchor" number="21.2.2">
+<h3><span class="header-section-number">21.2.2</span> <code>voom()</code><a href="differential-gene-expression-analysis-with-limma-voom.html#voom" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Compared to NB-based methods, <em>limma</em> works with <span class="math inline">\(log(cpm)\)</span> which are approximately normally distributed (as we have seen) and thus, opens the possibility to leverage a wide range of normal-based statistical tools not available for count distributions, including methods developed for microarray data. However, <em>limma</em> doesn’t assume nor require data to follow a normal distribution, but it does apply normal-based microarray-like statistical methods to RNA-seq read counts [2].</p>
+<blockquote>
+“… limma does not make any assumption that the data appears normal in a histogram.”
+<div align="right">
+- Gordon Smyth, author of <em>limma</em>, in the <a href="https://support.bioconductor.org/p/9140296/#9156131">Bioconductor support website</a> 2021.
+</div>
+</blockquote>
+<p>The benefit of using <span class="math inline">\(log(cpm)\)</span>, however, is not immediate. One limitation for the direct application of normal-based methods to log-counts is that reads counts have unequal variabilities even after a log-transformation depending on the count sizes: probability distributions for counts are naturally heteroscedastic, with log-cpm not having constant variances (larger variances for larger counts) [2]. It has been proposed that to design powerful statistical analysis for RNA-seq, it is more important to model the relationship between the mean and the variance in the data than to specify which probabilistic distribution to use for the counts [2]. And importantly, converting count data taking such relationship into account does open up access to their analysis with normal-based methods. That’s why we use <code>voom()</code>.</p>
+<p>What <code>voom()</code> does is:</p>
+<ol style="list-style-type: decimal">
+<li><p>First, to compute log-cpm. Log-normalized expression for gene <span class="math inline">\(g\)</span> in sample <span class="math inline">\(i\)</span> (<span class="math inline">\(y_{gi}\)</span>) is given by<br />
+<span class="math display">\[
+y_{gi}=log_2(\frac{r_{gi} + 0.5}{R_i + 1.0} \times 10^6)
+\]</span>
+where <span class="math inline">\(r_{gi}\)</span> is the raw count for the gene in the sample and <span class="math inline">\(R_i\)</span> the library size of the sample.
+We add +0.5 to the counts to avoid log of zero and +1 to the library size to
+ensure that <span class="math inline">\(\frac{r_{gi}+0.5}{R_i+1}\)</span> is strictly less than 1 (if <span class="math inline">\(r_{gi} = R_i\)</span>).</p></li>
+<li><p>A linear model is fitted to gene log-cpm values by ordinary least squares as:
+<span class="math display">\[ E(y_{gi})=\mu_{gi}=X_i\beta_g \]</span>
+where <span class="math inline">\(E(y_{gi})\)</span> is the expected expression of gene <span class="math inline">\(g\)</span> in sample <span class="math inline">\(i\)</span>, <span class="math inline">\(X_i\)</span> is the vector with the sample values for the covariates and <span class="math inline">\(\beta_g\)</span> the vector of covariate coefficients for the gene. As a result, we have the estimated <span class="math inline">\(\hat\beta_g\)</span>, the fitted log-cpm’s <span class="math inline">\(\hat\mu_{gi}=X_i\hat\beta_g\)</span> and the residual standard deviations <span class="math inline">\(s_g\)</span>.</p></li>
+<li><p>Then it estimates the mean-variance trend of the data by fitting a smooth curve to the <span class="math inline">\(\sqrt s_g\)</span> of the genes presented as a function of the average gene expression (in log-counts, not log-cpm). The <span class="math inline">\(\sqrt s_g\)</span>’s are used because they are symmetrically distributed. Log-counts typically show a decreasing mean-variance trend.</p></li>
+<li><p><code>voom()</code> then predicts the standard deviation of each individual normalized observation <span class="math inline">\(y_{gi}\)</span> (<em>limma</em>-trend does that at the gene level) using this trend curve: the fitted log-count of each observation is mapped to the curve and its <span class="math inline">\(\sqrt s_{gi}\)</span>value is obtained. The observation weights are <span class="math inline">\(w_{gi}=\frac{1}{s_{gi}^2}\)</span>.</p></li>
+</ol>
+<figure>
+<img src="Figures/voom.png" width="800px" align=center />
+<figcaption style="color: gray; line-height: 0.9; text-align: justify">
+<p><font size="-1.8">
+<b>Figure 2</b>: <b> <code>voom()</code> procedure to estimate observation-level variance weights for <em>limma</em>. </b> Extracted from the original voom publication ( <a href="https://genomebiology.biomedcentral.com/articles/10.1186/gb-2014-15-2-r29">Law, C. W. <em>et al</em>. 2018</a>).</p>
+</font>
+</figcaption>
+</figure>
+<ol start="5" style="list-style-type: decimal">
+<li>Log-cpm (<span class="math inline">\(y_{gi}\)</span>) and associated weights (<span class="math inline">\(w_{gi}\)</span>) can then be entered into the <em>limma</em> framework for linear modeling. These weights are used in the linear modeling to adjust for count heteroscedasticity [2].</li>
+</ol>
+<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb144-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;limma&quot;</span>)</span>
+<span id="cb144-2"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb144-2" tabindex="-1"></a></span>
+<span id="cb144-3"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb144-3" tabindex="-1"></a><span class="do">## voom():</span></span>
+<span id="cb144-4"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb144-4" tabindex="-1"></a><span class="co">#   1. Transform counts to log2(cpm) </span></span>
+<span id="cb144-5"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb144-5" tabindex="-1"></a><span class="co">#      ----------------------------------------------------------------------------</span></span>
+<span id="cb144-6"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb144-6" tabindex="-1"></a><span class="co">#.     |   Note we passed voom() raw counts as input, not the lognorm counts!!!   |</span></span>
+<span id="cb144-7"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb144-7" tabindex="-1"></a><span class="co">#      ----------------------------------------------------------------------------</span></span>
+<span id="cb144-8"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb144-8" tabindex="-1"></a><span class="co">#   2. Estimate mean-variance relationship for each gene</span></span>
+<span id="cb144-9"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb144-9" tabindex="-1"></a><span class="co">#   3. Compute observation weights for limma (next step)</span></span>
+<span id="cb144-10"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb144-10" tabindex="-1"></a></span>
+<span id="cb144-11"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb144-11" tabindex="-1"></a>vGene <span class="ot">&lt;-</span> <span class="fu">voom</span>(<span class="fu">assay</span>(rse_gene_filt), <span class="at">design =</span> model, <span class="at">plot =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/voom-1.png" width="672" /></p>
+<p>Let’s explore the outpus of this function.</p>
+<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-1" tabindex="-1"></a><span class="do">## Returned data</span></span>
+<span id="cb145-2"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-2" tabindex="-1"></a><span class="fu">names</span>(vGene)</span>
+<span id="cb145-3"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-3" tabindex="-1"></a><span class="co">#&gt; [1] &quot;E&quot;       &quot;weights&quot; &quot;design&quot;  &quot;targets&quot;</span></span>
+<span id="cb145-4"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-4" tabindex="-1"></a></span>
+<span id="cb145-5"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-5" tabindex="-1"></a><span class="do">## E: contains the computed log(cpm)</span></span>
+<span id="cb145-6"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-6" tabindex="-1"></a><span class="fu">dim</span>(vGene<span class="sc">$</span>E)</span>
+<span id="cb145-7"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-7" tabindex="-1"></a><span class="co">#&gt; [1] 19974    42</span></span>
+<span id="cb145-8"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-8" tabindex="-1"></a>vGene<span class="sc">$</span>E[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span>
+<span id="cb145-9"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-9" tabindex="-1"></a><span class="co">#&gt;                            [,1]       [,2]       [,3]      [,4]      [,5]</span></span>
+<span id="cb145-10"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-10" tabindex="-1"></a><span class="co">#&gt; ENSMUSG00000051951.5   5.906572  6.1425731  5.7434780  6.133741  6.061250</span></span>
+<span id="cb145-11"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-11" tabindex="-1"></a><span class="co">#&gt; ENSMUSG00000102331.1  -1.512368 -0.9445475 -1.9587859 -1.306258 -1.024247</span></span>
+<span id="cb145-12"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-12" tabindex="-1"></a><span class="co">#&gt; ENSMUSG00000025900.13 -2.074247 -1.9918532 -0.3738234 -1.736892 -1.691672</span></span>
+<span id="cb145-13"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-13" tabindex="-1"></a><span class="co">#&gt; ENSMUSG00000025902.13  1.446325  1.2611275  1.3707154  1.419026  1.688471</span></span>
+<span id="cb145-14"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-14" tabindex="-1"></a><span class="co">#&gt; ENSMUSG00000098104.1   1.572354  1.2408075  1.4727667  1.404882  1.533748</span></span>
+<span id="cb145-15"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-15" tabindex="-1"></a></span>
+<span id="cb145-16"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-16" tabindex="-1"></a><span class="do">## weights: contains the computed variance weight for each observation</span></span>
+<span id="cb145-17"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-17" tabindex="-1"></a><span class="fu">dim</span>(vGene<span class="sc">$</span>weights)</span>
+<span id="cb145-18"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-18" tabindex="-1"></a><span class="co">#&gt; [1] 19974    42</span></span>
+<span id="cb145-19"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-19" tabindex="-1"></a>vGene<span class="sc">$</span>weights[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span>
+<span id="cb145-20"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-20" tabindex="-1"></a><span class="co">#&gt;            [,1]       [,2]       [,3]       [,4]       [,5]</span></span>
+<span id="cb145-21"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-21" tabindex="-1"></a><span class="co">#&gt; [1,] 143.326885 117.323375 139.214140 141.247546 128.818305</span></span>
+<span id="cb145-22"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-22" tabindex="-1"></a><span class="co">#&gt; [2,]   4.255525   4.277395   2.698902   5.113520   3.377285</span></span>
+<span id="cb145-23"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-23" tabindex="-1"></a><span class="co">#&gt; [3,]   4.009671   3.341317   5.555186   4.020098   2.546810</span></span>
+<span id="cb145-24"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-24" tabindex="-1"></a><span class="co">#&gt; [4,]  20.584769  15.108579  15.521441  19.219652  16.893714</span></span>
+<span id="cb145-25"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-25" tabindex="-1"></a><span class="co">#&gt; [5,]  22.473314  16.369739  18.359068  17.691839  14.325510</span></span>
+<span id="cb145-26"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-26" tabindex="-1"></a></span>
+<span id="cb145-27"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-27" tabindex="-1"></a><span class="do">## design is the provided design matrix </span></span>
+<span id="cb145-28"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-28" tabindex="-1"></a><span class="fu">head</span>(vGene<span class="sc">$</span>design)</span>
+<span id="cb145-29"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-29" tabindex="-1"></a><span class="co">#&gt;   (Intercept) GroupExperimental SexM flowcellHKCMHDSXX flowcellHKCNKDSXX flowcellHKCTMDSXX   mitoRate overallMapRate</span></span>
+<span id="cb145-30"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-30" tabindex="-1"></a><span class="co">#&gt; 1           1                 0    0                 0                 1                 0 0.03876995         0.9811</span></span>
+<span id="cb145-31"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-31" tabindex="-1"></a><span class="co">#&gt; 2           1                 1    0                 0                 1                 0 0.03337699         0.9791</span></span>
+<span id="cb145-32"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-32" tabindex="-1"></a><span class="co">#&gt; 3           1                 0    1                 0                 1                 0 0.03606147         0.9825</span></span>
+<span id="cb145-33"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-33" tabindex="-1"></a><span class="co">#&gt; 4           1                 1    1                 1                 0                 0 0.03962591         0.9855</span></span>
+<span id="cb145-34"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-34" tabindex="-1"></a><span class="co">#&gt;   totalAssignedGene detected ERCCsumLogErr</span></span>
+<span id="cb145-35"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-35" tabindex="-1"></a><span class="co">#&gt; 1         0.7715862    26545     -67.33211</span></span>
+<span id="cb145-36"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-36" tabindex="-1"></a><span class="co">#&gt; 2         0.7778447    24545     -66.38868</span></span>
+<span id="cb145-37"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-37" tabindex="-1"></a><span class="co">#&gt; 3         0.7870034    25640     -58.89350</span></span>
+<span id="cb145-38"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-38" tabindex="-1"></a><span class="co">#&gt; 4         0.7786461    25905     -84.91929</span></span>
+<span id="cb145-39"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-39" tabindex="-1"></a><span class="co">#&gt;  [ reached getOption(&quot;max.print&quot;) -- omitted 2 rows ]</span></span>
+<span id="cb145-40"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-40" tabindex="-1"></a></span>
+<span id="cb145-41"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-41" tabindex="-1"></a><span class="do">## targets: the sample library sizes used to compute log(cpm) in the first step</span></span>
+<span id="cb145-42"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-42" tabindex="-1"></a><span class="fu">dim</span>(vGene<span class="sc">$</span>targets)</span>
+<span id="cb145-43"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-43" tabindex="-1"></a><span class="co">#&gt; [1] 42  1</span></span>
+<span id="cb145-44"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-44" tabindex="-1"></a><span class="fu">head</span>(vGene<span class="sc">$</span>targets)</span>
+<span id="cb145-45"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-45" tabindex="-1"></a><span class="co">#&gt;   lib.size</span></span>
+<span id="cb145-46"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-46" tabindex="-1"></a><span class="co">#&gt; 1 44218086</span></span>
+<span id="cb145-47"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-47" tabindex="-1"></a><span class="co">#&gt; 2 29831069</span></span>
+<span id="cb145-48"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-48" tabindex="-1"></a><span class="co">#&gt; 3 36929795</span></span>
+<span id="cb145-49"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-49" tabindex="-1"></a><span class="co">#&gt; 4 38331383</span></span>
+<span id="cb145-50"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-50" tabindex="-1"></a><span class="co">#&gt; 5 27457620</span></span>
+<span id="cb145-51"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-51" tabindex="-1"></a><span class="co">#&gt; 6 27113922</span></span>
+<span id="cb145-52"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-52" tabindex="-1"></a></span>
+<span id="cb145-53"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-53" tabindex="-1"></a><span class="fu">identical</span>(vGene<span class="sc">$</span>targets<span class="sc">$</span>lib.size, <span class="fu">colSums</span>(<span class="fu">assay</span>(rse_gene_filt)))</span>
+<span id="cb145-54"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-54" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
+<p class="conclusion">
+➡️ In summary, <code>voom()</code> estimates non-parametrically the global mean-variance trend of the count data based on the expression of the genes and uses that to predict the variance of each individual expression observation (each log-cpm value) based on their predicted count sizes. The predicted variances are then associated as inverse weights to each observation that when used in linear modeling eliminate the log-cpm mean-variance trend [2].
+</p>
+<div style="background-color:#E0EEE0; padding:20px; font-family: sans-serif">
+<p>
+👉🏼 <strong>Advantages</strong>:
+<ul>
+<li>
+✅ <code>voom()</code> estimates the mean-variance relationship in a non-parametric way.
+</li>
+<blockquote class="ludwig">
+“The parametric advantages of the Poisson or NB distributions are mitigated by the fact that the observed mean-variance relationship of RNA-seq data does not perfectly match the theoretical mean-variance relationships inherent in these distributions. While the quadratic mean-variance relationship of the NB distribution captures most of the mean-variance trend, the NB dispersion still shows a non-ignorable trend with gene abundance.” [2]
+</blockquote>
+<li>
+✅ Since <code>voom()</code> is a method to adapt count data to normal models, these give access to tractable empirical Bayes distribution theory.
+</li>
+<li>
+✅ The use of normal distribution approaches and variance modeling is supported by generalized linear model theory.
+</li>
+</ul>
+</p>
+</div>
+</div>
+<div id="lmfit" class="section level3 hasAnchor" number="21.2.3">
+<h3><span class="header-section-number">21.2.3</span> <code>lmFit()</code><a href="differential-gene-expression-analysis-with-limma-voom.html#lmfit" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>This <em>limma</em> function fits a <strong>multiple linear model</strong> to the expression of each gene by weighted or generalized least squares to estimate the coefficients of the sample covariates which correspond to the logFC’s comparing gene expression between sample groups.</p>
+<p><strong>Ordinary least squares (OLS)</strong></p>
+<p>This is used to estimate the coefficients of a linear regression by minimizing the residual sum of squares [5].</p>
+<figure>
+<p><img src="Figures/lmFit.png" width="400px" align=left />
+&lt;figcaption style=“color: gray; line-height: 0.9; text-align: justify; caption-side: bottom&gt;
+<font size="-1.8">
+<b>Figure 3</b>: <b> Graphical representation of the OLS method for simple regression analysis </b>. Source: Gulve, A. (2020). Ordinary Least Square (OLS) Method for Linear Regression.</p>
+</font>
+</figcaption>
+</figure>
+<p>For simplicity, let’s work with one gene and say we have <span class="math inline">\(n\)</span> samples. The fitted expression of the gene in the <span class="math inline">\(j\)</span>th sample is <span class="math inline">\(\hat y_j =\beta_{0} + \sum_{1}^h\beta_{h}X_{jh}\)</span> , where <span class="math inline">\(\beta_h\)</span> is the coefficient for the <span class="math inline">\(h\)</span>th covariate and <span class="math inline">\(X_{jh}\)</span> the value the <span class="math inline">\(j\)</span>th sample takes for the <span class="math inline">\(h\)</span>th covariate. It can also be written as <span class="math inline">\(\hat y_j =\sum_{0}^h\beta_{h}X_{jh}\)</span> if <span class="math inline">\(X_{j0}=1\)</span>.</p>
+<p>So we have an overdetermined system of <span class="math inline">\(n\)</span> linear equations and <span class="math inline">\(h\)</span> unknown parameters with <span class="math inline">\(n&gt;h\)</span>:</p>
+<p><span class="math inline">\(\hat y_j =\sum_{0}^h\beta_{h}X_{jh}\)</span> with <span class="math inline">\(j=(1,2, ..., n)\)</span>.</p>
+<p>Such system usually has no exact solution, so we need to estimate the coefficients that better fit the data in a linear regression. The problem is reduced to solving a quadratic minimization problem:</p>
+<p><span class="math inline">\(\hat \beta=arg \ _\beta\ min \ \ S(\beta)\)</span> where <span class="math inline">\(S(\beta)=\sum_j(y_j -\hat y_j)^2=RSS\)</span>.</p>
+<div style="background-color:#FFFFF0; padding:20px; font-family: sans-serif; border: 1px solid black">
+<p>➡️ We can see these <span class="math inline">\(\beta\)</span>’s as differences in the fitted (expected) expression of a gene. Say we have two categorical variables in the model, then the expected gene expression in a sample is <span class="math inline">\(E(y|X_1, X_2) =\hat y =\beta_{0} + \beta_1X_1+\beta_2X_2\)</span>, where <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> equal 1 or 0. Then we have the following 4 combinations:</p>
+<ul>
+<li><mark style= "background-color: #FAECF8"> <span class="math inline">\(E(y|X_1=1, X_2=1) = \mu_{12}=\beta_{0} + \beta_1+\beta_2\)</span> </mark></li>
+<li><mark style= "background-color: #FCF3CF"> <span class="math inline">\(E(y|X_1=1, X_2=0) =\mu_{1}=\beta_{0} + \beta_1\)</span> </mark></li>
+<li><mark style= "background-color: #FAECF8"> <span class="math inline">\(E(y|X_1=0, X_2=1) =\mu_{2}=\beta_{0} + \beta_2\)</span> </mark></li>
+<li><mark style= "background-color: #FCF3CF"> <span class="math inline">\(E(y|X_1=0, X_2=0) =\mu_{0}=\beta_{0}\)</span> </mark></li>
+</ul>
+<p>So <span class="math inline">\(\beta_1=\)</span> <mark style= "background-color: #FCF3CF"><span class="math inline">\(\mu_1-\mu_0\)</span></mark> <span class="math inline">\(=\)</span> <mark style= "background-color: #FAECF8"> <span class="math inline">\(\mu_{12}-\mu_2\)</span> </mark> and <span class="math inline">\(\beta_2=\mu_2-\mu_0\)</span>. Say our variable of interest is <span class="math inline">\(\beta_1\)</span>. Then in the two-sample <em>t</em>-test, what we are really testing is if the expected expression of a gene is different when <span class="math inline">\(X_1=1\)</span> (in the first sample group) and <span class="math inline">\(X_1=0\)</span> (in the second sample group), fixing <span class="math inline">\(X_2\)</span> in either 1 or 0.</p>
+</div>
+<p><strong>Generalized least squares (GLS)</strong></p>
+<p>Is a generalization of OLS that allows for heteroskedasticity and correlation between the residuals [6].</p>
+<p><strong>Weighted least squares (WLS)</strong></p>
+<p>In this case the function to be minimized becomes the weighted sum of the squared residuals: squared residuals are weighted by the reciprocal of their variance so that more noisy observations have less weight. That’s what we used <code>voom()</code> for.</p>
+<p><code>lmFit()</code> returns a fitted model object with the estimated <strong>coefficients</strong>, <strong>standard errors</strong> (<span class="math inline">\(SE=sd/\sqrt n\)</span>) and <strong>residual standard errors/deviations</strong> (<span class="math inline">\(RSE=s_g=\sqrt {RSS/ n-2}\)</span>) for each gene. Depending on the arguments and correlations in the data, this function calls one of the following functions to fit a linear model for each gene [7]:</p>
+<ul>
+<li><code>mrlm</code>: for a robust regression if <code>method="robust”</code>.</li>
+<li><code>gls.series</code>: GLS estimator if <code>method="ls”</code> and a correlation structure has been specified.</li>
+<li><code>lm.series</code>: OLS method if <code>method="ls”</code> and there is no correlation structure.</li>
+</ul>
+<p>For the <code>weights</code> argument of <code>lmFit()</code>, the precision weights for the observations previously computed are extracted from the <code>voom()</code> output.</p>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb146-1" tabindex="-1"></a><span class="do">## lmFit():</span></span>
+<span id="cb146-2"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb146-2" tabindex="-1"></a><span class="co">#   1. Fit linear model for each gene to estimate logFCs</span></span>
+<span id="cb146-3"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb146-3" tabindex="-1"></a>fitGene <span class="ot">&lt;-</span> <span class="fu">lmFit</span>(vGene)</span>
+<span id="cb146-4"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb146-4" tabindex="-1"></a></span>
+<span id="cb146-5"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb146-5" tabindex="-1"></a><span class="do">## Corroborate &quot;ls&quot; method was applied</span></span>
+<span id="cb146-6"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb146-6" tabindex="-1"></a>fitGene<span class="sc">$</span>method</span>
+<span id="cb146-7"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb146-7" tabindex="-1"></a><span class="co">#&gt; [1] &quot;ls&quot;</span></span>
+<span id="cb146-8"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb146-8" tabindex="-1"></a></span>
+<span id="cb146-9"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb146-9" tabindex="-1"></a><span class="do">## Explore outputs: estimated coefficients (logFCs)</span></span>
+<span id="cb146-10"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb146-10" tabindex="-1"></a><span class="fu">head</span>(fitGene<span class="sc">$</span>coefficients)</span>
+<span id="cb146-11"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb146-11" tabindex="-1"></a><span class="co">#&gt;                       (Intercept) GroupExperimental        SexM flowcellHKCMHDSXX flowcellHKCNKDSXX flowcellHKCTMDSXX</span></span>
+<span id="cb146-12"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb146-12" tabindex="-1"></a><span class="co">#&gt; ENSMUSG00000051951.5   -35.637900       -0.05125195  0.05690091       -0.47469588       -0.38545404       -0.66545820</span></span>
+<span id="cb146-13"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb146-13" tabindex="-1"></a><span class="co">#&gt; ENSMUSG00000102331.1    37.943310        0.72450620  0.19887963       -0.20803712       -0.40926270       -0.10900553</span></span>
+<span id="cb146-14"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb146-14" tabindex="-1"></a><span class="co">#&gt; ENSMUSG00000025900.13  -43.586603        0.17256694  0.28895786       -0.04476551        0.15257245       -0.06949759</span></span>
+<span id="cb146-15"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb146-15" tabindex="-1"></a><span class="co">#&gt; ENSMUSG00000025902.13    5.657837       -0.05025788 -0.04808144       -0.18732331       -0.26041436        0.07364071</span></span>
+<span id="cb146-16"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb146-16" tabindex="-1"></a><span class="co">#&gt;                         mitoRate overallMapRate totalAssignedGene      detected ERCCsumLogErr</span></span>
+<span id="cb146-17"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb146-17" tabindex="-1"></a><span class="co">#&gt; ENSMUSG00000051951.5  -11.487040      37.443647          4.753830  6.442499e-05 -0.0043851842</span></span>
+<span id="cb146-18"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb146-18" tabindex="-1"></a><span class="co">#&gt; ENSMUSG00000102331.1  -21.871815      27.323603        -79.223111 -1.026687e-04  0.0166190950</span></span>
+<span id="cb146-19"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb146-19" tabindex="-1"></a><span class="co">#&gt; ENSMUSG00000025900.13  16.727251       7.179484         42.367908  8.535604e-05  0.0133260060</span></span>
+<span id="cb146-20"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb146-20" tabindex="-1"></a><span class="co">#&gt; ENSMUSG00000025902.13 -24.538883      11.174017        -18.548282 -1.231546e-05 -0.0092194951</span></span>
+<span id="cb146-21"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb146-21" tabindex="-1"></a><span class="co">#&gt;  [ reached getOption(&quot;max.print&quot;) -- omitted 2 rows ]</span></span></code></pre></div>
+<div class="alert alert-info">
+<p><strong>Interaction terms in linear models</strong></p>
+<p>In some cases we want to model the gene expression differences in 2 conditions within more than 1 group. Say for example that we are interested in knowing what are the effects of a treatment (<span class="math inline">\(X_1=1\)</span> for treatment and 0 for controls) in female and males separately (<span class="math inline">\(X_2=1\)</span> for females and 0 for males). For that we can apply an interaction model in which we include the product of <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> so that <span class="math inline">\(X_1X_2=1\)</span> if a sample comes from a female that was treated and 0 otherwise:</p>
+<p><span class="math display">\[E(y|X_1, X_2) =\beta_{0} + \beta_1X_1+\beta_2X_2 + \beta_3X_1X_2\]</span></p>
+<ul>
+<li><span class="math inline">\(E(y|X_1=1, X_2=1) =\mu_{12} =\beta_{0} + \beta_1+\beta_2+\beta_3\)</span></li>
+<li><span class="math inline">\(E(y|X_1=1, X_2=0) =\mu_{1} =\beta_{0} + \beta_1\)</span></li>
+<li><span class="math inline">\(E(y|X_1=0, X_2=1) =\mu_{2} =\beta_{0} + \beta_2\)</span></li>
+<li><span class="math inline">\(E(y|X_1=0, X_2=0) =\mu_{0} =\beta_{0}\)</span></li>
+</ul>
+<p><span class="math inline">\(\beta_1 + \beta_3=\mu_{12}-\mu_2\)</span> which is the expression difference in cases and controls for females samples (<span class="math inline">\(X_2=1\)</span> ) and <span class="math inline">\(\beta_1 =\mu_{1}-\mu_0\)</span> for males (<span class="math inline">\(X_2=0\)</span>). Finally <span class="math inline">\(\beta_3\)</span>, called the <strong>interaction term</strong>, is <span class="math inline">\(\beta_3=(\mu_{12}-\mu_2)-(\mu_1-\mu_0)\)</span>, described as the difference in gene expression changes driven by the treatment in females compared to males [8].</p>
+</div>
+</div>
+<div id="ebayes" class="section level3 hasAnchor" number="21.2.4">
+<h3><span class="header-section-number">21.2.4</span> <code>eBayes()</code><a href="differential-gene-expression-analysis-with-limma-voom.html#ebayes" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+</div>
+<div id="toptable" class="section level3 hasAnchor" number="21.2.5">
+<h3><span class="header-section-number">21.2.5</span> <code>topTable()</code><a href="differential-gene-expression-analysis-with-limma-voom.html#toptable" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+</div>
+</div>
+<div id="references-3" class="section level2 hasAnchor" number="21.3">
+<h2><span class="header-section-number">21.3</span> References<a href="differential-gene-expression-analysis-with-limma-voom.html#references-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ol style="list-style-type: decimal">
+<li><p>Li, W. V., &amp; Li, J. J. (2018). Modeling and analysis of RNA‐seq data: a review from a statistical perspective. Quantitative Biology, 6(3), 195-209.</p></li>
+<li><p>Law, C. W., Chen, Y., Shi, W., &amp; Smyth, G. K. (2014). voom: Precision weights unlock linear model analysis tools for RNA-seq read counts. Genome biology, 15(2), 1-17.</p></li>
+<li><p>Smyth, G. K., Ritchie, M., Thorne, N., Wettenhall, J., Shi, W., &amp; Hu, Y. (2002). limma: linear models for microarray and RNA-Seq data user’s guide. Bioinformatics Division, The Walter and Eliza Hall Institute of Medical Research, Melbourne, Australia.</p></li>
+<li><p>van den Berg, S. M. (2022). Analysing data using linear models. Web site: <a href="https://bookdown.org/pingapang9/linear_models_bookdown/" class="uri">https://bookdown.org/pingapang9/linear_models_bookdown/</a></p></li>
+<li><p>Wikipedia. (n.d.). Ordinary least squares. Web site: <a href="https://en.wikipedia.org/wiki/Ordinary_least_squares" class="uri">https://en.wikipedia.org/wiki/Ordinary_least_squares</a></p></li>
+<li><p>Taboga, Marco (2021). “Generalized least squares”, Lectures on probability theory and mathematical statistics. Kindle Direct Publishing. Online appendix. <a href="https://www.statlect.com/fundamentals-of-statistics/generalized-least-squares" class="uri">https://www.statlect.com/fundamentals-of-statistics/generalized-least-squares</a>.</p></li>
+<li><p>Documentation for lmFit: <a href="https://rdrr.io/bioc/limma/man/lmFit.html" class="uri">https://rdrr.io/bioc/limma/man/lmFit.html</a></p></li>
+<li><p>The Pennsylvania State University. (2018). Statistical Analysis of Genomics Data. Web site: <a href="https://online.stat.psu.edu/stat555/node/36/" class="uri">https://online.stat.psu.edu/stat555/node/36/</a></p></li>
+</ol>
+
+</div>
+</div>
+
+
+
+
+
+
+<div class="container">
+    <footer class="site-footer">
+
+      <center>
+<p class="powered-by">
+© 2011-2023. All thoughts and opinions here are my own. The icon was designed by <a href="https://www.linkedin.com/in/mauricio-guzman-6529b551/">Mauricio Guzmán</a> and is inspired by <a href="https://en.wikipedia.org/wiki/Huichol">Huichol culture</a>; it represents my community building interests.
+</p>
+
+<p class="powered-by copyright-license-text">
+This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0" rel="noopener noreferrer" target="_blank">CC BY NC SA 4.0</a>
+</p>
+
+<p class="powered-by footer-license-icons">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0" rel="noopener noreferrer" target="_blank">
+      <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="CC icon" width="32px">
+      <img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="CC by icon" width="32px">
+      <img src="https://mirrors.creativecommons.org/presskit/icons/nc.svg" alt="CC NC icon" width="32px">
+      <img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="CC SA icon" width="32px">
+    </a>
+</p>
+
+<div id="clustrmaps-widget"></div><script type='text/javascript' id='clustrmaps' src='//cdn.clustrmaps.com/map_v2.js?cl=ffffff&w=300&t=m&d=Zo-deincaJGsqhqjIWsujtdoNOMJsnnZLefKmxDKVv8&co=124b73&cmo=dd53ff&cmn=4ec724'></script>
+
+<p class="powered-by">
+Published with <a href="https://bookdown.org/" target="_blank" rel="noopener">Bookdown</a>
+</p>
+
+</center>
+
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-45299226-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-45299226-1');
+</script>
+
+</footer>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="differential-gene-expression-analysis-overview.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
