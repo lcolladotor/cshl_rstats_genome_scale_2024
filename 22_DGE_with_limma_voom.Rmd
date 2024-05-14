@@ -29,13 +29,13 @@ Estimating the NB distribution parameters is necessary to assess DE of each gene
 
 Examples of popular methods based on the NB distribution are [*edgeR*](https://bioconductor.org/packages/release/bioc/html/edgeR.html) and [*DESeq2*](https://bioconductor.org/packages/release/bioc/html/DESeq2.html). 
 
-Nevertheless, one problem NB-based methods for differential expression face is that they set dispersion of the data as a known and global parameter, ignoring observation-specific variation and importantly, there's a reduced number of statistical methods for count distributions compared to the normal distribution [1,2]. Here, we'll focus on [*limma*](https://bioconductor.org/packages/release/bioc/html/limma.html) that does not rely on a certain distribution but rather works on $log_2(cpm)$ and fits linear models for DGE enabling the incorporation of additional predictors to model gene expression, specially useful in complex experimental settings.   
+Nevertheless, one problem NB-based methods face is that they set dispersion of the data as a known and global parameter, ignoring observation-specific variation and importantly, there's a reduced number of statistical methods for count distributions compared to the normal distribution [1,2]. Here, we'll focus on [*limma*](https://bioconductor.org/packages/release/bioc/html/limma.html) that does not rely on a certain distribution but rather works on $log_2(cpm)$ and fits linear models for DGE enabling the incorporation of additional predictors to model gene expression, a feature specially valuable for complex experimental settings.   
 
 
  
 ## *limma*-*voom* pipeline
 
-[*limma*](https://bioconductor.org/packages/release/bioc/html/limma.html) is a package for the analysis of gene expression data arising from microarray or RNA-seq technologies. It has features that make the analyses stable even for experiments with small number of arrays —this is achieved by borrowing information across genes. It is specially designed for analyzing complex experiments with a variety of experimental conditions and predictors [3].
+[*limma*](https://bioconductor.org/packages/release/bioc/html/limma.html) is a package for the analysis of gene expression data arising from microarray or RNA-seq technologies. It has features that make the analyses stable even for experiments with small number of arrays or samples —this is achieved by borrowing information across genes. It is specially designed for analyzing complex experiments with a variety of experimental conditions and predictors [3].
 
 Usually, *limma* DGE analysis is carried out in five main steps, the last four of them completed by *limma* `R` functions, as described below. We'll use bulk RNA-seq data from the [`smokingMouse()`](https://bioconductor.org/packages/release/data/experiment/html/smokingMouse.html) package to exemplify the steps. 
 
@@ -82,10 +82,22 @@ head(colData(rse_gene_filt), 2)
 *limma* fits a linear model to the expression data of each gene (response variable), modeling the systematic part of the data by sample-level covariates (predictors). 
 
 <style>
-p.comment {
-background-color: #F0F0F0;
-padding: 10px;
-border: 0px solid black;
+p.info {
+background-color: #FFFFF0;
+padding: 20px;
+border: 1px solid black;
+margin-left: 0px;
+border-radius: 1px;
+font-family: sans-serif;
+}
+</style>
+
+
+<style>
+p.conclusion {
+background-color: #EEE9E9;
+padding: 20px;
+border: 1px solid black;
 margin-left: 0px;
 border-radius: 1px;
 font-family: sans-serif;
@@ -93,7 +105,56 @@ font-family: sans-serif;
 
 </style>
 
-<p class="comment">
+
+<style>
+p.question{
+background-color: #E3E3E3;
+padding: 20px;
+border: 1px solid black;
+margin-left: 0px;
+border-radius: 1px;
+font-family: sans-serif;
+}
+</style>
+
+
+<style>
+p.comment {
+background-color: #F0F0F0;
+padding: 20px;
+border: 0px solid black;
+margin-left: 0px;
+border-radius: 1px;
+font-family: sans-serif;
+}
+</style>
+
+
+<style>
+p.alert {
+background-color: #FFE4E1;
+padding: 20px;
+border: 0px solid black;
+margin-left: 0px;
+border-radius: 1px;
+font-family: sans-serif;
+}
+</style>
+
+
+<style>
+p.success {
+background-color: #E0EEE0;
+padding: 20px;
+border: 0px solid black;
+margin-left: 0px;
+border-radius: 1px;
+font-family: sans-serif;
+}
+</style>
+
+
+<p class="info">
 💡 A model is a specification of how a set of variables relate to each other. In the case of a linear model, it is a linear equation that describes how the dependent or response variable is explained by the independent variables, also called predictors. A regression analysis with more than one independent variable is called **multiple regression**. Regression with only one independent variable is called **simple regression**. There are many variations but what they all have in common is that all of them aim to predict one dependent variable from one or more predictors through a linear equation [4].
 </p>
 
@@ -112,7 +173,7 @@ In the first step we create this matrix using `model.matrix()` that receives a f
 ```{r model.matrix()}
 
 ## Define formula
-formula <- ~ Group + Sex + plate + mitoRate + rRNA_rate + sum + detected 
+formula <- ~ Group + Sex + flowcell + mitoRate + overallMapRate + totalAssignedGene + detected + ERCCsumLogErr
 
 ## Model matrix
 model <- model.matrix(formula, data = colData(rse_gene_filt))
@@ -120,12 +181,13 @@ head(model)
 
 ```
 
-<p class="comment">
+<p class="question">
 ❓ **Which variables to include as covariates in the models?** A straightforward strategy is to keep the model as **simple as possible** and after fitting the model extract the variables of interest [3]. In chapter XX we have discussed how correlation and variance partition analyses can help us to set up the best models.
  </p>
 
-<p class="comment">
+<p class="alert">
 ⚠️ **Very important**: always check which condition group is set as the reference in you model for the coefficient/contrast of interest (column named as `[Coefficient_name][Reference_Group]`) as this determines if a DEG is up or downregulated in the given condition compared to the other.</p>
+
 ```{r coeff}
 ## Comparison of interest: Group 
 coef <- "GroupExperimental"
@@ -137,8 +199,9 @@ coef <- "GroupExperimental"
 
 Compared to NB-based methods, *limma* works with $log(cpm)$ which are approximately normally distributed (as we have seen) and thus, opens the possibility to leverage a wide range of normal-based statistical tools not available for count distributions, including methods developed for microarray data. However, *limma* doesn't assume nor require data to follow a normal distribution, but it does apply normal-based microarray-like statistical methods to RNA-seq read counts [2].
 
->  "... limma does not make any assumption that the data appears normal in a histogram."
-     \- Gordon Smyth, author of *limma*, in the [Bioconductor support website](https://support.bioconductor.org/p/9140296/#9156131) 2021.
+>  "... limma does not make any assumption that the data appears normal in a histogram." 
+<div align="right"> \- Gordon Smyth, author of *limma*, in the [Bioconductor support website](https://support.bioconductor.org/p/9140296/#9156131) 2021. </div>
+
 
 The benefit of using $log(cpm)$, however, is not immediate. One limitation for the direct application of normal-based methods to log-counts is that reads counts have unequal variabilities even after a log-transformation depending on the count sizes: probability distributions for counts are naturally heteroscedastic, with log-cpm not having constant variances (larger variances for larger counts) [2]. It has been proposed that to design powerful statistical analysis for RNA-seq, it is more important to model the relationship between the mean and the variance in the data than to specify which probabilistic distribution to use for the counts [2]. And importantly, converting count data taking such relationship into account does open up access to their analysis with normal-based methods. That’s why we use `voom()`. 
 
@@ -170,15 +233,153 @@ $$ E(y_{gi})=\mu_{gi}=X_i\beta_g $$
         </figcaption>
 </figure>
 
-5. Log-cpm ($y_{gi}$) and associated weights ($w_{gi}$) can then be entered into the limma framework for linear modeling [3]. These weights are used in the linear modeling to adjust for count heteroscedasticity.
+5. Log-cpm ($y_{gi}$) and associated weights ($w_{gi}$) can then be entered into the *limma* framework for linear modeling. These weights are used in the linear modeling to adjust for count heteroscedasticity [2].
+
+```{r voom}
+library("limma")
+
+## voom():
+#   1. Transform counts to log2(cpm) 
+#      ----------------------------------------------------------------------------
+#.     |   Note we passed voom() raw counts as input, not the lognorm counts!!!   |
+#      ----------------------------------------------------------------------------
+#   2. Estimate mean-variance relationship for each gene
+#   3. Compute observation weights for limma (next step)
+
+vGene <- voom(assay(rse_gene_filt), design = model, plot = TRUE)
+```
+
+Let's explore the outpus of this function.
+```{r voom_outs}
+## Returned data
+names(vGene)
+
+## E: contains the computed log(cpm)
+dim(vGene$E)
+vGene$E[1:5, 1:5]
+
+## weights: contains the computed variance weight for each observation
+dim(vGene$weights)
+vGene$weights[1:5, 1:5]
+
+## design is the provided design matrix 
+head(vGene$design)
+
+## targets: the sample library sizes used to compute log(cpm) in the first step
+dim(vGene$targets)
+head(vGene$targets)
+
+identical(vGene$targets$lib.size, colSums(assay(rse_gene_filt)))
+```
+
+<p class="conclusion">
+➡️ In summary, `voom()` estimates non-parametrically the global mean-variance trend of the count data based on the expression of the genes and uses that to predict the variance of each individual expression observation (each log-cpm value) based on their predicted count sizes. The predicted variances are then associated as inverse weights to each observation that when used in linear modeling eliminate the log-cpm mean-variance trend [2]. 
+ </p>
 
 
 
-## CODEEEEE
+
+
+
+<div style="background-color:#E0EEE0; padding:20px; font-family: sans-serif">
+<p>
+👉🏼 **Advantages**:
+<ul>
+<li>✅ `voom()` estimates the mean-variance relationship in a non-parametric way. </li>
+ <blockquote class="ludwig">
+    "The parametric advantages of the Poisson or NB distributions are mitigated by the fact that the observed mean-variance relationship of RNA-seq data does not perfectly match the theoretical mean-variance relationships inherent in these distributions. While the quadratic mean-variance relationship of the NB distribution captures most of the mean-variance trend, the NB dispersion still shows a non-ignorable trend with gene abundance." [2]
+ </blockquote>
+<li>✅ Since `voom()` is a method to adapt count data to normal models, these give access to tractable empirical Bayes distribution theory. </li>
+<li>✅ The use of normal distribution approaches and variance modeling is supported by generalized linear model theory. </li>
+</ul>
+</p>
+</div>
 
 
 
 ### `lmFit()`
+
+This *limma* function fits a **multiple linear model** to the expression of each gene by weighted or generalized least squares to estimate the coefficients of the sample covariates which correspond to the logFC's comparing gene expression between sample groups. 
+
+**Ordinary least squares (OLS)**
+
+This is used to estimate the coefficients of a linear regression by minimizing the residual sum of squares [5].
+
+<figure>
+    <img src="Figures/lmFit.png" width="400px" align=left />
+        <figcaption style="color: gray; line-height: 0.9; text-align: justify; caption-side: bottom>
+            <font size="-1.8">
+                <b>Figure 3</b>: <b> Graphical representation of the OLS method for simple regression analysis </b>. Source: Gulve, A. (2020). Ordinary Least Square (OLS) Method for Linear Regression. 
+                
+</font>
+</figcaption>
+</figure>
+
+
+For simplicity, let’s work with one gene and say we have $n$ samples. The fitted expression of the gene in the $j$th sample is $\hat y_j =\beta_{0} + \sum_{1}^h\beta_{h}X_{jh}$ , where $\beta_h$  is the coefficient for the $h$th covariate and $X_{jh}$ the value the $j$th sample takes for the $h$th covariate. It can also be written as $\hat y_j =\sum_{0}^h\beta_{h}X_{jh}$  if $X_{j0}=1$.
+
+So we have an overdetermined system of $n$ linear equations and $h$ unknown parameters with $n>h$:
+
+$\hat y_j =\sum_{0}^h\beta_{h}X_{jh}$  with $j=(1,2, ..., n)$. 
+
+Such system usually has no exact solution, so we need to estimate the coefficients that better fit the data in a linear regression. The problem is reduced to solving a quadratic minimization problem:
+
+ $\hat \beta=arg \ _\beta\ min \ \ S(\beta)$ where $S(\beta)=\sum_j(y_j -\hat y_j)^2=RSS$.
+
+<div style="background-color:#FFFFF0; padding:20px; font-family: sans-serif; border: 1px solid black">
+➡️ We can see these $\beta$’s as differences in the fitted (expected) expression of a gene. Say we have two categorical variables in the model, then the expected gene expression in a sample is $E(y|X_1, X_2) =\hat y =\beta_{0} + \beta_1X_1+\beta_2X_2$, where $X_1$ and $X_2$ equal 1 or 0. Then we have the following 4 combinations:
+
+- <mark style= "background-color: #FAECF8"> $E(y|X_1=1, X_2=1) = \mu_{12}=\beta_{0} + \beta_1+\beta_2$ </mark>
+- <mark style= "background-color: #FCF3CF"> $E(y|X_1=1, X_2=0) =\mu_{1}=\beta_{0} + \beta_1$ </mark>
+- <mark style= "background-color: #FAECF8"> $E(y|X_1=0, X_2=1) =\mu_{2}=\beta_{0} + \beta_2$ </mark>
+- <mark style= "background-color: #FCF3CF"> $E(y|X_1=0, X_2=0) =\mu_{0}=\beta_{0}$ </mark>
+
+ So $\beta_1=$  <mark style= "background-color: #FCF3CF">$\mu_1-\mu_0$</mark>   $=$   <mark style= "background-color: #FAECF8"> $\mu_{12}-\mu_2$ </mark>  and $\beta_2=\mu_2-\mu_0$. Say our variable of interest is $\beta_1$. Then in the two-sample *t*-test, what we are really testing is if the expected expression of a gene is different when $X_1=1$ (in the first sample group) and $X_1=0$ (in the second sample group), fixing $X_2$ in either 1 or 0.    
+</div>
+
+**Generalized least squares (GLS)**
+
+Is a generalization of OLS that allows for heteroskedasticity and correlation between the residuals [6].
+
+**Weighted least squares (WLS)** 
+
+In this case the function to be minimized becomes the weighted sum of the squared residuals: squared residuals are weighted by the reciprocal of their variance so that more noisy observations have less weight. That’s what we used `voom()` for.
+
+`lmFit()` returns a fitted model object with the estimated **coefficients**, **standard errors** ($SE=sd/\sqrt n$) and **residual standard errors/deviations** ($RSE=s_g=\sqrt {RSS/ n-2}$) for each gene. Depending on the arguments and correlations in the data, this function calls one of the following functions to fit a linear model for each gene [7]:
+
+- `mrlm`: for a robust regression if `method="robust”`.
+- `gls.series`: GLS estimator if `method="ls”` and a correlation structure has been specified.
+- `lm.series`: OLS method if `method="ls”` and there is no correlation structure.
+
+For the `weights` argument of `lmFit()`, the precision weights for the observations previously computed are extracted from the `voom()` output.
+
+```{r lmFit}
+## lmFit():
+#   1. Fit linear model for each gene to estimate logFCs
+fitGene <- lmFit(vGene)
+
+## Corroborate "ls" method was applied
+fitGene$method
+
+## Explore outputs: estimated coefficients (logFCs)
+head(fitGene$coefficients)
+
+```
+
+<div class="alert alert-info">
+**Interaction terms in linear models**
+
+In some cases we want to model the gene expression differences in 2 conditions within more than 1 group. Say for example that we are interested in knowing what are the effects of a treatment ($X_1=1$ for treatment and 0 for controls) in female and males separately ($X_2=1$  for females and 0 for males). For that we can apply an interaction model in which we include the product of $X_1$  and $X_2$ so that $X_1X_2=1$ if a sample comes from a female that was treated and 0 otherwise:
+
+$$E(y|X_1, X_2) =\beta_{0} + \beta_1X_1+\beta_2X_2 + \beta_3X_1X_2$$
+
+- $E(y|X_1=1, X_2=1) =\mu_{12} =\beta_{0} + \beta_1+\beta_2+\beta_3$
+- $E(y|X_1=1, X_2=0) =\mu_{1} =\beta_{0} + \beta_1$
+- $E(y|X_1=0, X_2=1) =\mu_{2} =\beta_{0} + \beta_2$
+- $E(y|X_1=0, X_2=0) =\mu_{0} =\beta_{0}$
+
+$\beta_1 + \beta_3=\mu_{12}-\mu_2$ which is the expression difference in cases and controls for females samples ($X_2=1$ ) and $\beta_1 =\mu_{1}-\mu_0$ for males ($X_2=0$). Finally $\beta_3$, called the **interaction term**, is $\beta_3=(\mu_{12}-\mu_2)-(\mu_1-\mu_0)$, described as the difference in gene expression changes driven by the treatment in females compared to males [8].
+</div>
 
 
 ### `eBayes()`
@@ -195,8 +396,16 @@ $$ E(y_{gi})=\mu_{gi}=X_i\beta_g $$
 
 1. Li, W. V., & Li, J. J. (2018). Modeling and analysis of RNA‐seq data: a review from a statistical perspective. Quantitative Biology, 6(3), 195-209.
 
-2. Law, C. W., Chen, Y., Shi, W., & Smyth, G. K. (2014). voom: Precision weights unlock linear model analysis tools for RNA-seq read counts. Genome biology, 15(2), 1-17.
+2. Law, C. W., Chen, Y., Shi, W., & Smyth, G. K. (2014). voom: Precision weights unlock linear model analysis tools for RNA-seq read counts. Genome biology, 15(2), 1-17.
 
 3. Smyth, G. K., Ritchie, M., Thorne, N., Wettenhall, J., Shi, W., & Hu, Y. (2002). limma: linear models for microarray and RNA-Seq data user’s guide. Bioinformatics Division, The Walter and Eliza Hall Institute of Medical Research, Melbourne, Australia.
 
 4. van den Berg, S. M. (2022). Analysing data using linear models. Web site: https://bookdown.org/pingapang9/linear_models_bookdown/
+
+5. Wikipedia. (n.d.). Ordinary least squares. Web site: https://en.wikipedia.org/wiki/Ordinary_least_squares
+
+6. Taboga, Marco (2021). "Generalized least squares", Lectures on probability theory and mathematical statistics. Kindle Direct Publishing. Online appendix. https://www.statlect.com/fundamentals-of-statistics/generalized-least-squares.
+
+7. Documentation for lmFit: https://rdrr.io/bioc/limma/man/lmFit.html
+
+8. The Pennsylvania State University. (2018). Statistical Analysis of Genomics Data. Web site: https://online.stat.psu.edu/stat555/node/36/

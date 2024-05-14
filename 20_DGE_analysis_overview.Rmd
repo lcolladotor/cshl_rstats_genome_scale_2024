@@ -125,7 +125,7 @@ Sample gene expression profiles can be analyzed and compared after dimensionalit
 </figure> 
 
 
-#### Model building: covariate selection for limma-voom 
+#### Model building: covariate selection for *limma*-*voom* 
 
 
 
