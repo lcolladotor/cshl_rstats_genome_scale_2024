@@ -462,6 +462,17 @@ font-family: sans-serif;
 }
 </style>
 <style>
+p.link{
+background-color: #FFFFFF;
+padding: 10px;
+border: 0px solid black;
+margin-left: 0px;
+border-radius: 1px;
+font-size: 13px;
+font-family: sans-serif;
+}
+</style>
+<style>
 p.comment {
 background-color: #F0F0F0;
 padding: 20px;
@@ -604,7 +615,7 @@ where <span class="math inline">\(E(y_{gi})\)</span> is the expected expression 
 <span id="cb145-24"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-24" tabindex="-1"></a><span class="co">#&gt; [4,]  20.584769  15.108579  15.521441  19.219652  16.893714</span></span>
 <span id="cb145-25"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-25" tabindex="-1"></a><span class="co">#&gt; [5,]  22.473314  16.369739  18.359068  17.691839  14.325510</span></span>
 <span id="cb145-26"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-26" tabindex="-1"></a></span>
-<span id="cb145-27"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-27" tabindex="-1"></a><span class="do">## design is the provided design matrix </span></span>
+<span id="cb145-27"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-27" tabindex="-1"></a><span class="do">## design: is the provided design matrix </span></span>
 <span id="cb145-28"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-28" tabindex="-1"></a><span class="fu">head</span>(vGene<span class="sc">$</span>design)</span>
 <span id="cb145-29"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-29" tabindex="-1"></a><span class="co">#&gt;   (Intercept) GroupExperimental SexM flowcellHKCMHDSXX flowcellHKCNKDSXX flowcellHKCTMDSXX   mitoRate overallMapRate</span></span>
 <span id="cb145-30"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb145-30" tabindex="-1"></a><span class="co">#&gt; 1           1                 0    0                 0                 1                 0 0.03876995         0.9811</span></span>
@@ -660,28 +671,30 @@ where <span class="math inline">\(E(y_{gi})\)</span> is the expected expression 
 <p>This <em>limma</em> function fits a <strong>multiple linear model</strong> to the expression of each gene by weighted or generalized least squares to estimate the coefficients of the sample covariates which correspond to the logFC’s comparing gene expression between sample groups.</p>
 <p><strong>Ordinary least squares (OLS)</strong></p>
 <p>This is used to estimate the coefficients of a linear regression by minimizing the residual sum of squares [5].</p>
+<div style="text-align: center">
 <figure>
-<p><img src="Figures/lmFit.png" width="400px" align=left />
-&lt;figcaption style=“color: gray; line-height: 0.9; text-align: justify; caption-side: bottom&gt;
-<font size="-1.8">
+<img src="Figures/lmFit.png" width="400px" align=center/>
+<figcaption style="color: gray; line-height: 0.9; text-align: justify; caption-side: bottom">
+<p><font size="-1.8">
 <b>Figure 3</b>: <b> Graphical representation of the OLS method for simple regression analysis </b>. Source: Gulve, A. (2020). Ordinary Least Square (OLS) Method for Linear Regression.</p>
 </font>
 </figcaption>
 </figure>
+</div>
 <p>For simplicity, let’s work with one gene and say we have <span class="math inline">\(n\)</span> samples. The fitted expression of the gene in the <span class="math inline">\(j\)</span>th sample is <span class="math inline">\(\hat y_j =\beta_{0} + \sum_{1}^h\beta_{h}X_{jh}\)</span> , where <span class="math inline">\(\beta_h\)</span> is the coefficient for the <span class="math inline">\(h\)</span>th covariate and <span class="math inline">\(X_{jh}\)</span> the value the <span class="math inline">\(j\)</span>th sample takes for the <span class="math inline">\(h\)</span>th covariate. It can also be written as <span class="math inline">\(\hat y_j =\sum_{0}^h\beta_{h}X_{jh}\)</span> if <span class="math inline">\(X_{j0}=1\)</span>.</p>
 <p>So we have an overdetermined system of <span class="math inline">\(n\)</span> linear equations and <span class="math inline">\(h\)</span> unknown parameters with <span class="math inline">\(n&gt;h\)</span>:</p>
 <p><span class="math inline">\(\hat y_j =\sum_{0}^h\beta_{h}X_{jh}\)</span> with <span class="math inline">\(j=(1,2, ..., n)\)</span>.</p>
 <p>Such system usually has no exact solution, so we need to estimate the coefficients that better fit the data in a linear regression. The problem is reduced to solving a quadratic minimization problem:</p>
-<p><span class="math inline">\(\hat \beta=arg \ _\beta\ min \ \ S(\beta)\)</span> where <span class="math inline">\(S(\beta)=\sum_j(y_j -\hat y_j)^2=RSS\)</span>.</p>
+<p><span class="math inline">\(\hat \beta=arg \ _\beta\ min \ \ S(\beta)\)</span> where <span class="math inline">\(S(\beta)=\sum_j(y_j -\hat y_j)^2=RSS\)</span> (residual sum of squares).</p>
 <div style="background-color:#FFFFF0; padding:20px; font-family: sans-serif; border: 1px solid black">
-<p>➡️ We can see these <span class="math inline">\(\beta\)</span>’s as differences in the fitted (expected) expression of a gene. Say we have two categorical variables in the model, then the expected gene expression in a sample is <span class="math inline">\(E(y|X_1, X_2) =\hat y =\beta_{0} + \beta_1X_1+\beta_2X_2\)</span>, where <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> equal 1 or 0. Then we have the following 4 combinations:</p>
+<p>💡 We can think of these <span class="math inline">\(\beta\)</span>’s as differences in the fitted (expected) expression of a gene. Say we have two binary categorical variables in the model (<span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span>), then the expected gene expression in a sample is <span class="math inline">\(E(y|X_1, X_2) =\hat y =\beta_{0} + \beta_1X_1+\beta_2X_2\)</span>, where <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> equal to 1 or 0. Then we have the following 4 combinations:</p>
 <ul>
 <li><mark style= "background-color: #FAECF8"> <span class="math inline">\(E(y|X_1=1, X_2=1) = \mu_{12}=\beta_{0} + \beta_1+\beta_2\)</span> </mark></li>
 <li><mark style= "background-color: #FCF3CF"> <span class="math inline">\(E(y|X_1=1, X_2=0) =\mu_{1}=\beta_{0} + \beta_1\)</span> </mark></li>
 <li><mark style= "background-color: #FAECF8"> <span class="math inline">\(E(y|X_1=0, X_2=1) =\mu_{2}=\beta_{0} + \beta_2\)</span> </mark></li>
 <li><mark style= "background-color: #FCF3CF"> <span class="math inline">\(E(y|X_1=0, X_2=0) =\mu_{0}=\beta_{0}\)</span> </mark></li>
 </ul>
-<p>So <span class="math inline">\(\beta_1=\)</span> <mark style= "background-color: #FCF3CF"><span class="math inline">\(\mu_1-\mu_0\)</span></mark> <span class="math inline">\(=\)</span> <mark style= "background-color: #FAECF8"> <span class="math inline">\(\mu_{12}-\mu_2\)</span> </mark> and <span class="math inline">\(\beta_2=\mu_2-\mu_0\)</span>. Say our variable of interest is <span class="math inline">\(\beta_1\)</span>. Then in the two-sample <em>t</em>-test, what we are really testing is if the expected expression of a gene is different when <span class="math inline">\(X_1=1\)</span> (in the first sample group) and <span class="math inline">\(X_1=0\)</span> (in the second sample group), fixing <span class="math inline">\(X_2\)</span> in either 1 or 0.</p>
+<p>So <span class="math inline">\(\beta_1=\)</span> <mark style= "background-color: #FCF3CF"><span class="math inline">\(\mu_1-\mu_0\)</span></mark> <span class="math inline">\(=\)</span> <mark style= "background-color: #FAECF8"> <span class="math inline">\(\mu_{12}-\mu_2\)</span> </mark> and <span class="math inline">\(\beta_2=\)</span> <mark style= "background-color: #FAECF8"><span class="math inline">\(\mu_2\)</span></mark><span class="math inline">\(-\)</span> <mark style= "background-color: #FCF3CF"><span class="math inline">\(\mu_0\)</span></mark>. Say our variable of interest is <span class="math inline">\(\beta_1\)</span>. Then what we are testing is if the expected expression of a gene is different when <span class="math inline">\(X_1=1\)</span> (in the first sample group) and <span class="math inline">\(X_1=0\)</span> (in the second sample group), fixing <span class="math inline">\(X_2\)</span> in either 1 or 0.</p>
 </div>
 <p><strong>Generalized least squares (GLS)</strong></p>
 <p>Is a generalization of OLS that allows for heteroskedasticity and correlation between the residuals [6].</p>
@@ -715,24 +728,182 @@ where <span class="math inline">\(E(y_{gi})\)</span> is the expected expression 
 <span id="cb146-19"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb146-19" tabindex="-1"></a><span class="co">#&gt; ENSMUSG00000025900.13  16.727251       7.179484         42.367908  8.535604e-05  0.0133260060</span></span>
 <span id="cb146-20"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb146-20" tabindex="-1"></a><span class="co">#&gt; ENSMUSG00000025902.13 -24.538883      11.174017        -18.548282 -1.231546e-05 -0.0092194951</span></span>
 <span id="cb146-21"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb146-21" tabindex="-1"></a><span class="co">#&gt;  [ reached getOption(&quot;max.print&quot;) -- omitted 2 rows ]</span></span></code></pre></div>
-<div class="alert alert-info">
-<p><strong>Interaction terms in linear models</strong></p>
-<p>In some cases we want to model the gene expression differences in 2 conditions within more than 1 group. Say for example that we are interested in knowing what are the effects of a treatment (<span class="math inline">\(X_1=1\)</span> for treatment and 0 for controls) in female and males separately (<span class="math inline">\(X_2=1\)</span> for females and 0 for males). For that we can apply an interaction model in which we include the product of <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> so that <span class="math inline">\(X_1X_2=1\)</span> if a sample comes from a female that was treated and 0 otherwise:</p>
+<div style="background-color:#FFFFF0; padding:20px; font-family: sans-serif; border: 1px solid black">
+<p>💡<strong>Interaction terms in linear models</strong></p>
+<p>There may be cases where we want to assess gene expression differences between 2 conditions within more than one specific group; for example if we were interested in knowing what are the effects of a treatment (<span class="math inline">\(X_1=1\)</span> for treatment and 0 for controls) in <mark style= "background-color: #FAECF8">females</mark> and <mark style= "background-color: #E0FFFF">males</mark> separately (<span class="math inline">\(X_2=1\)</span> for females and 0 for males). In such cases we can fit an <strong>interaction model</strong> in which we include the product of <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> so that <span class="math inline">\(X_1X_2=1\)</span> if a sample comes from a female that was treated and 0 otherwise:</p>
 <p><span class="math display">\[E(y|X_1, X_2) =\beta_{0} + \beta_1X_1+\beta_2X_2 + \beta_3X_1X_2\]</span></p>
 <ul>
-<li><span class="math inline">\(E(y|X_1=1, X_2=1) =\mu_{12} =\beta_{0} + \beta_1+\beta_2+\beta_3\)</span></li>
-<li><span class="math inline">\(E(y|X_1=1, X_2=0) =\mu_{1} =\beta_{0} + \beta_1\)</span></li>
-<li><span class="math inline">\(E(y|X_1=0, X_2=1) =\mu_{2} =\beta_{0} + \beta_2\)</span></li>
-<li><span class="math inline">\(E(y|X_1=0, X_2=0) =\mu_{0} =\beta_{0}\)</span></li>
+<li><mark style= "background-color: #FAECF8"> <span class="math inline">\(E(y|X_1=1, X_2=1) =\mu_{12} =\beta_{0} + \beta_1+\beta_2+\beta_3\)</span> </mark></li>
+<li><mark style= "background-color: #E0FFFF"> <span class="math inline">\(E(y|X_1=1, X_2=0) =\mu_{1} =\beta_{0} + \beta_1\)</span> </mark></li>
+<li><mark style= "background-color: #FAECF8"> <span class="math inline">\(E(y|X_1=0, X_2=1) =\mu_{2} =\beta_{0} + \beta_2\)</span> </mark></li>
+<li><mark style= "background-color: #E0FFFF"> <span class="math inline">\(E(y|X_1=0, X_2=0) =\mu_{0} =\beta_{0}\)</span> </mark></li>
 </ul>
-<p><span class="math inline">\(\beta_1 + \beta_3=\mu_{12}-\mu_2\)</span> which is the expression difference in cases and controls for females samples (<span class="math inline">\(X_2=1\)</span> ) and <span class="math inline">\(\beta_1 =\mu_{1}-\mu_0\)</span> for males (<span class="math inline">\(X_2=0\)</span>). Finally <span class="math inline">\(\beta_3\)</span>, called the <strong>interaction term</strong>, is <span class="math inline">\(\beta_3=(\mu_{12}-\mu_2)-(\mu_1-\mu_0)\)</span>, described as the difference in gene expression changes driven by the treatment in females compared to males [8].</p>
+<p><span class="math inline">\(\beta_1 + \beta_3=\)</span> <mark style= "background-color: #FAECF8"><span class="math inline">\(\mu_{12}-\mu_2\)</span></mark> which is the expression difference between treated and control female samples (<span class="math inline">\(X_2=1\)</span>) and <span class="math inline">\(\beta_1 =\)</span> <mark style= "background-color: #E0FFFF"><span class="math inline">\(\mu_{1}-\mu_0\)</span></mark> for male samples (<span class="math inline">\(X_2=0\)</span>). Finally <span class="math inline">\(\beta_3\)</span>, called the <strong>interaction term</strong>, is (<mark style= "background-color: #FAECF8"><span class="math inline">\(\mu_{12}-\mu_2\)</span></mark>)<span class="math inline">\(-\)</span>(<mark style= "background-color: #E0FFFF"><span class="math inline">\(\mu_1-\mu_0\)</span></mark>), described as the difference in gene expression changes driven by the treatment in females compared to males [8].</p>
 </div>
 </div>
 <div id="ebayes" class="section level3 hasAnchor" number="21.2.4">
 <h3><span class="header-section-number">21.2.4</span> <code>eBayes()</code><a href="differential-gene-expression-analysis-with-limma-voom.html#ebayes" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Next, we want to assess if the differences in gene expression across the sample groups are statistically significant. Initially, we can think of comparing the mean expression of a gene in two sample groups (e.g. cases and controls) which can be handled applying a <strong>two-sample <em>t</em>-test</strong> assuming that the values in both groups have an approximately normal distribution.</p>
+<p>Here we use the <em>t</em>-score (<strong><em>t</em>-stats</strong>) to define if the difference in the means is statistically significant based on a <em>t</em>-distribution.</p>
+<p>The <em>t</em>-stats is given by:</p>
+<p><span class="math display">\[
+t=\frac{\bar x_1 - \bar x_2}{\sqrt{\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}}}
+\]</span></p>
+<p>where <span class="math inline">\(\bar x_1\)</span> and <span class="math inline">\(\bar x_2\)</span> are the means of the expression values of a gene in the first and second sample groups, <span class="math inline">\(s_1\)</span> and <span class="math inline">\(s_2\)</span> are the sample standard deviations of gene expression in the same groups, and <span class="math inline">\(n_1\)</span>, <span class="math inline">\(n_2\)</span> the corresponding sample group sizes:</p>
+<p><span class="math inline">\(s_1 = \sqrt{\frac{\sum_{i=1}^ {n_1} (x_i-\bar x_1)^2}{n_1-1}}\)</span> and <span class="math inline">\(s_2 = \sqrt{\frac{\sum_{j=1}^ {n_2} (x_j-\bar x_2)^2}{n_2-1}}\)</span>, with <span class="math inline">\(x_i\)</span> and <span class="math inline">\(x_j\)</span> the gene expression values in the samples of group 1 and 2, respectively.</p>
+<p class="question">
+➡️ Note that we say <em>sample</em> means and <em>sample</em> standard deviations because they are estimators of the population parameters, computed based on the data that we have.
+</p>
+<p>We can think of this <em>t</em>-stats as a ratio of signal and noise. The numerator contains the difference between the two means, taken as the <strong>signal</strong> for DE. The denominator corresponds to the <strong>standard error</strong> and represents the <strong>noise</strong> in terms of gene expression variance within the sample groups. This represents how spread out the signal is [9]. In that way, the <em>t</em>-stats is a measure of how strong is the DE signal. Once computed, the <em>t</em>-stats have an associated <em>p</em>-value based on a Student <em>t</em>-distribution under the null hypothesis (<span class="math inline">\(H_o\)</span>: <span class="math inline">\(\bar x_1 - \bar x_2=0\)</span>).</p>
+<p>This is exactly what we can get using <code>lm()</code>. (ToDo)</p>
+<p class="info">
+💡 Sample sizes are critical! Larger sample sizes increase the power of the tests and reduce the false discovery rate (FDR) as they decrease the denominator of the <em>t</em>-stats (increasing their values) and slight differences can then be detected.
+</p>
+<p class="alert">
+⚠️ Now consider that for genes with small variances in their expression the <em>t</em>-stats will be greater and we could be detecting non-DEGs as DE (false positives).
+</p>
+<p>But two things must be considered at least when working with gene expression data:</p>
+<ol style="list-style-type: decimal">
+<li>The first is that expression values are usually not normally distributed.</li>
+<li>Second, the distributions and variances of expression values vary across genes and conditions.</li>
+</ol>
+<p class="question">
+➡️ With that in mind, inference at the individual gene level can be addressed borrowing information from all the genes in the experiment through a Bayes or empirical Bayes method that produces more powerful tests.
+</p>
+<p>The idea of <strong>Bayesian statistics</strong> is to give unknown quantities a prior distribution, considering each feature as a member of a population of features such as genes. More specifically, <strong>empirical Bayes methods</strong> are procedures for statistical inference in which the (empirical) prior distribution is estimated from the population of all features (from the data) [8]; in standard Bayesian methods this prior distribution is fixed before observing any data [10].</p>
+<p>Inspired by the work of Lönnstedt and Speed (2002) in which a simple expression for the posterior odds of differential expression for each gene was computed using a parametric empirical Bayes approach, <a href="https://doi.org/10.2202/1544-6115.1027">Smyth, G. K. (2004)</a> generalized this model for its application to experiments with any numbers of samples and conditions and reformulated the posterior odds statistic in terms of a <strong>moderated <em>t</em>-statistic</strong> in which the posterior residual standard deviations are used instead of the ordinary ones, eliminating the requirement of knowing the non-null prior guess for the proportion of differentially expressed genes required in the log-odds [11]. Let’s see how it proceeds.</p>
+<p>First, for each gene <span class="math inline">\(g\)</span> we have a vector with the expression values in the <span class="math inline">\(n\)</span> samples:</p>
+<p><span class="math display">\[
+y_{g}= (y_{g1}, y_{g2}, ..., y_{gn})
+\]</span></p>
+<p>We already know that the expected (predicted) gene expression in the samples is <span class="math inline">\(E(y_{g})=X\alpha_g\)</span> with <span class="math inline">\(X\)</span> the design matrix and <span class="math inline">\(\alpha_g\)</span> the vector of the coefficients for the <span class="math inline">\(h\)</span> covariates in the model; of these the ones of biological interest are the <span class="math inline">\(\beta_g\)</span>’s (contrasts of interest).</p>
+<p>Then, as previously described, a linear model is fitted to the expression data for each gene to obtain the <strong>coefficient estimators</strong> (<span class="math inline">\(\hat \alpha_g\)</span>) (as well as <span class="math inline">\(\hat \beta_g\)</span>), the <strong>residual sample variances</strong> (<span class="math inline">\(s_g^2\)</span>) as estimators of the (true but unknown) residual variances (<span class="math inline">\(\sigma_g^2\)</span>), and the estimated covariance matrices.</p>
+<p>Two relevant considerations here:</p>
+<ol style="list-style-type: decimal">
+<li>The expression values are not necessarily assumed to be normally distributed.</li>
+<li>The linear model is not assumed to be necessarily by least squares.</li>
+</ol>
+<p>However, there are two assumptions:</p>
+<ol style="list-style-type: decimal">
+<li>The contrast estimators <span class="math inline">\(\hat \beta_g\)</span> are assumed to be approximately normally distributed with mean <span class="math inline">\(\beta_g\)</span>.</li>
+<li>The residual sample variances (<span class="math inline">\(s_g^2\)</span>) are assumed to follow approximately a scaled chisquare distribution.</li>
+</ol>
+<p>Under such assumptions the ordinary <em>t</em>-stats for the covariate <span class="math inline">\(j\)</span> in the gene <span class="math inline">\(g\)</span> is defined by:</p>
+<p><span class="math display">\[
+t_{gj}=\frac{\hat \beta_{gj}}{s_g u_{gj}}=\frac{\hat \beta_{gj}}{SE(\hat \beta_{gj})}
+\]</span></p>
+<p>with <span class="math inline">\(s_g\)</span> the residual sample standard deviation of the gene and <span class="math inline">\(u_{gj}\)</span> the unscaled standard deviation. <span class="math inline">\(SE\)</span> stands for standard error.</p>
+<p>The key step in the empirical Bayes approach of <em>limma</em> is to leverage the information across all genes by defining prior distributions for the unknown coefficients <span class="math inline">\(\beta_{gj}\)</span> and residual variance <span class="math inline">\(\sigma_g^2\)</span> of the genes.</p>
+<ul>
+<li><p>For <span class="math inline">\(\beta_{gj}\)</span> it models the prior distribution of the coefficients that are not zero, i.e. is the expected distribution of the <strong>logFC</strong> of the genes that are DE, is given by:
+<span class="math display">\[\beta_{gj}|\sigma_{g}^2, \beta_{gj}≠0  \sim N(0, v_{0j}\sigma_g^2)\]</span></p>
+<blockquote>
+<p>“Saying that the betas have prior information centered around zero implies that we are ignorant of the sign (<strong>+</strong>/<strong>-</strong>) of the beta.”</p>
+</blockquote>
+<div align="right">
+– Vincent Carey
+</div></li>
+<li><p>For the residual variances what <em>limma</em> does is to take the residual sample variances of all genes (<span class="math inline">\(s_g^2\)</span>’s) and estimate the empirical parameters of the gamma distribution it is assumed that they follow. Specifically, <span class="math inline">\(\frac{1}{\sigma_g^2}\)</span> is modeled by a scaled chisquare (gamma) prior distribution with mean <span class="math inline">\(\frac{1}{s_0^2}\)</span> and <span class="math inline">\(d_0\)</span> degrees of freedom, describing how the residual variances are expected to vary across genes:
+<span class="math display">\[\frac{1}{\sigma_g^2} \sim \frac{1}{d_0s_0^2}\chi_{d_0}^2\]</span></p></li>
+</ul>
+<p>What we want to do next is not only to take the mean of the residual variances in the distribution (prior mean<span class="math inline">\(\frac{1}{s_0^2}\)</span>) but to estimate each gene residual variance as a Bayes predictor: as a weighted average of the <strong>prior mean</strong> (<span class="math inline">\(\frac{1}{s_0^2}\)</span>) and the observed <strong>sample variance</strong> (<span class="math inline">\(s_g^2\)</span>) of each gene. This is called the <strong>moderated variance</strong> and what is graphically happening is that we are pulling the observed gene variances towards the prior mean variance: large variances are reduced and the |<em>t</em>-stats| increases (more powerful <em>t</em>-test for those genes) and small variances are increased, decreasing the |<em>t</em>-stats| and the power of the <em>t</em>-test. Under this model the <strong>posterior residual sample variance</strong> or posterior residual variance estimator (<span class="math inline">\(\tilde s_g^2\)</span>) is:</p>
+<p><span class="math display">\[
+\tilde s_g^2=E(\sigma_g^2|s_g^2)=\frac{d_0s_0^2 + d_gs_g^2}{d_0+d_g}
+\]</span></p>
+<p>Moderation is somehow like having larger sample sizes for the estimation of variance given that the moderated variances are (on average) closer to the population variance than the original sample variances.</p>
+<p>The <strong>moderated <em>t</em>-statistic</strong> can be now defined in terms of this <strong>posterior residual sample standard deviations</strong> instead of the usual ones:</p>
+<p><span class="math display">\[
+\tilde t_{gj}=\frac{\hat \beta_{gj}}{\tilde s_g u_{gj}}
+\]</span></p>
+<p>These moderated <em>t</em>-stats follow a <em>t</em>-distribution under the null hypothesis (<span class="math inline">\(H_o:B_{gj}=0\)</span>) with degrees of freedom <span class="math inline">\(d_g+d_0\)</span> and the associated <em>p</em>-values can be computed based on such distribution.</p>
+<p>As previously stated, with this redefined formula, large <em>t</em>-stats merely from very small <span class="math inline">\(s_g\)</span>’s are avoided. This results in increased power and reduced false non-discovery rate (FNR) (non detected DEGs) and the number of DEGs obtained increases [8].</p>
+<p>In the end we say we have moderated the residual sample standard deviations of each gene in the <em>t</em>-stats denominator by using the distribution of all of them across the population of genes.</p>
+<div style="background-color:#E0EEE0; padding:14px; font-family: sans-serif">
+✅ The approach of using the posterior values results in shrinking the gene-wise residual sample variances (<span class="math inline">\(s_g^2\)</span>) towards the prior mean, making a more stable inference when a small number of samples is available.
+</div>
+<p><code>eBayes()</code> will implement this empirical Bayes model to compute for each gene and for each contrast these moderated <em>t</em>-statistic and their unadjusted <em>p</em>-values. Additionally, it returns moderated F-statistic and log-odds of differential expression. The moderated F-statistic tests whether any of the contrasts for a gene is non-zero (<span class="math inline">\(H_0:B_{g}=0\)</span>), i.e., whether that gene is differentially expressed for any contrast; it is similar to the ordinary F-statistic from analysis of variance (ANOVAR). The <em>t</em>-test does that for each individual contrast <span class="math inline">\(j\)</span> (<span class="math inline">\(H_0:B_{gj}=0\)</span>).</p>
+<p class="link">
+👉🏼 Check more about F-stats and other statistics computed by <code>eBayes()</code> here: <a href="https://support.bioconductor.org/p/6124/" class="uri">https://support.bioconductor.org/p/6124/</a>.
+</p>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb147-1" tabindex="-1"></a><span class="do">## eBayes()</span></span>
+<span id="cb147-2"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb147-2" tabindex="-1"></a><span class="do">## 1. Compute the empirical Bayes statistics for DE</span></span>
+<span id="cb147-3"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb147-3" tabindex="-1"></a>eBGene <span class="ot">&lt;-</span> <span class="fu">eBayes</span>(fitGene)</span>
+<span id="cb147-4"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb147-4" tabindex="-1"></a></span>
+<span id="cb147-5"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb147-5" tabindex="-1"></a><span class="do">## Outputs of interest:</span></span>
+<span id="cb147-6"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb147-6" tabindex="-1"></a><span class="do">## s2.prior -&gt; prior residual variance (prior mean 1/s0^2)</span></span>
+<span id="cb147-7"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb147-7" tabindex="-1"></a><span class="do">##             in prior distribution of residual variances</span></span>
+<span id="cb147-8"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb147-8" tabindex="-1"></a>eBGene<span class="sc">$</span>s2.prior</span>
+<span id="cb147-9"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb147-9" tabindex="-1"></a><span class="co">#&gt; [1] 0.78987</span></span>
+<span id="cb147-10"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb147-10" tabindex="-1"></a></span>
+<span id="cb147-11"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb147-11" tabindex="-1"></a><span class="do">## df.prior -&gt; degrees of freedom d0 in prior distribution </span></span>
+<span id="cb147-12"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb147-12" tabindex="-1"></a><span class="do">##             of residual variances</span></span>
+<span id="cb147-13"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb147-13" tabindex="-1"></a>eBGene<span class="sc">$</span>df.prior</span>
+<span id="cb147-14"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb147-14" tabindex="-1"></a><span class="co">#&gt; [1] 4.913248</span></span>
+<span id="cb147-15"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb147-15" tabindex="-1"></a></span>
+<span id="cb147-16"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb147-16" tabindex="-1"></a><span class="do">## s2.post -&gt; posterior residual sample variances of the genes (~sg^2)</span></span>
+<span id="cb147-17"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb147-17" tabindex="-1"></a><span class="fu">length</span>(eBGene<span class="sc">$</span>s2.post)</span>
+<span id="cb147-18"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb147-18" tabindex="-1"></a><span class="co">#&gt; [1] 19974</span></span>
+<span id="cb147-19"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb147-19" tabindex="-1"></a><span class="fu">head</span>(eBGene<span class="sc">$</span>s2.post)</span>
+<span id="cb147-20"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb147-20" tabindex="-1"></a><span class="co">#&gt; [1] 2.3397702 0.7092520 1.1613995 0.9579389 0.7390718 0.4996251</span></span>
+<span id="cb147-21"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb147-21" tabindex="-1"></a></span>
+<span id="cb147-22"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb147-22" tabindex="-1"></a><span class="do">##  t -&gt; moderated t-stats of the genes for each contrast</span></span>
+<span id="cb147-23"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb147-23" tabindex="-1"></a><span class="fu">dim</span>(eBGene<span class="sc">$</span>t)</span>
+<span id="cb147-24"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb147-24" tabindex="-1"></a><span class="co">#&gt; [1] 19974    11</span></span>
+<span id="cb147-25"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb147-25" tabindex="-1"></a>eBGene<span class="sc">$</span>t[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span>
+<span id="cb147-26"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb147-26" tabindex="-1"></a><span class="co">#&gt;                       (Intercept) GroupExperimental       SexM flowcellHKCMHDSXX flowcellHKCNKDSXX</span></span>
+<span id="cb147-27"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb147-27" tabindex="-1"></a><span class="co">#&gt; ENSMUSG00000051951.5   -4.4458336        -1.0615386  1.2467597        -4.8896590        -4.2555598</span></span>
+<span id="cb147-28"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb147-28" tabindex="-1"></a><span class="co">#&gt; ENSMUSG00000102331.1    1.5930925         4.5298885  1.3144392        -0.6934431        -1.3930231</span></span>
+<span id="cb147-29"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb147-29" tabindex="-1"></a><span class="co">#&gt; ENSMUSG00000025900.13  -1.2896585         0.8392518  1.4887297        -0.1047634         0.3829694</span></span>
+<span id="cb147-30"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb147-30" tabindex="-1"></a><span class="co">#&gt; ENSMUSG00000025902.13   0.4035855        -0.5885950 -0.5891347        -1.0922124        -1.6131630</span></span>
+<span id="cb147-31"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb147-31" tabindex="-1"></a><span class="co">#&gt; ENSMUSG00000098104.1    0.7120536        -0.3614893 -1.0031002         0.6473100         1.0165548</span></span>
+<span id="cb147-32"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb147-32" tabindex="-1"></a></span>
+<span id="cb147-33"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb147-33" tabindex="-1"></a><span class="do">## p.value: corresponding unadjusted p-values of moderated t-stats</span></span>
+<span id="cb147-34"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb147-34" tabindex="-1"></a><span class="fu">dim</span>(eBGene<span class="sc">$</span>p.value)</span>
+<span id="cb147-35"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb147-35" tabindex="-1"></a><span class="co">#&gt; [1] 19974    11</span></span>
+<span id="cb147-36"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb147-36" tabindex="-1"></a>eBGene<span class="sc">$</span>p.value[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span>
+<span id="cb147-37"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb147-37" tabindex="-1"></a><span class="co">#&gt;                        (Intercept) GroupExperimental      SexM flowcellHKCMHDSXX flowcellHKCNKDSXX</span></span>
+<span id="cb147-38"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb147-38" tabindex="-1"></a><span class="co">#&gt; ENSMUSG00000051951.5  8.086618e-05      2.955320e-01 0.2205562      2.114989e-05      0.0001425797</span></span>
+<span id="cb147-39"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb147-39" tabindex="-1"></a><span class="co">#&gt; ENSMUSG00000102331.1  1.199041e-01      6.283899e-05 0.1970317      4.924924e-01      0.1721763827</span></span>
+<span id="cb147-40"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb147-40" tabindex="-1"></a><span class="co">#&gt; ENSMUSG00000025900.13 2.054130e-01      4.068800e-01 0.1452882      9.171465e-01      0.7039999597</span></span>
+<span id="cb147-41"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb147-41" tabindex="-1"></a><span class="co">#&gt; ENSMUSG00000025902.13 6.889106e-01      5.598170e-01 0.5594589      2.820128e-01      0.1154631942</span></span>
+<span id="cb147-42"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb147-42" tabindex="-1"></a><span class="co">#&gt; ENSMUSG00000098104.1  4.810321e-01      7.198519e-01 0.3225237      5.215478e-01      0.3161651149</span></span></code></pre></div>
 </div>
 <div id="toptable" class="section level3 hasAnchor" number="21.2.5">
 <h3><span class="header-section-number">21.2.5</span> <code>topTable()</code><a href="differential-gene-expression-analysis-with-limma-voom.html#toptable" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>This function is also provided by <em>limma</em> and summarizes the results of the linear model, performs hypothesis tests and adjusts the <em>p</em>-values for multiple testing [12]. Among the summary statistics presented, it returns the log2FC, moderated <em>t</em>-statistics, <em>p</em>-values, and FDR-adjusted <em>p</em>-values of the genes for a given contrast of interest. The default form of <em>p</em>-value adjustment is the <strong>Benjamini and Hochberg’s</strong> method to control the false discovery rate (FDR) which assumes independence between genes.</p>
+<p><strong>Relevant concepts</strong>:</p>
+<ul>
+<li>**q<em>-value<strong> → is the </strong>FDR-adjusted </em>p*-value<strong> used to control the </strong>False Discovery Rate (FDR)** that is the expected proportion of false discoveries among the discoveries (DEGs). Selecting discoveries as those being below <span class="math inline">\(\alpha\)</span> in <em>q</em>-value, we control FDR ≤ <span class="math inline">\(\alpha\)</span>.</li>
+</ul>
+<p>Now we have the final statistics to determine wich genes are DE.</p>
+<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb148-1" tabindex="-1"></a><span class="do">## topTable()</span></span>
+<span id="cb148-2"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb148-2" tabindex="-1"></a><span class="do">## 1. Rank genes by logFC for Group (nicotine vs ctrl)</span></span>
+<span id="cb148-3"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb148-3" tabindex="-1"></a>top_genes <span class="ot">&lt;-</span> <span class="fu">topTable</span>(eBGene, <span class="at">coef =</span> coef, <span class="at">p.value =</span> <span class="dv">1</span>, <span class="at">number =</span> <span class="fu">nrow</span>(rse_gene_filt), <span class="at">sort.by =</span> <span class="st">&quot;none&quot;</span>)</span>
+<span id="cb148-4"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb148-4" tabindex="-1"></a></span>
+<span id="cb148-5"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb148-5" tabindex="-1"></a><span class="do">## Outputs for each gene and for the coeff selected (Group):</span></span>
+<span id="cb148-6"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb148-6" tabindex="-1"></a><span class="do">##  logFC: log2-fold-changes (correspond to the betas in limma) </span></span>
+<span id="cb148-7"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb148-7" tabindex="-1"></a><span class="fu">head</span>(top_genes<span class="sc">$</span>logFC)</span>
+<span id="cb148-8"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb148-8" tabindex="-1"></a><span class="co">#&gt; [1] -0.05125195  0.72450620  0.17256694 -0.05025788 -0.02726320 -0.02684710</span></span>
+<span id="cb148-9"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb148-9" tabindex="-1"></a></span>
+<span id="cb148-10"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb148-10" tabindex="-1"></a><span class="do">##  t: moderated t-stats </span></span>
+<span id="cb148-11"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb148-11" tabindex="-1"></a><span class="fu">head</span>(top_genes<span class="sc">$</span>t)</span>
+<span id="cb148-12"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb148-12" tabindex="-1"></a><span class="co">#&gt; [1] -1.0615386  4.5298885  0.8392518 -0.5885950 -0.3614893 -1.0959528</span></span>
+<span id="cb148-13"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb148-13" tabindex="-1"></a></span>
+<span id="cb148-14"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb148-14" tabindex="-1"></a><span class="do">##. P.value: unadjusted p-values of t-stats</span></span>
+<span id="cb148-15"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb148-15" tabindex="-1"></a><span class="fu">head</span>(top_genes<span class="sc">$</span>P.Value)</span>
+<span id="cb148-16"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb148-16" tabindex="-1"></a><span class="co">#&gt; [1] 2.955320e-01 6.283899e-05 4.068800e-01 5.598170e-01 7.198519e-01 2.803946e-01</span></span>
+<span id="cb148-17"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb148-17" tabindex="-1"></a></span>
+<span id="cb148-18"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb148-18" tabindex="-1"></a><span class="do">##  adj.P.Val: p-values adjusted to control the FDR</span></span>
+<span id="cb148-19"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb148-19" tabindex="-1"></a><span class="fu">head</span>(top_genes<span class="sc">$</span>adj.P.Val)</span>
+<span id="cb148-20"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb148-20" tabindex="-1"></a><span class="co">#&gt; [1] 0.53854173 0.00412576 0.63704026 0.75340755 0.85943342 0.52324928</span></span></code></pre></div>
+<p>In limma the <span class="math inline">\(\beta_{gj}\)</span>’s are the logFC’s:</p>
+<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb149-1" tabindex="-1"></a><span class="fu">setdiff</span>(top_genes<span class="sc">$</span>logFC, eBGene<span class="sc">$</span>coefficients[,<span class="st">&#39;GroupExperimental&#39;</span>])</span>
+<span id="cb149-2"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb149-2" tabindex="-1"></a><span class="co">#&gt; numeric(0)</span></span></code></pre></div>
+<p>After running all these 5 steps, one main initial plot we have to look at is the histogram of the <em>p</em>-values of the <em>t</em>-stats for the genes. If there were DEGs, we’d expect to see a flat distribution of <em>p</em>-values corresponding to non-DEGs and a peak near <em>p</em>=0 for DEGs (where we reject the null hypothesis). If this peak is absent but a uniform distribution still appears, DEGs might be obtained after correcting for multiple testing.</p>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb150-1" tabindex="-1"></a><span class="do">## Histogram of adjusted p-values</span></span>
+<span id="cb150-2"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb150-2" tabindex="-1"></a><span class="fu">hist</span>(top_genes<span class="sc">$</span>P.Value, <span class="at">xlab =</span> <span class="st">&quot;p-values&quot;</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/hist_p-1.png" width="672" /></p>
+<p>If very different <em>p</em>-value distributions are obtained from the uniform one, the best we can do is trying to explore if there are specific groups of genes (e.g. lowly-expressed genes) presenting such variable <em>p</em>-values and revisiting the assumptions and considerations of the statistical tests implemented [13].</p>
 </div>
 </div>
 <div id="references-3" class="section level2 hasAnchor" number="21.3">
@@ -746,6 +917,11 @@ where <span class="math inline">\(E(y_{gi})\)</span> is the expected expression 
 <li><p>Taboga, Marco (2021). “Generalized least squares”, Lectures on probability theory and mathematical statistics. Kindle Direct Publishing. Online appendix. <a href="https://www.statlect.com/fundamentals-of-statistics/generalized-least-squares" class="uri">https://www.statlect.com/fundamentals-of-statistics/generalized-least-squares</a>.</p></li>
 <li><p>Documentation for lmFit: <a href="https://rdrr.io/bioc/limma/man/lmFit.html" class="uri">https://rdrr.io/bioc/limma/man/lmFit.html</a></p></li>
 <li><p>The Pennsylvania State University. (2018). Statistical Analysis of Genomics Data. Web site: <a href="https://online.stat.psu.edu/stat555/node/36/" class="uri">https://online.stat.psu.edu/stat555/node/36/</a></p></li>
+<li><p>Tushe, M. (2021). A Simple Trick to Understand the t-test. Web site: <a href="https://miroslavtushev.medium.com/a-simple-trick-to-understand-the-t-test-2c2a9e7f1dc5" class="uri">https://miroslavtushev.medium.com/a-simple-trick-to-understand-the-t-test-2c2a9e7f1dc5</a></p></li>
+<li><p>Wikipedia. (n.d.). Empirical Bayes method. Web site: <a href="https://en.wikipedia.org/wiki/Empirical_Bayes_method#" class="uri">https://en.wikipedia.org/wiki/Empirical_Bayes_method#</a>:~:text=Empirical Bayes methods are procedures,before any data are observed.</p></li>
+<li><p>Smyth, G. K. (2004). Linear models and empirical bayes methods for assessing differential expression in microarray experiments. Statistical applications in genetics and molecular biology, 3(1).</p></li>
+<li><p>Documentation for topTable: <a href="https://www.rdocumentation.org/packages/limma/versions/3.28.14/topics/toptable" class="uri">https://www.rdocumentation.org/packages/limma/versions/3.28.14/topics/toptable</a></p></li>
+<li><p>Robinson, D. (2014). How to interpret a p-value histogram. Web site: <a href="http://varianceexplained.org/statistics/interpreting-pvalue-histogram/" class="uri">http://varianceexplained.org/statistics/interpreting-pvalue-histogram/</a></p></li>
 </ol>
 
 </div>
