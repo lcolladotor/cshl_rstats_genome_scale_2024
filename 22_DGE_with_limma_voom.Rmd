@@ -119,6 +119,19 @@ font-family: sans-serif;
 
 
 <style>
+p.link{
+background-color: #FFFFFF;
+padding: 10px;
+border: 0px solid black;
+margin-left: 0px;
+border-radius: 1px;
+font-size: 13px;
+font-family: sans-serif;
+}
+</style>
+
+
+<style>
 p.comment {
 background-color: #F0F0F0;
 padding: 20px;
@@ -262,7 +275,7 @@ vGene$E[1:5, 1:5]
 dim(vGene$weights)
 vGene$weights[1:5, 1:5]
 
-## design is the provided design matrix 
+## design: is the provided design matrix 
 head(vGene$design)
 
 ## targets: the sample library sizes used to compute log(cpm) in the first step
@@ -305,16 +318,17 @@ This *limma* function fits a **multiple linear model** to the expression of each
 
 This is used to estimate the coefficients of a linear regression by minimizing the residual sum of squares [5].
 
+<div style="text-align: center">
 <figure>
-    <img src="Figures/lmFit.png" width="400px" align=left />
-        <figcaption style="color: gray; line-height: 0.9; text-align: justify; caption-side: bottom>
+    <img src="Figures/lmFit.png" width="400px" align=center/>
+        <figcaption style="color: gray; line-height: 0.9; text-align: justify; caption-side: bottom">
             <font size="-1.8">
                 <b>Figure 3</b>: <b> Graphical representation of the OLS method for simple regression analysis </b>. Source: Gulve, A. (2020). Ordinary Least Square (OLS) Method for Linear Regression. 
                 
 </font>
 </figcaption>
 </figure>
-
+</div>
 
 For simplicity, let’s work with one gene and say we have $n$ samples. The fitted expression of the gene in the $j$th sample is $\hat y_j =\beta_{0} + \sum_{1}^h\beta_{h}X_{jh}$ , where $\beta_h$  is the coefficient for the $h$th covariate and $X_{jh}$ the value the $j$th sample takes for the $h$th covariate. It can also be written as $\hat y_j =\sum_{0}^h\beta_{h}X_{jh}$  if $X_{j0}=1$.
 
@@ -324,17 +338,17 @@ $\hat y_j =\sum_{0}^h\beta_{h}X_{jh}$  with $j=(1,2, ..., n)$.
 
 Such system usually has no exact solution, so we need to estimate the coefficients that better fit the data in a linear regression. The problem is reduced to solving a quadratic minimization problem:
 
- $\hat \beta=arg \ _\beta\ min \ \ S(\beta)$ where $S(\beta)=\sum_j(y_j -\hat y_j)^2=RSS$.
+ $\hat \beta=arg \ _\beta\ min \ \ S(\beta)$ where $S(\beta)=\sum_j(y_j -\hat y_j)^2=RSS$ (residual sum of squares).
 
 <div style="background-color:#FFFFF0; padding:20px; font-family: sans-serif; border: 1px solid black">
-➡️ We can see these $\beta$’s as differences in the fitted (expected) expression of a gene. Say we have two categorical variables in the model, then the expected gene expression in a sample is $E(y|X_1, X_2) =\hat y =\beta_{0} + \beta_1X_1+\beta_2X_2$, where $X_1$ and $X_2$ equal 1 or 0. Then we have the following 4 combinations:
+💡 We can think of these $\beta$’s as differences in the fitted (expected) expression of a gene. Say we have two binary categorical variables in the model ($X_1$ and $X_2$), then the expected gene expression in a sample is $E(y|X_1, X_2) =\hat y =\beta_{0} + \beta_1X_1+\beta_2X_2$, where $X_1$ and $X_2$ equal to 1 or 0. Then we have the following 4 combinations:
 
 - <mark style= "background-color: #FAECF8"> $E(y|X_1=1, X_2=1) = \mu_{12}=\beta_{0} + \beta_1+\beta_2$ </mark>
 - <mark style= "background-color: #FCF3CF"> $E(y|X_1=1, X_2=0) =\mu_{1}=\beta_{0} + \beta_1$ </mark>
 - <mark style= "background-color: #FAECF8"> $E(y|X_1=0, X_2=1) =\mu_{2}=\beta_{0} + \beta_2$ </mark>
 - <mark style= "background-color: #FCF3CF"> $E(y|X_1=0, X_2=0) =\mu_{0}=\beta_{0}$ </mark>
 
- So $\beta_1=$  <mark style= "background-color: #FCF3CF">$\mu_1-\mu_0$</mark>   $=$   <mark style= "background-color: #FAECF8"> $\mu_{12}-\mu_2$ </mark>  and $\beta_2=\mu_2-\mu_0$. Say our variable of interest is $\beta_1$. Then in the two-sample *t*-test, what we are really testing is if the expected expression of a gene is different when $X_1=1$ (in the first sample group) and $X_1=0$ (in the second sample group), fixing $X_2$ in either 1 or 0.    
+ So $\beta_1=$  <mark style= "background-color: #FCF3CF">$\mu_1-\mu_0$</mark>   $=$   <mark style= "background-color: #FAECF8"> $\mu_{12}-\mu_2$ </mark>  and $\beta_2=$ <mark style= "background-color: #FAECF8">$\mu_2$</mark>$-$ <mark style= "background-color: #FCF3CF">$\mu_0$</mark>. Say our variable of interest is $\beta_1$. Then what we are testing is if the expected expression of a gene is different when $X_1=1$ (in the first sample group) and $X_1=0$ (in the second sample group), fixing $X_2$ in either 1 or 0.    
 </div>
 
 **Generalized least squares (GLS)**
@@ -366,29 +380,209 @@ head(fitGene$coefficients)
 
 ```
 
-<div class="alert alert-info">
-**Interaction terms in linear models**
+<div style="background-color:#FFFFF0; padding:20px; font-family: sans-serif; border: 1px solid black">
+💡**Interaction terms in linear models**
 
-In some cases we want to model the gene expression differences in 2 conditions within more than 1 group. Say for example that we are interested in knowing what are the effects of a treatment ($X_1=1$ for treatment and 0 for controls) in female and males separately ($X_2=1$  for females and 0 for males). For that we can apply an interaction model in which we include the product of $X_1$  and $X_2$ so that $X_1X_2=1$ if a sample comes from a female that was treated and 0 otherwise:
+There may be cases where we want to assess gene expression differences between 2 conditions within more than one specific group; for example if we were interested in knowing what are the effects of a treatment ($X_1=1$ for treatment and 0 for controls) in <mark style= "background-color: #FAECF8">females</mark> and <mark style= "background-color: #E0FFFF">males</mark> separately ($X_2=1$ for females and 0 for males). In such cases we can fit an **interaction model** in which we include the product of $X_1$ and $X_2$ so that $X_1X_2=1$ if a sample comes from a female that was treated and 0 otherwise:
 
 $$E(y|X_1, X_2) =\beta_{0} + \beta_1X_1+\beta_2X_2 + \beta_3X_1X_2$$
 
-- $E(y|X_1=1, X_2=1) =\mu_{12} =\beta_{0} + \beta_1+\beta_2+\beta_3$
-- $E(y|X_1=1, X_2=0) =\mu_{1} =\beta_{0} + \beta_1$
-- $E(y|X_1=0, X_2=1) =\mu_{2} =\beta_{0} + \beta_2$
-- $E(y|X_1=0, X_2=0) =\mu_{0} =\beta_{0}$
+- <mark style= "background-color: #FAECF8"> $E(y|X_1=1, X_2=1) =\mu_{12} =\beta_{0} + \beta_1+\beta_2+\beta_3$ </mark>
+- <mark style= "background-color: #E0FFFF"> $E(y|X_1=1, X_2=0) =\mu_{1} =\beta_{0} + \beta_1$ </mark>
+- <mark style= "background-color: #FAECF8"> $E(y|X_1=0, X_2=1) =\mu_{2} =\beta_{0} + \beta_2$ </mark>
+- <mark style= "background-color: #E0FFFF"> $E(y|X_1=0, X_2=0) =\mu_{0} =\beta_{0}$ </mark>
 
-$\beta_1 + \beta_3=\mu_{12}-\mu_2$ which is the expression difference in cases and controls for females samples ($X_2=1$ ) and $\beta_1 =\mu_{1}-\mu_0$ for males ($X_2=0$). Finally $\beta_3$, called the **interaction term**, is $\beta_3=(\mu_{12}-\mu_2)-(\mu_1-\mu_0)$, described as the difference in gene expression changes driven by the treatment in females compared to males [8].
+$\beta_1 + \beta_3=$ <mark style= "background-color: #FAECF8">$\mu_{12}-\mu_2$</mark> which is the expression difference between treated and control female samples ($X_2=1$) and $\beta_1 =$ <mark style= "background-color: #E0FFFF">$\mu_{1}-\mu_0$</mark> for male samples ($X_2=0$). Finally $\beta_3$, called the **interaction term**, is (<mark style= "background-color: #FAECF8">$\mu_{12}-\mu_2$</mark>)$-$(<mark style= "background-color: #E0FFFF">$\mu_1-\mu_0$</mark>), described as the difference in gene expression changes driven by the treatment in females compared to males [8].
 </div>
 
 
+
 ### `eBayes()`
+Next, we want to assess if the differences in gene expression across the sample groups are statistically significant. Initially, we can think of comparing the mean expression of a gene in two sample groups (e.g. cases and controls) which can be handled applying a **two-sample *t*-test**  assuming that the values in both groups have an approximately normal distribution.
+
+Here we use the *t*-score (***t*-stats**) to define if the difference in the means is statistically significant based on a *t*-distribution. 
+
+The *t*-stats is given by:
+
+$$
+t=\frac{\bar x_1 - \bar x_2}{\sqrt{\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}}}
+$$
+
+where $\bar x_1$ and $\bar x_2$ are the means of the expression values of a gene in the first and second sample groups, $s_1$ and $s_2$ are the sample standard deviations of gene expression in the same groups, and $n_1$, $n_2$ the corresponding sample group sizes:  
+
+ $s_1 = \sqrt{\frac{\sum_{i=1}^ {n_1} (x_i-\bar x_1)^2}{n_1-1}}$ and  $s_2 = \sqrt{\frac{\sum_{j=1}^ {n_2} (x_j-\bar x_2)^2}{n_2-1}}$, with $x_i$ and $x_j$ the gene expression values in the samples of group 1 and 2, respectively. 
+
+<p class="question">
+➡️ Note that we say *sample* means and *sample* standard deviations because they are estimators of the population parameters, computed based on the data that we have.
+</p>
+
+We can think of this *t*-stats as a ratio of signal and noise. The numerator contains the difference between the two means, taken as the **signal** for DE. The denominator corresponds to the **standard error** and represents the **noise** in terms of gene expression variance within the sample groups. This represents how spread out the signal is [9]. In that way, the *t*-stats is a measure of how strong is the DE signal. Once computed, the *t*-stats have an associated *p*-value based on a Student *t*-distribution under the null hypothesis ($H_o$:  $\bar x_1 - \bar x_2=0$).
+
+This is exactly what we can get using `lm()`.  (ToDo)
+```{r lm}
+
+
+```
+
+<p class="info">
+💡 Sample sizes are critical! Larger sample sizes increase the power of the tests and reduce the false discovery rate (FDR) as they decrease the denominator of the *t*-stats (increasing their values) and slight differences can then be detected. 
+</p>
+
+<p class="alert">
+⚠️ Now consider that for genes with small variances in their expression the *t*-stats will be greater and we could be detecting non-DEGs as DE (false positives).
+</p>
+
+But two things must be considered at least when working with gene expression data:
+
+1. The first is that expression values are usually not normally distributed.
+2. Second, the distributions and variances of expression values vary across genes and conditions.
+
+<p class="question">
+➡️ With that in mind, inference at the individual gene level can be addressed borrowing information from all the genes in the experiment through a Bayes or empirical Bayes method that produces more powerful tests.
+</p>
+
+The idea of **Bayesian statistics** is to give unknown quantities a prior distribution, considering each feature as a member of a population of features such as genes. More specifically, **empirical Bayes methods** are procedures for statistical inference in which the (empirical) prior distribution is estimated from the population of all features (from the data) [8]; in standard Bayesian methods this prior distribution is fixed before observing any data [10].
+
+Inspired by the work of Lönnstedt and Speed (2002) in which a simple expression for the posterior odds of differential expression for each gene was computed using a parametric empirical Bayes approach, [Smyth, G. K. (2004)](https://doi.org/10.2202/1544-6115.1027) generalized this model for its application to experiments with any numbers of samples and conditions and reformulated the posterior odds statistic in terms of a **moderated *t*-statistic** in which the posterior residual standard deviations are used instead of the ordinary ones, eliminating the requirement of knowing the non-null prior guess for the proportion of differentially expressed genes required in the log-odds [11]. Let’s see how it proceeds. 
+
+First, for each gene $g$ we have a vector with the expression values in the $n$ samples: 
+
+$$
+y_{g}= (y_{g1}, y_{g2}, ..., y_{gn})
+$$
+
+We already know that the expected (predicted) gene expression in the samples is $E(y_{g})=X\alpha_g$ with $X$ the design matrix and $\alpha_g$ the vector of the coefficients for the $h$ covariates in the model; of these the ones of biological interest are the $\beta_g$’s (contrasts of interest).
+
+Then, as previously described, a linear model is fitted to the expression data for each gene to obtain the **coefficient estimators** ($\hat \alpha_g$) (as well as $\hat \beta_g$), the **residual sample variances** ($s_g^2$) as estimators of the (true but unknown) residual variances ($\sigma_g^2$), and the estimated covariance matrices.
+
+Two relevant considerations here: 
+
+1. The expression values are not necessarily assumed to be normally distributed. 
+2. The linear model is not assumed to be necessarily by least squares.
+
+However, there are two assumptions:
+
+1. The contrast estimators $\hat \beta_g$ are assumed to be approximately normally distributed with mean $\beta_g$.
+2. The residual sample variances ($s_g^2$) are assumed to follow approximately a scaled chisquare distribution.
+
+Under such assumptions the ordinary *t*-stats for the covariate $j$ in the gene $g$ is defined by:
+
+$$
+t_{gj}=\frac{\hat \beta_{gj}}{s_g u_{gj}}=\frac{\hat \beta_{gj}}{SE(\hat \beta_{gj})}
+$$
+
+with $s_g$ the residual sample standard deviation of the gene and $u_{gj}$ the unscaled standard deviation. $SE$ stands for standard error.
+
+The key step in the empirical Bayes approach of *limma* is to leverage the information across all genes by defining prior distributions for the unknown coefficients $\beta_{gj}$ and residual variance $\sigma_g^2$ of the genes. 
+
+* For $\beta_{gj}$ it models the prior distribution of the coefficients that are not zero, i.e. is the expected distribution of the **logFC** of the genes that are DE, is given by:
+    $$\beta_{gj}|\sigma_{g}^2, \beta_{gj}≠0  \sim N(0, v_{0j}\sigma_g^2)$$
+    
+    > "Saying that the betas have prior information centered around zero implies that we are ignorant of the sign (**+**/**-**) of the beta."
+    
+    <div align="right"> \– Vincent Carey </div>
+
+* For the residual variances what *limma* does is to take the residual sample variances of all genes ($s_g^2$’s) and estimate the empirical parameters of the gamma distribution it is assumed that they follow. Specifically, $\frac{1}{\sigma_g^2}$ is modeled by a scaled chisquare (gamma) prior distribution with mean $\frac{1}{s_0^2}$ and $d_0$ degrees of freedom, describing how the residual variances are expected to vary across genes:
+    $$\frac{1}{\sigma_g^2} \sim \frac{1}{d_0s_0^2}\chi_{d_0}^2$$
+
+What we want to do next is not only to take the mean of the residual variances in the distribution (prior mean$\frac{1}{s_0^2}$) but to estimate each gene residual variance as a Bayes predictor: as a weighted average of the **prior mean** ($\frac{1}{s_0^2}$) and the observed **sample variance** ($s_g^2$) of each gene. This is called the **moderated variance** and what is graphically happening is that we are pulling the observed gene variances towards the prior mean variance: large variances are reduced and the |*t*-stats| increases (more powerful *t*-test for those genes) and small variances are increased, decreasing the |*t*-stats| and the power of the *t*-test. Under this model the **posterior residual sample variance** or posterior residual variance estimator ($\tilde s_g^2$) is: 
+
+$$
+\tilde s_g^2=E(\sigma_g^2|s_g^2)=\frac{d_0s_0^2 + d_gs_g^2}{d_0+d_g}
+$$
+
+Moderation is somehow like having larger sample sizes for the estimation of variance given that the moderated variances are (on average) closer to the population variance than the original sample variances.
+
+The **moderated *t*-statistic** can be now defined in terms of this **posterior residual sample standard deviations** instead of the usual ones:
+
+$$
+\tilde t_{gj}=\frac{\hat \beta_{gj}}{\tilde s_g u_{gj}}
+$$
+
+These moderated *t*-stats follow a *t*-distribution under the null hypothesis ($H_o:B_{gj}=0$) with degrees of freedom $d_g+d_0$ and the associated *p*-values can be computed based on such distribution.
+
+As previously stated, with this redefined formula, large *t*-stats merely from very small $s_g$’s are avoided. This results in increased power and reduced false non-discovery rate (FNR) (non detected DEGs) and the number of DEGs obtained increases [8].
+
+In the end we say we have moderated the residual sample standard deviations of each gene in the *t*-stats denominator by using the distribution of all of them across the population of genes. 
+
+<div style="background-color:#E0EEE0; padding:14px; font-family: sans-serif">
+✅ The approach of using the posterior values results in shrinking the gene-wise residual sample variances ($s_g^2$) towards the prior mean, making a more stable inference when a small number of samples is available. </div>
+
+`eBayes()` will implement this empirical Bayes model to compute for each gene and for each contrast these moderated *t*-statistic and their unadjusted *p*-values. Additionally, it returns moderated F-statistic and log-odds of differential expression. The moderated F-statistic tests whether any of the contrasts for a gene is non-zero ($H_0:B_{g}=0$), i.e., whether that gene is differentially expressed for any contrast; it is similar to the ordinary F-statistic from analysis of variance (ANOVAR). The *t*-test does that for each individual contrast $j$ ($H_0:B_{gj}=0$).
+
+<p class="link">
+    👉🏼 Check more about F-stats and other statistics computed by `eBayes()` here: https://support.bioconductor.org/p/6124/.
+</p>
+
+```{r eBayes}
+## eBayes()
+## 1. Compute the empirical Bayes statistics for DE
+eBGene <- eBayes(fitGene)
+
+## Outputs of interest:
+## s2.prior -> prior residual variance (prior mean 1/s0^2)
+##             in prior distribution of residual variances
+eBGene$s2.prior
+
+## df.prior -> degrees of freedom d0 in prior distribution 
+##             of residual variances
+eBGene$df.prior
+
+## s2.post -> posterior residual sample variances of the genes (~sg^2)
+length(eBGene$s2.post)
+head(eBGene$s2.post)
+
+##  t -> moderated t-stats of the genes for each contrast
+dim(eBGene$t)
+eBGene$t[1:5, 1:5]
+
+## p.value: corresponding unadjusted p-values of moderated t-stats
+dim(eBGene$p.value)
+eBGene$p.value[1:5, 1:5]
+```
 
 ### `topTable()`
 
+This function is also provided by *limma* and summarizes the results of the linear model, performs hypothesis tests and adjusts the *p*-values for multiple testing [12]. Among the summary statistics presented, it returns the log2FC, moderated *t*-statistics, *p*-values, and FDR-adjusted *p*-values of the genes for a given contrast of interest. The default form of *p*-value adjustment is the **Benjamini and Hochberg’s** method to control the false discovery rate (FDR) which assumes independence between genes.
+
+**Relevant concepts**: 
+
+* **q*-value** → is the **FDR-adjusted *p*-value** used to control the **False Discovery Rate (FDR)** that is the expected proportion of false discoveries among the discoveries (DEGs). Selecting discoveries as those being below $\alpha$ in *q*-value, we control FDR ≤ $\alpha$.
+
+Now we have the final statistics to determine wich genes are DE.
+```{r topTable}
+## topTable()
+## 1. Rank genes by logFC for Group (nicotine vs ctrl)
+top_genes <- topTable(eBGene, coef = coef, p.value = 1, number = nrow(rse_gene_filt), sort.by = "none")
+
+## Outputs for each gene and for the coeff selected (Group):
+##  logFC: log2-fold-changes (correspond to the betas in limma) 
+head(top_genes$logFC)
+
+##  t: moderated t-stats 
+head(top_genes$t)
+
+##. P.value: unadjusted p-values of t-stats
+head(top_genes$P.Value)
+
+##  adj.P.Val: p-values adjusted to control the FDR
+head(top_genes$adj.P.Val)
+```
+
+In limma the $\beta_{gj}$‘s are the logFC’s:
+```{r betas_logFCs}
+setdiff(top_genes$logFC, eBGene$coefficients[,'GroupExperimental'])
+```
+
+After running all these 5 steps, one main initial plot we have to look at is the histogram of the *p*-values of the *t*-stats for the genes. If there were DEGs, we'd expect to see a flat distribution of *p*-values corresponding to non-DEGs and a peak near *p*=0 for DEGs (where we reject the null hypothesis). If this peak is absent but a uniform distribution still appears, DEGs might be obtained after correcting for multiple testing. 
+
+```{r hist_p}
+## Histogram of adjusted p-values
+hist(top_genes$P.Value, xlab = "p-values", main = "")
+```
 
 
-
+If very different *p*-value distributions are obtained from the uniform one, the best we can do is trying to explore if there are specific groups of genes (e.g. lowly-expressed genes) presenting such variable *p*-values and revisiting the assumptions and considerations of the statistical tests implemented [13]. 
 
 
 
@@ -409,3 +603,13 @@ $\beta_1 + \beta_3=\mu_{12}-\mu_2$ which is the expression difference in cases a
 7. Documentation for lmFit: https://rdrr.io/bioc/limma/man/lmFit.html
 
 8. The Pennsylvania State University. (2018). Statistical Analysis of Genomics Data. Web site: https://online.stat.psu.edu/stat555/node/36/
+
+9. Tushe, M. (2021). A Simple Trick to Understand the t-test. Web site: https://miroslavtushev.medium.com/a-simple-trick-to-understand-the-t-test-2c2a9e7f1dc5
+
+10. Wikipedia. (n.d.). Empirical Bayes method. Web site: https://en.wikipedia.org/wiki/Empirical_Bayes_method#:~:text=Empirical Bayes methods are procedures,before any data are observed.
+
+11. Smyth, G. K. (2004). Linear models and empirical bayes methods for assessing differential expression in microarray experiments. Statistical applications in genetics and molecular biology, 3(1).
+
+12. Documentation for topTable: https://www.rdocumentation.org/packages/limma/versions/3.28.14/topics/toptable
+
+13. Robinson, D. (2014). How to interpret a p-value histogram. Web site: http://varianceexplained.org/statistics/interpreting-pvalue-histogram/
