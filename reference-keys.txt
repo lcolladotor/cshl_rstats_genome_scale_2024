@@ -66,7 +66,7 @@ community-4
 differential-gene-expression-exercise
 recap
 exercise-2
-de-model-building-with-variancepartition
+dge-model-building-with-variancepartition
 download-the-smokingmouse-data-and-subset-it
 explore-gene-level-effects
 variance-partition-analysis
@@ -123,4 +123,5 @@ voom
 lmfit
 ebayes
 toptable
+de-visualization
 references-3
