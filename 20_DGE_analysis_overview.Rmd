@@ -37,7 +37,21 @@ DEG(s): differentially expressed gene(s); Ctrl: control; Expt: experimental; GO:
 
 Evident computational steps right after sequencing involve raw sequencing reads Quality Control (QC) analysis and read alignment to a reference genome for the subsequent gene expression quantification, generating the input for DGE. Comprehensive pipelines have been developed for these purposes, such as the RNA-seq processing pipeline [*SPEAQeasy*](http://research.libd.org/SPEAQeasy/) (Eagles, N.J. *et al*. 2021) that provides a flexible, user-friendly, and reproducible pipeline to perform all such analyses through the implementation of a single workflow, liberating from the need of performing each step individually. 
 
-More details of this pipeline are provided in the [original manuscript](https://doi.org/10.1186/s12859-021-04142-3), the [documentation website](http://research.libd.org/SPEAQeasy/index.html), and other in [created resources](http://research.libd.org/SPEAQeasy-example/).
+<style>
+p.link{
+background-color: #FFFFFF;
+padding: 10px;
+border: 0px solid black;
+margin-left: 0px;
+border-radius: 1px;
+font-size: 15px;
+font-family: sans-serif;
+}
+</style>
+
+<p class="link">
+    👉🏼 More details of this pipeline are provided in the [original manuscript](https://doi.org/10.1186/s12859-021-04142-3), the [documentation website](http://research.libd.org/SPEAQeasy/index.html), and other in [created resources](http://research.libd.org/SPEAQeasy-example/).
+</p>
 
 
 ### RNA-seq data processing
@@ -54,7 +68,10 @@ Often the expression profiling platform (microarray or RNA-seq) includes genes t
 
 Different approaches exist for this step, ranging from the simple definition of a gene expression cutoff to those taking into account not only global gene expression but also the number of samples in which they have a minimum expression level. 
 
-More details about normalization and filtering can be consulted in the course material of 2023 ([Statistical Analysis of Genome Scale Data 2023: Data preparation](https://lcolladotor.github.io/cshl_rstats_genome_scale_2023/rse-plotting-basics-with-smokingmouse.html#data-preparation)).
+<p class="link">
+    👉🏼 More details about normalization and filtering can be consulted in the course material of 2023 ([Statistical Analysis of Genome Scale Data 2023: Data preparation](https://lcolladotor.github.io/cshl_rstats_genome_scale_2023/rse-plotting-basics-with-smokingmouse.html#data-preparation)).
+</p>
+
 
 <figure>
     <img src="Figures/Data_processing.png" width="700px" align=center />
@@ -103,8 +120,9 @@ Other approaches include identifying outlier QC metrics (**Figure 2**: step 3), 
         </figcaption>
 </figure> 
 
-
-See more details about QCA in [Statistical Analysis of Genome Scale Data 2023: Quality Control Analysis](https://lcolladotor.github.io/cshl_rstats_genome_scale_2023/rse-plotting-basics-with-smokingmouse.html#quality-control-analysis).
+<p class="link">
+    👉🏼 See more details about QCA in [Statistical Analysis of Genome Scale Data 2023: Quality Control Analysis](https://lcolladotor.github.io/cshl_rstats_genome_scale_2023/rse-plotting-basics-with-smokingmouse.html#quality-control-analysis).
+</p>
 
 
 #### Exploration of sample-level effects

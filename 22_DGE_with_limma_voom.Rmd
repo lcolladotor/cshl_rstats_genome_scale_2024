@@ -20,7 +20,7 @@ An initial central point of discussion around DGE method development is how to m
 </figure>
 
 
-Estimating the NB distribution parameters is necessary to assess DE of each gene $i$ between any two conditions $k=1,2$ (**Figure 1**). Bayesian models are used defining prior distributions and relationships of such parameters. Briefly, after 1) estimating gene-wise NB parameters, 2) the mean-variance relationship across all genes can be used to shrink the gene variance estimations borrowing information from all genes or incorporating prior knowledge, something advantageous when sample sizes are small (**Figure 2**). 3) A statistical test is used to assess for each gene $i$ if its true expression in the first and second condition ($\theta_{1i}$ and $\theta_{2i}$) is the same (null hypothesis) or differs (alternative hypothesis):
+Estimating the NB distribution parameters is necessary to assess DE of each gene $i$ between any two conditions $k=1,2$ (**Figure 1**). Bayesian models are used defining prior distributions and relationships of such parameters. Briefly, after 1) estimating gene-wise NB parameters, 2) the mean-variance relationship across all genes can be used to shrink the gene variance estimations borrowing information from all genes or incorporating prior knowledge, something advantageous when sample sizes are small. 3) A statistical test is used to assess for each gene $i$ if its true expression in the first and second condition ($\theta_{1i}$ and $\theta_{2i}$) is the same (null hypothesis) or differs (alternative hypothesis):
 
 * $H_0: \theta_{1i}=\theta_{2i}$
 * $H_1: \theta_{1i}≠\theta_{2i}$, where the $\theta_{i}$'s are parameters included in the mean of the NB distributions ($\mu$). 
@@ -29,7 +29,7 @@ Estimating the NB distribution parameters is necessary to assess DE of each gene
 
 Examples of popular methods based on the NB distribution are [*edgeR*](https://bioconductor.org/packages/release/bioc/html/edgeR.html) and [*DESeq2*](https://bioconductor.org/packages/release/bioc/html/DESeq2.html). 
 
-Nevertheless, one problem NB-based methods face is that they set dispersion of the data as a known and global parameter, ignoring observation-specific variation and importantly, there's a reduced number of statistical methods for count distributions compared to the normal distribution [1,2]. Here, we'll focus on [*limma*](https://bioconductor.org/packages/release/bioc/html/limma.html) that does not rely on a certain distribution but rather works on $log_2(cpm)$ and fits linear models for DGE enabling the incorporation of additional predictors to model gene expression, a feature specially valuable for complex experimental settings.   
+Nevertheless, one limitation NB-based methods face is that they set dispersion of the data as a known and global parameter, ignoring observation-specific variation and importantly, there's a reduced number of statistical methods for count distributions compared to the normal distribution [1,2]. Here, we'll focus on [*limma*](https://bioconductor.org/packages/release/bioc/html/limma.html) that does not rely on a certain distribution but rather works on $log_2(cpm)$ and fits linear models for DGE enabling the incorporation of additional predictors to model gene expression, a feature specially valuable for complex experimental settings.   
 
 
  
@@ -37,7 +37,7 @@ Nevertheless, one problem NB-based methods face is that they set dispersion of t
 
 [*limma*](https://bioconductor.org/packages/release/bioc/html/limma.html) is a package for the analysis of gene expression data arising from microarray or RNA-seq technologies. It has features that make the analyses stable even for experiments with small number of arrays or samples —this is achieved by borrowing information across genes. It is specially designed for analyzing complex experiments with a variety of experimental conditions and predictors [3].
 
-Usually, *limma* DGE analysis is carried out in five main steps, the last four of them completed by *limma* `R` functions, as described below. We'll use bulk RNA-seq data from the [`smokingMouse()`](https://bioconductor.org/packages/release/data/experiment/html/smokingMouse.html) package to exemplify the steps. 
+Usually, *limma* DGE analysis is carried out in five main steps, the last four of them completed by *limma* `R` functions, as described below. We'll use bulk RNA-seq data from the [*smokingMouse*](https://bioconductor.org/packages/release/data/experiment/html/smokingMouse.html) package to exemplify the steps. 
 
 ```{r download_data, warning=FALSE,message=FALSE}
 
@@ -76,10 +76,25 @@ assays(rse_gene_filt)$logcounts[1:3, 1:5]
 ## Data for the first 2 samples
 head(colData(rse_gene_filt), 2)
 ```
+<p class="exercise">
+📝 **Exercise 1**: in order for you to perform a DGE analysis, locate your own RNA-seq datasets if you have any, or download expression data from a study of your interest and build a `RSE` object using *recount3* (see **chapter XX: recount3 introduction**). A third option you have is to download data from the *smokingMouse* package used here. 
+<p/>
 
 ### `model.matrix()`
 
 *limma* fits a linear model to the expression data of each gene (response variable), modeling the systematic part of the data by sample-level covariates (predictors). 
+
+<style>
+p.exercise {
+background-color: #FFFAFA;
+padding: 15px;
+border: 2px solid black;
+margin-left: 0px;
+border-radius: 1px;
+font-family: sans-serif;
+}
+</style>
+
 
 <style>
 p.info {
@@ -146,7 +161,7 @@ font-family: sans-serif;
 <style>
 p.alert {
 background-color: #FFE4E1;
-padding: 20px;
+padding: 14px;
 border: 0px solid black;
 margin-left: 0px;
 border-radius: 1px;
@@ -158,7 +173,7 @@ font-family: sans-serif;
 <style>
 p.success {
 background-color: #E0EEE0;
-padding: 20px;
+padding: 14px;
 border: 0px solid black;
 margin-left: 0px;
 border-radius: 1px;
@@ -168,7 +183,7 @@ font-family: sans-serif;
 
 
 <p class="info">
-💡 A model is a specification of how a set of variables relate to each other. In the case of a linear model, it is a linear equation that describes how the dependent or response variable is explained by the independent variables, also called predictors. A regression analysis with more than one independent variable is called **multiple regression**. Regression with only one independent variable is called **simple regression**. There are many variations but what they all have in common is that all of them aim to predict one dependent variable from one or more predictors through a linear equation [4].
+💡 A model is a specification of how a set of variables relate to each other. In the case of a linear model, it is a linear equation that describes how the dependent or response variable is explained by the independent variables, also called predictors. A regression analysis with more than one independent variable is called **multiple regression**. Regression with only one independent variable is called **simple regression** [4].
 </p>
 
 The *limma* model is specified with a **design matrix**, also known as **model matrix** or **regressor matrix**, often denoted by $X$. This is a matrix of values for explanatory variables of the samples: rows correspond to samples and columns to sample variables. 
@@ -195,7 +210,7 @@ head(model)
 ```
 
 <p class="question">
-❓ **Which variables to include as covariates in the models?** A straightforward strategy is to keep the model as **simple as possible** and after fitting the model extract the variables of interest [3]. In chapter XX we have discussed how correlation and variance partition analyses can help us to set up the best models.
+❓ **Which variables to include as covariates in the models?** A straightforward strategy is to keep the model as **simple as possible** and after fitting the model evaluate the comparisons of interest [3]. In **Chapter XX** we have discussed how correlation and variance partition analyses can help us to set up the best models.
  </p>
 
 <p class="alert">
@@ -206,6 +221,10 @@ head(model)
 coef <- "GroupExperimental"
 
 ```
+
+<p class="exercise">
+📝 **Exercise 2**: perform a variance partition analysis (see **Chapter XX:DGE model building with variancePartition**) to select the sample variables to include in your models for DGE based on your data and create the respective design matrix. 
+<p/>
 
 
 ### `voom()`
@@ -292,8 +311,6 @@ identical(vGene$targets$lib.size, colSums(assay(rse_gene_filt)))
 
 
 
-
-
 <div style="background-color:#E0EEE0; padding:20px; font-family: sans-serif">
 <p>
 👉🏼 **Advantages**:
@@ -307,6 +324,15 @@ identical(vGene$targets$lib.size, colSums(assay(rse_gene_filt)))
 </ul>
 </p>
 </div>
+
+<p>
+
+</p>
+
+
+<p class="exercise">
+📝 **Exercise 3**: compute the $log(cpm)$ and the residual variance weights for each observation in your data using `voom()`.
+<p/>
 
 
 
@@ -351,6 +377,10 @@ Such system usually has no exact solution, so we need to estimate the coefficien
  So $\beta_1=$  <mark style= "background-color: #FCF3CF">$\mu_1-\mu_0$</mark>   $=$   <mark style= "background-color: #FAECF8"> $\mu_{12}-\mu_2$ </mark>  and $\beta_2=$ <mark style= "background-color: #FAECF8">$\mu_2$</mark>$-$ <mark style= "background-color: #FCF3CF">$\mu_0$</mark>. Say our variable of interest is $\beta_1$. Then what we are testing is if the expected expression of a gene is different when $X_1=1$ (in the first sample group) and $X_1=0$ (in the second sample group), fixing $X_2$ in either 1 or 0.    
 </div>
 
+<p>
+
+</p>
+
 **Generalized least squares (GLS)**
 
 Is a generalization of OLS that allows for heteroskedasticity and correlation between the residuals [6].
@@ -381,7 +411,7 @@ head(fitGene$coefficients)
 ```
 
 <div style="background-color:#FFFFF0; padding:20px; font-family: sans-serif; border: 1px solid black">
-💡**Interaction terms in linear models**
+💡 **Interaction terms in linear models**
 
 There may be cases where we want to assess gene expression differences between 2 conditions within more than one specific group; for example if we were interested in knowing what are the effects of a treatment ($X_1=1$ for treatment and 0 for controls) in <mark style= "background-color: #FAECF8">females</mark> and <mark style= "background-color: #E0FFFF">males</mark> separately ($X_2=1$ for females and 0 for males). In such cases we can fit an **interaction model** in which we include the product of $X_1$ and $X_2$ so that $X_1X_2=1$ if a sample comes from a female that was treated and 0 otherwise:
 
@@ -395,10 +425,18 @@ $$E(y|X_1, X_2) =\beta_{0} + \beta_1X_1+\beta_2X_2 + \beta_3X_1X_2$$
 $\beta_1 + \beta_3=$ <mark style= "background-color: #FAECF8">$\mu_{12}-\mu_2$</mark> which is the expression difference between treated and control female samples ($X_2=1$) and $\beta_1 =$ <mark style= "background-color: #E0FFFF">$\mu_{1}-\mu_0$</mark> for male samples ($X_2=0$). Finally $\beta_3$, called the **interaction term**, is (<mark style= "background-color: #FAECF8">$\mu_{12}-\mu_2$</mark>)$-$(<mark style= "background-color: #E0FFFF">$\mu_1-\mu_0$</mark>), described as the difference in gene expression changes driven by the treatment in females compared to males [8].
 </div>
 
+<p>
+
+</p>
+
+<p class="exercise">
+📝 **Exercise 4**: fit a linear regression model to the expression data of your genes and extract the coefficients for the included covariates.
+<p/>
+
 
 
 ### `eBayes()`
-Next, we want to assess if the differences in gene expression across the sample groups are statistically significant. Initially, we can think of comparing the mean expression of a gene in two sample groups (e.g. cases and controls) which can be handled applying a **two-sample *t*-test**  assuming that the values in both groups have an approximately normal distribution.
+Next, we want to assess if the differences in gene expression between the sample groups are statistically significant. Initially, we can think of comparing the mean expression of a gene in the sample groups (e.g. cases and controls) which can be handled applying a **two-sample *t*-test**  assuming that the values in both groups have an approximately normal distribution.
 
 Here we use the *t*-score (***t*-stats**) to define if the difference in the means is statistically significant based on a *t*-distribution. 
 
@@ -418,10 +456,21 @@ where $\bar x_1$ and $\bar x_2$ are the means of the expression values of a gene
 
 We can think of this *t*-stats as a ratio of signal and noise. The numerator contains the difference between the two means, taken as the **signal** for DE. The denominator corresponds to the **standard error** and represents the **noise** in terms of gene expression variance within the sample groups. This represents how spread out the signal is [9]. In that way, the *t*-stats is a measure of how strong is the DE signal. Once computed, the *t*-stats have an associated *p*-value based on a Student *t*-distribution under the null hypothesis ($H_o$:  $\bar x_1 - \bar x_2=0$).
 
-This is exactly what we can get using `lm()`.  (ToDo)
+This is exactly what we can get using `lm()`:
 ```{r lm}
+## Lognorm expression of first gene
+rse_gene_one_gene <- rse_gene_filt[1,]
+colData(rse_gene_one_gene) <- cbind(colData(rse_gene_one_gene), 
+                                    "lognorm_expr"= assays(rse_gene_one_gene)$logcounts[1,])
 
 
+## Fit simple linear model
+formula <- lognorm_expr ~ Group
+lm <- lm(formula, data = colData(rse_gene_one_gene))
+summary(lm)
+
+## Two sample t-test
+t.test(formula, data = colData(rse_gene_one_gene), var.equal=TRUE)
 ```
 
 <p class="info">
@@ -479,8 +528,11 @@ The key step in the empirical Bayes approach of *limma* is to leverage the infor
     $$\beta_{gj}|\sigma_{g}^2, \beta_{gj}≠0  \sim N(0, v_{0j}\sigma_g^2)$$
     
     > "Saying that the betas have prior information centered around zero implies that we are ignorant of the sign (**+**/**-**) of the beta."
-    
-    <div align="right"> \– Vincent Carey </div>
+    <div align="right"> \– Vincent Carey (personal communication)</div>
+
+<p>
+
+</p>
 
 * For the residual variances what *limma* does is to take the residual sample variances of all genes ($s_g^2$’s) and estimate the empirical parameters of the gamma distribution it is assumed that they follow. Specifically, $\frac{1}{\sigma_g^2}$ is modeled by a scaled chisquare (gamma) prior distribution with mean $\frac{1}{s_0^2}$ and $d_0$ degrees of freedom, describing how the residual variances are expected to vary across genes:
     $$\frac{1}{\sigma_g^2} \sim \frac{1}{d_0s_0^2}\chi_{d_0}^2$$
@@ -507,6 +559,10 @@ In the end we say we have moderated the residual sample standard deviations of e
 
 <div style="background-color:#E0EEE0; padding:14px; font-family: sans-serif">
 ✅ The approach of using the posterior values results in shrinking the gene-wise residual sample variances ($s_g^2$) towards the prior mean, making a more stable inference when a small number of samples is available. </div>
+
+<p>
+
+</p>
 
 `eBayes()` will implement this empirical Bayes model to compute for each gene and for each contrast these moderated *t*-statistic and their unadjusted *p*-values. Additionally, it returns moderated F-statistic and log-odds of differential expression. The moderated F-statistic tests whether any of the contrasts for a gene is non-zero ($H_0:B_{g}=0$), i.e., whether that gene is differentially expressed for any contrast; it is similar to the ordinary F-statistic from analysis of variance (ANOVAR). The *t*-test does that for each individual contrast $j$ ($H_0:B_{gj}=0$).
 
@@ -541,24 +597,39 @@ dim(eBGene$p.value)
 eBGene$p.value[1:5, 1:5]
 ```
 
+<p class="exercise">
+📝 **Exercise 5**: obtain the moderated *t*-stats and associated *p*-values of all genes in you data for all covariates included in your model.
+<p/>
+
+<p>
+
+</p>
+
 ### `topTable()`
 
-This function is also provided by *limma* and summarizes the results of the linear model, performs hypothesis tests and adjusts the *p*-values for multiple testing [12]. Among the summary statistics presented, it returns the log2FC, moderated *t*-statistics, *p*-values, and FDR-adjusted *p*-values of the genes for a given contrast of interest. The default form of *p*-value adjustment is the **Benjamini and Hochberg’s** method to control the false discovery rate (FDR) which assumes independence between genes.
+This function is also provided by *limma* and summarizes the results of the linear model, performs hypothesis tests and adjusts the *p*-values for multiple testing [12]. Among the summary statistics presented, it returns the log2FCs, moderated *t*-statistics, *p*-values, and FDR-adjusted *p*-values of the genes for a given contrast of interest. The default form of *p*-value adjustment is the **Benjamini and Hochberg’s** method to control the false discovery rate (FDR) which assumes independence between genes.
 
 **Relevant concepts**: 
 
-* **q*-value** → is the **FDR-adjusted *p*-value** used to control the **False Discovery Rate (FDR)** that is the expected proportion of false discoveries among the discoveries (DEGs). Selecting discoveries as those being below $\alpha$ in *q*-value, we control FDR ≤ $\alpha$.
+* ***q*-value** → is the **FDR-adjusted *p*-value** used to control the **False Discovery Rate (FDR)** that is the expected proportion of false discoveries among the discoveries (DEGs). Selecting discoveries as those being below $\alpha$ in *q*-value, we control FDR ≤ $\alpha$.
 
 Now we have the final statistics to determine wich genes are DE.
 ```{r topTable}
 ## topTable()
-## 1. Rank genes by logFC for Group (nicotine vs ctrl)
+## 1. Obtain gene-wise DE stats for Group (Nicotine vs Ctrl)
 top_genes <- topTable(eBGene, coef = coef, p.value = 1, number = nrow(rse_gene_filt), sort.by = "none")
 
 ## Outputs for each gene and for the coeff selected (Group):
-##  logFC: log2-fold-changes (correspond to the betas in limma) 
+##  logFC: log2-fold-changes 
 head(top_genes$logFC)
+```
 
+In limma the $\beta_{gj}$‘s are the logFC’s:
+```{r betas_logFCs}
+setdiff(top_genes$logFC, eBGene$coefficients[,'GroupExperimental'])
+```
+
+```{r topTable2}
 ##  t: moderated t-stats 
 head(top_genes$t)
 
@@ -569,20 +640,26 @@ head(top_genes$P.Value)
 head(top_genes$adj.P.Val)
 ```
 
-In limma the $\beta_{gj}$‘s are the logFC’s:
-```{r betas_logFCs}
-setdiff(top_genes$logFC, eBGene$coefficients[,'GroupExperimental'])
-```
-
-After running all these 5 steps, one main initial plot we have to look at is the histogram of the *p*-values of the *t*-stats for the genes. If there were DEGs, we'd expect to see a flat distribution of *p*-values corresponding to non-DEGs and a peak near *p*=0 for DEGs (where we reject the null hypothesis). If this peak is absent but a uniform distribution still appears, DEGs might be obtained after correcting for multiple testing. 
+After running all these 5 steps, one main initial plot we have to look at is the histogram of the *p*-values of the moderated *t*-stats of the genes. If there were DEGs, we'd expect to see a flat distribution of *p*-values corresponding to non-DEGs and a peak near *p*=0 for DEGs (for which we reject the null hypothesis). If this peak is absent but a uniform distribution still appears, DEGs might be detected after correcting for multiple testing. 
 
 ```{r hist_p}
-## Histogram of adjusted p-values
+## Histogram of unadjusted p-values
 hist(top_genes$P.Value, xlab = "p-values", main = "")
 ```
 
 
 If very different *p*-value distributions are obtained from the uniform one, the best we can do is trying to explore if there are specific groups of genes (e.g. lowly-expressed genes) presenting such variable *p*-values and revisiting the assumptions and considerations of the statistical tests implemented [13]. 
+
+
+<p class="exercise">
+📝 **Exercise 6**: obtain the DE logFCs, *t*-stats, *p*-values, and adjusted *p*-values of the genes for a given constrast/covariate under study. 
+</p>
+
+
+## DE visualization
+DEGs are identified defining a significance threshold ()
+
+
 
 
 

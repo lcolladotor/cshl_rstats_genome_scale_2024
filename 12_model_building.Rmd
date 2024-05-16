@@ -1,4 +1,4 @@
-# DE model building with variancePartition
+# DGE model building with variancePartition
 
 Instructor: Daianna
 
