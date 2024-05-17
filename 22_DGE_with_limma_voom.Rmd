@@ -39,7 +39,7 @@ Nevertheless, one limitation NB-based methods face is that they set dispersion o
 
 Usually, *limma* DGE analysis is carried out in five main steps, the last four of them completed by *limma* `R` functions, as described below. We'll use bulk RNA-seq data from the [*smokingMouse*](https://bioconductor.org/packages/release/data/experiment/html/smokingMouse.html) package to exemplify the steps. 
 
-```{r download_data, warning=FALSE,message=FALSE}
+```{r download_data, warning=FALSE, message=FALSE}
 
 ## Load the container package for this type of data
 library("SummarizedExperiment")
@@ -657,10 +657,105 @@ If very different *p*-value distributions are obtained from the uniform one, the
 
 
 ## DE visualization
-DEGs are identified defining a significance threshold ()
+DEGs are identified defining a significance threshold (on the adjusted *p*-values). Let's quantify the number of DEGs for nicotine exposure in pup brain and visualize their expression and DE statistics.
+
+```{r quantify_DEGs}
+## DEGs for FDR<0.05
+de_genes <- top_genes[which(top_genes$adj.P.Val<0.05), ]
+
+## Number of DEGs
+dim(de_genes)
+```
+
+A very practical and useful plot to graphically represent DEGs and visualize their expression differences between conditions is a volcano plot. This is a scatter plot of the logFC's of the genes in the x-axis vs their adjusted *p*-values in a -log scale in the y-axis. 
+
+```{r volcano plot}
+library("ggplot2")
+
+## Define up- and down-regulated DEGs, and non-DEGs
+FDR = 0.05
+DE<-vector()
+for (i in 1:dim(top_genes)[1]) {
+    if (top_genes$adj.P.Val[i]>FDR) {
+        DE<-append(DE, "n.s.")
+    }
+    else {
+        if (top_genes$logFC[i]>0) {
+            DE<-append(DE, "Up")
+        }
+        else {
+            DE<-append(DE, "Down")
+        }
+    }
+}
+top_genes$DE<- DE
+
+## Colors, sizes and transparencies for up & down DEGs and non-DEGs
+cols <- c("Up" = "indianred2", "Down" = "steelblue2", "n.s." = "grey")
+sizes <- c("Up" = 1.3, "Down" = 1.3, "n.s." = 0.8)
+alphas <- c("Up" = 0.4, "Down" = 0.6, "n.s." = 0.5)
+    
+## Plot volcano plot 
+ggplot(data = top_genes,
+               aes(x = logFC,y = -log10(adj.P.Val),
+                   color = DE,
+                   fill = DE,
+                   size = DE,
+                   alpha = DE)) +
+        geom_point(shape = 21) +
+        geom_hline(yintercept = -log10(FDR),
+                   linetype = "dashed", color = 'gray35', linewidth=0.5) +
+        geom_vline(xintercept = c(-1,1),
+                   linetype = "dashed", color = 'gray35', linewidth=0.5) +
+        labs(y="-log10(FDR)", x="logFC(Nicotine vs Control)")+
+        theme_bw() +
+        scale_color_manual(values = cols, name="Differential expression") +
+        scale_fill_manual(values = cols, name="Differential expression") +
+        scale_size_manual(values = sizes, name="Differential expression") +
+        scale_alpha_manual(values = alphas, name="Differential expression") +
+        theme(plot.margin = unit(c(1,1,1,1), "cm"),
+              legend.key.height = unit(0.15,"cm"),
+              axis.title = element_text(size = (13)),
+              legend.title = element_text(size=13),
+              legend.text = element_text(size=12)) 
+```
+
+Another common way to represent differential expression results is through a heat map. The package [*ComplexHeatmap*](https://bioconductor.org/packages/release/bioc/html/ComplexHeatmap.html) offers a flexible toolkit to easily create heat maps with row and column annotations, a feature of particular value to plot expression data of genes across samples with multiple biological and technical differences. Although initially all genes in your data can be plotted, frequently only DEGs are included as they tend to show clearer gene expression patterns. 
+
+```{r complexHeatmap, warning=FALSE,message=FALSE}
+library("ComplexHeatmap")
+
+## We plot lognorm counts
+lognorm_data<- assays(rse_gene_filt)$logcounts
+colnames(lognorm_data) <- paste0("Pup_", 1:dim(rse_gene_filt)[2])
+```
 
 
+<div style="background-color:#EDEDED; padding:20px; font-family: sans-serif; border: 1px solid black">
+🗒️ **Note**: it is important to regress out the technical variables' contributions on gene expression (if necessary and suitable; functions such as [`cleaningY()`](https://rdrr.io/github/LieberInstitute/jaffelab/man/cleaningY.html) of *jaffelab* can be used for this purpose) and to correctly scale and center (around zero) the lognorm counts to make the differences in the expression of the genes more notorious. A simple way to do that is substracting from each lognorm count $cpm_{gi}$ (from the gene $g$ and sample $i$) the mean expression of the gene across all samples* and dividing by the standard deviation of the same gene expression values. This is formally called the z-score: the number of sd away from the mean.
 
+$$
+z_{ score}=\frac{cpm_{gi} - \frac{\sum_{k=1}^{n}{cpm_{gk}}}{n}}{sd},
+$$
+$n$ is the number of samples.
+
+<font size="2"> \* This can also be done for rows (features), not only for samples (columns). </font>
+</div>
+
+<p>
+
+</p>
+
+
+```{r scale_data}
+## Center and scale the data to make differences more evident
+lognorm_data <- (lognorm_data - rowMeans(lognorm_data)) / rowSds(lognorm_data)
+```
+
+<p class="link">
+    👉🏼 More for on centering and scaling, see this video:
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/c8ffeFVUzk8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</p>
 
 
 ## References
