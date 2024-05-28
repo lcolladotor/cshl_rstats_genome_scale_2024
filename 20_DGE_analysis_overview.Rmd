@@ -93,22 +93,22 @@ Although here we describe EDA as being comprised by QCA, dimensionality reductio
 
 
 #### Quality Control Analysis (QCA)
-First, the quality metrics of the samples regarding read and RNA contents, and read mapping rates have to be compared to (**Figure 2**: step 1):
+First, the quality metrics of the samples regarding read and RNA contents, and read mapping rates have to be compared to (**Figure 3**: step 1):
 
  1) Identify punctual samples or groups of samples of poor quality that may have arisen by technical causes during experimental steps.  
  2) Evaluate if samples from the groups of interest for DGE (diagnostic, treatment, etc.) differ in their quality metrics as these can represent confounding factors for differential expression. 
  3) Detect high biological variability to subsequently support data partition to perform subanalyses of the data.  
 
-Further, we are also interested in investigating trends and relationships between sample variables to unveil underlying technical and biological aspects of the observed data (**Figure 2**: step 2). 
+Further, we are also interested in investigating trends and relationships between sample variables to unveil underlying technical and biological aspects of the observed data (**Figure 3**: step 2). 
 
 After having identified poor-quality samples, we have to remove them to not include the unreliable expression data they provide in downstream analyses. Cutoffs can be defined for specific QC metrics to decide which samples to keep; this however, is not strongly recommended as no consolidated references exist to define them and therefore rather represent arbitrary values. 
-Other approaches include identifying outlier QC metrics (**Figure 2**: step 3), but again, caution must be taken as outlier definition is also arbitrary and we could be discarding good-quality samples.  
+Other approaches include identifying outlier QC metrics (**Figure 3**: step 3), but again, caution must be taken as outlier definition is also arbitrary and we could be discarding good-quality samples.  
 
 <figure>
     <img src="Figures/QCA.png" width="700px" align=center />
         <figcaption style="color: gray; line-height: 0.9; text-align: justify">
             <font size="-1.8">
-                <b>Figure 2</b>: <b> Quality Control Analysis steps. </b> 
+                <b>Figure 3</b>: <b> Quality Control Analysis steps. </b> 
 
 <b> 1. Evaluate QC metrics for groups of samples</b>: sample QC metrics such as the fraction of reads that mapped to the mitochondrial chromosome (`mitoRate`) and to the reference genome (`overallMapRate`) are compared between sample groups given by the variable of interest (`Group` in this example), technical variables (e.g. `plate` for sample library preparation), and biological variables (e.g. `Age`). 
 
@@ -127,13 +127,13 @@ Other approaches include identifying outlier QC metrics (**Figure 2**: step 3), 
 
 #### Exploration of sample-level effects
 
-Sample gene expression profiles can be analyzed and compared after dimensionality reduction procedures such as Principal Component Analysis (PCA) and Multidimensional-Scaling (MDS). These analyses are useful to potentially detect samples with outlier transcriptomic profiles to further remove and to identify sample variables driving gene expression variations (**Figure 3**).
+Sample gene expression profiles can be analyzed and compared after dimensionality reduction procedures such as Principal Component Analysis (PCA) and Multidimensional-Scaling (MDS). These analyses are useful to potentially detect samples with outlier transcriptomic profiles to further remove and to identify sample variables driving gene expression variations (**Figure 4**).
 
 <figure>
-    <img src="Figures/PCA.png" width="700px" align=center />
+    <img src="Figures/PCA.png" width="650px" align=center />
         <figcaption style="color: gray; line-height: 0.9; text-align: justify">
             <font size="-1.8">
-                <b>Figure 2</b>: <b>  Exploration of sample-level effects through PCA</b> 
+                <b>Figure 4</b>: <b>  Exploration of sample-level effects through PCA</b> 
 
 <b> 1. Detection of atypical samples (manual PCA-based sample filtering)</b>: PCx vs PCy plots can expose outlier samples that appear segregated from the rest (purple-squared sample) or samples of a particular group (`Sex`: `F` or `M`) closer to samples from the other group (blue-squared sample). These should be further examined to evalute if they can be kept or must be discarded. In this case, after removing them, PC2 that explains a higher % of variance in gene expression, separates samples by sex. 
 
@@ -145,12 +145,18 @@ Sample gene expression profiles can be analyzed and compared after dimensionalit
 
 #### Model building: covariate selection for *limma*-*voom* 
 
+DGE methods fitting linear models to gene expression data to assess if a covariate impacts significantly on the expression of a gene, require the selection of sample-level variables to model transcriptomic data. 
+If very few variables are present, normally they are all included in the model but that’s not often the case with RNA-seq and it doesn't represent a well founded strategy. Usually, multiple technical and biological variables are implicated in the experiments and sample QC metrics can affect the gene expression levels, even after count normalization, whereas other variables are redundant and/or minimally informative. Therefore, we’d like to identify an optimal set of variables to adjust gene expression for, in addition to the covariate of interest.
+
+We have already introduced one first approximation to that with PCA as this analysis allows us to identify variables explaining high percentages of gene expression variance between samples. In **Chapter XX** we will review how correlation and variance partition analyses at the gene level can help us determine a suitable set of highly explanatory variables. 
 
 
 ## Differential Gene Expression 
+Different mathematical and statistical approaches exist to compare gene expression between two or more conditions. In **Chapter XX** we'll briefly introduce methods based on the negative binomial distribution and address how to perform DGE under the empirical Bayes *limma*-*voom* framework, distinguishing how it operates, its main specifications, inputs, and outputs. 
 
 
 ## Downstream analyses
+After finding DEGs, volcano plots and heat maps are commonly used to graphically represent them, plotting relevant information about them and their expression levels, respectively. In **Chapter XX** we'll also check how to create and interpret these plots.
 
 
 

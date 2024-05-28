@@ -667,9 +667,10 @@ de_genes <- top_genes[which(top_genes$adj.P.Val<0.05), ]
 dim(de_genes)
 ```
 
+### Volcano plots
 A very practical and useful plot to graphically represent DEGs and visualize their expression differences between conditions is a volcano plot. This is a scatter plot of the logFC's of the genes in the x-axis vs their adjusted *p*-values in a -log scale in the y-axis. 
 
-```{r volcano plot}
+```{r volcano plot, warning=FALSE, message=FALSE}
 library("ggplot2")
 
 ## Define up- and down-regulated DEGs, and non-DEGs
@@ -720,6 +721,7 @@ ggplot(data = top_genes,
               legend.text = element_text(size=12)) 
 ```
 
+### Heat maps
 Another common way to represent differential expression results is through a heat map. The package [*ComplexHeatmap*](https://bioconductor.org/packages/release/bioc/html/ComplexHeatmap.html) offers a flexible toolkit to easily create heat maps with row and column annotations, a feature of particular value to plot expression data of genes across samples with multiple biological and technical differences. Although initially all genes in your data can be plotted, frequently only DEGs are included as they tend to show clearer gene expression patterns. 
 
 ```{r complexHeatmap, warning=FALSE,message=FALSE}
@@ -727,19 +729,37 @@ library("ComplexHeatmap")
 
 ## We plot lognorm counts
 lognorm_data<- assays(rse_gene_filt)$logcounts
-colnames(lognorm_data) <- paste0("Pup_", 1:dim(rse_gene_filt)[2])
+
+## Subset to DEGs only
+lognorm_data <- lognorm_data[rownames(de_genes),]
+
+## Define column (sample) names to display
+colnames(lognorm_data) <- paste0("Pup_", 1:dim(lognorm_data)[2])
 ```
 
 
 <div style="background-color:#EDEDED; padding:20px; font-family: sans-serif; border: 1px solid black">
-🗒️ **Note**: it is important to regress out the technical variables' contributions on gene expression (if necessary and suitable; functions such as [`cleaningY()`](https://rdrr.io/github/LieberInstitute/jaffelab/man/cleaningY.html) of *jaffelab* can be used for this purpose) and to correctly scale and center (around zero) the lognorm counts to make the differences in the expression of the genes more notorious. A simple way to do that is substracting from each lognorm count $cpm_{gi}$ (from the gene $g$ and sample $i$) the mean expression of the gene across all samples* and dividing by the standard deviation of the same gene expression values. This is formally called the z-score: the number of sd away from the mean.
+🗒️ **Notes**:
+
+1) It is sometimes convenient to regress out the technical variables' contributions on gene expression to see more clearly the effects of interest. This can happen, for instance, when the logFCs are too small to see any significant differences in the plots or when there are other strong confounding factors. Functions such as [`cleaningY()`](https://rdrr.io/github/LieberInstitute/jaffelab/man/cleaningY.html) of *jaffelab* can be used for this purpose.
+
+2) The lognorm counts have to be correctly scaled and centered (around zero) to make the differences in the expression of the genes more notorious in the heat map. A simple way to do that is substracting from each lognorm count $y_{gi}$ (from the gene $g$ and sample $i$) the mean expression of the gene* and dividing by the standard deviation ($\sigma$) of the same gene expression values. This is formally called the *z*-score: the number of standard deviations away from the mean.
 
 $$
-z_{ score}=\frac{cpm_{gi} - \frac{\sum_{k=1}^{n}{cpm_{gk}}}{n}}{sd},
+z=\frac{y_{gi} - \frac{\sum_{k=1}^{n}{y_{gk}}}{n}}{\sigma},
 $$
 $n$ is the number of samples.
 
-<font size="2"> \* This can also be done for rows (features), not only for samples (columns). </font>
+<font size="2"> \* This can also be done by columns (samples), not only by rows (genes). </font>
+
+<p class="link" style="background-color:#EDEDED">
+    👉🏼 For more on centering and scaling, see this video:
+</p>
+
+<p class="link" style="background-color:#EDEDED; text-align: center">
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/c8ffeFVUzk8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</p>
+
 </div>
 
 <p>
@@ -750,11 +770,50 @@ $n$ is the number of samples.
 ```{r scale_data}
 ## Center and scale the data to make differences more evident
 lognorm_data <- (lognorm_data - rowMeans(lognorm_data)) / rowSds(lognorm_data)
+
+## Sample annotation: Sex, Group, and library size
+col_anno <- HeatmapAnnotation(
+    df = as.data.frame(colData(rse_gene_filt)[, c("Sex", "Group")]),
+    library_size = anno_barplot(colData(rse_gene_filt)$sum, gp = gpar(fill = "lightyellow2")),
+    col = list("Sex" = c("F" = "hotpink1", "M" = "dodgerblue"),
+               "Group" = c("Control" = "gray68", "Experimental" = "gold2"))
+    )
+
+## Gene annotation: logFC and biotype
+de_genes$logFC_binary <- sapply(de_genes$logFC, function(x){if(x>0){">0"} else{"<0"}})
+de_genes$protein_coding_gene <- sapply(rowData(rse_gene_filt[rownames(de_genes), ])$gene_type, function(x){
+    if(x=="protein_coding"){"TRUE"} else{"FALSE"}})
+
+gene_anno <- rowAnnotation(
+    df = as.data.frame(cbind("logFC" = de_genes$logFC_binary, 
+                             "protein_coding_gene"= de_genes$protein_coding_gene)),
+    col = list("logFC" = c("<0"="deepskyblue3", ">0"="brown2"), 
+               "protein_coding_gene" = c("TRUE"="darkseagreen3", "FALSE"="magenta"))
+    )
 ```
 
-<p class="link">
-    👉🏼 More for on centering and scaling, see this video:
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/c8ffeFVUzk8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+```{r heat map, warning=FALSE, message=FALSE, fig.width=10,fig.height=6.9}
+library("circlize")
+
+## Plot
+Heatmap(lognorm_data,
+    name = "lognorm counts",
+    show_row_names = FALSE,
+    top_annotation = col_anno,
+    left_annotation = gene_anno,
+    row_km = 2,
+    column_km = 2,
+    col = colorRamp2(c(-4, -0.0001, 00001, 4), c("darkblue", "lightblue", "lightsalmon", "darkred")),
+    row_title = "DEGs",
+    column_title = "Samples",
+    column_names_gp = gpar(fontsize = 7),
+    heatmap_width = unit(12.5, "cm"),
+    heatmap_height = unit(12.5, "cm")
+)
+```
+
+<p class="exercise">
+📝 **Exercise 7**: obtain the number of DEGs you got and represent them in a volcano plot and a heat map. Include all the sample and gene information you consider relevant in the latter. 
 </p>
 
 
