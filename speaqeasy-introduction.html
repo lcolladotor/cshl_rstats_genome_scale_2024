@@ -328,7 +328,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="21.2.4" data-path="differential-gene-expression-analysis-with-limma-voom.html"><a href="differential-gene-expression-analysis-with-limma-voom.html#ebayes"><i class="fa fa-check"></i><b>21.2.4</b> <code>eBayes()</code></a></li>
 <li class="chapter" data-level="21.2.5" data-path="differential-gene-expression-analysis-with-limma-voom.html"><a href="differential-gene-expression-analysis-with-limma-voom.html#toptable"><i class="fa fa-check"></i><b>21.2.5</b> <code>topTable()</code></a></li>
 </ul></li>
-<li class="chapter" data-level="21.3" data-path="differential-gene-expression-analysis-with-limma-voom.html"><a href="differential-gene-expression-analysis-with-limma-voom.html#de-visualization"><i class="fa fa-check"></i><b>21.3</b> DE visualization</a></li>
+<li class="chapter" data-level="21.3" data-path="differential-gene-expression-analysis-with-limma-voom.html"><a href="differential-gene-expression-analysis-with-limma-voom.html#de-visualization"><i class="fa fa-check"></i><b>21.3</b> DE visualization</a>
+<ul>
+<li class="chapter" data-level="21.3.1" data-path="differential-gene-expression-analysis-with-limma-voom.html"><a href="differential-gene-expression-analysis-with-limma-voom.html#volcano-plots"><i class="fa fa-check"></i><b>21.3.1</b> Volcano plots</a></li>
+<li class="chapter" data-level="21.3.2" data-path="differential-gene-expression-analysis-with-limma-voom.html"><a href="differential-gene-expression-analysis-with-limma-voom.html#heat-maps"><i class="fa fa-check"></i><b>21.3.2</b> Heat maps</a></li>
+</ul></li>
 <li class="chapter" data-level="21.4" data-path="differential-gene-expression-analysis-with-limma-voom.html"><a href="differential-gene-expression-analysis-with-limma-voom.html#references-3"><i class="fa fa-check"></i><b>21.4</b> References</a></li>
 </ul></li>
 </ul>
@@ -401,8 +405,8 @@ Congrats Nick <a href="https://t.co/O3u5XRPXy2">https://t.co/O3u5XRPXy2</a> for 
 <pre><code>## adding rname &#39;https://github.com/LieberInstitute/SPEAQeasy-example/raw/master/rse_speaqeasy.RData&#39;</code></pre>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="speaqeasy-introduction.html#cb10-1" tabindex="-1"></a><span class="do">## Check the local path on our cache</span></span>
 <span id="cb10-2"><a href="speaqeasy-introduction.html#cb10-2" tabindex="-1"></a>cached_rse_gene_example</span></code></pre></div>
-<pre><code>##                                                                  BFC1 
-## &quot;/github/home/.cache/R/BiocFileCache/26d12cad071_rse_speaqeasy.RData&quot;</code></pre>
+<pre><code>##                                                                   BFC1 
+## &quot;/github/home/.cache/R/BiocFileCache/107d2e59e079_rse_speaqeasy.RData&quot;</code></pre>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="speaqeasy-introduction.html#cb12-1" tabindex="-1"></a><span class="do">## Load the rse_gene object</span></span>
 <span id="cb12-2"><a href="speaqeasy-introduction.html#cb12-2" tabindex="-1"></a><span class="fu">load</span>(cached_rse_gene_example, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>## Loading objects:

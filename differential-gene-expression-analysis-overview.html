@@ -328,7 +328,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="21.2.4" data-path="differential-gene-expression-analysis-with-limma-voom.html"><a href="differential-gene-expression-analysis-with-limma-voom.html#ebayes"><i class="fa fa-check"></i><b>21.2.4</b> <code>eBayes()</code></a></li>
 <li class="chapter" data-level="21.2.5" data-path="differential-gene-expression-analysis-with-limma-voom.html"><a href="differential-gene-expression-analysis-with-limma-voom.html#toptable"><i class="fa fa-check"></i><b>21.2.5</b> <code>topTable()</code></a></li>
 </ul></li>
-<li class="chapter" data-level="21.3" data-path="differential-gene-expression-analysis-with-limma-voom.html"><a href="differential-gene-expression-analysis-with-limma-voom.html#de-visualization"><i class="fa fa-check"></i><b>21.3</b> DE visualization</a></li>
+<li class="chapter" data-level="21.3" data-path="differential-gene-expression-analysis-with-limma-voom.html"><a href="differential-gene-expression-analysis-with-limma-voom.html#de-visualization"><i class="fa fa-check"></i><b>21.3</b> DE visualization</a>
+<ul>
+<li class="chapter" data-level="21.3.1" data-path="differential-gene-expression-analysis-with-limma-voom.html"><a href="differential-gene-expression-analysis-with-limma-voom.html#volcano-plots"><i class="fa fa-check"></i><b>21.3.1</b> Volcano plots</a></li>
+<li class="chapter" data-level="21.3.2" data-path="differential-gene-expression-analysis-with-limma-voom.html"><a href="differential-gene-expression-analysis-with-limma-voom.html#heat-maps"><i class="fa fa-check"></i><b>21.3.2</b> Heat maps</a></li>
+</ul></li>
 <li class="chapter" data-level="21.4" data-path="differential-gene-expression-analysis-with-limma-voom.html"><a href="differential-gene-expression-analysis-with-limma-voom.html#references-3"><i class="fa fa-check"></i><b>21.4</b> References</a></li>
 </ul></li>
 </ul>
@@ -424,21 +428,21 @@ In this process we basically create tons of plots, charts and graphs to visualiz
 <p>Although here we describe EDA as being comprised by QCA, dimensionality reduction to explore sample-level effects, and variance partition analysis to explore gene-level effects, EDA is not a well defined process that can be followed by concrete instructions or steps. The analyses you run and what you plot depends on the particular questions you’re trying to answer, what you would like to know about your data and of course, it completely depends on the specific characteristics of your own dataset.</p>
 <div id="quality-control-analysis-qca" class="section level4 hasAnchor" number="20.1.2.1">
 <h4><span class="header-section-number">20.1.2.1</span> Quality Control Analysis (QCA)<a href="differential-gene-expression-analysis-overview.html#quality-control-analysis-qca" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>First, the quality metrics of the samples regarding read and RNA contents, and read mapping rates have to be compared to (<strong>Figure 2</strong>: step 1):</p>
+<p>First, the quality metrics of the samples regarding read and RNA contents, and read mapping rates have to be compared to (<strong>Figure 3</strong>: step 1):</p>
 <ol style="list-style-type: decimal">
 <li>Identify punctual samples or groups of samples of poor quality that may have arisen by technical causes during experimental steps.<br />
 </li>
 <li>Evaluate if samples from the groups of interest for DGE (diagnostic, treatment, etc.) differ in their quality metrics as these can represent confounding factors for differential expression.</li>
 <li>Detect high biological variability to subsequently support data partition to perform subanalyses of the data.</li>
 </ol>
-<p>Further, we are also interested in investigating trends and relationships between sample variables to unveil underlying technical and biological aspects of the observed data (<strong>Figure 2</strong>: step 2).</p>
+<p>Further, we are also interested in investigating trends and relationships between sample variables to unveil underlying technical and biological aspects of the observed data (<strong>Figure 3</strong>: step 2).</p>
 <p>After having identified poor-quality samples, we have to remove them to not include the unreliable expression data they provide in downstream analyses. Cutoffs can be defined for specific QC metrics to decide which samples to keep; this however, is not strongly recommended as no consolidated references exist to define them and therefore rather represent arbitrary values.
-Other approaches include identifying outlier QC metrics (<strong>Figure 2</strong>: step 3), but again, caution must be taken as outlier definition is also arbitrary and we could be discarding good-quality samples.</p>
+Other approaches include identifying outlier QC metrics (<strong>Figure 3</strong>: step 3), but again, caution must be taken as outlier definition is also arbitrary and we could be discarding good-quality samples.</p>
 <figure>
 <img src="Figures/QCA.png" width="700px" align=center />
 <figcaption style="color: gray; line-height: 0.9; text-align: justify">
 <p><font size="-1.8">
-<b>Figure 2</b>: <b> Quality Control Analysis steps. </b></p>
+<b>Figure 3</b>: <b> Quality Control Analysis steps. </b></p>
 <p><b> 1. Evaluate QC metrics for groups of samples</b>: sample QC metrics such as the fraction of reads that mapped to the mitochondrial chromosome (<code>mitoRate</code>) and to the reference genome (<code>overallMapRate</code>) are compared between sample groups given by the variable of interest (<code>Group</code> in this example), technical variables (e.g. <code>plate</code> for sample library preparation), and biological variables (e.g. <code>Age</code>).</p>
 <p><b> 2. Examine relationships between sample variables</b>: pairs of QC metrics are compared; here <code>mitoRate</code> and the fraction of reads assigned to rRNA genes (<code>rRNA_rate</code>), as well as the library size (<code>sum</code>) and the number of expressed genes (<code>detected</code>) are plotted to explore the relationships they present with each other and with other sample metadata variables. (<code>Group</code> and <code>Age</code>).</p>
 <p><b> 3. QC-based sample filtering</b>: outlier QC metrics (red) are detected based on +/- 3 median-absolute-deviations (MADs) away (dotted lines) from the median (solid line).</p>
@@ -451,12 +455,12 @@ Other approaches include identifying outlier QC metrics (<strong>Figure 2</stron
 </div>
 <div id="exploration-of-sample-level-effects" class="section level4 hasAnchor" number="20.1.2.2">
 <h4><span class="header-section-number">20.1.2.2</span> Exploration of sample-level effects<a href="differential-gene-expression-analysis-overview.html#exploration-of-sample-level-effects" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>Sample gene expression profiles can be analyzed and compared after dimensionality reduction procedures such as Principal Component Analysis (PCA) and Multidimensional-Scaling (MDS). These analyses are useful to potentially detect samples with outlier transcriptomic profiles to further remove and to identify sample variables driving gene expression variations (<strong>Figure 3</strong>).</p>
+<p>Sample gene expression profiles can be analyzed and compared after dimensionality reduction procedures such as Principal Component Analysis (PCA) and Multidimensional-Scaling (MDS). These analyses are useful to potentially detect samples with outlier transcriptomic profiles to further remove and to identify sample variables driving gene expression variations (<strong>Figure 4</strong>).</p>
 <figure>
-<img src="Figures/PCA.png" width="700px" align=center />
+<img src="Figures/PCA.png" width="650px" align=center />
 <figcaption style="color: gray; line-height: 0.9; text-align: justify">
 <p><font size="-1.8">
-<b>Figure 2</b>: <b> Exploration of sample-level effects through PCA</b></p>
+<b>Figure 4</b>: <b> Exploration of sample-level effects through PCA</b></p>
 <p><b> 1. Detection of atypical samples (manual PCA-based sample filtering)</b>: PCx vs PCy plots can expose outlier samples that appear segregated from the rest (purple-squared sample) or samples of a particular group (<code>Sex</code>: <code>F</code> or <code>M</code>) closer to samples from the other group (blue-squared sample). These should be further examined to evalute if they can be kept or must be discarded. In this case, after removing them, PC2 that explains a higher % of variance in gene expression, separates samples by sex.</p>
 <b> 2. Identification of drivers of sample gene expression variation</b>: reducing the dimensionality of our data enables to recognize sample variables explaining differences in the gene expression of the samples (<code>Age</code>), ascertain technical variables and batch effects are not impacting on the transcriptome (<code>plate</code>), and inquire to what extent our variable of interest is contributing to changes in gene expression (<code>Group</code>).
 </font>
@@ -465,14 +469,19 @@ Other approaches include identifying outlier QC metrics (<strong>Figure 2</stron
 </div>
 <div id="model-building-covariate-selection-for-limma-voom" class="section level4 hasAnchor" number="20.1.2.3">
 <h4><span class="header-section-number">20.1.2.3</span> Model building: covariate selection for <em>limma</em>-<em>voom</em><a href="differential-gene-expression-analysis-overview.html#model-building-covariate-selection-for-limma-voom" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>DGE methods fitting linear models to gene expression data to assess if a covariate impacts significantly on the expression of a gene, require the selection of sample-level variables to model transcriptomic data.
+If very few variables are present, normally they are all included in the model but that’s not often the case with RNA-seq and it doesn’t represent a well founded strategy. Usually, multiple technical and biological variables are implicated in the experiments and sample QC metrics can affect the gene expression levels, even after count normalization, whereas other variables are redundant and/or minimally informative. Therefore, we’d like to identify an optimal set of variables to adjust gene expression for, in addition to the covariate of interest.</p>
+<p>We have already introduced one first approximation to that with PCA as this analysis allows us to identify variables explaining high percentages of gene expression variance between samples. In <strong>Chapter XX</strong> we will review how correlation and variance partition analyses at the gene level can help us determine a suitable set of highly explanatory variables.</p>
 </div>
 </div>
 </div>
 <div id="differential-gene-expression" class="section level2 hasAnchor" number="20.2">
 <h2><span class="header-section-number">20.2</span> Differential Gene Expression<a href="differential-gene-expression-analysis-overview.html#differential-gene-expression" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Different mathematical and statistical approaches exist to compare gene expression between two or more conditions. In <strong>Chapter XX</strong> we’ll briefly introduce methods based on the negative binomial distribution and address how to perform DGE under the empirical Bayes <em>limma</em>-<em>voom</em> framework, distinguishing how it operates, its main specifications, inputs, and outputs.</p>
 </div>
 <div id="downstream-analyses" class="section level2 hasAnchor" number="20.3">
 <h2><span class="header-section-number">20.3</span> Downstream analyses<a href="differential-gene-expression-analysis-overview.html#downstream-analyses" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>After finding DEGs, volcano plots and heat maps are commonly used to graphically represent them, plotting relevant information about them and their expression levels, respectively. In <strong>Chapter XX</strong> we’ll also check how to create and interpret these plots.</p>
 </div>
 <div id="references-2" class="section level2 hasAnchor" number="20.4">
 <h2><span class="header-section-number">20.4</span> References<a href="differential-gene-expression-analysis-overview.html#references-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>

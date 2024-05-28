@@ -328,7 +328,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="21.2.4" data-path="differential-gene-expression-analysis-with-limma-voom.html"><a href="differential-gene-expression-analysis-with-limma-voom.html#ebayes"><i class="fa fa-check"></i><b>21.2.4</b> <code>eBayes()</code></a></li>
 <li class="chapter" data-level="21.2.5" data-path="differential-gene-expression-analysis-with-limma-voom.html"><a href="differential-gene-expression-analysis-with-limma-voom.html#toptable"><i class="fa fa-check"></i><b>21.2.5</b> <code>topTable()</code></a></li>
 </ul></li>
-<li class="chapter" data-level="21.3" data-path="differential-gene-expression-analysis-with-limma-voom.html"><a href="differential-gene-expression-analysis-with-limma-voom.html#de-visualization"><i class="fa fa-check"></i><b>21.3</b> DE visualization</a></li>
+<li class="chapter" data-level="21.3" data-path="differential-gene-expression-analysis-with-limma-voom.html"><a href="differential-gene-expression-analysis-with-limma-voom.html#de-visualization"><i class="fa fa-check"></i><b>21.3</b> DE visualization</a>
+<ul>
+<li class="chapter" data-level="21.3.1" data-path="differential-gene-expression-analysis-with-limma-voom.html"><a href="differential-gene-expression-analysis-with-limma-voom.html#volcano-plots"><i class="fa fa-check"></i><b>21.3.1</b> Volcano plots</a></li>
+<li class="chapter" data-level="21.3.2" data-path="differential-gene-expression-analysis-with-limma-voom.html"><a href="differential-gene-expression-analysis-with-limma-voom.html#heat-maps"><i class="fa fa-check"></i><b>21.3.2</b> Heat maps</a></li>
+</ul></li>
 <li class="chapter" data-level="21.4" data-path="differential-gene-expression-analysis-with-limma-voom.html"><a href="differential-gene-expression-analysis-with-limma-voom.html#references-3"><i class="fa fa-check"></i><b>21.4</b> References</a></li>
 </ul></li>
 </ul>
@@ -430,7 +434,7 @@ write any code? The answer is with <code>iSEE</code> 🎨</p>
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="isee-introduction.html#cb35-1" tabindex="-1"></a><span class="do">## Lets get some data using spatialLIBD</span></span>
 <span id="cb35-2"><a href="isee-introduction.html#cb35-2" tabindex="-1"></a>sce_layer <span class="ot">&lt;-</span> spatialLIBD<span class="sc">::</span><span class="fu">fetch_data</span>(<span class="st">&quot;sce_layer&quot;</span>)</span>
 <span id="cb35-3"><a href="isee-introduction.html#cb35-3" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;https://www.dropbox.com/s/bg8xwysh2vnjwvg/Human_DLPFC_Visium_processedData_sce_scran_sce_layer_spatialLIBD.Rdata?dl=1&#39;</span></span>
-<span id="cb35-4"><a href="isee-introduction.html#cb35-4" tabindex="-1"></a><span class="co">#&gt; 2024-05-17 07:09:37.184098 loading file /github/home/.cache/R/BiocFileCache/26d78445a96_Human_DLPFC_Visium_processedData_sce_scran_sce_layer_spatialLIBD.Rdata%3Fdl%3D1</span></span>
+<span id="cb35-4"><a href="isee-introduction.html#cb35-4" tabindex="-1"></a><span class="co">#&gt; 2024-05-28 02:35:18.612336 loading file /github/home/.cache/R/BiocFileCache/107d428bede0_Human_DLPFC_Visium_processedData_sce_scran_sce_layer_spatialLIBD.Rdata%3Fdl%3D1</span></span>
 <span id="cb35-5"><a href="isee-introduction.html#cb35-5" tabindex="-1"></a>sce_layer</span>
 <span id="cb35-6"><a href="isee-introduction.html#cb35-6" tabindex="-1"></a><span class="co">#&gt; class: SingleCellExperiment </span></span>
 <span id="cb35-7"><a href="isee-introduction.html#cb35-7" tabindex="-1"></a><span class="co">#&gt; dim: 22331 76 </span></span>

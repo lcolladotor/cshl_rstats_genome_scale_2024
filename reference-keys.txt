@@ -124,4 +124,6 @@ lmfit
 ebayes
 toptable
 de-visualization
+volcano-plots
+heat-maps
 references-3

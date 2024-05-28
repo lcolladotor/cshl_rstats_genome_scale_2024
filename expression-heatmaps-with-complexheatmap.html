@@ -328,7 +328,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="21.2.4" data-path="differential-gene-expression-analysis-with-limma-voom.html"><a href="differential-gene-expression-analysis-with-limma-voom.html#ebayes"><i class="fa fa-check"></i><b>21.2.4</b> <code>eBayes()</code></a></li>
 <li class="chapter" data-level="21.2.5" data-path="differential-gene-expression-analysis-with-limma-voom.html"><a href="differential-gene-expression-analysis-with-limma-voom.html#toptable"><i class="fa fa-check"></i><b>21.2.5</b> <code>topTable()</code></a></li>
 </ul></li>
-<li class="chapter" data-level="21.3" data-path="differential-gene-expression-analysis-with-limma-voom.html"><a href="differential-gene-expression-analysis-with-limma-voom.html#de-visualization"><i class="fa fa-check"></i><b>21.3</b> DE visualization</a></li>
+<li class="chapter" data-level="21.3" data-path="differential-gene-expression-analysis-with-limma-voom.html"><a href="differential-gene-expression-analysis-with-limma-voom.html#de-visualization"><i class="fa fa-check"></i><b>21.3</b> DE visualization</a>
+<ul>
+<li class="chapter" data-level="21.3.1" data-path="differential-gene-expression-analysis-with-limma-voom.html"><a href="differential-gene-expression-analysis-with-limma-voom.html#volcano-plots"><i class="fa fa-check"></i><b>21.3.1</b> Volcano plots</a></li>
+<li class="chapter" data-level="21.3.2" data-path="differential-gene-expression-analysis-with-limma-voom.html"><a href="differential-gene-expression-analysis-with-limma-voom.html#heat-maps"><i class="fa fa-check"></i><b>21.3.2</b> Heat maps</a></li>
+</ul></li>
 <li class="chapter" data-level="21.4" data-path="differential-gene-expression-analysis-with-limma-voom.html"><a href="differential-gene-expression-analysis-with-limma-voom.html#references-3"><i class="fa fa-check"></i><b>21.4</b> References</a></li>
 </ul></li>
 </ul>
@@ -411,8 +415,8 @@ Explore the <a href="https://bioconductor.org/packages/release/bioc/html/Complex
 <span id="cb120-8"><a href="expression-heatmaps-with-complexheatmap.html#cb120-8" tabindex="-1"></a></span>
 <span id="cb120-9"><a href="expression-heatmaps-with-complexheatmap.html#cb120-9" tabindex="-1"></a><span class="do">## Check the local path on our cache</span></span>
 <span id="cb120-10"><a href="expression-heatmaps-with-complexheatmap.html#cb120-10" tabindex="-1"></a>cached_rse_gene</span>
-<span id="cb120-11"><a href="expression-heatmaps-with-complexheatmap.html#cb120-11" tabindex="-1"></a><span class="co">#&gt;                                                                                  BFC2 </span></span>
-<span id="cb120-12"><a href="expression-heatmaps-with-complexheatmap.html#cb120-12" tabindex="-1"></a><span class="co">#&gt; &quot;/github/home/.cache/R/BiocFileCache/26d6bae164f_rse_gene_mouse_RNAseq_nic-smo.Rdata&quot;</span></span>
+<span id="cb120-11"><a href="expression-heatmaps-with-complexheatmap.html#cb120-11" tabindex="-1"></a><span class="co">#&gt;                                                                                   BFC2 </span></span>
+<span id="cb120-12"><a href="expression-heatmaps-with-complexheatmap.html#cb120-12" tabindex="-1"></a><span class="co">#&gt; &quot;/github/home/.cache/R/BiocFileCache/107d14e54709_rse_gene_mouse_RNAseq_nic-smo.Rdata&quot;</span></span>
 <span id="cb120-13"><a href="expression-heatmaps-with-complexheatmap.html#cb120-13" tabindex="-1"></a></span>
 <span id="cb120-14"><a href="expression-heatmaps-with-complexheatmap.html#cb120-14" tabindex="-1"></a><span class="do">## Load the rse_gene object</span></span>
 <span id="cb120-15"><a href="expression-heatmaps-with-complexheatmap.html#cb120-15" tabindex="-1"></a><span class="fu">load</span>(cached_rse_gene, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span>

@@ -328,7 +328,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="21.2.4" data-path="differential-gene-expression-analysis-with-limma-voom.html"><a href="differential-gene-expression-analysis-with-limma-voom.html#ebayes"><i class="fa fa-check"></i><b>21.2.4</b> <code>eBayes()</code></a></li>
 <li class="chapter" data-level="21.2.5" data-path="differential-gene-expression-analysis-with-limma-voom.html"><a href="differential-gene-expression-analysis-with-limma-voom.html#toptable"><i class="fa fa-check"></i><b>21.2.5</b> <code>topTable()</code></a></li>
 </ul></li>
-<li class="chapter" data-level="21.3" data-path="differential-gene-expression-analysis-with-limma-voom.html"><a href="differential-gene-expression-analysis-with-limma-voom.html#de-visualization"><i class="fa fa-check"></i><b>21.3</b> DE visualization</a></li>
+<li class="chapter" data-level="21.3" data-path="differential-gene-expression-analysis-with-limma-voom.html"><a href="differential-gene-expression-analysis-with-limma-voom.html#de-visualization"><i class="fa fa-check"></i><b>21.3</b> DE visualization</a>
+<ul>
+<li class="chapter" data-level="21.3.1" data-path="differential-gene-expression-analysis-with-limma-voom.html"><a href="differential-gene-expression-analysis-with-limma-voom.html#volcano-plots"><i class="fa fa-check"></i><b>21.3.1</b> Volcano plots</a></li>
+<li class="chapter" data-level="21.3.2" data-path="differential-gene-expression-analysis-with-limma-voom.html"><a href="differential-gene-expression-analysis-with-limma-voom.html#heat-maps"><i class="fa fa-check"></i><b>21.3.2</b> Heat maps</a></li>
+</ul></li>
 <li class="chapter" data-level="21.4" data-path="differential-gene-expression-analysis-with-limma-voom.html"><a href="differential-gene-expression-analysis-with-limma-voom.html#references-3"><i class="fa fa-check"></i><b>21.4</b> References</a></li>
 </ul></li>
 </ul>
@@ -999,6 +1003,8 @@ t_{gj}=\frac{\hat \beta_{gj}}{s_g u_{gj}}=\frac{\hat \beta_{gj}}{SE(\hat \beta_{
 <span id="cb153-4"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb153-4" tabindex="-1"></a><span class="do">## Number of DEGs</span></span>
 <span id="cb153-5"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb153-5" tabindex="-1"></a><span class="fu">dim</span>(de_genes)</span>
 <span id="cb153-6"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb153-6" tabindex="-1"></a><span class="co">#&gt; [1] 1895    6</span></span></code></pre></div>
+<div id="volcano-plots" class="section level3 hasAnchor" number="21.3.1">
+<h3><span class="header-section-number">21.3.1</span> Volcano plots<a href="differential-gene-expression-analysis-with-limma-voom.html#volcano-plots" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>A very practical and useful plot to graphically represent DEGs and visualize their expression differences between conditions is a volcano plot. This is a scatter plot of the logFC’s of the genes in the x-axis vs their adjusted <em>p</em>-values in a -log scale in the y-axis.</p>
 <div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb154-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;ggplot2&quot;</span>)</span>
 <span id="cb154-2"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb154-2" tabindex="-1"></a></span>
@@ -1049,28 +1055,85 @@ t_{gj}=\frac{\hat \beta_{gj}}{s_g u_{gj}}=\frac{\hat \beta_{gj}}{SE(\hat \beta_{
 <span id="cb154-47"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb154-47" tabindex="-1"></a>              <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">13</span>),</span>
 <span id="cb154-48"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb154-48" tabindex="-1"></a>              <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">12</span>)) </span></code></pre></div>
 <p><img src="_main_files/figure-html/volcano%20plot-1.png" width="672" /></p>
+</div>
+<div id="heat-maps" class="section level3 hasAnchor" number="21.3.2">
+<h3><span class="header-section-number">21.3.2</span> Heat maps<a href="differential-gene-expression-analysis-with-limma-voom.html#heat-maps" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Another common way to represent differential expression results is through a heat map. The package <a href="https://bioconductor.org/packages/release/bioc/html/ComplexHeatmap.html"><em>ComplexHeatmap</em></a> offers a flexible toolkit to easily create heat maps with row and column annotations, a feature of particular value to plot expression data of genes across samples with multiple biological and technical differences. Although initially all genes in your data can be plotted, frequently only DEGs are included as they tend to show clearer gene expression patterns.</p>
 <div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb155-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;ComplexHeatmap&quot;</span>)</span>
 <span id="cb155-2"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb155-2" tabindex="-1"></a></span>
 <span id="cb155-3"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb155-3" tabindex="-1"></a><span class="do">## We plot lognorm counts</span></span>
 <span id="cb155-4"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb155-4" tabindex="-1"></a>lognorm_data<span class="ot">&lt;-</span> <span class="fu">assays</span>(rse_gene_filt)<span class="sc">$</span>logcounts</span>
-<span id="cb155-5"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb155-5" tabindex="-1"></a><span class="fu">colnames</span>(lognorm_data) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;Pup_&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="fu">dim</span>(rse_gene_filt)[<span class="dv">2</span>])</span></code></pre></div>
+<span id="cb155-5"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb155-5" tabindex="-1"></a></span>
+<span id="cb155-6"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb155-6" tabindex="-1"></a><span class="do">## Subset to DEGs only</span></span>
+<span id="cb155-7"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb155-7" tabindex="-1"></a>lognorm_data <span class="ot">&lt;-</span> lognorm_data[<span class="fu">rownames</span>(de_genes),]</span>
+<span id="cb155-8"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb155-8" tabindex="-1"></a></span>
+<span id="cb155-9"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb155-9" tabindex="-1"></a><span class="do">## Define column (sample) names to display</span></span>
+<span id="cb155-10"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb155-10" tabindex="-1"></a><span class="fu">colnames</span>(lognorm_data) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;Pup_&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="fu">dim</span>(lognorm_data)[<span class="dv">2</span>])</span></code></pre></div>
 <div style="background-color:#EDEDED; padding:20px; font-family: sans-serif; border: 1px solid black">
-<p>🗒️ <strong>Note</strong>: it is important to regress out the technical variables’ contributions on gene expression (if necessary and suitable; functions such as <a href="https://rdrr.io/github/LieberInstitute/jaffelab/man/cleaningY.html"><code>cleaningY()</code></a> of <em>jaffelab</em> can be used for this purpose) and to correctly scale and center (around zero) the lognorm counts to make the differences in the expression of the genes more notorious. A simple way to do that is substracting from each lognorm count <span class="math inline">\(cpm_{gi}\)</span> (from the gene <span class="math inline">\(g\)</span> and sample <span class="math inline">\(i\)</span>) the mean expression of the gene across all samples* and dividing by the standard deviation of the same gene expression values. This is formally called the z-score: the number of sd away from the mean.</p>
+<p>🗒️ <strong>Notes</strong>:</p>
+<ol style="list-style-type: decimal">
+<li><p>It is sometimes convenient to regress out the technical variables’ contributions on gene expression to see more clearly the effects of interest. This can happen, for instance, when the logFCs are too small to see any significant differences in the plots or when there are other strong confounding factors. Functions such as <a href="https://rdrr.io/github/LieberInstitute/jaffelab/man/cleaningY.html"><code>cleaningY()</code></a> of <em>jaffelab</em> can be used for this purpose.</p></li>
+<li><p>The lognorm counts have to be correctly scaled and centered (around zero) to make the differences in the expression of the genes more notorious in the heat map. A simple way to do that is substracting from each lognorm count <span class="math inline">\(y_{gi}\)</span> (from the gene <span class="math inline">\(g\)</span> and sample <span class="math inline">\(i\)</span>) the mean expression of the gene* and dividing by the standard deviation (<span class="math inline">\(\sigma\)</span>) of the same gene expression values. This is formally called the <em>z</em>-score: the number of standard deviations away from the mean.</p></li>
+</ol>
 <p><span class="math display">\[
-z_{ score}=\frac{cpm_{gi} - \frac{\sum_{k=1}^{n}{cpm_{gk}}}{n}}{sd},
+z=\frac{y_{gi} - \frac{\sum_{k=1}^{n}{y_{gk}}}{n}}{\sigma},
 \]</span>
 <span class="math inline">\(n\)</span> is the number of samples.</p>
-<p><font size="2"> * This can also be done for rows (features), not only for samples (columns). </font></p>
+<p><font size="2"> * This can also be done by columns (samples), not only by rows (genes). </font></p>
+<p class="link" style="background-color:#EDEDED">
+👉🏼 For more on centering and scaling, see this video:
+</p>
+<p class="link" style="background-color:#EDEDED; text-align: center">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/c8ffeFVUzk8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen>
+</iframe>
+</p>
 </div>
 <p>
 </p>
 <div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb156-1" tabindex="-1"></a><span class="do">## Center and scale the data to make differences more evident</span></span>
-<span id="cb156-2"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb156-2" tabindex="-1"></a>lognorm_data <span class="ot">&lt;-</span> (lognorm_data <span class="sc">-</span> <span class="fu">rowMeans</span>(lognorm_data)) <span class="sc">/</span> <span class="fu">rowSds</span>(lognorm_data)</span></code></pre></div>
-<p class="link">
-👉🏼 More for on centering and scaling, see this video:
-<iframe width="560" height="315" src="https://www.youtube.com/embed/c8ffeFVUzk8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<span id="cb156-2"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb156-2" tabindex="-1"></a>lognorm_data <span class="ot">&lt;-</span> (lognorm_data <span class="sc">-</span> <span class="fu">rowMeans</span>(lognorm_data)) <span class="sc">/</span> <span class="fu">rowSds</span>(lognorm_data)</span>
+<span id="cb156-3"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb156-3" tabindex="-1"></a></span>
+<span id="cb156-4"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb156-4" tabindex="-1"></a><span class="do">## Sample annotation: Sex, Group, and library size</span></span>
+<span id="cb156-5"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb156-5" tabindex="-1"></a>col_anno <span class="ot">&lt;-</span> <span class="fu">HeatmapAnnotation</span>(</span>
+<span id="cb156-6"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb156-6" tabindex="-1"></a>    <span class="at">df =</span> <span class="fu">as.data.frame</span>(<span class="fu">colData</span>(rse_gene_filt)[, <span class="fu">c</span>(<span class="st">&quot;Sex&quot;</span>, <span class="st">&quot;Group&quot;</span>)]),</span>
+<span id="cb156-7"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb156-7" tabindex="-1"></a>    <span class="at">library_size =</span> <span class="fu">anno_barplot</span>(<span class="fu">colData</span>(rse_gene_filt)<span class="sc">$</span>sum, <span class="at">gp =</span> <span class="fu">gpar</span>(<span class="at">fill =</span> <span class="st">&quot;lightyellow2&quot;</span>)),</span>
+<span id="cb156-8"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb156-8" tabindex="-1"></a>    <span class="at">col =</span> <span class="fu">list</span>(<span class="st">&quot;Sex&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;F&quot;</span> <span class="ot">=</span> <span class="st">&quot;hotpink1&quot;</span>, <span class="st">&quot;M&quot;</span> <span class="ot">=</span> <span class="st">&quot;dodgerblue&quot;</span>),</span>
+<span id="cb156-9"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb156-9" tabindex="-1"></a>               <span class="st">&quot;Group&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;Control&quot;</span> <span class="ot">=</span> <span class="st">&quot;gray68&quot;</span>, <span class="st">&quot;Experimental&quot;</span> <span class="ot">=</span> <span class="st">&quot;gold2&quot;</span>))</span>
+<span id="cb156-10"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb156-10" tabindex="-1"></a>    )</span>
+<span id="cb156-11"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb156-11" tabindex="-1"></a></span>
+<span id="cb156-12"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb156-12" tabindex="-1"></a><span class="do">## Gene annotation: logFC and biotype</span></span>
+<span id="cb156-13"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb156-13" tabindex="-1"></a>de_genes<span class="sc">$</span>logFC_binary <span class="ot">&lt;-</span> <span class="fu">sapply</span>(de_genes<span class="sc">$</span>logFC, <span class="cf">function</span>(x){<span class="cf">if</span>(x<span class="sc">&gt;</span><span class="dv">0</span>){<span class="st">&quot;&gt;0&quot;</span>} <span class="cf">else</span>{<span class="st">&quot;&lt;0&quot;</span>}})</span>
+<span id="cb156-14"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb156-14" tabindex="-1"></a>de_genes<span class="sc">$</span>protein_coding_gene <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="fu">rowData</span>(rse_gene_filt[<span class="fu">rownames</span>(de_genes), ])<span class="sc">$</span>gene_type, <span class="cf">function</span>(x){</span>
+<span id="cb156-15"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb156-15" tabindex="-1"></a>    <span class="cf">if</span>(x<span class="sc">==</span><span class="st">&quot;protein_coding&quot;</span>){<span class="st">&quot;TRUE&quot;</span>} <span class="cf">else</span>{<span class="st">&quot;FALSE&quot;</span>}})</span>
+<span id="cb156-16"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb156-16" tabindex="-1"></a></span>
+<span id="cb156-17"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb156-17" tabindex="-1"></a>gene_anno <span class="ot">&lt;-</span> <span class="fu">rowAnnotation</span>(</span>
+<span id="cb156-18"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb156-18" tabindex="-1"></a>    <span class="at">df =</span> <span class="fu">as.data.frame</span>(<span class="fu">cbind</span>(<span class="st">&quot;logFC&quot;</span> <span class="ot">=</span> de_genes<span class="sc">$</span>logFC_binary, </span>
+<span id="cb156-19"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb156-19" tabindex="-1"></a>                             <span class="st">&quot;protein_coding_gene&quot;</span><span class="ot">=</span> de_genes<span class="sc">$</span>protein_coding_gene)),</span>
+<span id="cb156-20"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb156-20" tabindex="-1"></a>    <span class="at">col =</span> <span class="fu">list</span>(<span class="st">&quot;logFC&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;&lt;0&quot;</span><span class="ot">=</span><span class="st">&quot;deepskyblue3&quot;</span>, <span class="st">&quot;&gt;0&quot;</span><span class="ot">=</span><span class="st">&quot;brown2&quot;</span>), </span>
+<span id="cb156-21"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb156-21" tabindex="-1"></a>               <span class="st">&quot;protein_coding_gene&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;TRUE&quot;</span><span class="ot">=</span><span class="st">&quot;darkseagreen3&quot;</span>, <span class="st">&quot;FALSE&quot;</span><span class="ot">=</span><span class="st">&quot;magenta&quot;</span>))</span>
+<span id="cb156-22"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb156-22" tabindex="-1"></a>    )</span></code></pre></div>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb157-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;circlize&quot;</span>)</span>
+<span id="cb157-2"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb157-2" tabindex="-1"></a></span>
+<span id="cb157-3"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb157-3" tabindex="-1"></a><span class="do">## Plot</span></span>
+<span id="cb157-4"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb157-4" tabindex="-1"></a><span class="fu">Heatmap</span>(lognorm_data,</span>
+<span id="cb157-5"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb157-5" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">&quot;lognorm counts&quot;</span>,</span>
+<span id="cb157-6"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb157-6" tabindex="-1"></a>    <span class="at">show_row_names =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb157-7"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb157-7" tabindex="-1"></a>    <span class="at">top_annotation =</span> col_anno,</span>
+<span id="cb157-8"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb157-8" tabindex="-1"></a>    <span class="at">left_annotation =</span> gene_anno,</span>
+<span id="cb157-9"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb157-9" tabindex="-1"></a>    <span class="at">row_km =</span> <span class="dv">2</span>,</span>
+<span id="cb157-10"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb157-10" tabindex="-1"></a>    <span class="at">column_km =</span> <span class="dv">2</span>,</span>
+<span id="cb157-11"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb157-11" tabindex="-1"></a>    <span class="at">col =</span> <span class="fu">colorRamp2</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="sc">-</span><span class="fl">0.0001</span>, <span class="dv">00001</span>, <span class="dv">4</span>), <span class="fu">c</span>(<span class="st">&quot;darkblue&quot;</span>, <span class="st">&quot;lightblue&quot;</span>, <span class="st">&quot;lightsalmon&quot;</span>, <span class="st">&quot;darkred&quot;</span>)),</span>
+<span id="cb157-12"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb157-12" tabindex="-1"></a>    <span class="at">row_title =</span> <span class="st">&quot;DEGs&quot;</span>,</span>
+<span id="cb157-13"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb157-13" tabindex="-1"></a>    <span class="at">column_title =</span> <span class="st">&quot;Samples&quot;</span>,</span>
+<span id="cb157-14"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb157-14" tabindex="-1"></a>    <span class="at">column_names_gp =</span> <span class="fu">gpar</span>(<span class="at">fontsize =</span> <span class="dv">7</span>),</span>
+<span id="cb157-15"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb157-15" tabindex="-1"></a>    <span class="at">heatmap_width =</span> <span class="fu">unit</span>(<span class="fl">12.5</span>, <span class="st">&quot;cm&quot;</span>),</span>
+<span id="cb157-16"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb157-16" tabindex="-1"></a>    <span class="at">heatmap_height =</span> <span class="fu">unit</span>(<span class="fl">12.5</span>, <span class="st">&quot;cm&quot;</span>)</span>
+<span id="cb157-17"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb157-17" tabindex="-1"></a>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/heat%20map-1.png" width="960" /></p>
+<p class="exercise">
+📝 <strong>Exercise 7</strong>: obtain the number of DEGs you got and represent them in a volcano plot and a heat map. Include all the sample and gene information you consider relevant in the latter.
 </p>
+</div>
 </div>
 <div id="references-3" class="section level2 hasAnchor" number="21.4">
 <h2><span class="header-section-number">21.4</span> References<a href="differential-gene-expression-analysis-with-limma-voom.html#references-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
