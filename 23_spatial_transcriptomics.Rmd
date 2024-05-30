@@ -1,0 +1,21 @@
+# Introduction to spatial transcriptomics
+
+In recent years, we have been constantly demonstrating that specific cell types and cell-to-cell interactions play critical roles in the definition of numerous diseases and development-related processes. Thus, understanding the cellular context and the spatial location in which dysregulations and normal stage events occur is necessary to unveil the molecular underpinnings causing pathologies and leading to malfunctions of the living organisms.
+
+Spatial transcriptomic technologies have been developed, improved, and widely applied to study a wide range of biological processes and have provide numerous insights into disease and development mechanisms. In particular, cell type-specific associations with disorders have been established for a number of diseases and disorders, but a spatial resolution is often missing but relevant to understand the molecular underpinnings leading to ... 
+
+Visium is a spatial technology from the 10x Genomics that 
+
+
+
+The relationship between cells and their relative locations within tissue is critical to understanding normal development and disease pathology. Spatial transcriptomics is a groundbreaking molecular profiling method that allows scientists to measure all the gene activity in a tissue sample and map where the activity is occurring. Already this technology is leading to new discoveries that are proving instrumental in helping scientists gain a better understanding of biological processes and disease.
+
+## 3' Visium spatial technology
+With this technology we spatially capture polyadenilated transcripts. This is the Visium technology more frequently used.
+
+In the Visium expression slide there are 4 capture areas, each of 6.5 (+1.5) mm$^2$ with ~5k barcoded spots (55 µm in diameter each), within which mRNAs are captured by polyT primers that contain a read for sequencing (see below), a UMI, and a spatial barcode. In this way, all RNAs trapped in the same spot are tagged with the same spot-specific barcode and we can computationally trace the original location of the RNAs.
+
+## Exploration of spot-level QC metrics
+
+
+## Additional resources

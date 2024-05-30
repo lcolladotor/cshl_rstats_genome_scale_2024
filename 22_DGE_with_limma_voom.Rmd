@@ -37,29 +37,28 @@ Nevertheless, one limitation NB-based methods face is that they set dispersion o
 
 [*limma*](https://bioconductor.org/packages/release/bioc/html/limma.html) is a package for the analysis of gene expression data arising from microarray or RNA-seq technologies. It has features that make the analyses stable even for experiments with small number of arrays or samples —this is achieved by borrowing information across genes. It is specially designed for analyzing complex experiments with a variety of experimental conditions and predictors [3].
 
-Usually, *limma* DGE analysis is carried out in five main steps, the last four of them completed by *limma* `R` functions, as described below. We'll use bulk RNA-seq data from the [*smokingMouse*](https://bioconductor.org/packages/release/data/experiment/html/smokingMouse.html) package to exemplify the steps. 
+Usually, *limma* DGE analysis is carried out in five main steps, the last four of them completed by *limma* `R` functions, as described below. We'll continue using our bulk RNA-seq data from [*smokingMouse*](https://bioconductor.org/packages/release/data/experiment/html/smokingMouse.html) to exemplify the steps. 
 
 ```{r download_data, warning=FALSE, message=FALSE}
 
-## Load the container package for this type of data
+## Load the container package for RSE
 library("SummarizedExperiment")
 
 ## Connect to ExperimentHub
 library("ExperimentHub")
 eh <- ExperimentHub::ExperimentHub()
 
-## Load the datasets of the package
+## Load package datasets 
 myfiles <- query(eh, "smokingMouse")
 
 ## Download the mouse gene data
 rse_gene <- myfiles[["EH8313"]]
 
-## Keep samples from nicotine experiment and pups only
+## Samples from the nicotine experiment and from pups only
 rse_gene_nic <- rse_gene[, which(rse_gene$Expt == "Nicotine" & rse_gene$Age=='Pup')]
 
-## Only expressed genes (passed the filtering step)
+## Retain only expressed genes (passed the filtering step)
 rse_gene_filt <- rse_gene_nic[rowData(rse_gene_nic)$retained_after_feature_filtering == TRUE, ]
-
 ```
 
 Let's explore a little the data.
@@ -349,7 +348,7 @@ This is used to estimate the coefficients of a linear regression by minimizing t
     <img src="Figures/lmFit.png" width="400px" align=center/>
         <figcaption style="color: gray; line-height: 0.9; text-align: justify; caption-side: bottom">
             <font size="-1.8">
-                <b>Figure 3</b>: <b> Graphical representation of the OLS method for simple regression analysis </b>. Source: Gulve, A. (2020). Ordinary Least Square (OLS) Method for Linear Regression. 
+                <b>Figure 3</b>: <b> Graphical representation of the OLS method for simple regression analysis</b>. Source: Gulve, A. (2020). Ordinary Least Square (OLS) Method for Linear Regression. 
                 
 </font>
 </figcaption>
@@ -817,7 +816,7 @@ Heatmap(lognorm_data,
 </p>
 
 
-## References
+## References {-}
 
 1. Li, W. V., & Li, J. J. (2018). Modeling and analysis of RNA‐seq data: a review from a statistical perspective. Quantitative Biology, 6(3), 195-209.
 
