@@ -39,7 +39,7 @@ Nevertheless, one limitation NB-based methods face is that they set dispersion o
 
 Usually, *limma* DGE analysis is carried out in five main steps, the last four of them completed by *limma* `R` functions, as described below. We'll continue using our bulk RNA-seq data from [*smokingMouse*](https://bioconductor.org/packages/release/data/experiment/html/smokingMouse.html) to exemplify the steps. 
 
-```{r download_data, warning=FALSE, message=FALSE}
+```{r download_data_DGE, warning=FALSE, message=FALSE}
 
 ## Load the container package for RSE
 library("SummarizedExperiment")
