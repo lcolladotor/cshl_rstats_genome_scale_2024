@@ -67,15 +67,9 @@ differential-gene-expression-exercise
 recap
 exercise-2
 dge-model-building-with-variancepartition
-download-the-smokingmouse-data-and-subset-it
-explore-gene-level-effects
-variance-partition-analysis
 canonical-correlation-analysis
 fit-model-and-extract-fraction-of-variance-explained
-examine-expression-of-most-affected-genes-by-each-sample-variable
-solutions-2
-exercise-1-1
-exercise-2-1
+examine-the-expression-of-most-affected-genes-by-each-sample-variable
 expression-heatmaps-with-complexheatmap
 introduction-1
 complexheatmap
@@ -114,7 +108,6 @@ exploration-of-sample-level-effects
 model-building-covariate-selection-for-limma-voom
 differential-gene-expression
 downstream-analyses
-references-2
 differential-gene-expression-analysis-with-limma-voom
 nb-based-dge-methods
 limma-voom-pipeline
@@ -126,4 +119,8 @@ toptable
 de-visualization
 volcano-plots
 heat-maps
-references-3
+introduction-to-spatial-transcriptomics
+visium-spatial-technology
+spatial-data-visualization
+spot-level-data-exploration
+layer-level-data-exploration

@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>1 SPEAQeasy introduction | Statistical Analysis of Genome Scale Data 2024</title>
-  <meta name="description" content="1 SPEAQeasy introduction | Statistical Analysis of Genome Scale Data 2024" />
+  <title>22 Introduction to spatial transcriptomics | Statistical Analysis of Genome Scale Data 2024</title>
+  <meta name="description" content="22 Introduction to spatial transcriptomics | Statistical Analysis of Genome Scale Data 2024" />
   <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="1 SPEAQeasy introduction | Statistical Analysis of Genome Scale Data 2024" />
+  <meta property="og:title" content="22 Introduction to spatial transcriptomics | Statistical Analysis of Genome Scale Data 2024" />
   <meta property="og:type" content="book" />
   
   
   <meta name="github-repo" content="lcolladotor/cshl_rstats_genome_scale_2024" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="1 SPEAQeasy introduction | Statistical Analysis of Genome Scale Data 2024" />
+  <meta name="twitter:title" content="22 Introduction to spatial transcriptomics | Statistical Analysis of Genome Scale Data 2024" />
   
   
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="icon_32.png" type="image/x-icon" />
-<link rel="prev" href="index.html"/>
-<link rel="next" href="smokingmouse-study.html"/>
+<link rel="prev" href="differential-gene-expression-analysis-with-limma-voom.html"/>
+
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -352,130 +352,110 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="speaqeasy-introduction" class="section level1 hasAnchor" number="1">
-<h1><span class="header-section-number">1</span> SPEAQeasy introduction<a href="speaqeasy-introduction.html#speaqeasy-introduction" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>Instructor: Leo</p>
-<blockquote class="twitter-tweet">
-<p lang="en" dir="ltr">
-Congrats Nick <a href="https://t.co/O3u5XRPXy2">https://t.co/O3u5XRPXy2</a> for your <a href="https://twitter.com/biorxivpreprint?ref_src=twsrc%5Etfw"><span class="citation">@biorxivpreprint</span></a> first pre-print! 🙌🏽<br><br>SPEAQeasy is our <a href="https://twitter.com/nextflowio?ref_src=twsrc%5Etfw"><span class="citation">@nextflowio</span></a> implementation of the <a href="https://twitter.com/hashtag/RNAseq?src=hash&amp;ref_src=twsrc%5Etfw">#RNAseq</a> processing pipeline that produces <a href="https://twitter.com/Bioconductor?ref_src=twsrc%5Etfw"><span class="citation">@Bioconductor</span></a>-friendly <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> objects that we use at <a href="https://twitter.com/LieberInstitute?ref_src=twsrc%5Etfw"><span class="citation">@LieberInstitute</span></a><br><br>📜 <a href="https://t.co/zKuBRtBCmY">https://t.co/zKuBRtBCmY</a> <a href="https://t.co/F83fXI90eP">pic.twitter.com/F83fXI90eP</a>
-</p>
-— 🇲🇽 Leonardo Collado-Torres (<span class="citation">@lcolladotor</span>) <a href="https://twitter.com/lcolladotor/status/1337637531945496577?ref_src=twsrc%5Etfw">December 12, 2020</a>
-</blockquote>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-<div id="overview-slides" class="section level2 hasAnchor" number="1.1">
-<h2><span class="header-section-number">1.1</span> 2022-04-20 overview slides<a href="speaqeasy-introduction.html#overview-slides" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/33scakbTNO0?start=318" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen>
-</iframe>
-<script defer class="speakerdeck-embed" data-slide="7" data-id="3c32410b600740abb4724486e83ebd30" data-ratio="1.77725118483412" src="//speakerdeck.com/assets/embed.js"></script>
+<div id="introduction-to-spatial-transcriptomics" class="section level1 hasAnchor" number="22">
+<h1><span class="header-section-number">22</span> Introduction to spatial transcriptomics<a href="introduction-to-spatial-transcriptomics.html#introduction-to-spatial-transcriptomics" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>In recent years, with constant improvements in the current sequencing technologies and the generation of more sophisticated omics methodologies and bioinformatic pipelines, we have been constantly demonstrating that specific cell types and cell-to-cell interactions play critical roles in the definition of numerous diseases and development-related processes. In fact, cell type-specific associations have been established for a number of diseases and disorders. Thus, understanding the cellular context and the spatial location in which normal and deregulated cellular events occur is necessary to unveil the molecular underpinnings of disease pathologies and malfunctions of the organisms.</p>
+<p>Spatial transcriptomics technologies are molecular profiling methods developed to measure gene expression levels in a tissue sample at the spatial resolution. These methods have been improved and expanded over time and are widely applied to study a wide range of biological processes and have provided numerous insights into disease and development mechanisms.</p>
+<p>In particular, the 10x Genomics Visium platform is a technology that spatially profiles the transcriptome of frozen and fixed tissue sections in combination with histology.</p>
+<div id="visium-spatial-technology" class="section level2 hasAnchor" number="22.1">
+<h2><span class="header-section-number">22.1</span> 3’ Visium spatial technology<a href="introduction-to-spatial-transcriptomics.html#visium-spatial-technology" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>This is the Visium technology more frequently used and it captures polyadenilated transcripts within individual spatially barcoded spots.</p>
+<p>In the Visium expression slide there are 4 capture areas, each of 6.5 (+1.5) mm<span class="math inline">\(^2\)</span> with ~5k barcoded spots (55 µm in diameter each), within which mRNAs are captured by polyT primers that contain a read for sequencing (see below), a UMI, and a spatial barcode. In this way, all RNAs trapped in the same spot are tagged with the same spot-specific barcode and we can computationally trace the original location of the transcripts.</p>
+<div style="text-align: center">
+<figure>
+<img src="Figures/Visium_tech.png" width="650px" align=center/>
+<figcaption style="color: gray; line-height: 0.9; text-align: justify; caption-side: bottom">
+<p><font size="-1.8">
+<b>Figure 1</b>: <b> Schematic representation of the Visium capture areas and spots.</b> Source: SciLifeLab (2023).</p>
+</font>
+</figcaption>
+</figure>
 </div>
-<div id="speaqeasy-main-links" class="section level2 hasAnchor" number="1.2">
-<h2><span class="header-section-number">1.2</span> SPEAQeasy main links<a href="speaqeasy-introduction.html#speaqeasy-main-links" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+</div>
+<div id="spatial-data-visualization" class="section level2 hasAnchor" number="22.2">
+<h2><span class="header-section-number">22.2</span> Spatial data visualization<a href="introduction-to-spatial-transcriptomics.html#spatial-data-visualization" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In order to interactively visualize example spatial data we’ll use the shiny web application of <strong><em>spatialLIBD</em></strong>: <a href="http://spatial.libd.org/spatialLIBD/" class="uri">http://spatial.libd.org/spatialLIBD/</a>. This web application allows to browse the human dorsolateral pre-frontal cortex (DLPFC) spatial transcriptomics data generated at the LIBD using the 10x Genomics Visium platform. In total there are 12 DLPFC tissue sections from 3 donors, each spanning six classical histological layers plus the white matter (WM).</p>
+<div style="text-align: center">
+<figure>
+<img src="Figures/sample_DLPFC.png" width="400px" align=center/>
+<figcaption style="color: gray; line-height: 0.9; text-align: justify; caption-side: bottom">
+<p><font size="-1.8">
+<b>Figure 2</b>: <b> Human DLPFC tissue section</b>. Spot plot depicting the 6 classical histological layers (L1-L6) and the white matter (WM) in a human DLPFC sample.</p>
+</font>
+</figcaption>
+</figure>
+</div>
+<div id="spot-level-data-exploration" class="section level3 hasAnchor" number="22.2.1">
+<h3><span class="header-section-number">22.2.1</span> Spot-level data exploration<a href="introduction-to-spatial-transcriptomics.html#spot-level-data-exploration" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>With this tool you can:</p>
 <ul>
-<li>Paper: <a href="https://doi.org/10.1186/s12859-021-04142-3" class="uri">https://doi.org/10.1186/s12859-021-04142-3</a></li>
-<li>Documentation website: <a href="http://research.libd.org/SPEAQeasy/" class="uri">http://research.libd.org/SPEAQeasy/</a>
-<ul>
-<li>Source code: <a href="https://github.com/LieberInstitute/SPEAQeasy" class="uri">https://github.com/LieberInstitute/SPEAQeasy</a></li>
-</ul></li>
-<li>Example website: <a href="http://research.libd.org/SPEAQeasy-example/" class="uri">http://research.libd.org/SPEAQeasy-example/</a>
-<ul>
-<li>Source code: <a href="https://github.com/LieberInstitute/SPEAQeasy-example" class="uri">https://github.com/LieberInstitute/SPEAQeasy-example</a></li>
-</ul></li>
-<li>Differential expression analysis bootcamp: <a href="https://lcolladotor.github.io/bioc_team_ds/differential-expression-analysis.html" class="uri">https://lcolladotor.github.io/bioc_team_ds/differential-expression-analysis.html</a>
-<ul>
-<li>3 sessions, each 2 hours long</li>
-</ul></li>
+<li>Observe per-spot QC metrics and gene expression levels</li>
+<li>Explore spot clusters in the tissue sections</li>
+<li>Visualize the spot data on reduced dimensions</li>
+<li>Manually annotate spots to layers and export your manual annotations</li>
+<li>Customize the spatial images</li>
 </ul>
-</div>
-<div id="pipeline-outputs" class="section level2 hasAnchor" number="1.3">
-<h2><span class="header-section-number">1.3</span> Pipeline outputs<a href="speaqeasy-introduction.html#pipeline-outputs" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<ul>
-<li>Documentation chapter: <a href="http://research.libd.org/SPEAQeasy/outputs.html" class="uri">http://research.libd.org/SPEAQeasy/outputs.html</a></li>
-</ul>
-<p>That’s enough links! Lets download some data to check it out. We’ll use <em><a href="https://bioconductor.org/packages/3.18/BiocFileCache">BiocFileCache</a></em> to keep the data in a local cache in case we want to run this example again and don’t want to re-download the data from the web.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="speaqeasy-introduction.html#cb8-1" tabindex="-1"></a><span class="do">## Load the container package for this type of data</span></span>
-<span id="cb8-2"><a href="speaqeasy-introduction.html#cb8-2" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;SummarizedExperiment&quot;</span>)</span>
-<span id="cb8-3"><a href="speaqeasy-introduction.html#cb8-3" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="speaqeasy-introduction.html#cb8-4" tabindex="-1"></a><span class="do">## Download and cache the file</span></span>
-<span id="cb8-5"><a href="speaqeasy-introduction.html#cb8-5" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;BiocFileCache&quot;</span>)</span>
-<span id="cb8-6"><a href="speaqeasy-introduction.html#cb8-6" tabindex="-1"></a>bfc <span class="ot">&lt;-</span> BiocFileCache<span class="sc">::</span><span class="fu">BiocFileCache</span>()</span>
-<span id="cb8-7"><a href="speaqeasy-introduction.html#cb8-7" tabindex="-1"></a>cached_rse_gene_example <span class="ot">&lt;-</span> BiocFileCache<span class="sc">::</span><span class="fu">bfcrpath</span>(</span>
-<span id="cb8-8"><a href="speaqeasy-introduction.html#cb8-8" tabindex="-1"></a>    <span class="at">x =</span> bfc,</span>
-<span id="cb8-9"><a href="speaqeasy-introduction.html#cb8-9" tabindex="-1"></a>    <span class="st">&quot;https://github.com/LieberInstitute/SPEAQeasy-example/raw/master/rse_speaqeasy.RData&quot;</span></span>
-<span id="cb8-10"><a href="speaqeasy-introduction.html#cb8-10" tabindex="-1"></a>)</span></code></pre></div>
-<pre><code>## adding rname &#39;https://github.com/LieberInstitute/SPEAQeasy-example/raw/master/rse_speaqeasy.RData&#39;</code></pre>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="speaqeasy-introduction.html#cb10-1" tabindex="-1"></a><span class="do">## Check the local path on our cache</span></span>
-<span id="cb10-2"><a href="speaqeasy-introduction.html#cb10-2" tabindex="-1"></a>cached_rse_gene_example</span></code></pre></div>
-<pre><code>##                                                                  BFC1 
-## &quot;/github/home/.cache/R/BiocFileCache/26e6f703f9a_rse_speaqeasy.RData&quot;</code></pre>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="speaqeasy-introduction.html#cb12-1" tabindex="-1"></a><span class="do">## Load the rse_gene object</span></span>
-<span id="cb12-2"><a href="speaqeasy-introduction.html#cb12-2" tabindex="-1"></a><span class="fu">load</span>(cached_rse_gene_example, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<pre><code>## Loading objects:
-##   rse_gene</code></pre>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="speaqeasy-introduction.html#cb14-1" tabindex="-1"></a><span class="do">## General overview of the object</span></span>
-<span id="cb14-2"><a href="speaqeasy-introduction.html#cb14-2" tabindex="-1"></a>rse_gene</span></code></pre></div>
-<pre><code>## class: RangedSummarizedExperiment 
-## dim: 60609 40 
-## metadata(0):
-## assays(1): counts
-## rownames(60609): ENSG00000223972.5 ENSG00000227232.5 ... ENSG00000210195.2 ENSG00000210196.2
-## rowData names(10): Length gencodeID ... NumTx gencodeTx
-## colnames(40): R13896_H7JKMBBXX R13903_HCTYLBBXX ... R15120_HFY2MBBXX R15134_HFFGHBBXX
-## colData names(67): SAMPLE_ID FQCbasicStats ... AgeDeath BrNum</code></pre>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="speaqeasy-introduction.html#cb16-1" tabindex="-1"></a><span class="do">## We can check how big the object is with lobstr</span></span>
-<span id="cb16-2"><a href="speaqeasy-introduction.html#cb16-2" tabindex="-1"></a>lobstr<span class="sc">::</span><span class="fu">obj_size</span>(rse_gene)</span></code></pre></div>
-<pre><code>## 35.78 MB</code></pre>
-</div>
-<div id="exercises" class="section level2 hasAnchor" number="1.4">
-<h2><span class="header-section-number">1.4</span> Exercises<a href="speaqeasy-introduction.html#exercises" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <style>
-p.exercise  {
-background-color: #E4EDE2;
-padding: 9px;
-border: 1px solid black;
-border-radius: 10px;
+p.exercise {
+background-color: #FFFAFA;
+padding: 15px;
+border: 2px solid black;
+margin-left: 0px;
+border-radius: 1px;
 font-family: sans-serif;
 }
 </style>
 <p class="exercise">
-<strong>Exercise 1</strong>:
-Either by exploring the object <code>rse_gene</code> or by checking the <code>SPEAQeasy</code> documentation, what are the possible values for the variable <code>trimmed</code>?
+📝 <strong>Exercise 1</strong>: visualize the clustering of spots in all tissue sections using the different discrete variables to plot. Which one recapitulates better the six histological layers (plus the white matter) of the human DLPFC?
 </p>
 <p class="exercise">
-<strong>Exercise 2</strong>:
-Across genes (<code>rse_gene</code>), exons (<code>rse_exon</code>), exon-exon junctions (<code>rse_jx</code>), and transcripts (<code>rse_tx</code>), what part of the output is identical?
+📝 <strong>Exercise 2</strong>: explore the expression of <em>SNAP25</em> (neuronal marker gene), <em>MOBP</em> (oligodendrocyte/WM marker gene), and <em>PCP4</em> (layer 5 marker gene) in each DLPFC tissue section. What do you observe? Are there any spatial patterns in the expression of these genes?
 </p>
-<p>If you want to answer this question with data, you could use the 4 <code>RSE</code> objects from the BrainSEQ Phase II study that are available at <a href="http://eqtl.brainseq.org/phase2/" class="uri">http://eqtl.brainseq.org/phase2/</a>. They were created with the scripts at <a href="https://github.com/LieberInstitute/brainseq_phase2#rse_gene_unfilteredrdata" class="uri">https://github.com/LieberInstitute/brainseq_phase2#rse_gene_unfilteredrdata</a>. Note that these are much larger objects since they contain information for 900 samples.</p>
 </div>
-<div id="solutions" class="section level2 hasAnchor" number="1.5">
-<h2><span class="header-section-number">1.5</span> Solutions<a href="speaqeasy-introduction.html#solutions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="layer-level-data-exploration" class="section level3 hasAnchor" number="22.2.2">
+<h3><span class="header-section-number">22.2.2</span> Layer-level data exploration<a href="introduction-to-spatial-transcriptomics.html#layer-level-data-exploration" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Layer-level data result from pseudo-bulking the spot-level data, i.e. from aggregating spot data from all spots assigned to a given layer.</p>
+<p>At this level the tool allows to:</p>
+<ul>
+<li>Visualize the gene expression data at the layer level in reduced dimensions</li>
+<li>Plot the layer-level lognorm or raw expression of a gene across all tissue sections and extract DEGs among layers (ANOVA model), in a specific layer compared to the rest (enrichment model) or compared to another layer (pairwise model)</li>
+<li>Assess the enrichment of your own sets of genes of interest among the DEGs from these spatial DLPFC data</li>
+<li>Correlate gene-wise statistics for DE between sn/scRNA-seq data clusters/cell populations with the DE statistics in the human DLPFC layers provided in this study. This can be used to label your sn/scRNA-seq groups or clusters with the more molecularly-defined histological layers</li>
+</ul>
+<p class="exercise">
+📝 <strong>Exercise 3</strong>: plot the expression of <em>SNAP25</em>, <em>MOBP</em>, and <em>PCP4</em> in the different layers of each DLPFC tissue section. Are there any significant differences in the expression of these genes between layers under any of the statistical models for DGE?
+</p>
 <style>
-p.solution  {
-background-color: #C093D6;
-padding: 9px;
-border: 1px solid black;
-border-radius: 10px;
+p.link{
+background-color: #FFFFFF;
+padding: 10px;
+border: 0px solid black;
+margin-left: 0px;
+border-radius: 1px;
+font-size: 13px;
 font-family: sans-serif;
 }
 </style>
-<p class="solution">
-<strong>Solution 1</strong>:
-From <a href="http://research.libd.org/SPEAQeasy/outputs.html#quality-metrics" class="uri">http://research.libd.org/SPEAQeasy/outputs.html#quality-metrics</a> the answer was:
+<p class="link">
+👉🏼 There is also the <a href="https://bioconductor.org/packages/release/data/experiment/html/spatialLIBD.html"><em>spatialLIBD</em></a> R/Bioconductor package you can use to interactively inspect your own spatial data in a shiny web app.
 </p>
-<blockquote>
-<p>A boolean value (“TRUE” or “FALSE”), indicating whether the given sample underwent trimming</p>
-</blockquote>
-<p>With code, it’s this:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="speaqeasy-introduction.html#cb18-1" tabindex="-1"></a><span class="fu">class</span>(rse_gene<span class="sc">$</span>trimmed)</span></code></pre></div>
-<pre><code>## [1] &quot;logical&quot;</code></pre>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="speaqeasy-introduction.html#cb20-1" tabindex="-1"></a><span class="do">## logical vectors can take 2 values (plus the third `NA` if it&#39;s missing)</span></span></code></pre></div>
-</p>
-<p class="solution">
-<strong>Solution 2</strong>:
-From <a href="http://research.libd.org/SPEAQeasy/outputs.html#coldata-of-rse-objects" class="uri">http://research.libd.org/SPEAQeasy/outputs.html#coldata-of-rse-objects</a> the answer is that all objects have identical <code>colData()</code>.
-</p>
+</div>
+</div>
+<div id="bibliography" class="section level2 unnumbered hasAnchor">
+<h2>Bibliography<a href="introduction-to-spatial-transcriptomics.html#bibliography" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ol style="list-style-type: decimal">
+<li><p>SciLifeLab (2023). 10X Genomics Visium for Fresh Frozen samples. Web site: <a href="https://ngisweden.scilifelab.se/methods/10x-visium/" class="uri">https://ngisweden.scilifelab.se/methods/10x-visium/</a></p></li>
+<li><p>10x Genomics (n.d.). Whole transcriptome discovery in the tissue context. Web site: <a href="https://www.10xgenomics.com/platforms/visium" class="uri">https://www.10xgenomics.com/platforms/visium</a></p></li>
+</ol>
 
 </div>
 </div>
+
+
+
+
+
+
 <div class="container">
     <footer class="site-footer">
 
@@ -524,8 +504,8 @@ Published with <a href="https://bookdown.org/" target="_blank" rel="noopener">Bo
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="smokingmouse-study.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="differential-gene-expression-analysis-with-limma-voom.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
