@@ -202,7 +202,7 @@ corr_plots <- function(sample_var1, sample_var2, sample_color) {
 
 As shown below, `Group` and `plate` are moderately correlated given that 14 of the 23 (60.8%) control samples and 11 of the 19 (57.9%) exposed samples were in the first and second plate for library preparation, respectively. 
 
-```{r message=FALSE, warning=FALSE, out.height=5}
+```{r message=FALSE, warning=FALSE}
 ## Correlation plot for Group and plate
 p <- corr_plots("Group", "plate", NULL)
 p + theme(plot.margin = unit(c(1, 5.5, 1, 5.5), "cm"))
@@ -225,7 +225,7 @@ p <- corr_plots("plate", "overallMapRate", NULL)
 p + theme(plot.margin = unit(c(2, 5, 2, 5), "cm"))
 ```
 
-```{r message=FALSE, warning=FALSE, out.height=5}
+```{r message=FALSE, warning=FALSE}
 ## Correlation plot for overallMapRate and flowcell
 p <- corr_plots("flowcell", "overallMapRate", NULL)
 p + theme(plot.margin = unit(c(2, 5, 2, 5), "cm"))
@@ -234,7 +234,7 @@ p + theme(plot.margin = unit(c(2, 5, 2, 5), "cm"))
 Interestingly, control samples seem to present more expressed genes than exposed samples for a given library size, 
 however none of these variables is correlated with `Group`.
 
-```{r message=FALSE, warning=FALSE, out.height=5}
+```{r message=FALSE, warning=FALSE}
 ## Correlation plots for sum and detected
 p <- corr_plots("sum", "detected", "Group")
 p + theme(plot.margin = unit(c(2, 3.5, 2, 3.5), "cm"))
@@ -243,7 +243,7 @@ p + theme(plot.margin = unit(c(2, 3.5, 2, 3.5), "cm"))
 <div style="background-color:#FFFFFF; padding:20px; font-family: sans-serif; border: 2px solid black">
 ❓ Now look at the following plot. **Why is it important that experimental and control samples are distributed throughout all sequencing flowcells?** 
 
-```{r message=FALSE, warning=FALSE, out.height=5}
+```{r message=FALSE, warning=FALSE}
 p <- corr_plots("Group", "flowcell", NULL)
 plots <- plot_grid(p)
 plots + theme(plot.margin = unit(c(0.5, 5, 0.5, 5), "cm"))
