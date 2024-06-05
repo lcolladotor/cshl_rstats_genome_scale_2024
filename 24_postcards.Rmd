@@ -25,21 +25,17 @@ The base directory it takes will be the one you are in when you load the here pa
 In this case, the package is already installed so we just need to load it.
 
 ```{r, eval=FALSE, warning=FALSE, message=FALSE}
-
 ## Install the package manually 
 # install.packages("here")
 
 ## Load "here" (previously installed)
 library("here") 
-
 ```
 
 Sometimes there might be an error, as it might clash with other packages (like plyr). To avoid this, we can use here::here (which basically clarifies that the requested function is from the here package).
 
 ```{r, here::here, eval=FALSE, warning=FALSE, message=FALSE}
-
 here::here()
-
 ```
 
 Some usefull commands are "getwd" and "setwd", which deal with the working directory, which is the default location where R looks for files to read or save.
@@ -49,33 +45,29 @@ Some usefull commands are "getwd" and "setwd", which deal with the working direc
 - setwd() allows changing the current working directory.
 
 ```{r, check_paths, eval=FALSE, warning=FALSE, message=FALSE}
-
 getwd() # returns the current path
-
 setwd("desired/directory") # changes to the specified path
-
 ```
+
 
 > Best Practice:
 > 
 > Instead of using "setwd" to manually set your working directory, it is often better to use the "here" package. Using "here"
 > avoids issues with hard-coded paths and ensures your scripts work regardless of the specific setup of your working environment.
 
-```{r, bestpractice, eval=FALSE, warning=FALSE, message=FALSE}
 
+```{r, bestpractice, eval=FALSE, warning=FALSE, message=FALSE}
 ## Instead of "C:/Users/user/Desktop/data/myfile.csv"
 
 ## Use here to construct file paths
 file_path <- here("Users", "user", "Desktop","data", "myfile.csv")
 # file_path <- here:here("Users", "user", "Desktop","data", "myfile.csv")
 data <- read.csv(file_path)
-
 ```
 
 Other examples of how "here" could be used:
 
 ```{r, here_examples, eval=FALSE, warning=FALSE, message=FALSE}
-
 ## Example: save data to a file and load it
 a <- 1
 c <- 23
@@ -100,7 +92,6 @@ file.show(here("subdirectory", "filename"))
 ## For example, if we want to see our files in the directory
 list.files(here(), recursive = TRUE)
 # list.files(here:here(), recursive = TRUE)
-
 ```
 
 
@@ -111,13 +102,11 @@ The usethis package simplifies many common setup tasks and workflows in R. It he
 In this case, the package is already installed so we just need to load it.
 
 ```{r, load_usethis, eval=FALSE, warning=FALSE, message=FALSE}
-
 ## Install the package manually 
 # install.packages("usethis")
 
 ## Load "usethis (previously installed)
 library("usethis") 
-
 ```
 
 Usage:
@@ -125,24 +114,20 @@ Usage:
 All use_* functions operate on the current directory.
 
 ```{r, use_*, eval=FALSE, warning=FALSE, message=FALSE}
-
-# usethis::use_*()
+## usethis::use_*()
 usethis::use_r()
 usethis::use_git()
 usethis::use_readme_md()
-
 ```
 
 ✔ indicates that usethis has setup everything for you. 
 ● indicates that you'll need to do some work yourself.
 
 ```{r, usethis_example, eval=FALSE, warning=FALSE, message=FALSE}
-
 ## For example, create a README file
 usethis::use_readme_md()
 #> ✔ Writing 'README.md'
 #> ● Edit 'README.md'
-
 ```
 
 More functions in usethis: 
@@ -153,13 +138,13 @@ In the following exercises, we will see some uses of usethis.
 
 ## Git + GitHub
 
+[GitHub](https://github.com/)
+
 [An Intro to Git and GitHub for Beginners (Tutorial) by HubSpot](https://product.hubspot.com/blog/git-and-github-tutorial-for-beginners)
 
 Version control is a critical skill. Git helps you track changes in your projects, collaborate with others, and maintain a history of your work. 
 
 GitHub, a platform for hosting Git repositories, enables seamless collaboration and sharing of your projects with the world. Understanding Git and GitHub ensures your projects are well-organized and accessible.
-
-[GitHub](https://github.com/)
 
 ### Prerequisites
 
@@ -173,10 +158,9 @@ We also need to install Git on our computers as the "gitcreds" package requires 
 
 After installing Git, restart RStudio to allow it to annex.
 
+***Hay que agregarlos a los paquetes a instalar ??? ***
+
 ```{r, install_gitreq, eval=FALSE, warning=FALSE, message=FALSE}
-
-# Hay que agregarlos a los paquetes a instalar !!!
-
 ## Packages we will need
 install.packages(c("gitcreds", "gert", "gh"))
 
@@ -184,7 +168,6 @@ install.packages(c("gitcreds", "gert", "gh"))
 library("gitcreds")
 library("gert")
 library("gh")
-
 ```
 
 ### Creating a personal access token (PAT)
@@ -194,18 +177,14 @@ To connect our RStudio repository with GitHub, we request a token, which allows 
 You can request the token using R (choose a meaningful name).
 
 ```{r, token, eval=FALSE, warning=FALSE, message=FALSE}
-
 ## Initiate connection with GitHub
 usethis::create_github_token() # redirects to GitHub where you'll choose a specific name for the token
-
 ```
 
 Copy the token to enter it later with gitcreds_set()
 
 ```{r, gitcreds, eval=FALSE, warning=FALSE, message=FALSE}
-
 gitcreds::gitcreds_set() # here you place the token (NOT your GitHub password!!!)
-
 ```
 
 Another way to request the token is by going to [GitHub Tokens](https://github.com/settings/tokens), this option will provide a recommendation of the parameters to select.
@@ -220,7 +199,6 @@ Another way to request the token is by going to [GitHub Tokens](https://github.c
 The next step is to configure our GitHub user in the .gitconfig file:
 
 ```{r, git_config, eval=FALSE, warning=FALSE, message=FALSE}
-
 ## Configure GitHub user
 usethis::edit_git_config() # opens the .gitconfig file
 
@@ -230,7 +208,6 @@ usethis::edit_git_config() # opens the .gitconfig file
 # [user]
 #   name = N A M E
 #   email = github_email
-
 ```
 
 ### Initialize Git and GitHub repository
@@ -238,13 +215,11 @@ usethis::edit_git_config() # opens the .gitconfig file
 Now let's initialize the repository in Git (locally on your computer) and then request to connect it with GitHub servers. (Git is the software while GitHub is the web platform (based on Git) that allows collaboration).
 
 ```{r, git_repo, eval=FALSE, warning=FALSE, message=FALSE}
-
 ## Initialize the Git repository
 usethis::use_git() 
 
 ## Connect your local Git repository with GitHub servers
 usethis::use_github()
-
 ```
 
 ** Done **
@@ -253,9 +228,7 @@ usethis::use_github()
 Useful command to check configuration:
 
 ```{r, gh_whoami, eval=FALSE, warning=FALSE, message=FALSE}
-
 gh::gh_whoami() 
-
 ```
 
 
@@ -270,7 +243,6 @@ Some useful commands for this are:
 - git_push
 
 ```{r, git_commands, eval=FALSE, warning=FALSE, message=FALSE}
-
 ## Write a new file, using here::here to specify the path
 writeLines("hello", here::here("R", "test-here.R"))
 
@@ -288,13 +260,11 @@ gert::git_log()
 
 ## Upload your changes from the local repo to GitHub
 gert::git_push() # IMPORTANT COMMAND
-
 ```
 
 It might be more user-friendly to use the Git pane that appears in RStudio :)
 
-** Agregar imagen del panel !!! **
-
+![](https://raw.githubusercontent.com/lcolladotor/cshl_rstats_genome_scale_2024/devel/Figures/Git_Rstudio.png)
 
 ## R websites
 
@@ -307,7 +277,6 @@ Creating a website with R Markdown involves several key steps. First, you set up
 YAML (.yml file)
 
 ```
-
 name: "My Website"
 output_dir: "docs"
 navbar:
@@ -321,7 +290,6 @@ output:
   html_document:
     theme: cosmo
     highlight: tango
-
 ```
 
 ### 2. Create index.Rmd for the Homepage
@@ -329,10 +297,9 @@ output:
 The homepage is created using an index.Rmd file, which acts as the main entry point for visitors, providing an introduction or overview of the site. Additional pages, such as about.Rmd, offer more detailed information about the website or its author.
 
 
-Markdown (.Rmd file)
+Markdown (index.Rmd file)
 
 ```
-
 ---
 title: "Welcome to My Website"
 author: "Your Name"
@@ -355,7 +322,6 @@ Here is an example of a simple analysis:
 summary(cars)
 
 # ```
-
 ```
 
 ### 3. Render the Site
@@ -365,9 +331,7 @@ To render the site, use the rmarkdown::render_site() function, which converts al
 Common elements, such as shared HTML files and CSS for styling, ensure consistency and avoid redundancy. A well-configured navigation bar enhances user experience by providing easy access to different sections.
 
 ```{r, render_site, eval=FALSE, warning=FALSE, message=FALSE}
-
 rmarkdown::render_site()
-
 ```
 
 ### 4. Publish the Website
@@ -395,9 +359,12 @@ On Netlify, configure the deployment settings to specify the build command (rmar
 
 The postcards package makes it easy to create beautiful, single-page websites with minimal effort. It's perfect for personal websites, portfolios, and project showcases. Using postcards allows you to present your work professionally and creatively, without needing extensive web development knowledge.
 
+>
 > ***A collection of R Markdown templates for creating simple and easy-to-personalize single-page websites.***
 >
 > "The goal of the package is to make it easy for anyone to create a one-page personal website using an R Markdown document."
+>
+
 
 -   Author: Sean Kross [aut, cre]
 
@@ -429,38 +396,36 @@ In this case, the package is already installed
 Agregar postcards a los paquetes !!!!
 
 ```{r, install_postcards, eval=FALSE, warning=FALSE, message=FALSE}
-
 ## You can install Postcards with the following command:
 # install.packages("postcards")
 
 ## Or you can install the latest development version (not recommended):
 # remotes::install_github("seankross/postcards@main")
-
 ```
 
 ### Templates
 
 Postcards include five templates: Jolla, Jolla Blue, Trestles, Onofre, and Solana. Each site is optimized for viewing on both desktop and mobile devices. The goal of the package is to make it easy for anyone to create a one-page personal website using an R Markdown document.
 
-#### Jolla:
+- Jolla:
 
-![Jolla](https://raw.githubusercontent.com/Melii99/rnaseq_2024_postcards/master/Templates/jolla_preview.png)
+![](https://raw.githubusercontent.com/Melii99/rnaseq_2024_postcards/master/Templates/jolla_preview.png)
 
-#### Jolla Blue:
+- Jolla Blue:
 
-![Jolla Blue](https://raw.githubusercontent.com/Melii99/rnaseq_2024_postcards/master/Templates/jolla_blue_preview.png)
+![](https://raw.githubusercontent.com/Melii99/rnaseq_2024_postcards/master/Templates/jolla_blue_preview.png)
 
-#### Trestles:
+- Trestles:
 
-![Trestles](https://raw.githubusercontent.com/Melii99/rnaseq_2024_postcards/master/Templates/trestles-preview.png)
+![](https://raw.githubusercontent.com/Melii99/rnaseq_2024_postcards/master/Templates/trestles-preview.png)
 
-#### Onofre:
+- Onofre:
 
-![Onofre](https://raw.githubusercontent.com/Melii99/rnaseq_2024_postcards/master/Templates/onofre-preview.png)
+![](https://raw.githubusercontent.com/Melii99/rnaseq_2024_postcards/master/Templates/onofre-preview.png)
 
-#### Solana:
+- Solana:
 
-![Solana](https://raw.githubusercontent.com/Melii99/rnaseq_2024_postcards/master/Templates/solana-preview.png)
+![](https://raw.githubusercontent.com/Melii99/rnaseq_2024_postcards/master/Templates/solana-preview.png)
 
 To start personalizing one of these templates, you need to create a new project.
 
@@ -493,10 +458,8 @@ Select "Create Project" after choosing a name for the folder that will contain y
 - A sample photo you should replace (with your own)
 
 ```{r, postcards_project, eval=FALSE, warning=FALSE, message=FALSE}
-
 ## Create a new project
 usethis::create_project("Your_Username.github.io")
-
 ```
 
 ### Set Up Git and GitHub
@@ -504,24 +467,20 @@ usethis::create_project("Your_Username.github.io")
 To save changes, you need to set up Git and GitHub
 
 ```{r, setup_gitpcds, eval=FALSE, warning=FALSE, message=FALSE}
-
 ## Set up Git and GitHub
 usethis::use_git() # Restart the session
 usethis::use_github()
-
 ```
 
 ### Choose a Template
 
 ```{r, choose_template, eval=FALSE, warning=FALSE, message=FALSE}
-
 ## Choose only one template (the one you like the most)
 postcards::create_postcard(template = "jolla")
 postcards::create_postcard(template = "jolla-blue")
 postcards::create_postcard(template = "trestles")
 postcards::create_postcard(template = "onofre")
 postcards::create_postcard(template = "solana")
-
 ```
 
 In this way, you will also get the 2 important files:
@@ -545,10 +504,8 @@ In RStudio, you can use the "Knit" button
 or directly:
 
 ```{r, deploy_postcards, eval=FALSE, warning=FALSE, message=FALSE}
-
 ## Deploy the GitHub page
 rmarkdown::render("index.Rmd")
-
 ```
 
 ** Done **
