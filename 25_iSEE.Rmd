@@ -297,7 +297,7 @@ Zooming in is possible by first selecting a region of interest in a plot using t
     - https://osca.bioconductor.org/
     - https://www.nature.com/articles/s41592-019-0654-x Figures 2 and 3
 
-```{r download_sce_layer}
+```{r sce_layer}
 ## Lets get some data using spatialLIBD
 sce_layer <- spatialLIBD::fetch_data("sce_layer")
 sce_layer
