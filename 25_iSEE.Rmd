@@ -55,7 +55,7 @@ Adapted from [The iSEE User's Guide](https://www.bioconductor.org/packages/relea
 
 - Installation (version "4.4"). In this case, the package is already installed so we just need to load it.
 
-```{r, eval=FALSE, warning=FALSE, message=FALSE}
+```{r, load_iSEE, eval=FALSE, warning=FALSE, message=FALSE}
 # if (!require("BiocManager", quietly = TRUE))
 #     install.packages("BiocManager")
 # 
@@ -66,7 +66,7 @@ library(iSEE)
 
 - Documentation
 
-```{r, eval=FALSE, warning=FALSE, message=FALSE}
+```{r, vignettes_iSEE, eval=FALSE, warning=FALSE, message=FALSE}
 browseVignettes("iSEE")
 ```
 
@@ -74,7 +74,7 @@ browseVignettes("iSEE")
 
 If you have a "SummarizedExperiment" object (se) or an instance of a subclass, like a "SingleCellExperiment" object (sce), you can launch an iSEE app by running:
 
-```{r, eval=FALSE, warning=FALSE, message=FALSE}
+```{r, quick_launch, eval=FALSE, warning=FALSE, message=FALSE}
 ## Launch iSEE for the se ("SummarizedExperiment" object)
 iSEE(se)
 
@@ -297,7 +297,7 @@ Zooming in is possible by first selecting a region of interest in a plot using t
     - https://osca.bioconductor.org/
     - https://www.nature.com/articles/s41592-019-0654-x Figures 2 and 3
 
-```{r sce_layer}
+```{r, download_iSEEdata, eval=FALSE, warning=FALSE, message=FALSE} 
 ## Lets get some data using spatialLIBD
 sce_layer <- spatialLIBD::fetch_data("sce_layer")
 sce_layer
@@ -321,7 +321,7 @@ lobstr::obj_size(sce_layer)
 
 Now we can deploy `iSEE()` to explore the data.
 
-```{r explore_sce_layer, eval = FALSE}
+```{r explore_iSEE, eval = FALSE}
 ## Load ilibrary
 library("iSEE")
 
