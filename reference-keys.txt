@@ -143,11 +143,6 @@ configure-hosting
 postcards-1
 installation
 templates
-jolla
-jolla-blue
-trestles
-onofre
-solana
 create-your-own-website-with-postcards
 create-a-new-project-in-rstudio-interactive-selection
 set-up-git-and-github

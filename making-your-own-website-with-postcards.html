@@ -403,97 +403,88 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The here package is a powerful tool for managing file paths in your R projects. It helps you construct paths to files relative to your project’s root, ensuring your code is more robust and easier to share with others. Using here helps avoid issues with hard-coded paths and enhances the reproducibility of your analyses.</p>
 <p>The base directory it takes will be the one you are in when you load the here package, heuristically finding the root of the project and positioning itself there.</p>
 <p>In this case, the package is already installed so we just need to load it.</p>
-<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="making-your-own-website-with-postcards.html#cb148-1" tabindex="-1"></a></span>
-<span id="cb148-2"><a href="making-your-own-website-with-postcards.html#cb148-2" tabindex="-1"></a><span class="do">## Install the package manually </span></span>
-<span id="cb148-3"><a href="making-your-own-website-with-postcards.html#cb148-3" tabindex="-1"></a><span class="co"># install.packages(&quot;here&quot;)</span></span>
-<span id="cb148-4"><a href="making-your-own-website-with-postcards.html#cb148-4" tabindex="-1"></a></span>
-<span id="cb148-5"><a href="making-your-own-website-with-postcards.html#cb148-5" tabindex="-1"></a><span class="do">## Load &quot;here&quot; (previously installed)</span></span>
-<span id="cb148-6"><a href="making-your-own-website-with-postcards.html#cb148-6" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;here&quot;</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="making-your-own-website-with-postcards.html#cb148-1" tabindex="-1"></a><span class="do">## Install the package manually </span></span>
+<span id="cb148-2"><a href="making-your-own-website-with-postcards.html#cb148-2" tabindex="-1"></a><span class="co"># install.packages(&quot;here&quot;)</span></span>
+<span id="cb148-3"><a href="making-your-own-website-with-postcards.html#cb148-3" tabindex="-1"></a></span>
+<span id="cb148-4"><a href="making-your-own-website-with-postcards.html#cb148-4" tabindex="-1"></a><span class="do">## Load &quot;here&quot; (previously installed)</span></span>
+<span id="cb148-5"><a href="making-your-own-website-with-postcards.html#cb148-5" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;here&quot;</span>) </span></code></pre></div>
 <p>Sometimes there might be an error, as it might clash with other packages (like plyr). To avoid this, we can use here::here (which basically clarifies that the requested function is from the here package).</p>
-<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="making-your-own-website-with-postcards.html#cb149-1" tabindex="-1"></a></span>
-<span id="cb149-2"><a href="making-your-own-website-with-postcards.html#cb149-2" tabindex="-1"></a>here<span class="sc">::</span><span class="fu">here</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="making-your-own-website-with-postcards.html#cb149-1" tabindex="-1"></a>here<span class="sc">::</span><span class="fu">here</span>()</span></code></pre></div>
 <p>Some usefull commands are “getwd” and “setwd”, which deal with the working directory, which is the default location where R looks for files to read or save.</p>
 <ul>
 <li><p>getwd() retrieves the current working directory.</p></li>
 <li><p>setwd() allows changing the current working directory.</p></li>
 </ul>
-<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="making-your-own-website-with-postcards.html#cb150-1" tabindex="-1"></a></span>
-<span id="cb150-2"><a href="making-your-own-website-with-postcards.html#cb150-2" tabindex="-1"></a><span class="fu">getwd</span>() <span class="co"># returns the current path</span></span>
-<span id="cb150-3"><a href="making-your-own-website-with-postcards.html#cb150-3" tabindex="-1"></a></span>
-<span id="cb150-4"><a href="making-your-own-website-with-postcards.html#cb150-4" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;desired/directory&quot;</span>) <span class="co"># changes to the specified path</span></span></code></pre></div>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="making-your-own-website-with-postcards.html#cb150-1" tabindex="-1"></a><span class="fu">getwd</span>() <span class="co"># returns the current path</span></span>
+<span id="cb150-2"><a href="making-your-own-website-with-postcards.html#cb150-2" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;desired/directory&quot;</span>) <span class="co"># changes to the specified path</span></span></code></pre></div>
 <blockquote>
 <p>Best Practice:</p>
 <p>Instead of using “setwd” to manually set your working directory, it is often better to use the “here” package. Using “here”
 avoids issues with hard-coded paths and ensures your scripts work regardless of the specific setup of your working environment.</p>
 </blockquote>
-<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="making-your-own-website-with-postcards.html#cb151-1" tabindex="-1"></a></span>
-<span id="cb151-2"><a href="making-your-own-website-with-postcards.html#cb151-2" tabindex="-1"></a><span class="do">## Instead of &quot;C:/Users/user/Desktop/data/myfile.csv&quot;</span></span>
-<span id="cb151-3"><a href="making-your-own-website-with-postcards.html#cb151-3" tabindex="-1"></a></span>
-<span id="cb151-4"><a href="making-your-own-website-with-postcards.html#cb151-4" tabindex="-1"></a><span class="do">## Use here to construct file paths</span></span>
-<span id="cb151-5"><a href="making-your-own-website-with-postcards.html#cb151-5" tabindex="-1"></a>file_path <span class="ot">&lt;-</span> <span class="fu">here</span>(<span class="st">&quot;Users&quot;</span>, <span class="st">&quot;user&quot;</span>, <span class="st">&quot;Desktop&quot;</span>,<span class="st">&quot;data&quot;</span>, <span class="st">&quot;myfile.csv&quot;</span>)</span>
-<span id="cb151-6"><a href="making-your-own-website-with-postcards.html#cb151-6" tabindex="-1"></a><span class="co"># file_path &lt;- here:here(&quot;Users&quot;, &quot;user&quot;, &quot;Desktop&quot;,&quot;data&quot;, &quot;myfile.csv&quot;)</span></span>
-<span id="cb151-7"><a href="making-your-own-website-with-postcards.html#cb151-7" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(file_path)</span></code></pre></div>
+<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="making-your-own-website-with-postcards.html#cb151-1" tabindex="-1"></a><span class="do">## Instead of &quot;C:/Users/user/Desktop/data/myfile.csv&quot;</span></span>
+<span id="cb151-2"><a href="making-your-own-website-with-postcards.html#cb151-2" tabindex="-1"></a></span>
+<span id="cb151-3"><a href="making-your-own-website-with-postcards.html#cb151-3" tabindex="-1"></a><span class="do">## Use here to construct file paths</span></span>
+<span id="cb151-4"><a href="making-your-own-website-with-postcards.html#cb151-4" tabindex="-1"></a>file_path <span class="ot">&lt;-</span> <span class="fu">here</span>(<span class="st">&quot;Users&quot;</span>, <span class="st">&quot;user&quot;</span>, <span class="st">&quot;Desktop&quot;</span>,<span class="st">&quot;data&quot;</span>, <span class="st">&quot;myfile.csv&quot;</span>)</span>
+<span id="cb151-5"><a href="making-your-own-website-with-postcards.html#cb151-5" tabindex="-1"></a><span class="co"># file_path &lt;- here:here(&quot;Users&quot;, &quot;user&quot;, &quot;Desktop&quot;,&quot;data&quot;, &quot;myfile.csv&quot;)</span></span>
+<span id="cb151-6"><a href="making-your-own-website-with-postcards.html#cb151-6" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(file_path)</span></code></pre></div>
 <p>Other examples of how “here” could be used:</p>
-<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="making-your-own-website-with-postcards.html#cb152-1" tabindex="-1"></a></span>
-<span id="cb152-2"><a href="making-your-own-website-with-postcards.html#cb152-2" tabindex="-1"></a><span class="do">## Example: save data to a file and load it</span></span>
-<span id="cb152-3"><a href="making-your-own-website-with-postcards.html#cb152-3" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb152-4"><a href="making-your-own-website-with-postcards.html#cb152-4" tabindex="-1"></a>c <span class="ot">&lt;-</span> <span class="dv">23</span></span>
-<span id="cb152-5"><a href="making-your-own-website-with-postcards.html#cb152-5" tabindex="-1"></a></span>
-<span id="cb152-6"><a href="making-your-own-website-with-postcards.html#cb152-6" tabindex="-1"></a><span class="fu">save</span>(a, c, <span class="at">file =</span> <span class="fu">here</span>(<span class="st">&quot;test-data.RData&quot;</span>))</span>
-<span id="cb152-7"><a href="making-your-own-website-with-postcards.html#cb152-7" tabindex="-1"></a><span class="co"># save(a, c, file = here:here(&quot;test-data.RData&quot;))</span></span>
-<span id="cb152-8"><a href="making-your-own-website-with-postcards.html#cb152-8" tabindex="-1"></a><span class="fu">load</span>(<span class="fu">here</span>(<span class="st">&quot;test-data.RData&quot;</span>))</span>
-<span id="cb152-9"><a href="making-your-own-website-with-postcards.html#cb152-9" tabindex="-1"></a><span class="co"># load(here:here(&quot;test-data.RData&quot;))</span></span>
-<span id="cb152-10"><a href="making-your-own-website-with-postcards.html#cb152-10" tabindex="-1"></a></span>
-<span id="cb152-11"><a href="making-your-own-website-with-postcards.html#cb152-11" tabindex="-1"></a><span class="do">## Create a directory</span></span>
-<span id="cb152-12"><a href="making-your-own-website-with-postcards.html#cb152-12" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="fu">here</span>(<span class="st">&quot;subdirectory&quot;</span>), <span class="at">showWarnings =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb152-13"><a href="making-your-own-website-with-postcards.html#cb152-13" tabindex="-1"></a><span class="co"># dir.create(here:here(&quot;subdirectory&quot;), showWarnings = FALSE)</span></span>
-<span id="cb152-14"><a href="making-your-own-website-with-postcards.html#cb152-14" tabindex="-1"></a></span>
-<span id="cb152-15"><a href="making-your-own-website-with-postcards.html#cb152-15" tabindex="-1"></a><span class="do">## Create a file, indicating the subdirectory (the first argument in this case)</span></span>
-<span id="cb152-16"><a href="making-your-own-website-with-postcards.html#cb152-16" tabindex="-1"></a><span class="fu">file.create</span>(<span class="fu">here</span>(<span class="st">&quot;subdirectory&quot;</span>, <span class="st">&quot;filename&quot;</span>))</span>
-<span id="cb152-17"><a href="making-your-own-website-with-postcards.html#cb152-17" tabindex="-1"></a><span class="co"># file.create(here:here(&quot;subdirectory&quot;, &quot;filename&quot;))</span></span>
-<span id="cb152-18"><a href="making-your-own-website-with-postcards.html#cb152-18" tabindex="-1"></a></span>
-<span id="cb152-19"><a href="making-your-own-website-with-postcards.html#cb152-19" tabindex="-1"></a><span class="do">## Open the new created file</span></span>
-<span id="cb152-20"><a href="making-your-own-website-with-postcards.html#cb152-20" tabindex="-1"></a><span class="fu">file.show</span>(<span class="fu">here</span>(<span class="st">&quot;subdirectory&quot;</span>, <span class="st">&quot;filename&quot;</span>)) </span>
-<span id="cb152-21"><a href="making-your-own-website-with-postcards.html#cb152-21" tabindex="-1"></a><span class="co"># file.show(here:here(&quot;subdirectory&quot;, &quot;filename&quot;)) </span></span>
-<span id="cb152-22"><a href="making-your-own-website-with-postcards.html#cb152-22" tabindex="-1"></a></span>
-<span id="cb152-23"><a href="making-your-own-website-with-postcards.html#cb152-23" tabindex="-1"></a><span class="do">## For example, if we want to see our files in the directory</span></span>
-<span id="cb152-24"><a href="making-your-own-website-with-postcards.html#cb152-24" tabindex="-1"></a><span class="fu">list.files</span>(<span class="fu">here</span>(), <span class="at">recursive =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb152-25"><a href="making-your-own-website-with-postcards.html#cb152-25" tabindex="-1"></a><span class="co"># list.files(here:here(), recursive = TRUE)</span></span></code></pre></div>
+<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="making-your-own-website-with-postcards.html#cb152-1" tabindex="-1"></a><span class="do">## Example: save data to a file and load it</span></span>
+<span id="cb152-2"><a href="making-your-own-website-with-postcards.html#cb152-2" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb152-3"><a href="making-your-own-website-with-postcards.html#cb152-3" tabindex="-1"></a>c <span class="ot">&lt;-</span> <span class="dv">23</span></span>
+<span id="cb152-4"><a href="making-your-own-website-with-postcards.html#cb152-4" tabindex="-1"></a></span>
+<span id="cb152-5"><a href="making-your-own-website-with-postcards.html#cb152-5" tabindex="-1"></a><span class="fu">save</span>(a, c, <span class="at">file =</span> <span class="fu">here</span>(<span class="st">&quot;test-data.RData&quot;</span>))</span>
+<span id="cb152-6"><a href="making-your-own-website-with-postcards.html#cb152-6" tabindex="-1"></a><span class="co"># save(a, c, file = here:here(&quot;test-data.RData&quot;))</span></span>
+<span id="cb152-7"><a href="making-your-own-website-with-postcards.html#cb152-7" tabindex="-1"></a><span class="fu">load</span>(<span class="fu">here</span>(<span class="st">&quot;test-data.RData&quot;</span>))</span>
+<span id="cb152-8"><a href="making-your-own-website-with-postcards.html#cb152-8" tabindex="-1"></a><span class="co"># load(here:here(&quot;test-data.RData&quot;))</span></span>
+<span id="cb152-9"><a href="making-your-own-website-with-postcards.html#cb152-9" tabindex="-1"></a></span>
+<span id="cb152-10"><a href="making-your-own-website-with-postcards.html#cb152-10" tabindex="-1"></a><span class="do">## Create a directory</span></span>
+<span id="cb152-11"><a href="making-your-own-website-with-postcards.html#cb152-11" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="fu">here</span>(<span class="st">&quot;subdirectory&quot;</span>), <span class="at">showWarnings =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb152-12"><a href="making-your-own-website-with-postcards.html#cb152-12" tabindex="-1"></a><span class="co"># dir.create(here:here(&quot;subdirectory&quot;), showWarnings = FALSE)</span></span>
+<span id="cb152-13"><a href="making-your-own-website-with-postcards.html#cb152-13" tabindex="-1"></a></span>
+<span id="cb152-14"><a href="making-your-own-website-with-postcards.html#cb152-14" tabindex="-1"></a><span class="do">## Create a file, indicating the subdirectory (the first argument in this case)</span></span>
+<span id="cb152-15"><a href="making-your-own-website-with-postcards.html#cb152-15" tabindex="-1"></a><span class="fu">file.create</span>(<span class="fu">here</span>(<span class="st">&quot;subdirectory&quot;</span>, <span class="st">&quot;filename&quot;</span>))</span>
+<span id="cb152-16"><a href="making-your-own-website-with-postcards.html#cb152-16" tabindex="-1"></a><span class="co"># file.create(here:here(&quot;subdirectory&quot;, &quot;filename&quot;))</span></span>
+<span id="cb152-17"><a href="making-your-own-website-with-postcards.html#cb152-17" tabindex="-1"></a></span>
+<span id="cb152-18"><a href="making-your-own-website-with-postcards.html#cb152-18" tabindex="-1"></a><span class="do">## Open the new created file</span></span>
+<span id="cb152-19"><a href="making-your-own-website-with-postcards.html#cb152-19" tabindex="-1"></a><span class="fu">file.show</span>(<span class="fu">here</span>(<span class="st">&quot;subdirectory&quot;</span>, <span class="st">&quot;filename&quot;</span>)) </span>
+<span id="cb152-20"><a href="making-your-own-website-with-postcards.html#cb152-20" tabindex="-1"></a><span class="co"># file.show(here:here(&quot;subdirectory&quot;, &quot;filename&quot;)) </span></span>
+<span id="cb152-21"><a href="making-your-own-website-with-postcards.html#cb152-21" tabindex="-1"></a></span>
+<span id="cb152-22"><a href="making-your-own-website-with-postcards.html#cb152-22" tabindex="-1"></a><span class="do">## For example, if we want to see our files in the directory</span></span>
+<span id="cb152-23"><a href="making-your-own-website-with-postcards.html#cb152-23" tabindex="-1"></a><span class="fu">list.files</span>(<span class="fu">here</span>(), <span class="at">recursive =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb152-24"><a href="making-your-own-website-with-postcards.html#cb152-24" tabindex="-1"></a><span class="co"># list.files(here:here(), recursive = TRUE)</span></span></code></pre></div>
 </div>
 <div id="usethis" class="section level2 hasAnchor" number="23.2">
 <h2><span class="header-section-number">23.2</span> Usethis<a href="making-your-own-website-with-postcards.html#usethis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The usethis package simplifies many common setup tasks and workflows in R. It helps streamline the process of creating new projects, setting up Git repositories, and connecting with GitHub. Mastering usethis allows you to focus more on coding and less on configuration.</p>
 <p>In this case, the package is already installed so we just need to load it.</p>
-<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="making-your-own-website-with-postcards.html#cb153-1" tabindex="-1"></a></span>
-<span id="cb153-2"><a href="making-your-own-website-with-postcards.html#cb153-2" tabindex="-1"></a><span class="do">## Install the package manually </span></span>
-<span id="cb153-3"><a href="making-your-own-website-with-postcards.html#cb153-3" tabindex="-1"></a><span class="co"># install.packages(&quot;usethis&quot;)</span></span>
-<span id="cb153-4"><a href="making-your-own-website-with-postcards.html#cb153-4" tabindex="-1"></a></span>
-<span id="cb153-5"><a href="making-your-own-website-with-postcards.html#cb153-5" tabindex="-1"></a><span class="do">## Load &quot;usethis (previously installed)</span></span>
-<span id="cb153-6"><a href="making-your-own-website-with-postcards.html#cb153-6" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;usethis&quot;</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="making-your-own-website-with-postcards.html#cb153-1" tabindex="-1"></a><span class="do">## Install the package manually </span></span>
+<span id="cb153-2"><a href="making-your-own-website-with-postcards.html#cb153-2" tabindex="-1"></a><span class="co"># install.packages(&quot;usethis&quot;)</span></span>
+<span id="cb153-3"><a href="making-your-own-website-with-postcards.html#cb153-3" tabindex="-1"></a></span>
+<span id="cb153-4"><a href="making-your-own-website-with-postcards.html#cb153-4" tabindex="-1"></a><span class="do">## Load &quot;usethis (previously installed)</span></span>
+<span id="cb153-5"><a href="making-your-own-website-with-postcards.html#cb153-5" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;usethis&quot;</span>) </span></code></pre></div>
 <p>Usage:</p>
 <p>All use_* functions operate on the current directory.</p>
-<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="making-your-own-website-with-postcards.html#cb154-1" tabindex="-1"></a></span>
-<span id="cb154-2"><a href="making-your-own-website-with-postcards.html#cb154-2" tabindex="-1"></a><span class="co"># usethis::use_*()</span></span>
-<span id="cb154-3"><a href="making-your-own-website-with-postcards.html#cb154-3" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_r</span>()</span>
-<span id="cb154-4"><a href="making-your-own-website-with-postcards.html#cb154-4" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_git</span>()</span>
-<span id="cb154-5"><a href="making-your-own-website-with-postcards.html#cb154-5" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_readme_md</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="making-your-own-website-with-postcards.html#cb154-1" tabindex="-1"></a><span class="do">## usethis::use_*()</span></span>
+<span id="cb154-2"><a href="making-your-own-website-with-postcards.html#cb154-2" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_r</span>()</span>
+<span id="cb154-3"><a href="making-your-own-website-with-postcards.html#cb154-3" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_git</span>()</span>
+<span id="cb154-4"><a href="making-your-own-website-with-postcards.html#cb154-4" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_readme_md</span>()</span></code></pre></div>
 <p>✔ indicates that usethis has setup everything for you.
 ● indicates that you’ll need to do some work yourself.</p>
-<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="making-your-own-website-with-postcards.html#cb155-1" tabindex="-1"></a></span>
-<span id="cb155-2"><a href="making-your-own-website-with-postcards.html#cb155-2" tabindex="-1"></a><span class="do">## For example, create a README file</span></span>
-<span id="cb155-3"><a href="making-your-own-website-with-postcards.html#cb155-3" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_readme_md</span>()</span>
-<span id="cb155-4"><a href="making-your-own-website-with-postcards.html#cb155-4" tabindex="-1"></a><span class="co">#&gt; ✔ Writing &#39;README.md&#39;</span></span>
-<span id="cb155-5"><a href="making-your-own-website-with-postcards.html#cb155-5" tabindex="-1"></a><span class="co">#&gt; ● Edit &#39;README.md&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="making-your-own-website-with-postcards.html#cb155-1" tabindex="-1"></a><span class="do">## For example, create a README file</span></span>
+<span id="cb155-2"><a href="making-your-own-website-with-postcards.html#cb155-2" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_readme_md</span>()</span>
+<span id="cb155-3"><a href="making-your-own-website-with-postcards.html#cb155-3" tabindex="-1"></a><span class="co">#&gt; ✔ Writing &#39;README.md&#39;</span></span>
+<span id="cb155-4"><a href="making-your-own-website-with-postcards.html#cb155-4" tabindex="-1"></a><span class="co">#&gt; ● Edit &#39;README.md&#39;</span></span></code></pre></div>
 <p>More functions in usethis:
 <a href="https://cran.r-project.org/web/packages/usethis/usethis.pdf">usethis RDocumentation</a></p>
 <p>In the following exercises, we will see some uses of usethis.</p>
 </div>
 <div id="git-github" class="section level2 hasAnchor" number="23.3">
 <h2><span class="header-section-number">23.3</span> Git + GitHub<a href="making-your-own-website-with-postcards.html#git-github" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><a href="https://github.com/">GitHub</a></p>
 <p><a href="https://product.hubspot.com/blog/git-and-github-tutorial-for-beginners">An Intro to Git and GitHub for Beginners (Tutorial) by HubSpot</a></p>
 <p>Version control is a critical skill. Git helps you track changes in your projects, collaborate with others, and maintain a history of your work.</p>
 <p>GitHub, a platform for hosting Git repositories, enables seamless collaboration and sharing of your projects with the world. Understanding Git and GitHub ensures your projects are well-organized and accessible.</p>
-<p><a href="https://github.com/">GitHub</a></p>
 <div id="prerequisites" class="section level3 hasAnchor" number="23.3.1">
 <h3><span class="header-section-number">23.3.1</span> Prerequisites<a href="making-your-own-website-with-postcards.html#prerequisites" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>We need a GitHub account. If you don’t have one, now is the time to create it!</p>
@@ -501,27 +492,23 @@ avoids issues with hard-coded paths and ensures your scripts work regardless of 
 <p>We also need to install Git on our computers as the “gitcreds” package requires it.</p>
 <p><a href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git">Installing Git</a></p>
 <p>After installing Git, restart RStudio to allow it to annex.</p>
-<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="making-your-own-website-with-postcards.html#cb156-1" tabindex="-1"></a></span>
-<span id="cb156-2"><a href="making-your-own-website-with-postcards.html#cb156-2" tabindex="-1"></a><span class="co"># Hay que agregarlos a los paquetes a instalar !!!</span></span>
+<p><strong><em>Hay que agregarlos a los paquetes a instalar ??? </em></strong></p>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="making-your-own-website-with-postcards.html#cb156-1" tabindex="-1"></a><span class="do">## Packages we will need</span></span>
+<span id="cb156-2"><a href="making-your-own-website-with-postcards.html#cb156-2" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">&quot;gitcreds&quot;</span>, <span class="st">&quot;gert&quot;</span>, <span class="st">&quot;gh&quot;</span>))</span>
 <span id="cb156-3"><a href="making-your-own-website-with-postcards.html#cb156-3" tabindex="-1"></a></span>
-<span id="cb156-4"><a href="making-your-own-website-with-postcards.html#cb156-4" tabindex="-1"></a><span class="do">## Packages we will need</span></span>
-<span id="cb156-5"><a href="making-your-own-website-with-postcards.html#cb156-5" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">&quot;gitcreds&quot;</span>, <span class="st">&quot;gert&quot;</span>, <span class="st">&quot;gh&quot;</span>))</span>
-<span id="cb156-6"><a href="making-your-own-website-with-postcards.html#cb156-6" tabindex="-1"></a></span>
-<span id="cb156-7"><a href="making-your-own-website-with-postcards.html#cb156-7" tabindex="-1"></a><span class="do">## Load them separately</span></span>
-<span id="cb156-8"><a href="making-your-own-website-with-postcards.html#cb156-8" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;gitcreds&quot;</span>)</span>
-<span id="cb156-9"><a href="making-your-own-website-with-postcards.html#cb156-9" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;gert&quot;</span>)</span>
-<span id="cb156-10"><a href="making-your-own-website-with-postcards.html#cb156-10" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;gh&quot;</span>)</span></code></pre></div>
+<span id="cb156-4"><a href="making-your-own-website-with-postcards.html#cb156-4" tabindex="-1"></a><span class="do">## Load them separately</span></span>
+<span id="cb156-5"><a href="making-your-own-website-with-postcards.html#cb156-5" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;gitcreds&quot;</span>)</span>
+<span id="cb156-6"><a href="making-your-own-website-with-postcards.html#cb156-6" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;gert&quot;</span>)</span>
+<span id="cb156-7"><a href="making-your-own-website-with-postcards.html#cb156-7" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;gh&quot;</span>)</span></code></pre></div>
 </div>
 <div id="creating-a-personal-access-token-pat" class="section level3 hasAnchor" number="23.3.2">
 <h3><span class="header-section-number">23.3.2</span> Creating a personal access token (PAT)<a href="making-your-own-website-with-postcards.html#creating-a-personal-access-token-pat" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>To connect our RStudio repository with GitHub, we request a token, which allows GitHub to grant permission to our computer.</p>
 <p>You can request the token using R (choose a meaningful name).</p>
-<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="making-your-own-website-with-postcards.html#cb157-1" tabindex="-1"></a></span>
-<span id="cb157-2"><a href="making-your-own-website-with-postcards.html#cb157-2" tabindex="-1"></a><span class="do">## Initiate connection with GitHub</span></span>
-<span id="cb157-3"><a href="making-your-own-website-with-postcards.html#cb157-3" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">create_github_token</span>() <span class="co"># redirects to GitHub where you&#39;ll choose a specific name for the token</span></span></code></pre></div>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="making-your-own-website-with-postcards.html#cb157-1" tabindex="-1"></a><span class="do">## Initiate connection with GitHub</span></span>
+<span id="cb157-2"><a href="making-your-own-website-with-postcards.html#cb157-2" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">create_github_token</span>() <span class="co"># redirects to GitHub where you&#39;ll choose a specific name for the token</span></span></code></pre></div>
 <p>Copy the token to enter it later with gitcreds_set()</p>
-<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="making-your-own-website-with-postcards.html#cb158-1" tabindex="-1"></a></span>
-<span id="cb158-2"><a href="making-your-own-website-with-postcards.html#cb158-2" tabindex="-1"></a>gitcreds<span class="sc">::</span><span class="fu">gitcreds_set</span>() <span class="co"># here you place the token (NOT your GitHub password!!!)</span></span></code></pre></div>
+<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="making-your-own-website-with-postcards.html#cb158-1" tabindex="-1"></a>gitcreds<span class="sc">::</span><span class="fu">gitcreds_set</span>() <span class="co"># here you place the token (NOT your GitHub password!!!)</span></span></code></pre></div>
 <p>Another way to request the token is by going to <a href="https://github.com/settings/tokens">GitHub Tokens</a>, this option will provide a recommendation of the parameters to select.</p>
 <ul>
 <li><p>The token expiration parameter can be changed so it does not expire (for security, GitHub does not recommend this). Otherwise, consider its validity period.</p></li>
@@ -529,30 +516,27 @@ avoids issues with hard-coded paths and ensures your scripts work regardless of 
 <li><p>You can always generate a new one (don’t forget to delete the previous token).</p></li>
 </ul>
 <p>The next step is to configure our GitHub user in the .gitconfig file:</p>
-<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="making-your-own-website-with-postcards.html#cb159-1" tabindex="-1"></a></span>
-<span id="cb159-2"><a href="making-your-own-website-with-postcards.html#cb159-2" tabindex="-1"></a><span class="do">## Configure GitHub user</span></span>
-<span id="cb159-3"><a href="making-your-own-website-with-postcards.html#cb159-3" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">edit_git_config</span>() <span class="co"># opens the .gitconfig file</span></span>
-<span id="cb159-4"><a href="making-your-own-website-with-postcards.html#cb159-4" tabindex="-1"></a></span>
-<span id="cb159-5"><a href="making-your-own-website-with-postcards.html#cb159-5" tabindex="-1"></a><span class="do">## Place the name and email of your GitHub account. </span></span>
-<span id="cb159-6"><a href="making-your-own-website-with-postcards.html#cb159-6" tabindex="-1"></a><span class="do">## JUST remove the &quot;#&quot; and respect the other spaces</span></span>
-<span id="cb159-7"><a href="making-your-own-website-with-postcards.html#cb159-7" tabindex="-1"></a></span>
-<span id="cb159-8"><a href="making-your-own-website-with-postcards.html#cb159-8" tabindex="-1"></a><span class="co"># [user]</span></span>
-<span id="cb159-9"><a href="making-your-own-website-with-postcards.html#cb159-9" tabindex="-1"></a><span class="co">#   name = N A M E</span></span>
-<span id="cb159-10"><a href="making-your-own-website-with-postcards.html#cb159-10" tabindex="-1"></a><span class="co">#   email = github_email</span></span></code></pre></div>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="making-your-own-website-with-postcards.html#cb159-1" tabindex="-1"></a><span class="do">## Configure GitHub user</span></span>
+<span id="cb159-2"><a href="making-your-own-website-with-postcards.html#cb159-2" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">edit_git_config</span>() <span class="co"># opens the .gitconfig file</span></span>
+<span id="cb159-3"><a href="making-your-own-website-with-postcards.html#cb159-3" tabindex="-1"></a></span>
+<span id="cb159-4"><a href="making-your-own-website-with-postcards.html#cb159-4" tabindex="-1"></a><span class="do">## Place the name and email of your GitHub account. </span></span>
+<span id="cb159-5"><a href="making-your-own-website-with-postcards.html#cb159-5" tabindex="-1"></a><span class="do">## JUST remove the &quot;#&quot; and respect the other spaces</span></span>
+<span id="cb159-6"><a href="making-your-own-website-with-postcards.html#cb159-6" tabindex="-1"></a></span>
+<span id="cb159-7"><a href="making-your-own-website-with-postcards.html#cb159-7" tabindex="-1"></a><span class="co"># [user]</span></span>
+<span id="cb159-8"><a href="making-your-own-website-with-postcards.html#cb159-8" tabindex="-1"></a><span class="co">#   name = N A M E</span></span>
+<span id="cb159-9"><a href="making-your-own-website-with-postcards.html#cb159-9" tabindex="-1"></a><span class="co">#   email = github_email</span></span></code></pre></div>
 </div>
 <div id="initialize-git-and-github-repository" class="section level3 hasAnchor" number="23.3.3">
 <h3><span class="header-section-number">23.3.3</span> Initialize Git and GitHub repository<a href="making-your-own-website-with-postcards.html#initialize-git-and-github-repository" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Now let’s initialize the repository in Git (locally on your computer) and then request to connect it with GitHub servers. (Git is the software while GitHub is the web platform (based on Git) that allows collaboration).</p>
-<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="making-your-own-website-with-postcards.html#cb160-1" tabindex="-1"></a></span>
-<span id="cb160-2"><a href="making-your-own-website-with-postcards.html#cb160-2" tabindex="-1"></a><span class="do">## Initialize the Git repository</span></span>
-<span id="cb160-3"><a href="making-your-own-website-with-postcards.html#cb160-3" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_git</span>() </span>
-<span id="cb160-4"><a href="making-your-own-website-with-postcards.html#cb160-4" tabindex="-1"></a></span>
-<span id="cb160-5"><a href="making-your-own-website-with-postcards.html#cb160-5" tabindex="-1"></a><span class="do">## Connect your local Git repository with GitHub servers</span></span>
-<span id="cb160-6"><a href="making-your-own-website-with-postcards.html#cb160-6" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_github</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="making-your-own-website-with-postcards.html#cb160-1" tabindex="-1"></a><span class="do">## Initialize the Git repository</span></span>
+<span id="cb160-2"><a href="making-your-own-website-with-postcards.html#cb160-2" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_git</span>() </span>
+<span id="cb160-3"><a href="making-your-own-website-with-postcards.html#cb160-3" tabindex="-1"></a></span>
+<span id="cb160-4"><a href="making-your-own-website-with-postcards.html#cb160-4" tabindex="-1"></a><span class="do">## Connect your local Git repository with GitHub servers</span></span>
+<span id="cb160-5"><a href="making-your-own-website-with-postcards.html#cb160-5" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_github</span>()</span></code></pre></div>
 <p>** Done **</p>
 <p>Useful command to check configuration:</p>
-<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="making-your-own-website-with-postcards.html#cb161-1" tabindex="-1"></a></span>
-<span id="cb161-2"><a href="making-your-own-website-with-postcards.html#cb161-2" tabindex="-1"></a>gh<span class="sc">::</span><span class="fu">gh_whoami</span>() </span></code></pre></div>
+<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="making-your-own-website-with-postcards.html#cb161-1" tabindex="-1"></a>gh<span class="sc">::</span><span class="fu">gh_whoami</span>() </span></code></pre></div>
 </div>
 <div id="some-other-gert-commands" class="section level3 hasAnchor" number="23.3.4">
 <h3><span class="header-section-number">23.3.4</span> Some other gert commands<a href="making-your-own-website-with-postcards.html#some-other-gert-commands" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -564,26 +548,25 @@ Some useful commands for this are:</p>
 <li>git_log</li>
 <li>git_push</li>
 </ul>
-<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="making-your-own-website-with-postcards.html#cb162-1" tabindex="-1"></a></span>
-<span id="cb162-2"><a href="making-your-own-website-with-postcards.html#cb162-2" tabindex="-1"></a><span class="do">## Write a new file, using here::here to specify the path</span></span>
-<span id="cb162-3"><a href="making-your-own-website-with-postcards.html#cb162-3" tabindex="-1"></a><span class="fu">writeLines</span>(<span class="st">&quot;hello&quot;</span>, here<span class="sc">::</span><span class="fu">here</span>(<span class="st">&quot;R&quot;</span>, <span class="st">&quot;test-here.R&quot;</span>))</span>
-<span id="cb162-4"><a href="making-your-own-website-with-postcards.html#cb162-4" tabindex="-1"></a></span>
-<span id="cb162-5"><a href="making-your-own-website-with-postcards.html#cb162-5" tabindex="-1"></a><span class="do">## Another way is to use use_r</span></span>
-<span id="cb162-6"><a href="making-your-own-website-with-postcards.html#cb162-6" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_r</span>(<span class="st">&quot;test-file-github.R&quot;</span>) <span class="co"># adds file to the project&#39;s R directory</span></span>
-<span id="cb162-7"><a href="making-your-own-website-with-postcards.html#cb162-7" tabindex="-1"></a></span>
-<span id="cb162-8"><a href="making-your-own-website-with-postcards.html#cb162-8" tabindex="-1"></a><span class="do">## For example, we might try adding something new</span></span>
-<span id="cb162-9"><a href="making-your-own-website-with-postcards.html#cb162-9" tabindex="-1"></a>gert<span class="sc">::</span><span class="fu">git_add</span>(<span class="st">&quot;R/test-file-github.R&quot;</span>)</span>
-<span id="cb162-10"><a href="making-your-own-website-with-postcards.html#cb162-10" tabindex="-1"></a></span>
-<span id="cb162-11"><a href="making-your-own-website-with-postcards.html#cb162-11" tabindex="-1"></a><span class="do">## Add commit of what was done</span></span>
-<span id="cb162-12"><a href="making-your-own-website-with-postcards.html#cb162-12" tabindex="-1"></a>gert<span class="sc">::</span><span class="fu">git_commit</span>(<span class="st">&quot;uploaded test file&quot;</span>)</span>
-<span id="cb162-13"><a href="making-your-own-website-with-postcards.html#cb162-13" tabindex="-1"></a></span>
-<span id="cb162-14"><a href="making-your-own-website-with-postcards.html#cb162-14" tabindex="-1"></a><span class="do">## Gives info about the commits</span></span>
-<span id="cb162-15"><a href="making-your-own-website-with-postcards.html#cb162-15" tabindex="-1"></a>gert<span class="sc">::</span><span class="fu">git_log</span>()</span>
-<span id="cb162-16"><a href="making-your-own-website-with-postcards.html#cb162-16" tabindex="-1"></a></span>
-<span id="cb162-17"><a href="making-your-own-website-with-postcards.html#cb162-17" tabindex="-1"></a><span class="do">## Upload your changes from the local repo to GitHub</span></span>
-<span id="cb162-18"><a href="making-your-own-website-with-postcards.html#cb162-18" tabindex="-1"></a>gert<span class="sc">::</span><span class="fu">git_push</span>() <span class="co"># IMPORTANT COMMAND</span></span></code></pre></div>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="making-your-own-website-with-postcards.html#cb162-1" tabindex="-1"></a><span class="do">## Write a new file, using here::here to specify the path</span></span>
+<span id="cb162-2"><a href="making-your-own-website-with-postcards.html#cb162-2" tabindex="-1"></a><span class="fu">writeLines</span>(<span class="st">&quot;hello&quot;</span>, here<span class="sc">::</span><span class="fu">here</span>(<span class="st">&quot;R&quot;</span>, <span class="st">&quot;test-here.R&quot;</span>))</span>
+<span id="cb162-3"><a href="making-your-own-website-with-postcards.html#cb162-3" tabindex="-1"></a></span>
+<span id="cb162-4"><a href="making-your-own-website-with-postcards.html#cb162-4" tabindex="-1"></a><span class="do">## Another way is to use use_r</span></span>
+<span id="cb162-5"><a href="making-your-own-website-with-postcards.html#cb162-5" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_r</span>(<span class="st">&quot;test-file-github.R&quot;</span>) <span class="co"># adds file to the project&#39;s R directory</span></span>
+<span id="cb162-6"><a href="making-your-own-website-with-postcards.html#cb162-6" tabindex="-1"></a></span>
+<span id="cb162-7"><a href="making-your-own-website-with-postcards.html#cb162-7" tabindex="-1"></a><span class="do">## For example, we might try adding something new</span></span>
+<span id="cb162-8"><a href="making-your-own-website-with-postcards.html#cb162-8" tabindex="-1"></a>gert<span class="sc">::</span><span class="fu">git_add</span>(<span class="st">&quot;R/test-file-github.R&quot;</span>)</span>
+<span id="cb162-9"><a href="making-your-own-website-with-postcards.html#cb162-9" tabindex="-1"></a></span>
+<span id="cb162-10"><a href="making-your-own-website-with-postcards.html#cb162-10" tabindex="-1"></a><span class="do">## Add commit of what was done</span></span>
+<span id="cb162-11"><a href="making-your-own-website-with-postcards.html#cb162-11" tabindex="-1"></a>gert<span class="sc">::</span><span class="fu">git_commit</span>(<span class="st">&quot;uploaded test file&quot;</span>)</span>
+<span id="cb162-12"><a href="making-your-own-website-with-postcards.html#cb162-12" tabindex="-1"></a></span>
+<span id="cb162-13"><a href="making-your-own-website-with-postcards.html#cb162-13" tabindex="-1"></a><span class="do">## Gives info about the commits</span></span>
+<span id="cb162-14"><a href="making-your-own-website-with-postcards.html#cb162-14" tabindex="-1"></a>gert<span class="sc">::</span><span class="fu">git_log</span>()</span>
+<span id="cb162-15"><a href="making-your-own-website-with-postcards.html#cb162-15" tabindex="-1"></a></span>
+<span id="cb162-16"><a href="making-your-own-website-with-postcards.html#cb162-16" tabindex="-1"></a><span class="do">## Upload your changes from the local repo to GitHub</span></span>
+<span id="cb162-17"><a href="making-your-own-website-with-postcards.html#cb162-17" tabindex="-1"></a>gert<span class="sc">::</span><span class="fu">git_push</span>() <span class="co"># IMPORTANT COMMAND</span></span></code></pre></div>
 <p>It might be more user-friendly to use the Git pane that appears in RStudio :)</p>
-<p>** Agregar imagen del panel !!! **</p>
+<p><img src="https://raw.githubusercontent.com/lcolladotor/cshl_rstats_genome_scale_2024/devel/Figures/Git_Rstudio.png" /></p>
 </div>
 </div>
 <div id="r-websites" class="section level2 hasAnchor" number="23.4">
@@ -593,8 +576,7 @@ Some useful commands for this are:</p>
 <h3><span class="header-section-number">23.4.1</span> 1. Set Up _site.yml<a href="making-your-own-website-with-postcards.html#set-up-_site.yml" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Creating a website with R Markdown involves several key steps. First, you set up a _site.yml file, which configures the site’s name, navigation bar, and global options like themes and additional CSS or JavaScript files. This file ensures a consistent look and feel across all pages.</p>
 <p>YAML (.yml file)</p>
-<pre><code>
-name: &quot;My Website&quot;
+<pre><code>name: &quot;My Website&quot;
 output_dir: &quot;docs&quot;
 navbar:
   title: &quot;My Website&quot;
@@ -606,15 +588,13 @@ navbar:
 output:
   html_document:
     theme: cosmo
-    highlight: tango
-</code></pre>
+    highlight: tango</code></pre>
 </div>
 <div id="create-index.rmd-for-the-homepage" class="section level3 hasAnchor" number="23.4.2">
 <h3><span class="header-section-number">23.4.2</span> 2. Create index.Rmd for the Homepage<a href="making-your-own-website-with-postcards.html#create-index.rmd-for-the-homepage" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The homepage is created using an index.Rmd file, which acts as the main entry point for visitors, providing an introduction or overview of the site. Additional pages, such as about.Rmd, offer more detailed information about the website or its author.</p>
-<p>Markdown (.Rmd file)</p>
-<pre><code>
----
+<p>Markdown (index.Rmd file)</p>
+<pre><code>---
 title: &quot;Welcome to My Website&quot;
 author: &quot;Your Name&quot;
 date: &quot;2024-06-05&quot;
@@ -635,15 +615,13 @@ Here is an example of a simple analysis:
     
 summary(cars)
 
-# ```
-</code></pre>
+# ```</code></pre>
 </div>
 <div id="render-the-site" class="section level3 hasAnchor" number="23.4.3">
 <h3><span class="header-section-number">23.4.3</span> 3. Render the Site<a href="making-your-own-website-with-postcards.html#render-the-site" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>To render the site, use the rmarkdown::render_site() function, which converts all R Markdown and Markdown files into HTML. The resulting HTML files and resources are placed in a directory, typically _site. RStudio facilitates this process with tools like the “Knit” button for individual pages and the “Build” pane for the entire site.</p>
 <p>Common elements, such as shared HTML files and CSS for styling, ensure consistency and avoid redundancy. A well-configured navigation bar enhances user experience by providing easy access to different sections.</p>
-<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="making-your-own-website-with-postcards.html#cb165-1" tabindex="-1"></a></span>
-<span id="cb165-2"><a href="making-your-own-website-with-postcards.html#cb165-2" tabindex="-1"></a>rmarkdown<span class="sc">::</span><span class="fu">render_site</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="making-your-own-website-with-postcards.html#cb165-1" tabindex="-1"></a>rmarkdown<span class="sc">::</span><span class="fu">render_site</span>()</span></code></pre></div>
 </div>
 <div id="publish-the-website" class="section level3 hasAnchor" number="23.4.4">
 <h3><span class="header-section-number">23.4.4</span> 4. Publish the Website<a href="making-your-own-website-with-postcards.html#publish-the-website" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -693,52 +671,36 @@ summary(cars)
 <h3><span class="header-section-number">23.5.1</span> Installation<a href="making-your-own-website-with-postcards.html#installation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>In this case, the package is already installed</p>
 <p>Agregar postcards a los paquetes !!!!</p>
-<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="making-your-own-website-with-postcards.html#cb166-1" tabindex="-1"></a></span>
-<span id="cb166-2"><a href="making-your-own-website-with-postcards.html#cb166-2" tabindex="-1"></a><span class="do">## You can install Postcards with the following command:</span></span>
-<span id="cb166-3"><a href="making-your-own-website-with-postcards.html#cb166-3" tabindex="-1"></a><span class="co"># install.packages(&quot;postcards&quot;)</span></span>
-<span id="cb166-4"><a href="making-your-own-website-with-postcards.html#cb166-4" tabindex="-1"></a></span>
-<span id="cb166-5"><a href="making-your-own-website-with-postcards.html#cb166-5" tabindex="-1"></a><span class="do">## Or you can install the latest development version (not recommended):</span></span>
-<span id="cb166-6"><a href="making-your-own-website-with-postcards.html#cb166-6" tabindex="-1"></a><span class="co"># remotes::install_github(&quot;seankross/postcards@main&quot;)</span></span></code></pre></div>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="making-your-own-website-with-postcards.html#cb166-1" tabindex="-1"></a><span class="do">## You can install Postcards with the following command:</span></span>
+<span id="cb166-2"><a href="making-your-own-website-with-postcards.html#cb166-2" tabindex="-1"></a><span class="co"># install.packages(&quot;postcards&quot;)</span></span>
+<span id="cb166-3"><a href="making-your-own-website-with-postcards.html#cb166-3" tabindex="-1"></a></span>
+<span id="cb166-4"><a href="making-your-own-website-with-postcards.html#cb166-4" tabindex="-1"></a><span class="do">## Or you can install the latest development version (not recommended):</span></span>
+<span id="cb166-5"><a href="making-your-own-website-with-postcards.html#cb166-5" tabindex="-1"></a><span class="co"># remotes::install_github(&quot;seankross/postcards@main&quot;)</span></span></code></pre></div>
 </div>
 <div id="templates" class="section level3 hasAnchor" number="23.5.2">
 <h3><span class="header-section-number">23.5.2</span> Templates<a href="making-your-own-website-with-postcards.html#templates" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Postcards include five templates: Jolla, Jolla Blue, Trestles, Onofre, and Solana. Each site is optimized for viewing on both desktop and mobile devices. The goal of the package is to make it easy for anyone to create a one-page personal website using an R Markdown document.</p>
-<div id="jolla" class="section level4 hasAnchor" number="23.5.2.1">
-<h4><span class="header-section-number">23.5.2.1</span> Jolla:<a href="making-your-own-website-with-postcards.html#jolla" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<div class="float">
-<img src="https://raw.githubusercontent.com/Melii99/rnaseq_2024_postcards/master/Templates/jolla_preview.png" alt="Jolla" />
-<div class="figcaption">Jolla</div>
-</div>
-</div>
-<div id="jolla-blue" class="section level4 hasAnchor" number="23.5.2.2">
-<h4><span class="header-section-number">23.5.2.2</span> Jolla Blue:<a href="making-your-own-website-with-postcards.html#jolla-blue" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<div class="float">
-<img src="https://raw.githubusercontent.com/Melii99/rnaseq_2024_postcards/master/Templates/jolla_blue_preview.png" alt="Jolla Blue" />
-<div class="figcaption">Jolla Blue</div>
-</div>
-</div>
-<div id="trestles" class="section level4 hasAnchor" number="23.5.2.3">
-<h4><span class="header-section-number">23.5.2.3</span> Trestles:<a href="making-your-own-website-with-postcards.html#trestles" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<div class="float">
-<img src="https://raw.githubusercontent.com/Melii99/rnaseq_2024_postcards/master/Templates/trestles-preview.png" alt="Trestles" />
-<div class="figcaption">Trestles</div>
-</div>
-</div>
-<div id="onofre" class="section level4 hasAnchor" number="23.5.2.4">
-<h4><span class="header-section-number">23.5.2.4</span> Onofre:<a href="making-your-own-website-with-postcards.html#onofre" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<div class="float">
-<img src="https://raw.githubusercontent.com/Melii99/rnaseq_2024_postcards/master/Templates/onofre-preview.png" alt="Onofre" />
-<div class="figcaption">Onofre</div>
-</div>
-</div>
-<div id="solana" class="section level4 hasAnchor" number="23.5.2.5">
-<h4><span class="header-section-number">23.5.2.5</span> Solana:<a href="making-your-own-website-with-postcards.html#solana" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<div class="float">
-<img src="https://raw.githubusercontent.com/Melii99/rnaseq_2024_postcards/master/Templates/solana-preview.png" alt="Solana" />
-<div class="figcaption">Solana</div>
-</div>
+<ul>
+<li>Jolla:</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/Melii99/rnaseq_2024_postcards/master/Templates/jolla_preview.png" /></p>
+<ul>
+<li>Jolla Blue:</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/Melii99/rnaseq_2024_postcards/master/Templates/jolla_blue_preview.png" /></p>
+<ul>
+<li>Trestles:</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/Melii99/rnaseq_2024_postcards/master/Templates/trestles-preview.png" /></p>
+<ul>
+<li>Onofre:</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/Melii99/rnaseq_2024_postcards/master/Templates/onofre-preview.png" /></p>
+<ul>
+<li>Solana:</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/Melii99/rnaseq_2024_postcards/master/Templates/solana-preview.png" /></p>
 <p>To start personalizing one of these templates, you need to create a new project.</p>
-</div>
 </div>
 </div>
 <div id="create-your-own-website-with-postcards" class="section level2 hasAnchor" number="23.6">
@@ -763,27 +725,24 @@ In case you missed it, you can go back to the “Git + GitHub” section.</p>
 <li>An R Markdown document with your site’s content</li>
 <li>A sample photo you should replace (with your own)</li>
 </ul>
-<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="making-your-own-website-with-postcards.html#cb167-1" tabindex="-1"></a></span>
-<span id="cb167-2"><a href="making-your-own-website-with-postcards.html#cb167-2" tabindex="-1"></a><span class="do">## Create a new project</span></span>
-<span id="cb167-3"><a href="making-your-own-website-with-postcards.html#cb167-3" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">create_project</span>(<span class="st">&quot;Your_Username.github.io&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="making-your-own-website-with-postcards.html#cb167-1" tabindex="-1"></a><span class="do">## Create a new project</span></span>
+<span id="cb167-2"><a href="making-your-own-website-with-postcards.html#cb167-2" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">create_project</span>(<span class="st">&quot;Your_Username.github.io&quot;</span>)</span></code></pre></div>
 </div>
 <div id="set-up-git-and-github" class="section level3 hasAnchor" number="23.6.2">
 <h3><span class="header-section-number">23.6.2</span> Set Up Git and GitHub<a href="making-your-own-website-with-postcards.html#set-up-git-and-github" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>To save changes, you need to set up Git and GitHub</p>
-<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="making-your-own-website-with-postcards.html#cb168-1" tabindex="-1"></a></span>
-<span id="cb168-2"><a href="making-your-own-website-with-postcards.html#cb168-2" tabindex="-1"></a><span class="do">## Set up Git and GitHub</span></span>
-<span id="cb168-3"><a href="making-your-own-website-with-postcards.html#cb168-3" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_git</span>() <span class="co"># Restart the session</span></span>
-<span id="cb168-4"><a href="making-your-own-website-with-postcards.html#cb168-4" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_github</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="making-your-own-website-with-postcards.html#cb168-1" tabindex="-1"></a><span class="do">## Set up Git and GitHub</span></span>
+<span id="cb168-2"><a href="making-your-own-website-with-postcards.html#cb168-2" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_git</span>() <span class="co"># Restart the session</span></span>
+<span id="cb168-3"><a href="making-your-own-website-with-postcards.html#cb168-3" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_github</span>()</span></code></pre></div>
 </div>
 <div id="choose-a-template" class="section level3 hasAnchor" number="23.6.3">
 <h3><span class="header-section-number">23.6.3</span> Choose a Template<a href="making-your-own-website-with-postcards.html#choose-a-template" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="making-your-own-website-with-postcards.html#cb169-1" tabindex="-1"></a></span>
-<span id="cb169-2"><a href="making-your-own-website-with-postcards.html#cb169-2" tabindex="-1"></a><span class="do">## Choose only one template (the one you like the most)</span></span>
-<span id="cb169-3"><a href="making-your-own-website-with-postcards.html#cb169-3" tabindex="-1"></a>postcards<span class="sc">::</span><span class="fu">create_postcard</span>(<span class="at">template =</span> <span class="st">&quot;jolla&quot;</span>)</span>
-<span id="cb169-4"><a href="making-your-own-website-with-postcards.html#cb169-4" tabindex="-1"></a>postcards<span class="sc">::</span><span class="fu">create_postcard</span>(<span class="at">template =</span> <span class="st">&quot;jolla-blue&quot;</span>)</span>
-<span id="cb169-5"><a href="making-your-own-website-with-postcards.html#cb169-5" tabindex="-1"></a>postcards<span class="sc">::</span><span class="fu">create_postcard</span>(<span class="at">template =</span> <span class="st">&quot;trestles&quot;</span>)</span>
-<span id="cb169-6"><a href="making-your-own-website-with-postcards.html#cb169-6" tabindex="-1"></a>postcards<span class="sc">::</span><span class="fu">create_postcard</span>(<span class="at">template =</span> <span class="st">&quot;onofre&quot;</span>)</span>
-<span id="cb169-7"><a href="making-your-own-website-with-postcards.html#cb169-7" tabindex="-1"></a>postcards<span class="sc">::</span><span class="fu">create_postcard</span>(<span class="at">template =</span> <span class="st">&quot;solana&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="making-your-own-website-with-postcards.html#cb169-1" tabindex="-1"></a><span class="do">## Choose only one template (the one you like the most)</span></span>
+<span id="cb169-2"><a href="making-your-own-website-with-postcards.html#cb169-2" tabindex="-1"></a>postcards<span class="sc">::</span><span class="fu">create_postcard</span>(<span class="at">template =</span> <span class="st">&quot;jolla&quot;</span>)</span>
+<span id="cb169-3"><a href="making-your-own-website-with-postcards.html#cb169-3" tabindex="-1"></a>postcards<span class="sc">::</span><span class="fu">create_postcard</span>(<span class="at">template =</span> <span class="st">&quot;jolla-blue&quot;</span>)</span>
+<span id="cb169-4"><a href="making-your-own-website-with-postcards.html#cb169-4" tabindex="-1"></a>postcards<span class="sc">::</span><span class="fu">create_postcard</span>(<span class="at">template =</span> <span class="st">&quot;trestles&quot;</span>)</span>
+<span id="cb169-5"><a href="making-your-own-website-with-postcards.html#cb169-5" tabindex="-1"></a>postcards<span class="sc">::</span><span class="fu">create_postcard</span>(<span class="at">template =</span> <span class="st">&quot;onofre&quot;</span>)</span>
+<span id="cb169-6"><a href="making-your-own-website-with-postcards.html#cb169-6" tabindex="-1"></a>postcards<span class="sc">::</span><span class="fu">create_postcard</span>(<span class="at">template =</span> <span class="st">&quot;solana&quot;</span>)</span></code></pre></div>
 <p>In this way, you will also get the 2 important files:</p>
 <ul>
 <li>An R Markdown document with your site’s content</li>
@@ -801,9 +760,8 @@ In case you missed it, you can go back to the “Git + GitHub” section.</p>
 <p>To compile the self-contained HTML file for the site:</p>
 <p>In RStudio, you can use the “Knit” button
 or directly:</p>
-<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="making-your-own-website-with-postcards.html#cb170-1" tabindex="-1"></a></span>
-<span id="cb170-2"><a href="making-your-own-website-with-postcards.html#cb170-2" tabindex="-1"></a><span class="do">## Deploy the GitHub page</span></span>
-<span id="cb170-3"><a href="making-your-own-website-with-postcards.html#cb170-3" tabindex="-1"></a>rmarkdown<span class="sc">::</span><span class="fu">render</span>(<span class="st">&quot;index.Rmd&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="making-your-own-website-with-postcards.html#cb170-1" tabindex="-1"></a><span class="do">## Deploy the GitHub page</span></span>
+<span id="cb170-2"><a href="making-your-own-website-with-postcards.html#cb170-2" tabindex="-1"></a>rmarkdown<span class="sc">::</span><span class="fu">render</span>(<span class="st">&quot;index.Rmd&quot;</span>)</span></code></pre></div>
 <p>** Done **</p>
 </div>
 </div>
