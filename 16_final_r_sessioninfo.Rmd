@@ -7,6 +7,8 @@ This is the final R session after all the code in this book is run sequentially.
 library("sessioninfo")
 options(width = 120)
 session_info()
+
+curl::curl_version()
 ```
 
 This interactive book was last updated at `r Sys.time()`.

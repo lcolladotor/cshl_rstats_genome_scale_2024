@@ -143,6 +143,10 @@ jobs:
           ## Required for tcltk
           brew install xquartz --cask
 
+          ## For curl version 8.8.0
+          brew install curl
+          echo "PKG_CONFIG_PATH=/opt/homebrew/opt/curl/lib/pkgconfig" >> $GITHUB_ENV
+
       - name: Install Windows system dependencies
         if: runner.os == 'Windows'
         run: |
@@ -183,6 +187,7 @@ jobs:
       - name: Install dependencies pass 2
         run: |
           ## Pass #2 at installing dependencies
+          install.packages("curl", type = "source")
           message(paste('****', Sys.time(), 'pass number 2 at installing dependencies: any remaining dependencies ****'))
           remotes::install_local(dependencies = TRUE, repos = BiocManager::repositories(), build_vignettes = TRUE, upgrade = TRUE, force = TRUE)
         shell: Rscript {0}
@@ -211,6 +216,7 @@ jobs:
           options(width = 100)
           pkgs <- installed.packages()[, "Package"]
           sessioninfo::session_info(pkgs, include_base = TRUE)
+          curl::curl_version()
         shell: Rscript {0}
 
       # - name: Run CMD check

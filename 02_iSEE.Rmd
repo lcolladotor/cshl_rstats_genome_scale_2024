@@ -319,6 +319,42 @@ lobstr::obj_size(sce_layer)
 # 33.99 MB
 ```
 
+<div style="background-color:#E0EEE0; padding:20px; font-family: sans-serif">
+
+NOTE: if you run into this error:
+
+```
+Error in `BiocFileCache::bfcrpath()`:
+! not all 'rnames' found or unique.
+Backtrace:
+ 1. spatialLIBD::fetch_data("sce_layer")
+ 3. BiocFileCache::bfcrpath(bfc, url)
+```
+
+check the output of 
+
+```{r}
+curl::curl_version()$version
+```
+
+If it's version 8.6.0, you likely need to upgrade to version 8.8.0. For macOS users, you can do this via `Homebrew` with
+
+```{bash}
+## Install homebrew from https://brew.sh/
+brew install curl
+```
+
+then install `curl` from source with:
+
+```{r}
+Sys.setenv(PKG_CONFIG_PATH = "/opt/homebrew/opt/curl/lib/pkgconfig")
+install.packages("curl", type = "source")
+```
+
+For all the gory details, check https://github.com/curl/curl/issues/13725, https://github.com/Bioconductor/BiocFileCache/issues/48, and related issues.
+
+</div>
+
 Now we can deploy `iSEE()` to explore the data.
 
 ```{r explore_iSEE, eval = FALSE}
