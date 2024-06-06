@@ -10,7 +10,6 @@ To determine which variables are the major drivers of expression variability, an
 In order to exemplify how to implement this analysis and the type of conclusions that can be drawn from it, we'll use bulk RNA-seq data from the [*smokingMouse*](https://bioconductor.org/packages/release/data/experiment/html/smokingMouse.html) package.
 
 ```{r download_data, warning=FALSE, message=FALSE}
-
 ## Load the container package for this type of data
 library("SummarizedExperiment")
 
@@ -25,14 +24,14 @@ myfiles <- query(eh, "smokingMouse")
 rse_gene <- myfiles[["EH8313"]]
 
 ## Keep samples from nicotine experiment and pups only
-rse_gene_nic <- rse_gene[, which(rse_gene$Expt == "Nicotine" & rse_gene$Age=='Pup')]
+rse_gene_nic <- rse_gene[, which(rse_gene$Expt == "Nicotine" & rse_gene$Age == "Pup")]
 
 ## Use expressed genes only (i.e. that passed the filtering step)
 rse_gene_filt <- rse_gene_nic[rowData(rse_gene_nic)$retained_after_feature_filtering == TRUE, ]
 
 ## Keep samples that passed QC and manual sample filtering steps (all passed)
-rse_gene_filt <- rse_gene_filt[, rse_gene_filt$retained_after_QC_sample_filtering==TRUE & 
-                                 rse_gene_filt$retained_after_manual_sample_filtering==TRUE]
+rse_gene_filt <- rse_gene_filt[, rse_gene_filt$retained_after_QC_sample_filtering == TRUE &
+    rse_gene_filt$retained_after_manual_sample_filtering == TRUE]
 ```
 
 
@@ -67,7 +66,6 @@ pheatmap(
     cellwidth = unit(0.4, "cm"), ## height of cells
     cellheight = unit(0.4, "cm") ## width of cells
 )
-
 ```
 
 <style>
@@ -96,21 +94,21 @@ library("cowplot")
 ## Boxplots/Scatterplots/Barplots for each pair of correlated variables
 
 corr_plots <- function(sample_var1, sample_var2, sample_color) {
-
     ## Define sample colors by variable
     colors <- list(
         "Group" = c("Control" = "brown2", "Experimental" = "deepskyblue3"),
         "Sex" = c("F" = "hotpink1", "M" = "dodgerblue"),
         "plate" = c("Plate1" = "darkorange", "Plate2" = "lightskyblue", "Plate3" = "deeppink1"),
-        "flowcell" = c("HKCG7DSXX" = "chartreuse2", "HKCMHDSXX" = "magenta", 
-                       "HKCNKDSXX" = "turquoise3", "HKCTMDSXX" = "tomato")
+        "flowcell" = c(
+            "HKCG7DSXX" = "chartreuse2", "HKCMHDSXX" = "magenta",
+            "HKCNKDSXX" = "turquoise3", "HKCTMDSXX" = "tomato"
+        )
     )
 
     data <- colData(rse_gene_filt)
 
     ## a) Barplots for categorical variable vs categorical variable
     if (class(data[, sample_var1]) == "character" & class(data[, sample_var2]) == "character") {
-        
         ## y-axis label
         y_label <- paste("Number of samples from each ", sample_var2, sep = "")
 
@@ -118,7 +116,7 @@ corr_plots <- function(sample_var1, sample_var2, sample_color) {
         plot <- ggplot(data = as.data.frame(data), aes(
             x = !!rlang::sym(sample_var1),
             fill = !!rlang::sym(sample_var2)
-            )) +
+        )) +
             geom_bar(position = "stack") +
             ## Colors by 2nd variable
             scale_fill_manual(values = colors[[sample_var2]]) +
@@ -144,7 +142,6 @@ corr_plots <- function(sample_var1, sample_var2, sample_color) {
 
     ## b) Boxplots for categorical variable vs continuous variable
     else if (class(data[, sample_var1]) == "character" & class(data[, sample_var2]) == "numeric") {
-        
         plot <- ggplot(data = as.data.frame(data), mapping = aes(
             x = !!rlang::sym(sample_var1),
             y = !!rlang::sym(sample_var2),
@@ -172,20 +169,21 @@ corr_plots <- function(sample_var1, sample_var2, sample_color) {
 
     ## c) Scatterplots for continuous variable vs continuous variable
     else if (class(data[, sample_var1]) == "numeric" & class(data[, sample_var2]) == "numeric") {
-        
         plot <- ggplot(as.data.frame(data), aes(
-                x = !!rlang::sym(sample_var1),
-                y = !!rlang::sym(sample_var2),
-                color = !!rlang::sym(sample_color)
-            )) +
+            x = !!rlang::sym(sample_var1),
+            y = !!rlang::sym(sample_var2),
+            color = !!rlang::sym(sample_color)
+        )) +
             geom_point(size = 2) +
             stat_smooth(method = "lm", geom = "line", alpha = 0.6, size = 0.6, span = 0.25, color = "orangered3") +
             ## Color by sample_color variable
             scale_color_manual(name = sample_color, values = colors[[sample_color]]) +
             theme_bw() +
-            labs(subtitle = paste0("Corr: ", signif(CCA[sample_var1, sample_var2], digits = 3)), 
-                 y = gsub("_", " ", sample_var2), 
-                 x = gsub("_", " ", sample_var1)) +
+            labs(
+                subtitle = paste0("Corr: ", signif(CCA[sample_var1, sample_var2], digits = 3)),
+                y = gsub("_", " ", sample_var2),
+                x = gsub("_", " ", sample_var1)
+            ) +
             theme(
                 axis.title = element_text(size = (7)),
                 axis.text = element_text(size = (6)),
@@ -404,7 +402,6 @@ Once we have reviewed what *variancePartition* computes and how, we can use it t
 ## Fit a linear mixed model (LMM) that takes continuous variables as fixed effects and categorical variables as random effects
 
 varPartAnalysis <- function(formula) {
-    
     ## Ignore genes with variance 0
     genes_var_zero <- which(apply(assays(rse_gene_filt)$logcounts, 1, var) == 0)
     if (length(genes_var_zero) > 0) {
@@ -429,7 +426,7 @@ In the following violin plots, we have the % of variance explained in the expres
 
 # sum, detected, and ERCCsumLogErr are not included as they are in very different scales!
 formula <- ~ (1 | Group) + (1 | Sex) + (1 | plate) + (1 | flowcell) + mitoRate + overallMapRate +
-    totalAssignedGene + rRNA_rate 
+    totalAssignedGene + rRNA_rate
 plot <- varPartAnalysis(formula)[[1]]
 plot + theme(
     plot.margin = unit(c(1, 1, 1, 1), "cm"),
@@ -451,7 +448,7 @@ After re-running the analysis without the previous correlated variables, now `Gr
 #####  Fit model without correlated variables  #####
 
 ## Pup plots without overallMapRate and plate
-formula <- ~ (1 | Group) + (1 | Sex) + (1 | flowcell) + mitoRate + overallMapRate + totalAssignedGene 
+formula <- ~ (1 | Group) + (1 | Sex) + (1 | flowcell) + mitoRate + overallMapRate + totalAssignedGene
 varPart <- varPartAnalysis(formula)
 varPart_data <- varPart[[2]]
 plot <- varPart[[1]]
@@ -477,7 +474,6 @@ library("rlang")
 
 ## Plot of gene expression lognorm counts vs. sample variable
 plot_gene_expr <- function(sample_var, gene_id) {
-    
     colors <- list(
         "Group" = c("Control" = "brown2", "Experimental" = "deepskyblue3"),
         "Age" = c("Adult" = "slateblue3", "Pup" = "yellow3"),
@@ -560,7 +556,6 @@ plot_gene_expr <- function(sample_var, gene_id) {
 ## Function to plot gene expression vs sample variable data for top 3 most affected genes
 
 plot_gene_expr_sample <- function(sample_var) {
-    
     ## Top 3 genes most affected by sample variable
     affected_genes <- rownames(varPart_data[order(varPart_data[, sample_var], decreasing = TRUE), ][1:3, ])
 

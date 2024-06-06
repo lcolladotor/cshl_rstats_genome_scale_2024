@@ -1,4 +1,4 @@
-## ----install, eval = FALSE-------------------------------------------------------------------------
+## ----install, eval = FALSE---------------------------------------------------------------------------------------------------
 ## ## For installing Bioconductor packages
 ## if (!requireNamespace("BiocManager", quietly = TRUE)) {
 ##     install.packages("BiocManager")
@@ -10,6 +10,9 @@
 ##         "usethis", ## Utilities
 ##         "BiocFileCache",
 ##         "RefManageR",
+##         "gitcreds",
+##         "gert",
+##         "gh",
 ##         "here",
 ##         "Hmisc",
 ##         "biocthis",
@@ -26,6 +29,7 @@
 ##         "limma",
 ##         "recount3",
 ##         "rlang",
+##         "scRNAseq",
 ##         "pheatmap", ## Visualization
 ##         "ggplot2",
 ##         "ggrepel",
@@ -47,7 +51,7 @@
 ## BiocManager::install("lcolladotor/biocthis")
 
 
-## ----session_packages, eval = TRUE, message = FALSE------------------------------------------------
+## ----session_packages, eval = TRUE, message = FALSE--------------------------------------------------------------------------
 ## Load the package at the top of your script
 library("sessioninfo")
 
@@ -55,6 +59,9 @@ library("sessioninfo")
 library("BiocFileCache")
 library("BiocStyle")
 library("biocthis")
+library("gitcreds")
+library("gert")
+library("gh")
 library("here")
 library("lobstr")
 library("postcards")
@@ -63,6 +70,7 @@ library("sessioninfo")
 
 ## Data
 library("smokingMouse")
+library("scRNAseq")
 
 ## Main containers / vis
 library("SummarizedExperiment")
@@ -97,7 +105,7 @@ library("Polychrome")
 library("spatialLIBD")
 
 
-## ----session_info----------------------------------------------------------------------------------
+## ----session_info------------------------------------------------------------------------------------------------------------
 ## Reproducibility information
 options(width = 120)
 session_info()

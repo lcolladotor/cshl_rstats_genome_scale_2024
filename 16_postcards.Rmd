@@ -25,11 +25,11 @@ The base directory it takes will be the one you are in when you load the here pa
 In this case, the package is already installed so we just need to load it.
 
 ```{r, eval=FALSE, warning=FALSE, message=FALSE}
-## Install the package manually 
+## Install the package manually
 # install.packages("here")
 
 ## Load "here" (previously installed)
-library("here") 
+library("here")
 ```
 
 Sometimes there might be an error, as it might clash with other packages (like plyr). To avoid this, we can use here::here (which basically clarifies that the requested function is from the here package).
@@ -60,7 +60,7 @@ setwd("desired/directory") # changes to the specified path
 ## Instead of "C:/Users/user/Desktop/data/myfile.csv"
 
 ## Use here to construct file paths
-file_path <- here("Users", "user", "Desktop","data", "myfile.csv")
+file_path <- here("Users", "user", "Desktop", "data", "myfile.csv")
 # file_path <- here:here("Users", "user", "Desktop","data", "myfile.csv")
 data <- read.csv(file_path)
 ```
@@ -86,8 +86,8 @@ file.create(here("subdirectory", "filename"))
 # file.create(here:here("subdirectory", "filename"))
 
 ## Open the new created file
-file.show(here("subdirectory", "filename")) 
-# file.show(here:here("subdirectory", "filename")) 
+file.show(here("subdirectory", "filename"))
+# file.show(here:here("subdirectory", "filename"))
 
 ## For example, if we want to see our files in the directory
 list.files(here(), recursive = TRUE)
@@ -102,11 +102,11 @@ The usethis package simplifies many common setup tasks and workflows in R. It he
 In this case, the package is already installed so we just need to load it.
 
 ```{r, load_usethis, eval=FALSE, warning=FALSE, message=FALSE}
-## Install the package manually 
+## Install the package manually
 # install.packages("usethis")
 
 ## Load "usethis (previously installed)
-library("usethis") 
+library("usethis")
 ```
 
 Usage:
@@ -202,7 +202,7 @@ The next step is to configure our GitHub user in the .gitconfig file:
 ## Configure GitHub user
 usethis::edit_git_config() # opens the .gitconfig file
 
-## Place the name and email of your GitHub account. 
+## Place the name and email of your GitHub account.
 ## JUST remove the "#" and respect the other spaces
 
 # [user]
@@ -216,7 +216,7 @@ Now let's initialize the repository in Git (locally on your computer) and then r
 
 ```{r, git_repo, eval=FALSE, warning=FALSE, message=FALSE}
 ## Initialize the Git repository
-usethis::use_git() 
+usethis::use_git()
 
 ## Connect your local Git repository with GitHub servers
 usethis::use_github()
@@ -228,7 +228,7 @@ usethis::use_github()
 Useful command to check configuration:
 
 ```{r, gh_whoami, eval=FALSE, warning=FALSE, message=FALSE}
-gh::gh_whoami() 
+gh::gh_whoami()
 ```
 
 

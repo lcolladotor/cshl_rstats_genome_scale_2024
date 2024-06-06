@@ -1,4 +1,4 @@
-## ----download_SRP045638----------------------------------------------
+## ----download_SRP045638------------------------------------------------------------------------------------------------------
 library("recount3")
 
 human_projects <- available_projects()
@@ -12,17 +12,17 @@ rse_gene_SRP045638 <- create_rse(
 assay(rse_gene_SRP045638, "counts") <- compute_read_counts(rse_gene_SRP045638)
 
 
-## ----describe_issue--------------------------------------------------
+## ----describe_issue----------------------------------------------------------------------------------------------------------
 ## Can you notice the problem with the sample information?
 rse_gene_SRP045638$sra.sample_attributes[1:3]
 
 
-## ----solve_issue-----------------------------------------------------
+## ----solve_issue-------------------------------------------------------------------------------------------------------------
 rse_gene_SRP045638$sra.sample_attributes <- gsub("dev_stage;;Fetal\\|", "", rse_gene_SRP045638$sra.sample_attributes)
 rse_gene_SRP045638$sra.sample_attributes[1:3]
 
 
-## ----attributes------------------------------------------------------
+## ----attributes--------------------------------------------------------------------------------------------------------------
 rse_gene_SRP045638 <- expand_sra_attributes(rse_gene_SRP045638)
 
 colData(rse_gene_SRP045638)[
@@ -31,7 +31,7 @@ colData(rse_gene_SRP045638)[
 ]
 
 
-## ----re_cast---------------------------------------------------------
+## ----re_cast-----------------------------------------------------------------------------------------------------------------
 ## Recast character vectors into numeric or factor ones
 rse_gene_SRP045638$sra_attribute.age <- as.numeric(rse_gene_SRP045638$sra_attribute.age)
 rse_gene_SRP045638$sra_attribute.disease <- factor(tolower(rse_gene_SRP045638$sra_attribute.disease))
@@ -45,7 +45,7 @@ summary(as.data.frame(colData(rse_gene_SRP045638)[
 ]))
 
 
-## ----new_variables---------------------------------------------------
+## ----new_variables-----------------------------------------------------------------------------------------------------------
 ## We'll want to look for differences between prenatal and postnatal samples
 rse_gene_SRP045638$prenatal <- factor(ifelse(rse_gene_SRP045638$sra_attribute.age < 0, "prenatal", "postnatal"))
 table(rse_gene_SRP045638$prenatal)
@@ -59,7 +59,7 @@ with(colData(rse_gene_SRP045638), plot(assigned_gene_prop, sra_attribute.RIN))
 with(colData(rse_gene_SRP045638), tapply(assigned_gene_prop, prenatal, summary))
 
 
-## ----filter_rse------------------------------------------------------
+## ----filter_rse--------------------------------------------------------------------------------------------------------------
 ## Lets save our full object for now in case we change our minds later on
 rse_gene_SRP045638_unfiltered <- rse_gene_SRP045638
 
@@ -90,7 +90,7 @@ dim(rse_gene_SRP045638)
 round(nrow(rse_gene_SRP045638) / nrow(rse_gene_SRP045638_unfiltered) * 100, 2)
 
 
-## ----normalize-------------------------------------------------------
+## ----normalize---------------------------------------------------------------------------------------------------------------
 ## Use edgeR::calcNormFactors() to address the composition bias
 library("edgeR")
 dge <- DGEList(
@@ -100,7 +100,7 @@ dge <- DGEList(
 dge <- calcNormFactors(dge)
 
 
-## ----explore_gene_prop_by_age----------------------------------------
+## ----explore_gene_prop_by_age------------------------------------------------------------------------------------------------
 library("ggplot2")
 ggplot(as.data.frame(colData(rse_gene_SRP045638)), aes(y = assigned_gene_prop, x = prenatal)) +
     geom_boxplot() +
@@ -109,14 +109,14 @@ ggplot(as.data.frame(colData(rse_gene_SRP045638)), aes(y = assigned_gene_prop, x
     xlab("Age Group")
 
 
-## ----statiscal_model-------------------------------------------------
+## ----statiscal_model---------------------------------------------------------------------------------------------------------
 mod <- model.matrix(~ prenatal + sra_attribute.RIN + sra_attribute.sex + assigned_gene_prop,
     data = colData(rse_gene_SRP045638)
 )
 colnames(mod)
 
 
-## ----run_limma-------------------------------------------------------
+## ----run_limma---------------------------------------------------------------------------------------------------------------
 library("limma")
 vGene <- voom(dge, mod, plot = TRUE)
 
@@ -142,7 +142,7 @@ volcanoplot(eb_results, coef = 2, highlight = 3, names = de_results$gene_name)
 de_results[de_results$gene_name %in% c("ZSCAN2", "VASH2", "KIAA0922"), ]
 
 
-## ----pheatmap--------------------------------------------------------
+## ----pheatmap----------------------------------------------------------------------------------------------------------------
 ## Extract the normalized expression values from our limma-voom result
 ## from earlier
 exprs_heatmap <- vGene$E[rank(de_results$adj.P.Val) <= 50, ]
@@ -165,7 +165,7 @@ pheatmap(
 )
 
 
-## ----plot_mds--------------------------------------------------------
+## ----plot_mds----------------------------------------------------------------------------------------------------------------
 ## For nicer colors
 library("RColorBrewer")
 

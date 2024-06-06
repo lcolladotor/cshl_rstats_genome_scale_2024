@@ -57,4 +57,8 @@ Imports:
     stringr,
     SummarizedExperiment,
     usethis,
-    variancePartition
+    variancePartition,
+    gitcreds,
+    gert,
+    gh,
+    scRNAseq
