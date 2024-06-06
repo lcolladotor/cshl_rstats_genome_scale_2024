@@ -326,7 +326,7 @@ curl::curl_version()$version
 
 If it's version 8.6.0, you likely need to upgrade to version 8.8.0. For macOS users, you can do this via `Homebrew` with
 
-```{bash}
+```{bash, eval = FALSE}
 ## Install homebrew from https://brew.sh/
 brew install curl
 ```
