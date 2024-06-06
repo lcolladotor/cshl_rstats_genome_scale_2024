@@ -55,7 +55,7 @@
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -65,7 +65,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -464,95 +464,95 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">8.2</span> Using recount3<a href="recount3-introduction.html#using-recount3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><em>Check the original documentation <a href="http://rna.recount.bio/docs/quick-access.html#quick-recount3">here</a> and <a href="http://rna.recount.bio/docs/bioconductor.html#recount3">here</a>.</em></p>
 <p>Let’s first load <code>recount3</code> which will load all the required dependencies including <code>SummarizedExperiment</code>.</p>
-<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="recount3-introduction.html#cb63-1" tabindex="-1"></a><span class="do">## Load recount3 R package</span></span>
-<span id="cb63-2"><a href="recount3-introduction.html#cb63-2" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;recount3&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="recount3-introduction.html#cb106-1" tabindex="-1"></a><span class="do">## Load recount3 R package</span></span>
+<span id="cb106-2"><a href="recount3-introduction.html#cb106-2" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;recount3&quot;</span>)</span></code></pre></div>
 <p>Next we need to identify a study of interest as well as choose whether we want the data at the gene, exon, or some other feature level. Once we have identified our study of interest, we can download the files and build a <code>SummarizedExperiment</code> object using <code>recount3::create_rse()</code> as we’ll show next. <code>create_rse()</code> has arguments through which we can control what <em>annotation</em> we want to use (they are organism-dependent).</p>
-<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="recount3-introduction.html#cb64-1" tabindex="-1"></a><span class="do">## Lets download all the available projects</span></span>
-<span id="cb64-2"><a href="recount3-introduction.html#cb64-2" tabindex="-1"></a>human_projects <span class="ot">&lt;-</span> <span class="fu">available_projects</span>()</span>
-<span id="cb64-3"><a href="recount3-introduction.html#cb64-3" tabindex="-1"></a><span class="co">#&gt; 2024-06-06 17:59:52.117849 caching file sra.recount_project.MD.gz.</span></span>
-<span id="cb64-4"><a href="recount3-introduction.html#cb64-4" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;http://duffel.rail.bio/recount3/human/data_sources/sra/metadata/sra.recount_project.MD.gz&#39;</span></span>
-<span id="cb64-5"><a href="recount3-introduction.html#cb64-5" tabindex="-1"></a><span class="co">#&gt; 2024-06-06 17:59:53.193582 caching file gtex.recount_project.MD.gz.</span></span>
-<span id="cb64-6"><a href="recount3-introduction.html#cb64-6" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;http://duffel.rail.bio/recount3/human/data_sources/gtex/metadata/gtex.recount_project.MD.gz&#39;</span></span>
-<span id="cb64-7"><a href="recount3-introduction.html#cb64-7" tabindex="-1"></a><span class="co">#&gt; 2024-06-06 17:59:54.153146 caching file tcga.recount_project.MD.gz.</span></span>
-<span id="cb64-8"><a href="recount3-introduction.html#cb64-8" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;http://duffel.rail.bio/recount3/human/data_sources/tcga/metadata/tcga.recount_project.MD.gz&#39;</span></span>
-<span id="cb64-9"><a href="recount3-introduction.html#cb64-9" tabindex="-1"></a></span>
-<span id="cb64-10"><a href="recount3-introduction.html#cb64-10" tabindex="-1"></a><span class="do">## Find your project of interest. Here we&#39;ll use</span></span>
-<span id="cb64-11"><a href="recount3-introduction.html#cb64-11" tabindex="-1"></a><span class="do">## SRP009615 as an example</span></span>
-<span id="cb64-12"><a href="recount3-introduction.html#cb64-12" tabindex="-1"></a>proj_info <span class="ot">&lt;-</span> <span class="fu">subset</span>(</span>
-<span id="cb64-13"><a href="recount3-introduction.html#cb64-13" tabindex="-1"></a>    human_projects,</span>
-<span id="cb64-14"><a href="recount3-introduction.html#cb64-14" tabindex="-1"></a>    project <span class="sc">==</span> <span class="st">&quot;SRP009615&quot;</span> <span class="sc">&amp;</span> project_type <span class="sc">==</span> <span class="st">&quot;data_sources&quot;</span></span>
-<span id="cb64-15"><a href="recount3-introduction.html#cb64-15" tabindex="-1"></a>)</span>
-<span id="cb64-16"><a href="recount3-introduction.html#cb64-16" tabindex="-1"></a><span class="do">## Build a RangedSummarizedExperiment (RSE) object</span></span>
-<span id="cb64-17"><a href="recount3-introduction.html#cb64-17" tabindex="-1"></a><span class="do">## with the information at the gene level</span></span>
-<span id="cb64-18"><a href="recount3-introduction.html#cb64-18" tabindex="-1"></a>rse_gene_SRP009615 <span class="ot">&lt;-</span> <span class="fu">create_rse</span>(proj_info)</span>
-<span id="cb64-19"><a href="recount3-introduction.html#cb64-19" tabindex="-1"></a><span class="co">#&gt; 2024-06-06 17:59:57.147213 downloading and reading the metadata.</span></span>
-<span id="cb64-20"><a href="recount3-introduction.html#cb64-20" tabindex="-1"></a><span class="co">#&gt; 2024-06-06 17:59:57.42021 caching file sra.sra.SRP009615.MD.gz.</span></span>
-<span id="cb64-21"><a href="recount3-introduction.html#cb64-21" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;http://duffel.rail.bio/recount3/human/data_sources/sra/metadata/15/SRP009615/sra.sra.SRP009615.MD.gz&#39;</span></span>
-<span id="cb64-22"><a href="recount3-introduction.html#cb64-22" tabindex="-1"></a><span class="co">#&gt; 2024-06-06 17:59:58.366018 caching file sra.recount_project.SRP009615.MD.gz.</span></span>
-<span id="cb64-23"><a href="recount3-introduction.html#cb64-23" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;http://duffel.rail.bio/recount3/human/data_sources/sra/metadata/15/SRP009615/sra.recount_project.SRP009615.MD.gz&#39;</span></span>
-<span id="cb64-24"><a href="recount3-introduction.html#cb64-24" tabindex="-1"></a><span class="co">#&gt; 2024-06-06 17:59:59.259748 caching file sra.recount_qc.SRP009615.MD.gz.</span></span>
-<span id="cb64-25"><a href="recount3-introduction.html#cb64-25" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;http://duffel.rail.bio/recount3/human/data_sources/sra/metadata/15/SRP009615/sra.recount_qc.SRP009615.MD.gz&#39;</span></span>
-<span id="cb64-26"><a href="recount3-introduction.html#cb64-26" tabindex="-1"></a><span class="co">#&gt; 2024-06-06 18:00:00.142693 caching file sra.recount_seq_qc.SRP009615.MD.gz.</span></span>
-<span id="cb64-27"><a href="recount3-introduction.html#cb64-27" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;http://duffel.rail.bio/recount3/human/data_sources/sra/metadata/15/SRP009615/sra.recount_seq_qc.SRP009615.MD.gz&#39;</span></span>
-<span id="cb64-28"><a href="recount3-introduction.html#cb64-28" tabindex="-1"></a><span class="co">#&gt; 2024-06-06 18:00:01.060949 caching file sra.recount_pred.SRP009615.MD.gz.</span></span>
-<span id="cb64-29"><a href="recount3-introduction.html#cb64-29" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;http://duffel.rail.bio/recount3/human/data_sources/sra/metadata/15/SRP009615/sra.recount_pred.SRP009615.MD.gz&#39;</span></span>
-<span id="cb64-30"><a href="recount3-introduction.html#cb64-30" tabindex="-1"></a><span class="co">#&gt; 2024-06-06 18:00:02.003743 downloading and reading the feature information.</span></span>
-<span id="cb64-31"><a href="recount3-introduction.html#cb64-31" tabindex="-1"></a><span class="co">#&gt; 2024-06-06 18:00:02.288205 caching file human.gene_sums.G026.gtf.gz.</span></span>
-<span id="cb64-32"><a href="recount3-introduction.html#cb64-32" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;http://duffel.rail.bio/recount3/human/annotations/gene_sums/human.gene_sums.G026.gtf.gz&#39;</span></span>
-<span id="cb64-33"><a href="recount3-introduction.html#cb64-33" tabindex="-1"></a><span class="co">#&gt; 2024-06-06 18:00:03.446981 downloading and reading the counts: 12 samples across 63856 features.</span></span>
-<span id="cb64-34"><a href="recount3-introduction.html#cb64-34" tabindex="-1"></a><span class="co">#&gt; 2024-06-06 18:00:03.714297 caching file sra.gene_sums.SRP009615.G026.gz.</span></span>
-<span id="cb64-35"><a href="recount3-introduction.html#cb64-35" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;http://duffel.rail.bio/recount3/human/data_sources/sra/gene_sums/15/SRP009615/sra.gene_sums.SRP009615.G026.gz&#39;</span></span>
-<span id="cb64-36"><a href="recount3-introduction.html#cb64-36" tabindex="-1"></a><span class="co">#&gt; 2024-06-06 18:00:04.656587 constructing the RangedSummarizedExperiment (rse) object.</span></span>
-<span id="cb64-37"><a href="recount3-introduction.html#cb64-37" tabindex="-1"></a><span class="do">## Explore the resulting object</span></span>
-<span id="cb64-38"><a href="recount3-introduction.html#cb64-38" tabindex="-1"></a>rse_gene_SRP009615</span>
-<span id="cb64-39"><a href="recount3-introduction.html#cb64-39" tabindex="-1"></a><span class="co">#&gt; class: RangedSummarizedExperiment </span></span>
-<span id="cb64-40"><a href="recount3-introduction.html#cb64-40" tabindex="-1"></a><span class="co">#&gt; dim: 63856 12 </span></span>
-<span id="cb64-41"><a href="recount3-introduction.html#cb64-41" tabindex="-1"></a><span class="co">#&gt; metadata(8): time_created recount3_version ... annotation recount3_url</span></span>
-<span id="cb64-42"><a href="recount3-introduction.html#cb64-42" tabindex="-1"></a><span class="co">#&gt; assays(1): raw_counts</span></span>
-<span id="cb64-43"><a href="recount3-introduction.html#cb64-43" tabindex="-1"></a><span class="co">#&gt; rownames(63856): ENSG00000278704.1 ENSG00000277400.1 ... ENSG00000182484.15_PAR_Y ENSG00000227159.8_PAR_Y</span></span>
-<span id="cb64-44"><a href="recount3-introduction.html#cb64-44" tabindex="-1"></a><span class="co">#&gt; rowData names(10): source type ... havana_gene tag</span></span>
-<span id="cb64-45"><a href="recount3-introduction.html#cb64-45" tabindex="-1"></a><span class="co">#&gt; colnames(12): SRR387777 SRR387778 ... SRR389077 SRR389078</span></span>
-<span id="cb64-46"><a href="recount3-introduction.html#cb64-46" tabindex="-1"></a><span class="co">#&gt; colData names(175): rail_id external_id ... recount_pred.curated.cell_line BigWigURL</span></span>
-<span id="cb64-47"><a href="recount3-introduction.html#cb64-47" tabindex="-1"></a></span>
-<span id="cb64-48"><a href="recount3-introduction.html#cb64-48" tabindex="-1"></a><span class="do">## How large is it?</span></span>
-<span id="cb64-49"><a href="recount3-introduction.html#cb64-49" tabindex="-1"></a>lobstr<span class="sc">::</span><span class="fu">obj_size</span>(rse_gene_SRP009615)</span>
-<span id="cb64-50"><a href="recount3-introduction.html#cb64-50" tabindex="-1"></a><span class="co">#&gt; 24.81 MB</span></span></code></pre></div>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="recount3-introduction.html#cb107-1" tabindex="-1"></a><span class="do">## Lets download all the available projects</span></span>
+<span id="cb107-2"><a href="recount3-introduction.html#cb107-2" tabindex="-1"></a>human_projects <span class="ot">&lt;-</span> <span class="fu">available_projects</span>()</span>
+<span id="cb107-3"><a href="recount3-introduction.html#cb107-3" tabindex="-1"></a><span class="co">#&gt; 2024-06-06 18:06:32.876672 caching file sra.recount_project.MD.gz.</span></span>
+<span id="cb107-4"><a href="recount3-introduction.html#cb107-4" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;http://duffel.rail.bio/recount3/human/data_sources/sra/metadata/sra.recount_project.MD.gz&#39;</span></span>
+<span id="cb107-5"><a href="recount3-introduction.html#cb107-5" tabindex="-1"></a><span class="co">#&gt; 2024-06-06 18:06:35.111169 caching file gtex.recount_project.MD.gz.</span></span>
+<span id="cb107-6"><a href="recount3-introduction.html#cb107-6" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;http://duffel.rail.bio/recount3/human/data_sources/gtex/metadata/gtex.recount_project.MD.gz&#39;</span></span>
+<span id="cb107-7"><a href="recount3-introduction.html#cb107-7" tabindex="-1"></a><span class="co">#&gt; 2024-06-06 18:06:36.050229 caching file tcga.recount_project.MD.gz.</span></span>
+<span id="cb107-8"><a href="recount3-introduction.html#cb107-8" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;http://duffel.rail.bio/recount3/human/data_sources/tcga/metadata/tcga.recount_project.MD.gz&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="recount3-introduction.html#cb108-1" tabindex="-1"></a></span>
+<span id="cb108-2"><a href="recount3-introduction.html#cb108-2" tabindex="-1"></a><span class="do">## Find your project of interest. Here we&#39;ll use</span></span>
+<span id="cb108-3"><a href="recount3-introduction.html#cb108-3" tabindex="-1"></a><span class="do">## SRP009615 as an example</span></span>
+<span id="cb108-4"><a href="recount3-introduction.html#cb108-4" tabindex="-1"></a>proj_info <span class="ot">&lt;-</span> <span class="fu">subset</span>(</span>
+<span id="cb108-5"><a href="recount3-introduction.html#cb108-5" tabindex="-1"></a>    human_projects,</span>
+<span id="cb108-6"><a href="recount3-introduction.html#cb108-6" tabindex="-1"></a>    project <span class="sc">==</span> <span class="st">&quot;SRP009615&quot;</span> <span class="sc">&amp;</span> project_type <span class="sc">==</span> <span class="st">&quot;data_sources&quot;</span></span>
+<span id="cb108-7"><a href="recount3-introduction.html#cb108-7" tabindex="-1"></a>)</span>
+<span id="cb108-8"><a href="recount3-introduction.html#cb108-8" tabindex="-1"></a><span class="do">## Build a RangedSummarizedExperiment (RSE) object</span></span>
+<span id="cb108-9"><a href="recount3-introduction.html#cb108-9" tabindex="-1"></a><span class="do">## with the information at the gene level</span></span>
+<span id="cb108-10"><a href="recount3-introduction.html#cb108-10" tabindex="-1"></a>rse_gene_SRP009615 <span class="ot">&lt;-</span> <span class="fu">create_rse</span>(proj_info)</span>
+<span id="cb108-11"><a href="recount3-introduction.html#cb108-11" tabindex="-1"></a><span class="co">#&gt; 2024-06-06 18:06:39.01404 downloading and reading the metadata.</span></span>
+<span id="cb108-12"><a href="recount3-introduction.html#cb108-12" tabindex="-1"></a><span class="co">#&gt; 2024-06-06 18:06:39.274646 caching file sra.sra.SRP009615.MD.gz.</span></span>
+<span id="cb108-13"><a href="recount3-introduction.html#cb108-13" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;http://duffel.rail.bio/recount3/human/data_sources/sra/metadata/15/SRP009615/sra.sra.SRP009615.MD.gz&#39;</span></span>
+<span id="cb108-14"><a href="recount3-introduction.html#cb108-14" tabindex="-1"></a><span class="co">#&gt; 2024-06-06 18:06:40.195223 caching file sra.recount_project.SRP009615.MD.gz.</span></span>
+<span id="cb108-15"><a href="recount3-introduction.html#cb108-15" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;http://duffel.rail.bio/recount3/human/data_sources/sra/metadata/15/SRP009615/sra.recount_project.SRP009615.MD.gz&#39;</span></span>
+<span id="cb108-16"><a href="recount3-introduction.html#cb108-16" tabindex="-1"></a><span class="co">#&gt; 2024-06-06 18:06:41.101979 caching file sra.recount_qc.SRP009615.MD.gz.</span></span>
+<span id="cb108-17"><a href="recount3-introduction.html#cb108-17" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;http://duffel.rail.bio/recount3/human/data_sources/sra/metadata/15/SRP009615/sra.recount_qc.SRP009615.MD.gz&#39;</span></span>
+<span id="cb108-18"><a href="recount3-introduction.html#cb108-18" tabindex="-1"></a><span class="co">#&gt; 2024-06-06 18:06:42.045671 caching file sra.recount_seq_qc.SRP009615.MD.gz.</span></span>
+<span id="cb108-19"><a href="recount3-introduction.html#cb108-19" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;http://duffel.rail.bio/recount3/human/data_sources/sra/metadata/15/SRP009615/sra.recount_seq_qc.SRP009615.MD.gz&#39;</span></span>
+<span id="cb108-20"><a href="recount3-introduction.html#cb108-20" tabindex="-1"></a><span class="co">#&gt; 2024-06-06 18:06:42.957122 caching file sra.recount_pred.SRP009615.MD.gz.</span></span>
+<span id="cb108-21"><a href="recount3-introduction.html#cb108-21" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;http://duffel.rail.bio/recount3/human/data_sources/sra/metadata/15/SRP009615/sra.recount_pred.SRP009615.MD.gz&#39;</span></span>
+<span id="cb108-22"><a href="recount3-introduction.html#cb108-22" tabindex="-1"></a><span class="co">#&gt; 2024-06-06 18:06:43.633786 downloading and reading the feature information.</span></span>
+<span id="cb108-23"><a href="recount3-introduction.html#cb108-23" tabindex="-1"></a><span class="co">#&gt; 2024-06-06 18:06:43.865802 caching file human.gene_sums.G026.gtf.gz.</span></span>
+<span id="cb108-24"><a href="recount3-introduction.html#cb108-24" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;http://duffel.rail.bio/recount3/human/annotations/gene_sums/human.gene_sums.G026.gtf.gz&#39;</span></span>
+<span id="cb108-25"><a href="recount3-introduction.html#cb108-25" tabindex="-1"></a><span class="co">#&gt; 2024-06-06 18:06:46.597138 downloading and reading the counts: 12 samples across 63856 features.</span></span>
+<span id="cb108-26"><a href="recount3-introduction.html#cb108-26" tabindex="-1"></a><span class="co">#&gt; 2024-06-06 18:06:46.840591 caching file sra.gene_sums.SRP009615.G026.gz.</span></span>
+<span id="cb108-27"><a href="recount3-introduction.html#cb108-27" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;http://duffel.rail.bio/recount3/human/data_sources/sra/gene_sums/15/SRP009615/sra.gene_sums.SRP009615.G026.gz&#39;</span></span>
+<span id="cb108-28"><a href="recount3-introduction.html#cb108-28" tabindex="-1"></a><span class="co">#&gt; 2024-06-06 18:06:47.953879 constructing the RangedSummarizedExperiment (rse) object.</span></span></code></pre></div>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="recount3-introduction.html#cb109-1" tabindex="-1"></a><span class="do">## Explore the resulting object</span></span>
+<span id="cb109-2"><a href="recount3-introduction.html#cb109-2" tabindex="-1"></a>rse_gene_SRP009615</span>
+<span id="cb109-3"><a href="recount3-introduction.html#cb109-3" tabindex="-1"></a><span class="co">#&gt; class: RangedSummarizedExperiment </span></span>
+<span id="cb109-4"><a href="recount3-introduction.html#cb109-4" tabindex="-1"></a><span class="co">#&gt; dim: 63856 12 </span></span>
+<span id="cb109-5"><a href="recount3-introduction.html#cb109-5" tabindex="-1"></a><span class="co">#&gt; metadata(8): time_created recount3_version ... annotation recount3_url</span></span>
+<span id="cb109-6"><a href="recount3-introduction.html#cb109-6" tabindex="-1"></a><span class="co">#&gt; assays(1): raw_counts</span></span>
+<span id="cb109-7"><a href="recount3-introduction.html#cb109-7" tabindex="-1"></a><span class="co">#&gt; rownames(63856): ENSG00000278704.1 ENSG00000277400.1 ... ENSG00000182484.15_PAR_Y ENSG00000227159.8_PAR_Y</span></span>
+<span id="cb109-8"><a href="recount3-introduction.html#cb109-8" tabindex="-1"></a><span class="co">#&gt; rowData names(10): source type ... havana_gene tag</span></span>
+<span id="cb109-9"><a href="recount3-introduction.html#cb109-9" tabindex="-1"></a><span class="co">#&gt; colnames(12): SRR387777 SRR387778 ... SRR389077 SRR389078</span></span>
+<span id="cb109-10"><a href="recount3-introduction.html#cb109-10" tabindex="-1"></a><span class="co">#&gt; colData names(175): rail_id external_id ... recount_pred.curated.cell_line BigWigURL</span></span></code></pre></div>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="recount3-introduction.html#cb110-1" tabindex="-1"></a></span>
+<span id="cb110-2"><a href="recount3-introduction.html#cb110-2" tabindex="-1"></a><span class="do">## How large is it?</span></span>
+<span id="cb110-3"><a href="recount3-introduction.html#cb110-3" tabindex="-1"></a>lobstr<span class="sc">::</span><span class="fu">obj_size</span>(rse_gene_SRP009615)</span>
+<span id="cb110-4"><a href="recount3-introduction.html#cb110-4" tabindex="-1"></a><span class="co">#&gt; 24.81 MB</span></span></code></pre></div>
 <p>We can also interactively choose our study of interest using the following code or through the <a href="http://rna.recount.bio/docs/index.html#study-explorer">recount3 study explorer</a>.</p>
-<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="recount3-introduction.html#cb65-1" tabindex="-1"></a><span class="do">## Explore available human projects interactively</span></span>
-<span id="cb65-2"><a href="recount3-introduction.html#cb65-2" tabindex="-1"></a>proj_info_interactive <span class="ot">&lt;-</span> interactiveDisplayBase<span class="sc">::</span><span class="fu">display</span>(human_projects)</span>
-<span id="cb65-3"><a href="recount3-introduction.html#cb65-3" tabindex="-1"></a><span class="do">## Choose only 1 row in the table, then click on &quot;send&quot;.</span></span>
-<span id="cb65-4"><a href="recount3-introduction.html#cb65-4" tabindex="-1"></a></span>
-<span id="cb65-5"><a href="recount3-introduction.html#cb65-5" tabindex="-1"></a><span class="do">## Lets double check that you indeed selected only 1 row in the table</span></span>
-<span id="cb65-6"><a href="recount3-introduction.html#cb65-6" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="fu">nrow</span>(proj_info_interactive) <span class="sc">==</span> <span class="dv">1</span>)</span>
-<span id="cb65-7"><a href="recount3-introduction.html#cb65-7" tabindex="-1"></a><span class="do">## Now we can build the RSE object</span></span>
-<span id="cb65-8"><a href="recount3-introduction.html#cb65-8" tabindex="-1"></a>rse_gene_interactive <span class="ot">&lt;-</span> <span class="fu">create_rse</span>(proj_info_interactive)</span></code></pre></div>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="recount3-introduction.html#cb111-1" tabindex="-1"></a><span class="do">## Explore available human projects interactively</span></span>
+<span id="cb111-2"><a href="recount3-introduction.html#cb111-2" tabindex="-1"></a>proj_info_interactive <span class="ot">&lt;-</span> interactiveDisplayBase<span class="sc">::</span><span class="fu">display</span>(human_projects)</span>
+<span id="cb111-3"><a href="recount3-introduction.html#cb111-3" tabindex="-1"></a><span class="do">## Choose only 1 row in the table, then click on &quot;send&quot;.</span></span>
+<span id="cb111-4"><a href="recount3-introduction.html#cb111-4" tabindex="-1"></a></span>
+<span id="cb111-5"><a href="recount3-introduction.html#cb111-5" tabindex="-1"></a><span class="do">## Lets double check that you indeed selected only 1 row in the table</span></span>
+<span id="cb111-6"><a href="recount3-introduction.html#cb111-6" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="fu">nrow</span>(proj_info_interactive) <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb111-7"><a href="recount3-introduction.html#cb111-7" tabindex="-1"></a><span class="do">## Now we can build the RSE object</span></span>
+<span id="cb111-8"><a href="recount3-introduction.html#cb111-8" tabindex="-1"></a>rse_gene_interactive <span class="ot">&lt;-</span> <span class="fu">create_rse</span>(proj_info_interactive)</span></code></pre></div>
 <p>Now that we have the data, we can use <code>recount3::transform_counts()</code> or <code>recount3::compute_read_counts()</code> to convert the raw counts into a format expected by downstream tools. For more details, check the <code>recountWorkflow</code> <a href="https://f1000research.com/articles/6-1558/v1">paper</a>.</p>
-<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="recount3-introduction.html#cb66-1" tabindex="-1"></a><span class="do">## We&#39;ll compute read counts, which is what most downstream software</span></span>
-<span id="cb66-2"><a href="recount3-introduction.html#cb66-2" tabindex="-1"></a><span class="do">## uses.</span></span>
-<span id="cb66-3"><a href="recount3-introduction.html#cb66-3" tabindex="-1"></a><span class="do">## For other types of transformations such as RPKM and TPM, use</span></span>
-<span id="cb66-4"><a href="recount3-introduction.html#cb66-4" tabindex="-1"></a><span class="do">## transform_counts().</span></span>
-<span id="cb66-5"><a href="recount3-introduction.html#cb66-5" tabindex="-1"></a><span class="fu">assay</span>(rse_gene_SRP009615, <span class="st">&quot;counts&quot;</span>) <span class="ot">&lt;-</span> <span class="fu">compute_read_counts</span>(rse_gene_SRP009615)</span></code></pre></div>
-<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="recount3-introduction.html#cb67-1" tabindex="-1"></a><span class="do">## Lets make it easier to use the information available for this study</span></span>
-<span id="cb67-2"><a href="recount3-introduction.html#cb67-2" tabindex="-1"></a><span class="do">## that was provided by the original authors of the study.</span></span>
-<span id="cb67-3"><a href="recount3-introduction.html#cb67-3" tabindex="-1"></a>rse_gene_SRP009615 <span class="ot">&lt;-</span> <span class="fu">expand_sra_attributes</span>(rse_gene_SRP009615)</span>
-<span id="cb67-4"><a href="recount3-introduction.html#cb67-4" tabindex="-1"></a><span class="fu">colData</span>(rse_gene_SRP009615)[</span>
-<span id="cb67-5"><a href="recount3-introduction.html#cb67-5" tabindex="-1"></a>    ,</span>
-<span id="cb67-6"><a href="recount3-introduction.html#cb67-6" tabindex="-1"></a>    <span class="fu">grepl</span>(<span class="st">&quot;^sra_attribute&quot;</span>, <span class="fu">colnames</span>(<span class="fu">colData</span>(rse_gene_SRP009615)))</span>
-<span id="cb67-7"><a href="recount3-introduction.html#cb67-7" tabindex="-1"></a>]</span>
-<span id="cb67-8"><a href="recount3-introduction.html#cb67-8" tabindex="-1"></a><span class="co">#&gt; DataFrame with 12 rows and 4 columns</span></span>
-<span id="cb67-9"><a href="recount3-introduction.html#cb67-9" tabindex="-1"></a><span class="co">#&gt;           sra_attribute.cells sra_attribute.shRNA_expression sra_attribute.source_name sra_attribute.treatment</span></span>
-<span id="cb67-10"><a href="recount3-introduction.html#cb67-10" tabindex="-1"></a><span class="co">#&gt;                   &lt;character&gt;                    &lt;character&gt;               &lt;character&gt;             &lt;character&gt;</span></span>
-<span id="cb67-11"><a href="recount3-introduction.html#cb67-11" tabindex="-1"></a><span class="co">#&gt; SRR387777                K562                             no                    SL2933               Puromycin</span></span>
-<span id="cb67-12"><a href="recount3-introduction.html#cb67-12" tabindex="-1"></a><span class="co">#&gt; SRR387778                K562             yes, targeting SRF                    SL2934  Puromycin, doxycycline</span></span>
-<span id="cb67-13"><a href="recount3-introduction.html#cb67-13" tabindex="-1"></a><span class="co">#&gt; SRR387779                K562                             no                    SL5265               Puromycin</span></span>
-<span id="cb67-14"><a href="recount3-introduction.html#cb67-14" tabindex="-1"></a><span class="co">#&gt; SRR387780                K562              yes targeting SRF                    SL3141  Puromycin, doxycycline</span></span>
-<span id="cb67-15"><a href="recount3-introduction.html#cb67-15" tabindex="-1"></a><span class="co">#&gt; SRR389079                K562            no shRNA expression                    SL6485               Puromycin</span></span>
-<span id="cb67-16"><a href="recount3-introduction.html#cb67-16" tabindex="-1"></a><span class="co">#&gt; ...                       ...                            ...                       ...                     ...</span></span>
-<span id="cb67-17"><a href="recount3-introduction.html#cb67-17" tabindex="-1"></a><span class="co">#&gt; SRR389082                K562         expressing shRNA tar..                    SL2592  Puromycin, doxycycline</span></span>
-<span id="cb67-18"><a href="recount3-introduction.html#cb67-18" tabindex="-1"></a><span class="co">#&gt; SRR389083                K562            no shRNA expression                    SL4337               Puromycin</span></span>
-<span id="cb67-19"><a href="recount3-introduction.html#cb67-19" tabindex="-1"></a><span class="co">#&gt; SRR389084                K562         expressing shRNA tar..                    SL4326  Puromycin, doxycycline</span></span>
-<span id="cb67-20"><a href="recount3-introduction.html#cb67-20" tabindex="-1"></a><span class="co">#&gt; SRR389077                K562            no shRNA expression                    SL1584               Puromycin</span></span>
-<span id="cb67-21"><a href="recount3-introduction.html#cb67-21" tabindex="-1"></a><span class="co">#&gt; SRR389078                K562         expressing shRNA tar..                    SL1583  Puromycin, doxycycline</span></span></code></pre></div>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="recount3-introduction.html#cb112-1" tabindex="-1"></a><span class="do">## We&#39;ll compute read counts, which is what most downstream software</span></span>
+<span id="cb112-2"><a href="recount3-introduction.html#cb112-2" tabindex="-1"></a><span class="do">## uses.</span></span>
+<span id="cb112-3"><a href="recount3-introduction.html#cb112-3" tabindex="-1"></a><span class="do">## For other types of transformations such as RPKM and TPM, use</span></span>
+<span id="cb112-4"><a href="recount3-introduction.html#cb112-4" tabindex="-1"></a><span class="do">## transform_counts().</span></span>
+<span id="cb112-5"><a href="recount3-introduction.html#cb112-5" tabindex="-1"></a><span class="fu">assay</span>(rse_gene_SRP009615, <span class="st">&quot;counts&quot;</span>) <span class="ot">&lt;-</span> <span class="fu">compute_read_counts</span>(rse_gene_SRP009615)</span></code></pre></div>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="recount3-introduction.html#cb113-1" tabindex="-1"></a><span class="do">## Lets make it easier to use the information available for this study</span></span>
+<span id="cb113-2"><a href="recount3-introduction.html#cb113-2" tabindex="-1"></a><span class="do">## that was provided by the original authors of the study.</span></span>
+<span id="cb113-3"><a href="recount3-introduction.html#cb113-3" tabindex="-1"></a>rse_gene_SRP009615 <span class="ot">&lt;-</span> <span class="fu">expand_sra_attributes</span>(rse_gene_SRP009615)</span>
+<span id="cb113-4"><a href="recount3-introduction.html#cb113-4" tabindex="-1"></a><span class="fu">colData</span>(rse_gene_SRP009615)[</span>
+<span id="cb113-5"><a href="recount3-introduction.html#cb113-5" tabindex="-1"></a>    ,</span>
+<span id="cb113-6"><a href="recount3-introduction.html#cb113-6" tabindex="-1"></a>    <span class="fu">grepl</span>(<span class="st">&quot;^sra_attribute&quot;</span>, <span class="fu">colnames</span>(<span class="fu">colData</span>(rse_gene_SRP009615)))</span>
+<span id="cb113-7"><a href="recount3-introduction.html#cb113-7" tabindex="-1"></a>]</span>
+<span id="cb113-8"><a href="recount3-introduction.html#cb113-8" tabindex="-1"></a><span class="co">#&gt; DataFrame with 12 rows and 4 columns</span></span>
+<span id="cb113-9"><a href="recount3-introduction.html#cb113-9" tabindex="-1"></a><span class="co">#&gt;           sra_attribute.cells sra_attribute.shRNA_expression sra_attribute.source_name sra_attribute.treatment</span></span>
+<span id="cb113-10"><a href="recount3-introduction.html#cb113-10" tabindex="-1"></a><span class="co">#&gt;                   &lt;character&gt;                    &lt;character&gt;               &lt;character&gt;             &lt;character&gt;</span></span>
+<span id="cb113-11"><a href="recount3-introduction.html#cb113-11" tabindex="-1"></a><span class="co">#&gt; SRR387777                K562                             no                    SL2933               Puromycin</span></span>
+<span id="cb113-12"><a href="recount3-introduction.html#cb113-12" tabindex="-1"></a><span class="co">#&gt; SRR387778                K562             yes, targeting SRF                    SL2934  Puromycin, doxycycline</span></span>
+<span id="cb113-13"><a href="recount3-introduction.html#cb113-13" tabindex="-1"></a><span class="co">#&gt; SRR387779                K562                             no                    SL5265               Puromycin</span></span>
+<span id="cb113-14"><a href="recount3-introduction.html#cb113-14" tabindex="-1"></a><span class="co">#&gt; SRR387780                K562              yes targeting SRF                    SL3141  Puromycin, doxycycline</span></span>
+<span id="cb113-15"><a href="recount3-introduction.html#cb113-15" tabindex="-1"></a><span class="co">#&gt; SRR389079                K562            no shRNA expression                    SL6485               Puromycin</span></span>
+<span id="cb113-16"><a href="recount3-introduction.html#cb113-16" tabindex="-1"></a><span class="co">#&gt; ...                       ...                            ...                       ...                     ...</span></span>
+<span id="cb113-17"><a href="recount3-introduction.html#cb113-17" tabindex="-1"></a><span class="co">#&gt; SRR389082                K562         expressing shRNA tar..                    SL2592  Puromycin, doxycycline</span></span>
+<span id="cb113-18"><a href="recount3-introduction.html#cb113-18" tabindex="-1"></a><span class="co">#&gt; SRR389083                K562            no shRNA expression                    SL4337               Puromycin</span></span>
+<span id="cb113-19"><a href="recount3-introduction.html#cb113-19" tabindex="-1"></a><span class="co">#&gt; SRR389084                K562         expressing shRNA tar..                    SL4326  Puromycin, doxycycline</span></span>
+<span id="cb113-20"><a href="recount3-introduction.html#cb113-20" tabindex="-1"></a><span class="co">#&gt; SRR389077                K562            no shRNA expression                    SL1584               Puromycin</span></span>
+<span id="cb113-21"><a href="recount3-introduction.html#cb113-21" tabindex="-1"></a><span class="co">#&gt; SRR389078                K562         expressing shRNA tar..                    SL1583  Puromycin, doxycycline</span></span></code></pre></div>
 <p>We are now ready to use other bulk RNA-seq data analysis software tools.</p>
 </div>
 <div id="exercise" class="section level2 hasAnchor" number="8.3">

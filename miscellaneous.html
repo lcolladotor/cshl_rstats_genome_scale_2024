@@ -55,7 +55,7 @@
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -65,7 +65,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -451,21 +451,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="https://reneegf.github.io/" class="uri">https://reneegf.github.io/</a> + <a href="https://github.com/reneegf/reneegf.github.io" class="uri">https://github.com/reneegf/reneegf.github.io</a></li>
 </ul></li>
 </ul>
-<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="miscellaneous.html#cb116-1" tabindex="-1"></a><span class="do">## Create an RStudio project first with this particular name</span></span>
-<span id="cb116-2"><a href="miscellaneous.html#cb116-2" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">create_project</span>(<span class="st">&quot;~/Desktop/YourGitHubUsername.github.io&quot;</span>)</span>
-<span id="cb116-3"><a href="miscellaneous.html#cb116-3" tabindex="-1"></a></span>
-<span id="cb116-4"><a href="miscellaneous.html#cb116-4" tabindex="-1"></a><span class="do">## Configure Git and GitHub</span></span>
-<span id="cb116-5"><a href="miscellaneous.html#cb116-5" tabindex="-1"></a><span class="do">## If you don&#39;t have git, check &quot;Happy Git and GitHub for the useR&quot; available</span></span>
-<span id="cb116-6"><a href="miscellaneous.html#cb116-6" tabindex="-1"></a><span class="do">## at https://happygitwithr.com/</span></span>
-<span id="cb116-7"><a href="miscellaneous.html#cb116-7" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_git</span>()</span>
-<span id="cb116-8"><a href="miscellaneous.html#cb116-8" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_github</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="miscellaneous.html#cb180-1" tabindex="-1"></a><span class="do">## Create an RStudio project first with this particular name</span></span>
+<span id="cb180-2"><a href="miscellaneous.html#cb180-2" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">create_project</span>(<span class="st">&quot;~/Desktop/YourGitHubUsername.github.io&quot;</span>)</span>
+<span id="cb180-3"><a href="miscellaneous.html#cb180-3" tabindex="-1"></a></span>
+<span id="cb180-4"><a href="miscellaneous.html#cb180-4" tabindex="-1"></a><span class="do">## Configure Git and GitHub</span></span>
+<span id="cb180-5"><a href="miscellaneous.html#cb180-5" tabindex="-1"></a><span class="do">## If you don&#39;t have git, check &quot;Happy Git and GitHub for the useR&quot; available</span></span>
+<span id="cb180-6"><a href="miscellaneous.html#cb180-6" tabindex="-1"></a><span class="do">## at https://happygitwithr.com/</span></span>
+<span id="cb180-7"><a href="miscellaneous.html#cb180-7" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_git</span>()</span>
+<span id="cb180-8"><a href="miscellaneous.html#cb180-8" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_github</span>()</span></code></pre></div>
 <p>Create your website template using <code>postcards</code> by choosing one of the options below. This will create an <code>index.Rmd</code> file.</p>
-<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="miscellaneous.html#cb117-1" tabindex="-1"></a><span class="do">## Choose only one of these options, whichever you liked the most</span></span>
-<span id="cb117-2"><a href="miscellaneous.html#cb117-2" tabindex="-1"></a>postcards<span class="sc">::</span><span class="fu">create_postcard</span>(<span class="at">template =</span> <span class="st">&quot;jolla&quot;</span>)</span>
-<span id="cb117-3"><a href="miscellaneous.html#cb117-3" tabindex="-1"></a>postcards<span class="sc">::</span><span class="fu">create_postcard</span>(<span class="at">template =</span> <span class="st">&quot;jolla-blue&quot;</span>)</span>
-<span id="cb117-4"><a href="miscellaneous.html#cb117-4" tabindex="-1"></a>postcards<span class="sc">::</span><span class="fu">create_postcard</span>(<span class="at">template =</span> <span class="st">&quot;trestles&quot;</span>)</span>
-<span id="cb117-5"><a href="miscellaneous.html#cb117-5" tabindex="-1"></a>postcards<span class="sc">::</span><span class="fu">create_postcard</span>(<span class="at">template =</span> <span class="st">&quot;onofre&quot;</span>)</span>
-<span id="cb117-6"><a href="miscellaneous.html#cb117-6" tabindex="-1"></a>postcards<span class="sc">::</span><span class="fu">create_postcard</span>(<span class="at">template =</span> <span class="st">&quot;solana&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="miscellaneous.html#cb181-1" tabindex="-1"></a><span class="do">## Choose only one of these options, whichever you liked the most</span></span>
+<span id="cb181-2"><a href="miscellaneous.html#cb181-2" tabindex="-1"></a>postcards<span class="sc">::</span><span class="fu">create_postcard</span>(<span class="at">template =</span> <span class="st">&quot;jolla&quot;</span>)</span>
+<span id="cb181-3"><a href="miscellaneous.html#cb181-3" tabindex="-1"></a>postcards<span class="sc">::</span><span class="fu">create_postcard</span>(<span class="at">template =</span> <span class="st">&quot;jolla-blue&quot;</span>)</span>
+<span id="cb181-4"><a href="miscellaneous.html#cb181-4" tabindex="-1"></a>postcards<span class="sc">::</span><span class="fu">create_postcard</span>(<span class="at">template =</span> <span class="st">&quot;trestles&quot;</span>)</span>
+<span id="cb181-5"><a href="miscellaneous.html#cb181-5" tabindex="-1"></a>postcards<span class="sc">::</span><span class="fu">create_postcard</span>(<span class="at">template =</span> <span class="st">&quot;onofre&quot;</span>)</span>
+<span id="cb181-6"><a href="miscellaneous.html#cb181-6" tabindex="-1"></a>postcards<span class="sc">::</span><span class="fu">create_postcard</span>(<span class="at">template =</span> <span class="st">&quot;solana&quot;</span>)</span></code></pre></div>
 <ul>
 <li>Fill out your information using <code>Markdown</code> syntax. For example: <a href="https://github.com/andrewejaffe/andrewejaffe.github.io/blob/819141c6dca6205d04eabb3d15f36cdd79742766/index.Rmd#L17-L33" class="uri">https://github.com/andrewejaffe/andrewejaffe.github.io/blob/819141c6dca6205d04eabb3d15f36cdd79742766/index.Rmd#L17-L33</a>.</li>
 <li>Add links to your own profiles like at <a href="https://github.com/andrewejaffe/andrewejaffe.github.io/blob/819141c6dca6205d04eabb3d15f36cdd79742766/index.Rmd#L4-L12" class="uri">https://github.com/andrewejaffe/andrewejaffe.github.io/blob/819141c6dca6205d04eabb3d15f36cdd79742766/index.Rmd#L4-L12</a>.</li>

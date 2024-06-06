@@ -55,7 +55,7 @@
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -65,7 +65,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -449,7 +449,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>among several other plots and tools we learned along the way.</p>
 <p>Alternatively to <code>recount3</code>, we have learned about the <code>RangedSummarizedExperiment</code> objects produced by <code>SPEAQeasy</code> and in particular the one we are using on the <code>smokingMouse</code> project.</p>
-<p>You might have your own data already. Maybe you have it as an <code>AnnData</code> python object. If so, you can convert it to R with <em><a href="https://bioconductor.org/packages/3.18/zellkonverter">zellkonverter</a></em>.</p>
+<p>You might have your own data already. Maybe you have it as an <code>AnnData</code> python object. If so, you can convert it to R with <em><a href="https://bioconductor.org/packages/3.19/zellkonverter">zellkonverter</a></em>.</p>
 </div>
 <div id="exercise-2" class="section level2 hasAnchor" number="11.2">
 <h2><span class="header-section-number">11.2</span> Exercise<a href="differential-gene-expression-exercise.html#exercise-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -479,13 +479,13 @@ This will be an open ended exercise. Think of it as time to practice what we’v
 <li>If you don’t want to choose another <code>recount3</code> study, you could use the <code>smokingMouse</code> data and subset it once to the pups in nicotine arm of the study and a second time for the pups in the smoking arm of the study.</li>
 <li>Or you could use the GTEx brain data from <code>recount3</code>, subset it to the prefrontal cortex (PFC), and compute age related expression changes. That would be in addition to SRA study SRP045638 that we used previously.</li>
 </ul>
-<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="differential-gene-expression-exercise.html#cb91-1" tabindex="-1"></a>recount3<span class="sc">::</span><span class="fu">create_rse_manual</span>(</span>
-<span id="cb91-2"><a href="differential-gene-expression-exercise.html#cb91-2" tabindex="-1"></a>    <span class="at">project =</span> <span class="st">&quot;BRAIN&quot;</span>,</span>
-<span id="cb91-3"><a href="differential-gene-expression-exercise.html#cb91-3" tabindex="-1"></a>    <span class="at">project_home =</span> <span class="st">&quot;data_sources/gtex&quot;</span>,</span>
-<span id="cb91-4"><a href="differential-gene-expression-exercise.html#cb91-4" tabindex="-1"></a>    <span class="at">organism =</span> <span class="st">&quot;human&quot;</span>,</span>
-<span id="cb91-5"><a href="differential-gene-expression-exercise.html#cb91-5" tabindex="-1"></a>    <span class="at">annotation =</span> <span class="st">&quot;gencode_v26&quot;</span>,</span>
-<span id="cb91-6"><a href="differential-gene-expression-exercise.html#cb91-6" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">&quot;gene&quot;</span></span>
-<span id="cb91-7"><a href="differential-gene-expression-exercise.html#cb91-7" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="differential-gene-expression-exercise.html#cb151-1" tabindex="-1"></a>recount3<span class="sc">::</span><span class="fu">create_rse_manual</span>(</span>
+<span id="cb151-2"><a href="differential-gene-expression-exercise.html#cb151-2" tabindex="-1"></a>    <span class="at">project =</span> <span class="st">&quot;BRAIN&quot;</span>,</span>
+<span id="cb151-3"><a href="differential-gene-expression-exercise.html#cb151-3" tabindex="-1"></a>    <span class="at">project_home =</span> <span class="st">&quot;data_sources/gtex&quot;</span>,</span>
+<span id="cb151-4"><a href="differential-gene-expression-exercise.html#cb151-4" tabindex="-1"></a>    <span class="at">organism =</span> <span class="st">&quot;human&quot;</span>,</span>
+<span id="cb151-5"><a href="differential-gene-expression-exercise.html#cb151-5" tabindex="-1"></a>    <span class="at">annotation =</span> <span class="st">&quot;gencode_v26&quot;</span>,</span>
+<span id="cb151-6"><a href="differential-gene-expression-exercise.html#cb151-6" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">&quot;gene&quot;</span></span>
+<span id="cb151-7"><a href="differential-gene-expression-exercise.html#cb151-7" tabindex="-1"></a>)</span></code></pre></div>
 <ol start="3" style="list-style-type: decimal">
 <li>Make a scatterplot of the t-statistics between the two datasets to assess correlation / concordance. You might want to use <code>GGally::ggpairs()</code> for this <a href="https://ggobi.github.io/ggally/reference/ggpairs.html" class="uri">https://ggobi.github.io/ggally/reference/ggpairs.html</a>. Or <code>ggpubr::ggscatter()</code> <a href="https://rpkgs.datanovia.com/ggpubr/reference/ggscatter.html" class="uri">https://rpkgs.datanovia.com/ggpubr/reference/ggscatter.html</a>.</li>
 </ol>

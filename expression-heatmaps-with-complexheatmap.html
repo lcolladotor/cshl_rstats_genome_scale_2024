@@ -55,7 +55,7 @@
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -65,7 +65,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -476,121 +476,121 @@ Explore the <a href="https://bioconductor.org/packages/release/bioc/html/Complex
 <p>Let’s download and prepare our data first.</p>
 <div id="download-data-1" class="section level3 hasAnchor" number="13.3.1">
 <h3><span class="header-section-number">13.3.1</span> Download data<a href="expression-heatmaps-with-complexheatmap.html#download-data-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="expression-heatmaps-with-complexheatmap.html#cb109-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;SummarizedExperiment&quot;</span>)</span>
-<span id="cb109-2"><a href="expression-heatmaps-with-complexheatmap.html#cb109-2" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;ComplexHeatmap&quot;</span>)</span>
-<span id="cb109-3"><a href="expression-heatmaps-with-complexheatmap.html#cb109-3" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;circlize&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="expression-heatmaps-with-complexheatmap.html#cb110-1" tabindex="-1"></a><span class="do">## Download and cache the file</span></span>
-<span id="cb110-2"><a href="expression-heatmaps-with-complexheatmap.html#cb110-2" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;BiocFileCache&quot;</span>)</span>
-<span id="cb110-3"><a href="expression-heatmaps-with-complexheatmap.html#cb110-3" tabindex="-1"></a>bfc <span class="ot">&lt;-</span> BiocFileCache<span class="sc">::</span><span class="fu">BiocFileCache</span>()</span>
-<span id="cb110-4"><a href="expression-heatmaps-with-complexheatmap.html#cb110-4" tabindex="-1"></a>cached_rse_gene <span class="ot">&lt;-</span> BiocFileCache<span class="sc">::</span><span class="fu">bfcrpath</span>(</span>
-<span id="cb110-5"><a href="expression-heatmaps-with-complexheatmap.html#cb110-5" tabindex="-1"></a>    <span class="at">x =</span> bfc,</span>
-<span id="cb110-6"><a href="expression-heatmaps-with-complexheatmap.html#cb110-6" tabindex="-1"></a>    <span class="st">&quot;https://github.com/LieberInstitute/SPEAQeasyWorkshop2023/raw/devel/provisional_data/rse_gene_mouse_RNAseq_nic-smo.Rdata&quot;</span></span>
-<span id="cb110-7"><a href="expression-heatmaps-with-complexheatmap.html#cb110-7" tabindex="-1"></a>)</span>
-<span id="cb110-8"><a href="expression-heatmaps-with-complexheatmap.html#cb110-8" tabindex="-1"></a></span>
-<span id="cb110-9"><a href="expression-heatmaps-with-complexheatmap.html#cb110-9" tabindex="-1"></a><span class="do">## Check the local path on our cache</span></span>
-<span id="cb110-10"><a href="expression-heatmaps-with-complexheatmap.html#cb110-10" tabindex="-1"></a>cached_rse_gene</span>
-<span id="cb110-11"><a href="expression-heatmaps-with-complexheatmap.html#cb110-11" tabindex="-1"></a><span class="co">#&gt;                                                                                  BFC2 </span></span>
-<span id="cb110-12"><a href="expression-heatmaps-with-complexheatmap.html#cb110-12" tabindex="-1"></a><span class="co">#&gt; &quot;/github/home/.cache/R/BiocFileCache/26e475916de_rse_gene_mouse_RNAseq_nic-smo.Rdata&quot;</span></span>
-<span id="cb110-13"><a href="expression-heatmaps-with-complexheatmap.html#cb110-13" tabindex="-1"></a></span>
-<span id="cb110-14"><a href="expression-heatmaps-with-complexheatmap.html#cb110-14" tabindex="-1"></a><span class="do">## Load the rse_gene object</span></span>
-<span id="cb110-15"><a href="expression-heatmaps-with-complexheatmap.html#cb110-15" tabindex="-1"></a><span class="fu">load</span>(cached_rse_gene, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb110-16"><a href="expression-heatmaps-with-complexheatmap.html#cb110-16" tabindex="-1"></a><span class="co">#&gt; Loading objects:</span></span>
-<span id="cb110-17"><a href="expression-heatmaps-with-complexheatmap.html#cb110-17" tabindex="-1"></a><span class="co">#&gt;   rse_gene</span></span>
-<span id="cb110-18"><a href="expression-heatmaps-with-complexheatmap.html#cb110-18" tabindex="-1"></a></span>
-<span id="cb110-19"><a href="expression-heatmaps-with-complexheatmap.html#cb110-19" tabindex="-1"></a><span class="do">## General overview of the object</span></span>
-<span id="cb110-20"><a href="expression-heatmaps-with-complexheatmap.html#cb110-20" tabindex="-1"></a>rse_gene</span>
-<span id="cb110-21"><a href="expression-heatmaps-with-complexheatmap.html#cb110-21" tabindex="-1"></a><span class="co">#&gt; class: RangedSummarizedExperiment </span></span>
-<span id="cb110-22"><a href="expression-heatmaps-with-complexheatmap.html#cb110-22" tabindex="-1"></a><span class="co">#&gt; dim: 55401 208 </span></span>
-<span id="cb110-23"><a href="expression-heatmaps-with-complexheatmap.html#cb110-23" tabindex="-1"></a><span class="co">#&gt; metadata(1): Obtained_from</span></span>
-<span id="cb110-24"><a href="expression-heatmaps-with-complexheatmap.html#cb110-24" tabindex="-1"></a><span class="co">#&gt; assays(2): counts logcounts</span></span>
-<span id="cb110-25"><a href="expression-heatmaps-with-complexheatmap.html#cb110-25" tabindex="-1"></a><span class="co">#&gt; rownames(55401): ENSMUSG00000102693.1 ENSMUSG00000064842.1 ... ENSMUSG00000064371.1 ENSMUSG00000064372.1</span></span>
-<span id="cb110-26"><a href="expression-heatmaps-with-complexheatmap.html#cb110-26" tabindex="-1"></a><span class="co">#&gt; rowData names(13): Length gencodeID ... DE_in_pup_brain_nicotine DE_in_pup_brain_smoking</span></span>
-<span id="cb110-27"><a href="expression-heatmaps-with-complexheatmap.html#cb110-27" tabindex="-1"></a><span class="co">#&gt; colnames: NULL</span></span>
-<span id="cb110-28"><a href="expression-heatmaps-with-complexheatmap.html#cb110-28" tabindex="-1"></a><span class="co">#&gt; colData names(71): SAMPLE_ID FQCbasicStats ... retained_after_QC_sample_filtering</span></span>
-<span id="cb110-29"><a href="expression-heatmaps-with-complexheatmap.html#cb110-29" tabindex="-1"></a><span class="co">#&gt;   retained_after_manual_sample_filtering</span></span></code></pre></div>
+<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="expression-heatmaps-with-complexheatmap.html#cb169-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;SummarizedExperiment&quot;</span>)</span>
+<span id="cb169-2"><a href="expression-heatmaps-with-complexheatmap.html#cb169-2" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;ComplexHeatmap&quot;</span>)</span>
+<span id="cb169-3"><a href="expression-heatmaps-with-complexheatmap.html#cb169-3" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;circlize&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="expression-heatmaps-with-complexheatmap.html#cb170-1" tabindex="-1"></a><span class="do">## Download and cache the file</span></span>
+<span id="cb170-2"><a href="expression-heatmaps-with-complexheatmap.html#cb170-2" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;BiocFileCache&quot;</span>)</span>
+<span id="cb170-3"><a href="expression-heatmaps-with-complexheatmap.html#cb170-3" tabindex="-1"></a>bfc <span class="ot">&lt;-</span> BiocFileCache<span class="sc">::</span><span class="fu">BiocFileCache</span>()</span>
+<span id="cb170-4"><a href="expression-heatmaps-with-complexheatmap.html#cb170-4" tabindex="-1"></a>cached_rse_gene <span class="ot">&lt;-</span> BiocFileCache<span class="sc">::</span><span class="fu">bfcrpath</span>(</span>
+<span id="cb170-5"><a href="expression-heatmaps-with-complexheatmap.html#cb170-5" tabindex="-1"></a>    <span class="at">x =</span> bfc,</span>
+<span id="cb170-6"><a href="expression-heatmaps-with-complexheatmap.html#cb170-6" tabindex="-1"></a>    <span class="st">&quot;https://github.com/LieberInstitute/SPEAQeasyWorkshop2023/raw/devel/provisional_data/rse_gene_mouse_RNAseq_nic-smo.Rdata&quot;</span></span>
+<span id="cb170-7"><a href="expression-heatmaps-with-complexheatmap.html#cb170-7" tabindex="-1"></a>)</span>
+<span id="cb170-8"><a href="expression-heatmaps-with-complexheatmap.html#cb170-8" tabindex="-1"></a></span>
+<span id="cb170-9"><a href="expression-heatmaps-with-complexheatmap.html#cb170-9" tabindex="-1"></a><span class="do">## Check the local path on our cache</span></span>
+<span id="cb170-10"><a href="expression-heatmaps-with-complexheatmap.html#cb170-10" tabindex="-1"></a>cached_rse_gene</span>
+<span id="cb170-11"><a href="expression-heatmaps-with-complexheatmap.html#cb170-11" tabindex="-1"></a><span class="co">#&gt;                                                                                  BFC2 </span></span>
+<span id="cb170-12"><a href="expression-heatmaps-with-complexheatmap.html#cb170-12" tabindex="-1"></a><span class="co">#&gt; &quot;/github/home/.cache/R/BiocFileCache/126e9673e2c_rse_gene_mouse_RNAseq_nic-smo.Rdata&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="expression-heatmaps-with-complexheatmap.html#cb171-1" tabindex="-1"></a></span>
+<span id="cb171-2"><a href="expression-heatmaps-with-complexheatmap.html#cb171-2" tabindex="-1"></a><span class="do">## Load the rse_gene object</span></span>
+<span id="cb171-3"><a href="expression-heatmaps-with-complexheatmap.html#cb171-3" tabindex="-1"></a><span class="fu">load</span>(cached_rse_gene, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb171-4"><a href="expression-heatmaps-with-complexheatmap.html#cb171-4" tabindex="-1"></a><span class="co">#&gt; Loading objects:</span></span>
+<span id="cb171-5"><a href="expression-heatmaps-with-complexheatmap.html#cb171-5" tabindex="-1"></a><span class="co">#&gt;   rse_gene</span></span></code></pre></div>
+<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="expression-heatmaps-with-complexheatmap.html#cb172-1" tabindex="-1"></a></span>
+<span id="cb172-2"><a href="expression-heatmaps-with-complexheatmap.html#cb172-2" tabindex="-1"></a><span class="do">## General overview of the object</span></span>
+<span id="cb172-3"><a href="expression-heatmaps-with-complexheatmap.html#cb172-3" tabindex="-1"></a>rse_gene</span>
+<span id="cb172-4"><a href="expression-heatmaps-with-complexheatmap.html#cb172-4" tabindex="-1"></a><span class="co">#&gt; class: RangedSummarizedExperiment </span></span>
+<span id="cb172-5"><a href="expression-heatmaps-with-complexheatmap.html#cb172-5" tabindex="-1"></a><span class="co">#&gt; dim: 55401 208 </span></span>
+<span id="cb172-6"><a href="expression-heatmaps-with-complexheatmap.html#cb172-6" tabindex="-1"></a><span class="co">#&gt; metadata(1): Obtained_from</span></span>
+<span id="cb172-7"><a href="expression-heatmaps-with-complexheatmap.html#cb172-7" tabindex="-1"></a><span class="co">#&gt; assays(2): counts logcounts</span></span>
+<span id="cb172-8"><a href="expression-heatmaps-with-complexheatmap.html#cb172-8" tabindex="-1"></a><span class="co">#&gt; rownames(55401): ENSMUSG00000102693.1 ENSMUSG00000064842.1 ... ENSMUSG00000064371.1 ENSMUSG00000064372.1</span></span>
+<span id="cb172-9"><a href="expression-heatmaps-with-complexheatmap.html#cb172-9" tabindex="-1"></a><span class="co">#&gt; rowData names(13): Length gencodeID ... DE_in_pup_brain_nicotine DE_in_pup_brain_smoking</span></span>
+<span id="cb172-10"><a href="expression-heatmaps-with-complexheatmap.html#cb172-10" tabindex="-1"></a><span class="co">#&gt; colnames: NULL</span></span>
+<span id="cb172-11"><a href="expression-heatmaps-with-complexheatmap.html#cb172-11" tabindex="-1"></a><span class="co">#&gt; colData names(71): SAMPLE_ID FQCbasicStats ... retained_after_QC_sample_filtering</span></span>
+<span id="cb172-12"><a href="expression-heatmaps-with-complexheatmap.html#cb172-12" tabindex="-1"></a><span class="co">#&gt;   retained_after_manual_sample_filtering</span></span></code></pre></div>
 </div>
 <div id="prepare-the-data" class="section level3 hasAnchor" number="13.3.2">
 <h3><span class="header-section-number">13.3.2</span> Prepare the data<a href="expression-heatmaps-with-complexheatmap.html#prepare-the-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="expression-heatmaps-with-complexheatmap.html#cb111-1" tabindex="-1"></a><span class="do">## Extract genes and samples of interest</span></span>
-<span id="cb111-2"><a href="expression-heatmaps-with-complexheatmap.html#cb111-2" tabindex="-1"></a>rse_gene_pup_nic <span class="ot">&lt;-</span> rse_gene[</span>
-<span id="cb111-3"><a href="expression-heatmaps-with-complexheatmap.html#cb111-3" tabindex="-1"></a>    <span class="fu">rowData</span>(rse_gene)<span class="sc">$</span>DE_in_pup_brain_nicotine <span class="sc">==</span> <span class="cn">TRUE</span>,</span>
-<span id="cb111-4"><a href="expression-heatmaps-with-complexheatmap.html#cb111-4" tabindex="-1"></a>    rse_gene<span class="sc">$</span>Age <span class="sc">==</span> <span class="st">&quot;Pup&quot;</span> <span class="sc">&amp;</span> rse_gene<span class="sc">$</span>Expt <span class="sc">==</span> <span class="st">&quot;Nicotine&quot;</span></span>
-<span id="cb111-5"><a href="expression-heatmaps-with-complexheatmap.html#cb111-5" tabindex="-1"></a>]</span>
-<span id="cb111-6"><a href="expression-heatmaps-with-complexheatmap.html#cb111-6" tabindex="-1"></a></span>
-<span id="cb111-7"><a href="expression-heatmaps-with-complexheatmap.html#cb111-7" tabindex="-1"></a><span class="do">## Extract logcounts and add name columns</span></span>
-<span id="cb111-8"><a href="expression-heatmaps-with-complexheatmap.html#cb111-8" tabindex="-1"></a>logs_pup_nic <span class="ot">&lt;-</span> <span class="fu">assay</span>(rse_gene_pup_nic, <span class="dv">2</span>)</span>
-<span id="cb111-9"><a href="expression-heatmaps-with-complexheatmap.html#cb111-9" tabindex="-1"></a><span class="fu">colnames</span>(logs_pup_nic) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;Pup_&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="fu">dim</span>(rse_gene_pup_nic)[<span class="dv">2</span>])</span>
-<span id="cb111-10"><a href="expression-heatmaps-with-complexheatmap.html#cb111-10" tabindex="-1"></a></span>
-<span id="cb111-11"><a href="expression-heatmaps-with-complexheatmap.html#cb111-11" tabindex="-1"></a><span class="do">## Create function to remove technical variables&#39; contributions,</span></span>
-<span id="cb111-12"><a href="expression-heatmaps-with-complexheatmap.html#cb111-12" tabindex="-1"></a><span class="do">## this is from jaffelab package (https://github.com/LieberInstitute/jaffelab)</span></span>
-<span id="cb111-13"><a href="expression-heatmaps-with-complexheatmap.html#cb111-13" tabindex="-1"></a>cleaningY <span class="ot">&lt;-</span> <span class="cf">function</span>(y, mod, P) {</span>
-<span id="cb111-14"><a href="expression-heatmaps-with-complexheatmap.html#cb111-14" tabindex="-1"></a>    <span class="fu">stopifnot</span>(P <span class="sc">&lt;=</span> <span class="fu">ncol</span>(mod))</span>
-<span id="cb111-15"><a href="expression-heatmaps-with-complexheatmap.html#cb111-15" tabindex="-1"></a>    <span class="fu">stopifnot</span>(<span class="st">`</span><span class="at">Input matrix is not full rank</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">qr</span>(mod)<span class="sc">$</span>rank <span class="sc">==</span></span>
-<span id="cb111-16"><a href="expression-heatmaps-with-complexheatmap.html#cb111-16" tabindex="-1"></a>        <span class="fu">ncol</span>(mod))</span>
-<span id="cb111-17"><a href="expression-heatmaps-with-complexheatmap.html#cb111-17" tabindex="-1"></a>    Hat <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">t</span>(mod) <span class="sc">%*%</span> mod) <span class="sc">%*%</span> <span class="fu">t</span>(mod)</span>
-<span id="cb111-18"><a href="expression-heatmaps-with-complexheatmap.html#cb111-18" tabindex="-1"></a>    ty <span class="ot">&lt;-</span> <span class="fu">t</span>(y)</span>
-<span id="cb111-19"><a href="expression-heatmaps-with-complexheatmap.html#cb111-19" tabindex="-1"></a>    ty[<span class="fu">is.na</span>(ty)] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb111-20"><a href="expression-heatmaps-with-complexheatmap.html#cb111-20" tabindex="-1"></a>    beta <span class="ot">&lt;-</span> (Hat <span class="sc">%*%</span> ty)</span>
-<span id="cb111-21"><a href="expression-heatmaps-with-complexheatmap.html#cb111-21" tabindex="-1"></a>    cleany <span class="ot">&lt;-</span> y <span class="sc">-</span> <span class="fu">t</span>(<span class="fu">as.matrix</span>(mod[, <span class="sc">-</span><span class="fu">c</span>(<span class="fu">seq_len</span>(P))]) <span class="sc">%*%</span> beta[<span class="sc">-</span><span class="fu">seq_len</span>(P), ])</span>
-<span id="cb111-22"><a href="expression-heatmaps-with-complexheatmap.html#cb111-22" tabindex="-1"></a>    <span class="fu">return</span>(cleany)</span>
-<span id="cb111-23"><a href="expression-heatmaps-with-complexheatmap.html#cb111-23" tabindex="-1"></a>}</span>
-<span id="cb111-24"><a href="expression-heatmaps-with-complexheatmap.html#cb111-24" tabindex="-1"></a></span>
-<span id="cb111-25"><a href="expression-heatmaps-with-complexheatmap.html#cb111-25" tabindex="-1"></a><span class="do">## Remove contribution of technical variables</span></span>
-<span id="cb111-26"><a href="expression-heatmaps-with-complexheatmap.html#cb111-26" tabindex="-1"></a>formula <span class="ot">&lt;-</span> <span class="er">~</span> Group <span class="sc">+</span> Sex <span class="sc">+</span> plate <span class="sc">+</span> flowcell <span class="sc">+</span> rRNA_rate <span class="sc">+</span> totalAssignedGene <span class="sc">+</span> ERCCsumLogErr <span class="sc">+</span></span>
-<span id="cb111-27"><a href="expression-heatmaps-with-complexheatmap.html#cb111-27" tabindex="-1"></a>    overallMapRate <span class="sc">+</span> mitoRate</span>
-<span id="cb111-28"><a href="expression-heatmaps-with-complexheatmap.html#cb111-28" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(formula, <span class="at">data =</span> <span class="fu">colData</span>(rse_gene_pup_nic))</span>
-<span id="cb111-29"><a href="expression-heatmaps-with-complexheatmap.html#cb111-29" tabindex="-1"></a>logs_pup_nic <span class="ot">&lt;-</span> <span class="fu">cleaningY</span>(logs_pup_nic, model, <span class="at">P =</span> <span class="dv">2</span>)</span>
-<span id="cb111-30"><a href="expression-heatmaps-with-complexheatmap.html#cb111-30" tabindex="-1"></a></span>
-<span id="cb111-31"><a href="expression-heatmaps-with-complexheatmap.html#cb111-31" tabindex="-1"></a><span class="do">## Center the data to make differences more evident</span></span>
-<span id="cb111-32"><a href="expression-heatmaps-with-complexheatmap.html#cb111-32" tabindex="-1"></a>logs_pup_nic <span class="ot">&lt;-</span> (logs_pup_nic <span class="sc">-</span> <span class="fu">rowMeans</span>(logs_pup_nic)) <span class="sc">/</span> <span class="fu">rowSds</span>(logs_pup_nic)</span></code></pre></div>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="expression-heatmaps-with-complexheatmap.html#cb173-1" tabindex="-1"></a><span class="do">## Extract genes and samples of interest</span></span>
+<span id="cb173-2"><a href="expression-heatmaps-with-complexheatmap.html#cb173-2" tabindex="-1"></a>rse_gene_pup_nic <span class="ot">&lt;-</span> rse_gene[</span>
+<span id="cb173-3"><a href="expression-heatmaps-with-complexheatmap.html#cb173-3" tabindex="-1"></a>    <span class="fu">rowData</span>(rse_gene)<span class="sc">$</span>DE_in_pup_brain_nicotine <span class="sc">==</span> <span class="cn">TRUE</span>,</span>
+<span id="cb173-4"><a href="expression-heatmaps-with-complexheatmap.html#cb173-4" tabindex="-1"></a>    rse_gene<span class="sc">$</span>Age <span class="sc">==</span> <span class="st">&quot;Pup&quot;</span> <span class="sc">&amp;</span> rse_gene<span class="sc">$</span>Expt <span class="sc">==</span> <span class="st">&quot;Nicotine&quot;</span></span>
+<span id="cb173-5"><a href="expression-heatmaps-with-complexheatmap.html#cb173-5" tabindex="-1"></a>]</span>
+<span id="cb173-6"><a href="expression-heatmaps-with-complexheatmap.html#cb173-6" tabindex="-1"></a></span>
+<span id="cb173-7"><a href="expression-heatmaps-with-complexheatmap.html#cb173-7" tabindex="-1"></a><span class="do">## Extract logcounts and add name columns</span></span>
+<span id="cb173-8"><a href="expression-heatmaps-with-complexheatmap.html#cb173-8" tabindex="-1"></a>logs_pup_nic <span class="ot">&lt;-</span> <span class="fu">assay</span>(rse_gene_pup_nic, <span class="dv">2</span>)</span>
+<span id="cb173-9"><a href="expression-heatmaps-with-complexheatmap.html#cb173-9" tabindex="-1"></a><span class="fu">colnames</span>(logs_pup_nic) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;Pup_&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="fu">dim</span>(rse_gene_pup_nic)[<span class="dv">2</span>])</span>
+<span id="cb173-10"><a href="expression-heatmaps-with-complexheatmap.html#cb173-10" tabindex="-1"></a></span>
+<span id="cb173-11"><a href="expression-heatmaps-with-complexheatmap.html#cb173-11" tabindex="-1"></a><span class="do">## Create function to remove technical variables&#39; contributions,</span></span>
+<span id="cb173-12"><a href="expression-heatmaps-with-complexheatmap.html#cb173-12" tabindex="-1"></a><span class="do">## this is from jaffelab package (https://github.com/LieberInstitute/jaffelab)</span></span>
+<span id="cb173-13"><a href="expression-heatmaps-with-complexheatmap.html#cb173-13" tabindex="-1"></a>cleaningY <span class="ot">&lt;-</span> <span class="cf">function</span>(y, mod, P) {</span>
+<span id="cb173-14"><a href="expression-heatmaps-with-complexheatmap.html#cb173-14" tabindex="-1"></a>    <span class="fu">stopifnot</span>(P <span class="sc">&lt;=</span> <span class="fu">ncol</span>(mod))</span>
+<span id="cb173-15"><a href="expression-heatmaps-with-complexheatmap.html#cb173-15" tabindex="-1"></a>    <span class="fu">stopifnot</span>(<span class="st">`</span><span class="at">Input matrix is not full rank</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">qr</span>(mod)<span class="sc">$</span>rank <span class="sc">==</span></span>
+<span id="cb173-16"><a href="expression-heatmaps-with-complexheatmap.html#cb173-16" tabindex="-1"></a>        <span class="fu">ncol</span>(mod))</span>
+<span id="cb173-17"><a href="expression-heatmaps-with-complexheatmap.html#cb173-17" tabindex="-1"></a>    Hat <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">t</span>(mod) <span class="sc">%*%</span> mod) <span class="sc">%*%</span> <span class="fu">t</span>(mod)</span>
+<span id="cb173-18"><a href="expression-heatmaps-with-complexheatmap.html#cb173-18" tabindex="-1"></a>    ty <span class="ot">&lt;-</span> <span class="fu">t</span>(y)</span>
+<span id="cb173-19"><a href="expression-heatmaps-with-complexheatmap.html#cb173-19" tabindex="-1"></a>    ty[<span class="fu">is.na</span>(ty)] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb173-20"><a href="expression-heatmaps-with-complexheatmap.html#cb173-20" tabindex="-1"></a>    beta <span class="ot">&lt;-</span> (Hat <span class="sc">%*%</span> ty)</span>
+<span id="cb173-21"><a href="expression-heatmaps-with-complexheatmap.html#cb173-21" tabindex="-1"></a>    cleany <span class="ot">&lt;-</span> y <span class="sc">-</span> <span class="fu">t</span>(<span class="fu">as.matrix</span>(mod[, <span class="sc">-</span><span class="fu">c</span>(<span class="fu">seq_len</span>(P))]) <span class="sc">%*%</span> beta[<span class="sc">-</span><span class="fu">seq_len</span>(P), ])</span>
+<span id="cb173-22"><a href="expression-heatmaps-with-complexheatmap.html#cb173-22" tabindex="-1"></a>    <span class="fu">return</span>(cleany)</span>
+<span id="cb173-23"><a href="expression-heatmaps-with-complexheatmap.html#cb173-23" tabindex="-1"></a>}</span>
+<span id="cb173-24"><a href="expression-heatmaps-with-complexheatmap.html#cb173-24" tabindex="-1"></a></span>
+<span id="cb173-25"><a href="expression-heatmaps-with-complexheatmap.html#cb173-25" tabindex="-1"></a><span class="do">## Remove contribution of technical variables</span></span>
+<span id="cb173-26"><a href="expression-heatmaps-with-complexheatmap.html#cb173-26" tabindex="-1"></a>formula <span class="ot">&lt;-</span> <span class="er">~</span> Group <span class="sc">+</span> Sex <span class="sc">+</span> plate <span class="sc">+</span> flowcell <span class="sc">+</span> rRNA_rate <span class="sc">+</span> totalAssignedGene <span class="sc">+</span> ERCCsumLogErr <span class="sc">+</span></span>
+<span id="cb173-27"><a href="expression-heatmaps-with-complexheatmap.html#cb173-27" tabindex="-1"></a>    overallMapRate <span class="sc">+</span> mitoRate</span>
+<span id="cb173-28"><a href="expression-heatmaps-with-complexheatmap.html#cb173-28" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(formula, <span class="at">data =</span> <span class="fu">colData</span>(rse_gene_pup_nic))</span>
+<span id="cb173-29"><a href="expression-heatmaps-with-complexheatmap.html#cb173-29" tabindex="-1"></a>logs_pup_nic <span class="ot">&lt;-</span> <span class="fu">cleaningY</span>(logs_pup_nic, model, <span class="at">P =</span> <span class="dv">2</span>)</span>
+<span id="cb173-30"><a href="expression-heatmaps-with-complexheatmap.html#cb173-30" tabindex="-1"></a></span>
+<span id="cb173-31"><a href="expression-heatmaps-with-complexheatmap.html#cb173-31" tabindex="-1"></a><span class="do">## Center the data to make differences more evident</span></span>
+<span id="cb173-32"><a href="expression-heatmaps-with-complexheatmap.html#cb173-32" tabindex="-1"></a>logs_pup_nic <span class="ot">&lt;-</span> (logs_pup_nic <span class="sc">-</span> <span class="fu">rowMeans</span>(logs_pup_nic)) <span class="sc">/</span> <span class="fu">rowSds</span>(logs_pup_nic)</span></code></pre></div>
 <p>More for on centering and scaling, see this video:</p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/c8ffeFVUzk8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen>
 </iframe>
 </div>
 <div id="create-annotations" class="section level3 hasAnchor" number="13.3.3">
 <h3><span class="header-section-number">13.3.3</span> Create annotations<a href="expression-heatmaps-with-complexheatmap.html#create-annotations" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="expression-heatmaps-with-complexheatmap.html#cb112-1" tabindex="-1"></a><span class="do">## Prepare annotation for our heatmap</span></span>
-<span id="cb112-2"><a href="expression-heatmaps-with-complexheatmap.html#cb112-2" tabindex="-1"></a><span class="do">## For this heatmap I want to be able to see the Group to which each sample belongs</span></span>
-<span id="cb112-3"><a href="expression-heatmaps-with-complexheatmap.html#cb112-3" tabindex="-1"></a><span class="do">## as well as the Sex of the pup</span></span>
-<span id="cb112-4"><a href="expression-heatmaps-with-complexheatmap.html#cb112-4" tabindex="-1"></a></span>
-<span id="cb112-5"><a href="expression-heatmaps-with-complexheatmap.html#cb112-5" tabindex="-1"></a>top_ans <span class="ot">&lt;-</span> <span class="fu">HeatmapAnnotation</span>(</span>
-<span id="cb112-6"><a href="expression-heatmaps-with-complexheatmap.html#cb112-6" tabindex="-1"></a>    <span class="at">df =</span> <span class="fu">as.data.frame</span>(<span class="fu">colData</span>(rse_gene_pup_nic)[, <span class="fu">c</span>(<span class="st">&quot;Sex&quot;</span>, <span class="st">&quot;Group&quot;</span>)]),</span>
-<span id="cb112-7"><a href="expression-heatmaps-with-complexheatmap.html#cb112-7" tabindex="-1"></a>    <span class="at">col =</span> <span class="fu">list</span>(</span>
-<span id="cb112-8"><a href="expression-heatmaps-with-complexheatmap.html#cb112-8" tabindex="-1"></a>        <span class="st">&quot;Sex&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;F&quot;</span> <span class="ot">=</span> <span class="st">&quot;hotpink1&quot;</span>, <span class="st">&quot;M&quot;</span> <span class="ot">=</span> <span class="st">&quot;dodgerblue&quot;</span>),</span>
-<span id="cb112-9"><a href="expression-heatmaps-with-complexheatmap.html#cb112-9" tabindex="-1"></a>        <span class="st">&quot;Group&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;Control&quot;</span> <span class="ot">=</span> <span class="st">&quot;brown2&quot;</span>, <span class="st">&quot;Experimental&quot;</span> <span class="ot">=</span> <span class="st">&quot;deepskyblue3&quot;</span>)</span>
-<span id="cb112-10"><a href="expression-heatmaps-with-complexheatmap.html#cb112-10" tabindex="-1"></a>    )</span>
-<span id="cb112-11"><a href="expression-heatmaps-with-complexheatmap.html#cb112-11" tabindex="-1"></a>)</span>
-<span id="cb112-12"><a href="expression-heatmaps-with-complexheatmap.html#cb112-12" tabindex="-1"></a></span>
-<span id="cb112-13"><a href="expression-heatmaps-with-complexheatmap.html#cb112-13" tabindex="-1"></a><span class="do">## Also, I want to add the FDR associated to each gene</span></span>
-<span id="cb112-14"><a href="expression-heatmaps-with-complexheatmap.html#cb112-14" tabindex="-1"></a><span class="do">## Even though we do have that data, for this particular exercise we are gonna simulate it</span></span>
-<span id="cb112-15"><a href="expression-heatmaps-with-complexheatmap.html#cb112-15" tabindex="-1"></a></span>
-<span id="cb112-16"><a href="expression-heatmaps-with-complexheatmap.html#cb112-16" tabindex="-1"></a><span class="fu">rowData</span>(rse_gene_pup_nic)<span class="sc">$</span>FDR <span class="ot">&lt;-</span> <span class="fu">sample</span>(</span>
-<span id="cb112-17"><a href="expression-heatmaps-with-complexheatmap.html#cb112-17" tabindex="-1"></a>    <span class="at">x =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">5000</span>,</span>
-<span id="cb112-18"><a href="expression-heatmaps-with-complexheatmap.html#cb112-18" tabindex="-1"></a>    <span class="at">size =</span> <span class="fu">dim</span>(rse_gene_pup_nic)[<span class="dv">1</span>],</span>
-<span id="cb112-19"><a href="expression-heatmaps-with-complexheatmap.html#cb112-19" tabindex="-1"></a>    <span class="at">prob =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="fl">0.0012</span>, <span class="dv">1001</span>), <span class="fu">rep</span>(<span class="fl">0.00005</span>, <span class="dv">4000</span>))</span>
-<span id="cb112-20"><a href="expression-heatmaps-with-complexheatmap.html#cb112-20" tabindex="-1"></a>) <span class="sc">/</span> <span class="dv">10000</span></span>
-<span id="cb112-21"><a href="expression-heatmaps-with-complexheatmap.html#cb112-21" tabindex="-1"></a></span>
-<span id="cb112-22"><a href="expression-heatmaps-with-complexheatmap.html#cb112-22" tabindex="-1"></a>left_ans <span class="ot">&lt;-</span> <span class="fu">rowAnnotation</span>(</span>
-<span id="cb112-23"><a href="expression-heatmaps-with-complexheatmap.html#cb112-23" tabindex="-1"></a>    <span class="at">FDR =</span> <span class="fu">rowData</span>(rse_gene_pup_nic)<span class="sc">$</span>FDR,</span>
-<span id="cb112-24"><a href="expression-heatmaps-with-complexheatmap.html#cb112-24" tabindex="-1"></a>    <span class="at">col =</span> <span class="fu">list</span>(<span class="at">FDR =</span> <span class="fu">colorRamp2</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.049</span>), <span class="fu">c</span>(<span class="st">&quot;#ecf39e&quot;</span>, <span class="st">&quot;#4f772d&quot;</span>))),</span>
-<span id="cb112-25"><a href="expression-heatmaps-with-complexheatmap.html#cb112-25" tabindex="-1"></a>    <span class="at">annotation_legend_param =</span> <span class="fu">list</span>(<span class="at">FDR =</span> <span class="fu">list</span>(<span class="at">at =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.01</span>, <span class="fl">0.02</span>, <span class="fl">0.03</span>, <span class="fl">0.04</span>, <span class="fl">0.05</span>)))</span>
-<span id="cb112-26"><a href="expression-heatmaps-with-complexheatmap.html#cb112-26" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="expression-heatmaps-with-complexheatmap.html#cb174-1" tabindex="-1"></a><span class="do">## Prepare annotation for our heatmap</span></span>
+<span id="cb174-2"><a href="expression-heatmaps-with-complexheatmap.html#cb174-2" tabindex="-1"></a><span class="do">## For this heatmap I want to be able to see the Group to which each sample belongs</span></span>
+<span id="cb174-3"><a href="expression-heatmaps-with-complexheatmap.html#cb174-3" tabindex="-1"></a><span class="do">## as well as the Sex of the pup</span></span>
+<span id="cb174-4"><a href="expression-heatmaps-with-complexheatmap.html#cb174-4" tabindex="-1"></a></span>
+<span id="cb174-5"><a href="expression-heatmaps-with-complexheatmap.html#cb174-5" tabindex="-1"></a>top_ans <span class="ot">&lt;-</span> <span class="fu">HeatmapAnnotation</span>(</span>
+<span id="cb174-6"><a href="expression-heatmaps-with-complexheatmap.html#cb174-6" tabindex="-1"></a>    <span class="at">df =</span> <span class="fu">as.data.frame</span>(<span class="fu">colData</span>(rse_gene_pup_nic)[, <span class="fu">c</span>(<span class="st">&quot;Sex&quot;</span>, <span class="st">&quot;Group&quot;</span>)]),</span>
+<span id="cb174-7"><a href="expression-heatmaps-with-complexheatmap.html#cb174-7" tabindex="-1"></a>    <span class="at">col =</span> <span class="fu">list</span>(</span>
+<span id="cb174-8"><a href="expression-heatmaps-with-complexheatmap.html#cb174-8" tabindex="-1"></a>        <span class="st">&quot;Sex&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;F&quot;</span> <span class="ot">=</span> <span class="st">&quot;hotpink1&quot;</span>, <span class="st">&quot;M&quot;</span> <span class="ot">=</span> <span class="st">&quot;dodgerblue&quot;</span>),</span>
+<span id="cb174-9"><a href="expression-heatmaps-with-complexheatmap.html#cb174-9" tabindex="-1"></a>        <span class="st">&quot;Group&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;Control&quot;</span> <span class="ot">=</span> <span class="st">&quot;brown2&quot;</span>, <span class="st">&quot;Experimental&quot;</span> <span class="ot">=</span> <span class="st">&quot;deepskyblue3&quot;</span>)</span>
+<span id="cb174-10"><a href="expression-heatmaps-with-complexheatmap.html#cb174-10" tabindex="-1"></a>    )</span>
+<span id="cb174-11"><a href="expression-heatmaps-with-complexheatmap.html#cb174-11" tabindex="-1"></a>)</span>
+<span id="cb174-12"><a href="expression-heatmaps-with-complexheatmap.html#cb174-12" tabindex="-1"></a></span>
+<span id="cb174-13"><a href="expression-heatmaps-with-complexheatmap.html#cb174-13" tabindex="-1"></a><span class="do">## Also, I want to add the FDR associated to each gene</span></span>
+<span id="cb174-14"><a href="expression-heatmaps-with-complexheatmap.html#cb174-14" tabindex="-1"></a><span class="do">## Even though we do have that data, for this particular exercise we are gonna simulate it</span></span>
+<span id="cb174-15"><a href="expression-heatmaps-with-complexheatmap.html#cb174-15" tabindex="-1"></a></span>
+<span id="cb174-16"><a href="expression-heatmaps-with-complexheatmap.html#cb174-16" tabindex="-1"></a><span class="fu">rowData</span>(rse_gene_pup_nic)<span class="sc">$</span>FDR <span class="ot">&lt;-</span> <span class="fu">sample</span>(</span>
+<span id="cb174-17"><a href="expression-heatmaps-with-complexheatmap.html#cb174-17" tabindex="-1"></a>    <span class="at">x =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">5000</span>,</span>
+<span id="cb174-18"><a href="expression-heatmaps-with-complexheatmap.html#cb174-18" tabindex="-1"></a>    <span class="at">size =</span> <span class="fu">dim</span>(rse_gene_pup_nic)[<span class="dv">1</span>],</span>
+<span id="cb174-19"><a href="expression-heatmaps-with-complexheatmap.html#cb174-19" tabindex="-1"></a>    <span class="at">prob =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="fl">0.0012</span>, <span class="dv">1001</span>), <span class="fu">rep</span>(<span class="fl">0.00005</span>, <span class="dv">4000</span>))</span>
+<span id="cb174-20"><a href="expression-heatmaps-with-complexheatmap.html#cb174-20" tabindex="-1"></a>) <span class="sc">/</span> <span class="dv">10000</span></span>
+<span id="cb174-21"><a href="expression-heatmaps-with-complexheatmap.html#cb174-21" tabindex="-1"></a></span>
+<span id="cb174-22"><a href="expression-heatmaps-with-complexheatmap.html#cb174-22" tabindex="-1"></a>left_ans <span class="ot">&lt;-</span> <span class="fu">rowAnnotation</span>(</span>
+<span id="cb174-23"><a href="expression-heatmaps-with-complexheatmap.html#cb174-23" tabindex="-1"></a>    <span class="at">FDR =</span> <span class="fu">rowData</span>(rse_gene_pup_nic)<span class="sc">$</span>FDR,</span>
+<span id="cb174-24"><a href="expression-heatmaps-with-complexheatmap.html#cb174-24" tabindex="-1"></a>    <span class="at">col =</span> <span class="fu">list</span>(<span class="at">FDR =</span> <span class="fu">colorRamp2</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.049</span>), <span class="fu">c</span>(<span class="st">&quot;#ecf39e&quot;</span>, <span class="st">&quot;#4f772d&quot;</span>))),</span>
+<span id="cb174-25"><a href="expression-heatmaps-with-complexheatmap.html#cb174-25" tabindex="-1"></a>    <span class="at">annotation_legend_param =</span> <span class="fu">list</span>(<span class="at">FDR =</span> <span class="fu">list</span>(<span class="at">at =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.01</span>, <span class="fl">0.02</span>, <span class="fl">0.03</span>, <span class="fl">0.04</span>, <span class="fl">0.05</span>)))</span>
+<span id="cb174-26"><a href="expression-heatmaps-with-complexheatmap.html#cb174-26" tabindex="-1"></a>)</span></code></pre></div>
 </div>
 <div id="plot-our-heatmap" class="section level3 hasAnchor" number="13.3.4">
 <h3><span class="header-section-number">13.3.4</span> Plot our heatmap<a href="expression-heatmaps-with-complexheatmap.html#plot-our-heatmap" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="expression-heatmaps-with-complexheatmap.html#cb113-1" tabindex="-1"></a><span class="do">## Finally, let&#39;s plot!</span></span>
-<span id="cb113-2"><a href="expression-heatmaps-with-complexheatmap.html#cb113-2" tabindex="-1"></a><span class="fu">Heatmap</span>(logs_pup_nic,</span>
-<span id="cb113-3"><a href="expression-heatmaps-with-complexheatmap.html#cb113-3" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">&quot;logcounts&quot;</span>,</span>
-<span id="cb113-4"><a href="expression-heatmaps-with-complexheatmap.html#cb113-4" tabindex="-1"></a>    <span class="at">show_row_names =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb113-5"><a href="expression-heatmaps-with-complexheatmap.html#cb113-5" tabindex="-1"></a>    <span class="at">top_annotation =</span> top_ans,</span>
-<span id="cb113-6"><a href="expression-heatmaps-with-complexheatmap.html#cb113-6" tabindex="-1"></a>    <span class="at">left_annotation =</span> left_ans,</span>
-<span id="cb113-7"><a href="expression-heatmaps-with-complexheatmap.html#cb113-7" tabindex="-1"></a>    <span class="at">row_km =</span> <span class="dv">2</span>,</span>
-<span id="cb113-8"><a href="expression-heatmaps-with-complexheatmap.html#cb113-8" tabindex="-1"></a>    <span class="at">column_km =</span> <span class="dv">2</span>,</span>
-<span id="cb113-9"><a href="expression-heatmaps-with-complexheatmap.html#cb113-9" tabindex="-1"></a>    <span class="at">col =</span> <span class="fu">colorRamp2</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="sc">-</span><span class="fl">0.0001</span>, <span class="dv">00001</span>, <span class="dv">4</span>), <span class="fu">c</span>(<span class="st">&quot;darkblue&quot;</span>, <span class="st">&quot;lightblue&quot;</span>, <span class="st">&quot;lightsalmon&quot;</span>, <span class="st">&quot;darkred&quot;</span>)),</span>
-<span id="cb113-10"><a href="expression-heatmaps-with-complexheatmap.html#cb113-10" tabindex="-1"></a>    <span class="at">row_title =</span> <span class="cn">NULL</span>,</span>
-<span id="cb113-11"><a href="expression-heatmaps-with-complexheatmap.html#cb113-11" tabindex="-1"></a>    <span class="at">column_title =</span> <span class="cn">NULL</span>,</span>
-<span id="cb113-12"><a href="expression-heatmaps-with-complexheatmap.html#cb113-12" tabindex="-1"></a>    <span class="at">column_names_gp =</span> <span class="fu">gpar</span>(<span class="at">fontsize =</span> <span class="dv">7</span>)</span>
-<span id="cb113-13"><a href="expression-heatmaps-with-complexheatmap.html#cb113-13" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="expression-heatmaps-with-complexheatmap.html#cb175-1" tabindex="-1"></a><span class="do">## Finally, let&#39;s plot!</span></span>
+<span id="cb175-2"><a href="expression-heatmaps-with-complexheatmap.html#cb175-2" tabindex="-1"></a><span class="fu">Heatmap</span>(logs_pup_nic,</span>
+<span id="cb175-3"><a href="expression-heatmaps-with-complexheatmap.html#cb175-3" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">&quot;logcounts&quot;</span>,</span>
+<span id="cb175-4"><a href="expression-heatmaps-with-complexheatmap.html#cb175-4" tabindex="-1"></a>    <span class="at">show_row_names =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb175-5"><a href="expression-heatmaps-with-complexheatmap.html#cb175-5" tabindex="-1"></a>    <span class="at">top_annotation =</span> top_ans,</span>
+<span id="cb175-6"><a href="expression-heatmaps-with-complexheatmap.html#cb175-6" tabindex="-1"></a>    <span class="at">left_annotation =</span> left_ans,</span>
+<span id="cb175-7"><a href="expression-heatmaps-with-complexheatmap.html#cb175-7" tabindex="-1"></a>    <span class="at">row_km =</span> <span class="dv">2</span>,</span>
+<span id="cb175-8"><a href="expression-heatmaps-with-complexheatmap.html#cb175-8" tabindex="-1"></a>    <span class="at">column_km =</span> <span class="dv">2</span>,</span>
+<span id="cb175-9"><a href="expression-heatmaps-with-complexheatmap.html#cb175-9" tabindex="-1"></a>    <span class="at">col =</span> <span class="fu">colorRamp2</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="sc">-</span><span class="fl">0.0001</span>, <span class="dv">00001</span>, <span class="dv">4</span>), <span class="fu">c</span>(<span class="st">&quot;darkblue&quot;</span>, <span class="st">&quot;lightblue&quot;</span>, <span class="st">&quot;lightsalmon&quot;</span>, <span class="st">&quot;darkred&quot;</span>)),</span>
+<span id="cb175-10"><a href="expression-heatmaps-with-complexheatmap.html#cb175-10" tabindex="-1"></a>    <span class="at">row_title =</span> <span class="cn">NULL</span>,</span>
+<span id="cb175-11"><a href="expression-heatmaps-with-complexheatmap.html#cb175-11" tabindex="-1"></a>    <span class="at">column_title =</span> <span class="cn">NULL</span>,</span>
+<span id="cb175-12"><a href="expression-heatmaps-with-complexheatmap.html#cb175-12" tabindex="-1"></a>    <span class="at">column_names_gp =</span> <span class="fu">gpar</span>(<span class="at">fontsize =</span> <span class="dv">7</span>)</span>
+<span id="cb175-13"><a href="expression-heatmaps-with-complexheatmap.html#cb175-13" tabindex="-1"></a>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-51-1.png" width="1000px" /></p>
 <p class="exercise">
 <strong>Exercise 2</strong>:

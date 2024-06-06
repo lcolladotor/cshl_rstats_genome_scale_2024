@@ -55,7 +55,7 @@
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -65,7 +65,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -439,7 +439,7 @@ Hot of the pre-print press! 🔥 Our latest work <a href="https://twitter.com/ha
 <div id="spatial-registration" class="section level2 hasAnchor" number="19.1">
 <h2><span class="header-section-number">19.1</span> Spatial registration<a href="re-use-of-bulk-rna-seq-methods-for-spatial-data-exercise.html#spatial-registration" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Louise A. Huuki-Myers recently contributed a new vignette to <code>spatialLIBD</code> as noted on the package news / changelog: <a href="http://research.libd.org/spatialLIBD/news/index.html#spatiallibd-1132" class="uri">http://research.libd.org/spatialLIBD/news/index.html#spatiallibd-1132</a>. To follow it, you might want to have the latest version of <code>spatialLIBD</code> installed. You can install it with this command:</p>
-<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="re-use-of-bulk-rna-seq-methods-for-spatial-data-exercise.html#cb128-1" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">&quot;LieberInstitute/spatialLIBD&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="re-use-of-bulk-rna-seq-methods-for-spatial-data-exercise.html#cb196-1" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">&quot;LieberInstitute/spatialLIBD&quot;</span>)</span></code></pre></div>
 <p>Alternatively, you could have a Bioconductor devel setup, but that’s beyond the scope of this course. Using the <code>devel</code> docker image at <a href="http://bioconductor.org/help/docker/" class="uri">http://bioconductor.org/help/docker/</a> is probably the easiest option.</p>
 <p>After installing this version of <code>spatialLIBD</code>, you should be able to run without any issues the code Louise explains at <a href="http://research.libd.org/spatialLIBD/articles/guide_to_spatial_registration.html" class="uri">http://research.libd.org/spatialLIBD/articles/guide_to_spatial_registration.html</a>. This same information is displayed at <a href="https://bioconductor.org/packages/devel/data/experiment/vignettes/spatialLIBD/inst/doc/guide_to_spatial_registration.html" class="uri">https://bioconductor.org/packages/devel/data/experiment/vignettes/spatialLIBD/inst/doc/guide_to_spatial_registration.html</a>.</p>
 </div>

@@ -55,7 +55,7 @@
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -65,7 +65,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -485,104 +485,104 @@ font-family: sans-serif;
 <span id="cb22-8"><a href="summarizedexperiment-review.html#cb22-8" tabindex="-1"></a><span class="co">#&gt; rownames(63677): ENSG00000000003 ENSG00000000005 ... ENSG00000273492 ENSG00000273493</span></span>
 <span id="cb22-9"><a href="summarizedexperiment-review.html#cb22-9" tabindex="-1"></a><span class="co">#&gt; rowData names(10): gene_id gene_name ... seq_coord_system symbol</span></span>
 <span id="cb22-10"><a href="summarizedexperiment-review.html#cb22-10" tabindex="-1"></a><span class="co">#&gt; colnames(8): SRR1039508 SRR1039509 ... SRR1039520 SRR1039521</span></span>
-<span id="cb22-11"><a href="summarizedexperiment-review.html#cb22-11" tabindex="-1"></a><span class="co">#&gt; colData names(9): SampleName cell ... Sample BioSample</span></span>
-<span id="cb22-12"><a href="summarizedexperiment-review.html#cb22-12" tabindex="-1"></a></span>
-<span id="cb22-13"><a href="summarizedexperiment-review.html#cb22-13" tabindex="-1"></a><span class="do">## Same thing for b, you could just print the colData and count the samples, but this is not</span></span>
-<span id="cb22-14"><a href="summarizedexperiment-review.html#cb22-14" tabindex="-1"></a><span class="do">## efficient when our data consists in hundreds of samples. Find the answer using other tools.</span></span>
-<span id="cb22-15"><a href="summarizedexperiment-review.html#cb22-15" tabindex="-1"></a></span>
-<span id="cb22-16"><a href="summarizedexperiment-review.html#cb22-16" tabindex="-1"></a><span class="fu">colData</span>(se)</span>
-<span id="cb22-17"><a href="summarizedexperiment-review.html#cb22-17" tabindex="-1"></a><span class="co">#&gt; DataFrame with 8 rows and 9 columns</span></span>
-<span id="cb22-18"><a href="summarizedexperiment-review.html#cb22-18" tabindex="-1"></a><span class="co">#&gt;            SampleName     cell      dex    albut        Run avgLength Experiment    Sample    BioSample</span></span>
-<span id="cb22-19"><a href="summarizedexperiment-review.html#cb22-19" tabindex="-1"></a><span class="co">#&gt;              &lt;factor&gt; &lt;factor&gt; &lt;factor&gt; &lt;factor&gt;   &lt;factor&gt; &lt;integer&gt;   &lt;factor&gt;  &lt;factor&gt;     &lt;factor&gt;</span></span>
-<span id="cb22-20"><a href="summarizedexperiment-review.html#cb22-20" tabindex="-1"></a><span class="co">#&gt; SRR1039508 GSM1275862  N61311     untrt    untrt SRR1039508       126  SRX384345 SRS508568 SAMN02422669</span></span>
-<span id="cb22-21"><a href="summarizedexperiment-review.html#cb22-21" tabindex="-1"></a><span class="co">#&gt; SRR1039509 GSM1275863  N61311     trt      untrt SRR1039509       126  SRX384346 SRS508567 SAMN02422675</span></span>
-<span id="cb22-22"><a href="summarizedexperiment-review.html#cb22-22" tabindex="-1"></a><span class="co">#&gt; SRR1039512 GSM1275866  N052611    untrt    untrt SRR1039512       126  SRX384349 SRS508571 SAMN02422678</span></span>
-<span id="cb22-23"><a href="summarizedexperiment-review.html#cb22-23" tabindex="-1"></a><span class="co">#&gt; SRR1039513 GSM1275867  N052611    trt      untrt SRR1039513        87  SRX384350 SRS508572 SAMN02422670</span></span>
-<span id="cb22-24"><a href="summarizedexperiment-review.html#cb22-24" tabindex="-1"></a><span class="co">#&gt;  [ reached getOption(&quot;max.print&quot;) -- omitted 4 rows ]</span></span></code></pre></div>
+<span id="cb22-11"><a href="summarizedexperiment-review.html#cb22-11" tabindex="-1"></a><span class="co">#&gt; colData names(9): SampleName cell ... Sample BioSample</span></span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="summarizedexperiment-review.html#cb23-1" tabindex="-1"></a></span>
+<span id="cb23-2"><a href="summarizedexperiment-review.html#cb23-2" tabindex="-1"></a><span class="do">## Same thing for b, you could just print the colData and count the samples, but this is not</span></span>
+<span id="cb23-3"><a href="summarizedexperiment-review.html#cb23-3" tabindex="-1"></a><span class="do">## efficient when our data consists in hundreds of samples. Find the answer using other tools.</span></span>
+<span id="cb23-4"><a href="summarizedexperiment-review.html#cb23-4" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="summarizedexperiment-review.html#cb23-5" tabindex="-1"></a><span class="fu">colData</span>(se)</span>
+<span id="cb23-6"><a href="summarizedexperiment-review.html#cb23-6" tabindex="-1"></a><span class="co">#&gt; DataFrame with 8 rows and 9 columns</span></span>
+<span id="cb23-7"><a href="summarizedexperiment-review.html#cb23-7" tabindex="-1"></a><span class="co">#&gt;            SampleName     cell      dex    albut        Run avgLength Experiment    Sample    BioSample</span></span>
+<span id="cb23-8"><a href="summarizedexperiment-review.html#cb23-8" tabindex="-1"></a><span class="co">#&gt;              &lt;factor&gt; &lt;factor&gt; &lt;factor&gt; &lt;factor&gt;   &lt;factor&gt; &lt;integer&gt;   &lt;factor&gt;  &lt;factor&gt;     &lt;factor&gt;</span></span>
+<span id="cb23-9"><a href="summarizedexperiment-review.html#cb23-9" tabindex="-1"></a><span class="co">#&gt; SRR1039508 GSM1275862  N61311     untrt    untrt SRR1039508       126  SRX384345 SRS508568 SAMN02422669</span></span>
+<span id="cb23-10"><a href="summarizedexperiment-review.html#cb23-10" tabindex="-1"></a><span class="co">#&gt; SRR1039509 GSM1275863  N61311     trt      untrt SRR1039509       126  SRX384346 SRS508567 SAMN02422675</span></span>
+<span id="cb23-11"><a href="summarizedexperiment-review.html#cb23-11" tabindex="-1"></a><span class="co">#&gt; SRR1039512 GSM1275866  N052611    untrt    untrt SRR1039512       126  SRX384349 SRS508571 SAMN02422678</span></span>
+<span id="cb23-12"><a href="summarizedexperiment-review.html#cb23-12" tabindex="-1"></a><span class="co">#&gt; SRR1039513 GSM1275867  N052611    trt      untrt SRR1039513        87  SRX384350 SRS508572 SAMN02422670</span></span>
+<span id="cb23-13"><a href="summarizedexperiment-review.html#cb23-13" tabindex="-1"></a><span class="co">#&gt;  [ reached getOption(&quot;max.print&quot;) -- omitted 4 rows ]</span></span></code></pre></div>
 <p class="exercise">
 <strong>Exercise 2</strong>:
 Add another assay that has the log10 of your original counts
 </p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="summarizedexperiment-review.html#cb23-1" tabindex="-1"></a><span class="do">## In our object, if you look at the part that says assays, we can see that at the moment</span></span>
-<span id="cb23-2"><a href="summarizedexperiment-review.html#cb23-2" tabindex="-1"></a><span class="do">## we only have one with the name &quot;counts&quot;</span></span>
-<span id="cb23-3"><a href="summarizedexperiment-review.html#cb23-3" tabindex="-1"></a></span>
-<span id="cb23-4"><a href="summarizedexperiment-review.html#cb23-4" tabindex="-1"></a>se</span>
-<span id="cb23-5"><a href="summarizedexperiment-review.html#cb23-5" tabindex="-1"></a><span class="co">#&gt; class: RangedSummarizedExperiment </span></span>
-<span id="cb23-6"><a href="summarizedexperiment-review.html#cb23-6" tabindex="-1"></a><span class="co">#&gt; dim: 63677 8 </span></span>
-<span id="cb23-7"><a href="summarizedexperiment-review.html#cb23-7" tabindex="-1"></a><span class="co">#&gt; metadata(1): &#39;&#39;</span></span>
-<span id="cb23-8"><a href="summarizedexperiment-review.html#cb23-8" tabindex="-1"></a><span class="co">#&gt; assays(1): counts</span></span>
-<span id="cb23-9"><a href="summarizedexperiment-review.html#cb23-9" tabindex="-1"></a><span class="co">#&gt; rownames(63677): ENSG00000000003 ENSG00000000005 ... ENSG00000273492 ENSG00000273493</span></span>
-<span id="cb23-10"><a href="summarizedexperiment-review.html#cb23-10" tabindex="-1"></a><span class="co">#&gt; rowData names(10): gene_id gene_name ... seq_coord_system symbol</span></span>
-<span id="cb23-11"><a href="summarizedexperiment-review.html#cb23-11" tabindex="-1"></a><span class="co">#&gt; colnames(8): SRR1039508 SRR1039509 ... SRR1039520 SRR1039521</span></span>
-<span id="cb23-12"><a href="summarizedexperiment-review.html#cb23-12" tabindex="-1"></a><span class="co">#&gt; colData names(9): SampleName cell ... Sample BioSample</span></span>
-<span id="cb23-13"><a href="summarizedexperiment-review.html#cb23-13" tabindex="-1"></a></span>
-<span id="cb23-14"><a href="summarizedexperiment-review.html#cb23-14" tabindex="-1"></a><span class="do">## To see the data that&#39;s stored in that assay you can do either one of the next commands</span></span>
-<span id="cb23-15"><a href="summarizedexperiment-review.html#cb23-15" tabindex="-1"></a><span class="fu">assay</span>(se)</span>
-<span id="cb23-16"><a href="summarizedexperiment-review.html#cb23-16" tabindex="-1"></a><span class="co">#&gt;                 SRR1039508 SRR1039509 SRR1039512 SRR1039513 SRR1039516 SRR1039517 SRR1039520 SRR1039521</span></span>
-<span id="cb23-17"><a href="summarizedexperiment-review.html#cb23-17" tabindex="-1"></a><span class="co">#&gt; ENSG00000000003        679        448        873        408       1138       1047        770        572</span></span>
-<span id="cb23-18"><a href="summarizedexperiment-review.html#cb23-18" tabindex="-1"></a><span class="co">#&gt; ENSG00000000005          0          0          0          0          0          0          0          0</span></span>
-<span id="cb23-19"><a href="summarizedexperiment-review.html#cb23-19" tabindex="-1"></a><span class="co">#&gt; ENSG00000000419        467        515        621        365        587        799        417        508</span></span>
-<span id="cb23-20"><a href="summarizedexperiment-review.html#cb23-20" tabindex="-1"></a><span class="co">#&gt; ENSG00000000457        260        211        263        164        245        331        233        229</span></span>
-<span id="cb23-21"><a href="summarizedexperiment-review.html#cb23-21" tabindex="-1"></a><span class="co">#&gt; ENSG00000000460         60         55         40         35         78         63         76         60</span></span>
-<span id="cb23-22"><a href="summarizedexperiment-review.html#cb23-22" tabindex="-1"></a><span class="co">#&gt; ENSG00000000938          0          0          2          0          1          0          0          0</span></span>
-<span id="cb23-23"><a href="summarizedexperiment-review.html#cb23-23" tabindex="-1"></a><span class="co">#&gt;  [ reached getOption(&quot;max.print&quot;) -- omitted 63671 rows ]</span></span>
-<span id="cb23-24"><a href="summarizedexperiment-review.html#cb23-24" tabindex="-1"></a><span class="fu">assays</span>(se)<span class="sc">$</span>counts</span>
-<span id="cb23-25"><a href="summarizedexperiment-review.html#cb23-25" tabindex="-1"></a><span class="co">#&gt;                 SRR1039508 SRR1039509 SRR1039512 SRR1039513 SRR1039516 SRR1039517 SRR1039520 SRR1039521</span></span>
-<span id="cb23-26"><a href="summarizedexperiment-review.html#cb23-26" tabindex="-1"></a><span class="co">#&gt; ENSG00000000003        679        448        873        408       1138       1047        770        572</span></span>
-<span id="cb23-27"><a href="summarizedexperiment-review.html#cb23-27" tabindex="-1"></a><span class="co">#&gt; ENSG00000000005          0          0          0          0          0          0          0          0</span></span>
-<span id="cb23-28"><a href="summarizedexperiment-review.html#cb23-28" tabindex="-1"></a><span class="co">#&gt; ENSG00000000419        467        515        621        365        587        799        417        508</span></span>
-<span id="cb23-29"><a href="summarizedexperiment-review.html#cb23-29" tabindex="-1"></a><span class="co">#&gt; ENSG00000000457        260        211        263        164        245        331        233        229</span></span>
-<span id="cb23-30"><a href="summarizedexperiment-review.html#cb23-30" tabindex="-1"></a><span class="co">#&gt; ENSG00000000460         60         55         40         35         78         63         76         60</span></span>
-<span id="cb23-31"><a href="summarizedexperiment-review.html#cb23-31" tabindex="-1"></a><span class="co">#&gt; ENSG00000000938          0          0          2          0          1          0          0          0</span></span>
-<span id="cb23-32"><a href="summarizedexperiment-review.html#cb23-32" tabindex="-1"></a><span class="co">#&gt;  [ reached getOption(&quot;max.print&quot;) -- omitted 63671 rows ]</span></span>
-<span id="cb23-33"><a href="summarizedexperiment-review.html#cb23-33" tabindex="-1"></a></span>
-<span id="cb23-34"><a href="summarizedexperiment-review.html#cb23-34" tabindex="-1"></a><span class="do">## Note that assay() does not support $ operator</span></span>
-<span id="cb23-35"><a href="summarizedexperiment-review.html#cb23-35" tabindex="-1"></a><span class="co"># assay(se)$counts</span></span>
-<span id="cb23-36"><a href="summarizedexperiment-review.html#cb23-36" tabindex="-1"></a></span>
-<span id="cb23-37"><a href="summarizedexperiment-review.html#cb23-37" tabindex="-1"></a><span class="do">## We would have to do:</span></span>
-<span id="cb23-38"><a href="summarizedexperiment-review.html#cb23-38" tabindex="-1"></a><span class="fu">assay</span>(se, <span class="dv">1</span>)</span>
-<span id="cb23-39"><a href="summarizedexperiment-review.html#cb23-39" tabindex="-1"></a><span class="co">#&gt;                 SRR1039508 SRR1039509 SRR1039512 SRR1039513 SRR1039516 SRR1039517 SRR1039520 SRR1039521</span></span>
-<span id="cb23-40"><a href="summarizedexperiment-review.html#cb23-40" tabindex="-1"></a><span class="co">#&gt; ENSG00000000003        679        448        873        408       1138       1047        770        572</span></span>
-<span id="cb23-41"><a href="summarizedexperiment-review.html#cb23-41" tabindex="-1"></a><span class="co">#&gt; ENSG00000000005          0          0          0          0          0          0          0          0</span></span>
-<span id="cb23-42"><a href="summarizedexperiment-review.html#cb23-42" tabindex="-1"></a><span class="co">#&gt; ENSG00000000419        467        515        621        365        587        799        417        508</span></span>
-<span id="cb23-43"><a href="summarizedexperiment-review.html#cb23-43" tabindex="-1"></a><span class="co">#&gt; ENSG00000000457        260        211        263        164        245        331        233        229</span></span>
-<span id="cb23-44"><a href="summarizedexperiment-review.html#cb23-44" tabindex="-1"></a><span class="co">#&gt; ENSG00000000460         60         55         40         35         78         63         76         60</span></span>
-<span id="cb23-45"><a href="summarizedexperiment-review.html#cb23-45" tabindex="-1"></a><span class="co">#&gt; ENSG00000000938          0          0          2          0          1          0          0          0</span></span>
-<span id="cb23-46"><a href="summarizedexperiment-review.html#cb23-46" tabindex="-1"></a><span class="co">#&gt;  [ reached getOption(&quot;max.print&quot;) -- omitted 63671 rows ]</span></span>
-<span id="cb23-47"><a href="summarizedexperiment-review.html#cb23-47" tabindex="-1"></a><span class="fu">assay</span>(se, <span class="st">&quot;counts&quot;</span>)</span>
-<span id="cb23-48"><a href="summarizedexperiment-review.html#cb23-48" tabindex="-1"></a><span class="co">#&gt;                 SRR1039508 SRR1039509 SRR1039512 SRR1039513 SRR1039516 SRR1039517 SRR1039520 SRR1039521</span></span>
-<span id="cb23-49"><a href="summarizedexperiment-review.html#cb23-49" tabindex="-1"></a><span class="co">#&gt; ENSG00000000003        679        448        873        408       1138       1047        770        572</span></span>
-<span id="cb23-50"><a href="summarizedexperiment-review.html#cb23-50" tabindex="-1"></a><span class="co">#&gt; ENSG00000000005          0          0          0          0          0          0          0          0</span></span>
-<span id="cb23-51"><a href="summarizedexperiment-review.html#cb23-51" tabindex="-1"></a><span class="co">#&gt; ENSG00000000419        467        515        621        365        587        799        417        508</span></span>
-<span id="cb23-52"><a href="summarizedexperiment-review.html#cb23-52" tabindex="-1"></a><span class="co">#&gt; ENSG00000000457        260        211        263        164        245        331        233        229</span></span>
-<span id="cb23-53"><a href="summarizedexperiment-review.html#cb23-53" tabindex="-1"></a><span class="co">#&gt; ENSG00000000460         60         55         40         35         78         63         76         60</span></span>
-<span id="cb23-54"><a href="summarizedexperiment-review.html#cb23-54" tabindex="-1"></a><span class="co">#&gt; ENSG00000000938          0          0          2          0          1          0          0          0</span></span>
-<span id="cb23-55"><a href="summarizedexperiment-review.html#cb23-55" tabindex="-1"></a><span class="co">#&gt;  [ reached getOption(&quot;max.print&quot;) -- omitted 63671 rows ]</span></span>
-<span id="cb23-56"><a href="summarizedexperiment-review.html#cb23-56" tabindex="-1"></a></span>
-<span id="cb23-57"><a href="summarizedexperiment-review.html#cb23-57" tabindex="-1"></a><span class="do">## If you use assays() without specifying the element you want to see it shows you the length</span></span>
-<span id="cb23-58"><a href="summarizedexperiment-review.html#cb23-58" tabindex="-1"></a><span class="do">## of the list and the name of each element</span></span>
-<span id="cb23-59"><a href="summarizedexperiment-review.html#cb23-59" tabindex="-1"></a><span class="fu">assays</span>(se)</span>
-<span id="cb23-60"><a href="summarizedexperiment-review.html#cb23-60" tabindex="-1"></a><span class="co">#&gt; List of length 1</span></span>
-<span id="cb23-61"><a href="summarizedexperiment-review.html#cb23-61" tabindex="-1"></a><span class="co">#&gt; names(1): counts</span></span>
-<span id="cb23-62"><a href="summarizedexperiment-review.html#cb23-62" tabindex="-1"></a></span>
-<span id="cb23-63"><a href="summarizedexperiment-review.html#cb23-63" tabindex="-1"></a><span class="do">## To obtain a list of names as a vector you can do:</span></span>
-<span id="cb23-64"><a href="summarizedexperiment-review.html#cb23-64" tabindex="-1"></a><span class="fu">assayNames</span>(se)</span>
-<span id="cb23-65"><a href="summarizedexperiment-review.html#cb23-65" tabindex="-1"></a><span class="co">#&gt; [1] &quot;counts&quot;</span></span>
-<span id="cb23-66"><a href="summarizedexperiment-review.html#cb23-66" tabindex="-1"></a></span>
-<span id="cb23-67"><a href="summarizedexperiment-review.html#cb23-67" tabindex="-1"></a><span class="do">## Which can also be use to change the name of the assays</span></span>
-<span id="cb23-68"><a href="summarizedexperiment-review.html#cb23-68" tabindex="-1"></a><span class="fu">assayNames</span>(se)[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="st">&quot;foo&quot;</span></span>
-<span id="cb23-69"><a href="summarizedexperiment-review.html#cb23-69" tabindex="-1"></a><span class="fu">assayNames</span>(se)</span>
-<span id="cb23-70"><a href="summarizedexperiment-review.html#cb23-70" tabindex="-1"></a><span class="co">#&gt; [1] &quot;foo&quot;</span></span>
-<span id="cb23-71"><a href="summarizedexperiment-review.html#cb23-71" tabindex="-1"></a><span class="fu">assayNames</span>(se)[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="st">&quot;counts&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="summarizedexperiment-review.html#cb24-1" tabindex="-1"></a><span class="do">## In our object, if you look at the part that says assays, we can see that at the moment</span></span>
+<span id="cb24-2"><a href="summarizedexperiment-review.html#cb24-2" tabindex="-1"></a><span class="do">## we only have one with the name &quot;counts&quot;</span></span>
+<span id="cb24-3"><a href="summarizedexperiment-review.html#cb24-3" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="summarizedexperiment-review.html#cb24-4" tabindex="-1"></a>se</span>
+<span id="cb24-5"><a href="summarizedexperiment-review.html#cb24-5" tabindex="-1"></a><span class="co">#&gt; class: RangedSummarizedExperiment </span></span>
+<span id="cb24-6"><a href="summarizedexperiment-review.html#cb24-6" tabindex="-1"></a><span class="co">#&gt; dim: 63677 8 </span></span>
+<span id="cb24-7"><a href="summarizedexperiment-review.html#cb24-7" tabindex="-1"></a><span class="co">#&gt; metadata(1): &#39;&#39;</span></span>
+<span id="cb24-8"><a href="summarizedexperiment-review.html#cb24-8" tabindex="-1"></a><span class="co">#&gt; assays(1): counts</span></span>
+<span id="cb24-9"><a href="summarizedexperiment-review.html#cb24-9" tabindex="-1"></a><span class="co">#&gt; rownames(63677): ENSG00000000003 ENSG00000000005 ... ENSG00000273492 ENSG00000273493</span></span>
+<span id="cb24-10"><a href="summarizedexperiment-review.html#cb24-10" tabindex="-1"></a><span class="co">#&gt; rowData names(10): gene_id gene_name ... seq_coord_system symbol</span></span>
+<span id="cb24-11"><a href="summarizedexperiment-review.html#cb24-11" tabindex="-1"></a><span class="co">#&gt; colnames(8): SRR1039508 SRR1039509 ... SRR1039520 SRR1039521</span></span>
+<span id="cb24-12"><a href="summarizedexperiment-review.html#cb24-12" tabindex="-1"></a><span class="co">#&gt; colData names(9): SampleName cell ... Sample BioSample</span></span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="summarizedexperiment-review.html#cb25-1" tabindex="-1"></a></span>
+<span id="cb25-2"><a href="summarizedexperiment-review.html#cb25-2" tabindex="-1"></a><span class="do">## To see the data that&#39;s stored in that assay you can do either one of the next commands</span></span>
+<span id="cb25-3"><a href="summarizedexperiment-review.html#cb25-3" tabindex="-1"></a><span class="fu">assay</span>(se)</span>
+<span id="cb25-4"><a href="summarizedexperiment-review.html#cb25-4" tabindex="-1"></a><span class="co">#&gt;                 SRR1039508 SRR1039509 SRR1039512 SRR1039513 SRR1039516 SRR1039517 SRR1039520 SRR1039521</span></span>
+<span id="cb25-5"><a href="summarizedexperiment-review.html#cb25-5" tabindex="-1"></a><span class="co">#&gt; ENSG00000000003        679        448        873        408       1138       1047        770        572</span></span>
+<span id="cb25-6"><a href="summarizedexperiment-review.html#cb25-6" tabindex="-1"></a><span class="co">#&gt; ENSG00000000005          0          0          0          0          0          0          0          0</span></span>
+<span id="cb25-7"><a href="summarizedexperiment-review.html#cb25-7" tabindex="-1"></a><span class="co">#&gt; ENSG00000000419        467        515        621        365        587        799        417        508</span></span>
+<span id="cb25-8"><a href="summarizedexperiment-review.html#cb25-8" tabindex="-1"></a><span class="co">#&gt; ENSG00000000457        260        211        263        164        245        331        233        229</span></span>
+<span id="cb25-9"><a href="summarizedexperiment-review.html#cb25-9" tabindex="-1"></a><span class="co">#&gt; ENSG00000000460         60         55         40         35         78         63         76         60</span></span>
+<span id="cb25-10"><a href="summarizedexperiment-review.html#cb25-10" tabindex="-1"></a><span class="co">#&gt; ENSG00000000938          0          0          2          0          1          0          0          0</span></span>
+<span id="cb25-11"><a href="summarizedexperiment-review.html#cb25-11" tabindex="-1"></a><span class="co">#&gt;  [ reached getOption(&quot;max.print&quot;) -- omitted 63671 rows ]</span></span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="summarizedexperiment-review.html#cb26-1" tabindex="-1"></a><span class="fu">assays</span>(se)<span class="sc">$</span>counts</span>
+<span id="cb26-2"><a href="summarizedexperiment-review.html#cb26-2" tabindex="-1"></a><span class="co">#&gt;                 SRR1039508 SRR1039509 SRR1039512 SRR1039513 SRR1039516 SRR1039517 SRR1039520 SRR1039521</span></span>
+<span id="cb26-3"><a href="summarizedexperiment-review.html#cb26-3" tabindex="-1"></a><span class="co">#&gt; ENSG00000000003        679        448        873        408       1138       1047        770        572</span></span>
+<span id="cb26-4"><a href="summarizedexperiment-review.html#cb26-4" tabindex="-1"></a><span class="co">#&gt; ENSG00000000005          0          0          0          0          0          0          0          0</span></span>
+<span id="cb26-5"><a href="summarizedexperiment-review.html#cb26-5" tabindex="-1"></a><span class="co">#&gt; ENSG00000000419        467        515        621        365        587        799        417        508</span></span>
+<span id="cb26-6"><a href="summarizedexperiment-review.html#cb26-6" tabindex="-1"></a><span class="co">#&gt; ENSG00000000457        260        211        263        164        245        331        233        229</span></span>
+<span id="cb26-7"><a href="summarizedexperiment-review.html#cb26-7" tabindex="-1"></a><span class="co">#&gt; ENSG00000000460         60         55         40         35         78         63         76         60</span></span>
+<span id="cb26-8"><a href="summarizedexperiment-review.html#cb26-8" tabindex="-1"></a><span class="co">#&gt; ENSG00000000938          0          0          2          0          1          0          0          0</span></span>
+<span id="cb26-9"><a href="summarizedexperiment-review.html#cb26-9" tabindex="-1"></a><span class="co">#&gt;  [ reached getOption(&quot;max.print&quot;) -- omitted 63671 rows ]</span></span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="summarizedexperiment-review.html#cb27-1" tabindex="-1"></a></span>
+<span id="cb27-2"><a href="summarizedexperiment-review.html#cb27-2" tabindex="-1"></a><span class="do">## Note that assay() does not support $ operator</span></span>
+<span id="cb27-3"><a href="summarizedexperiment-review.html#cb27-3" tabindex="-1"></a><span class="co"># assay(se)$counts</span></span>
+<span id="cb27-4"><a href="summarizedexperiment-review.html#cb27-4" tabindex="-1"></a></span>
+<span id="cb27-5"><a href="summarizedexperiment-review.html#cb27-5" tabindex="-1"></a><span class="do">## We would have to do:</span></span>
+<span id="cb27-6"><a href="summarizedexperiment-review.html#cb27-6" tabindex="-1"></a><span class="fu">assay</span>(se, <span class="dv">1</span>)</span>
+<span id="cb27-7"><a href="summarizedexperiment-review.html#cb27-7" tabindex="-1"></a><span class="co">#&gt;                 SRR1039508 SRR1039509 SRR1039512 SRR1039513 SRR1039516 SRR1039517 SRR1039520 SRR1039521</span></span>
+<span id="cb27-8"><a href="summarizedexperiment-review.html#cb27-8" tabindex="-1"></a><span class="co">#&gt; ENSG00000000003        679        448        873        408       1138       1047        770        572</span></span>
+<span id="cb27-9"><a href="summarizedexperiment-review.html#cb27-9" tabindex="-1"></a><span class="co">#&gt; ENSG00000000005          0          0          0          0          0          0          0          0</span></span>
+<span id="cb27-10"><a href="summarizedexperiment-review.html#cb27-10" tabindex="-1"></a><span class="co">#&gt; ENSG00000000419        467        515        621        365        587        799        417        508</span></span>
+<span id="cb27-11"><a href="summarizedexperiment-review.html#cb27-11" tabindex="-1"></a><span class="co">#&gt; ENSG00000000457        260        211        263        164        245        331        233        229</span></span>
+<span id="cb27-12"><a href="summarizedexperiment-review.html#cb27-12" tabindex="-1"></a><span class="co">#&gt; ENSG00000000460         60         55         40         35         78         63         76         60</span></span>
+<span id="cb27-13"><a href="summarizedexperiment-review.html#cb27-13" tabindex="-1"></a><span class="co">#&gt; ENSG00000000938          0          0          2          0          1          0          0          0</span></span>
+<span id="cb27-14"><a href="summarizedexperiment-review.html#cb27-14" tabindex="-1"></a><span class="co">#&gt;  [ reached getOption(&quot;max.print&quot;) -- omitted 63671 rows ]</span></span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="summarizedexperiment-review.html#cb28-1" tabindex="-1"></a><span class="fu">assay</span>(se, <span class="st">&quot;counts&quot;</span>)</span>
+<span id="cb28-2"><a href="summarizedexperiment-review.html#cb28-2" tabindex="-1"></a><span class="co">#&gt;                 SRR1039508 SRR1039509 SRR1039512 SRR1039513 SRR1039516 SRR1039517 SRR1039520 SRR1039521</span></span>
+<span id="cb28-3"><a href="summarizedexperiment-review.html#cb28-3" tabindex="-1"></a><span class="co">#&gt; ENSG00000000003        679        448        873        408       1138       1047        770        572</span></span>
+<span id="cb28-4"><a href="summarizedexperiment-review.html#cb28-4" tabindex="-1"></a><span class="co">#&gt; ENSG00000000005          0          0          0          0          0          0          0          0</span></span>
+<span id="cb28-5"><a href="summarizedexperiment-review.html#cb28-5" tabindex="-1"></a><span class="co">#&gt; ENSG00000000419        467        515        621        365        587        799        417        508</span></span>
+<span id="cb28-6"><a href="summarizedexperiment-review.html#cb28-6" tabindex="-1"></a><span class="co">#&gt; ENSG00000000457        260        211        263        164        245        331        233        229</span></span>
+<span id="cb28-7"><a href="summarizedexperiment-review.html#cb28-7" tabindex="-1"></a><span class="co">#&gt; ENSG00000000460         60         55         40         35         78         63         76         60</span></span>
+<span id="cb28-8"><a href="summarizedexperiment-review.html#cb28-8" tabindex="-1"></a><span class="co">#&gt; ENSG00000000938          0          0          2          0          1          0          0          0</span></span>
+<span id="cb28-9"><a href="summarizedexperiment-review.html#cb28-9" tabindex="-1"></a><span class="co">#&gt;  [ reached getOption(&quot;max.print&quot;) -- omitted 63671 rows ]</span></span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="summarizedexperiment-review.html#cb29-1" tabindex="-1"></a></span>
+<span id="cb29-2"><a href="summarizedexperiment-review.html#cb29-2" tabindex="-1"></a><span class="do">## If you use assays() without specifying the element you want to see it shows you the length</span></span>
+<span id="cb29-3"><a href="summarizedexperiment-review.html#cb29-3" tabindex="-1"></a><span class="do">## of the list and the name of each element</span></span>
+<span id="cb29-4"><a href="summarizedexperiment-review.html#cb29-4" tabindex="-1"></a><span class="fu">assays</span>(se)</span>
+<span id="cb29-5"><a href="summarizedexperiment-review.html#cb29-5" tabindex="-1"></a><span class="co">#&gt; List of length 1</span></span>
+<span id="cb29-6"><a href="summarizedexperiment-review.html#cb29-6" tabindex="-1"></a><span class="co">#&gt; names(1): counts</span></span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="summarizedexperiment-review.html#cb30-1" tabindex="-1"></a></span>
+<span id="cb30-2"><a href="summarizedexperiment-review.html#cb30-2" tabindex="-1"></a><span class="do">## To obtain a list of names as a vector you can do:</span></span>
+<span id="cb30-3"><a href="summarizedexperiment-review.html#cb30-3" tabindex="-1"></a><span class="fu">assayNames</span>(se)</span>
+<span id="cb30-4"><a href="summarizedexperiment-review.html#cb30-4" tabindex="-1"></a><span class="co">#&gt; [1] &quot;counts&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="summarizedexperiment-review.html#cb31-1" tabindex="-1"></a></span>
+<span id="cb31-2"><a href="summarizedexperiment-review.html#cb31-2" tabindex="-1"></a><span class="do">## Which can also be use to change the name of the assays</span></span>
+<span id="cb31-3"><a href="summarizedexperiment-review.html#cb31-3" tabindex="-1"></a><span class="fu">assayNames</span>(se)[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="st">&quot;foo&quot;</span></span>
+<span id="cb31-4"><a href="summarizedexperiment-review.html#cb31-4" tabindex="-1"></a><span class="fu">assayNames</span>(se)</span>
+<span id="cb31-5"><a href="summarizedexperiment-review.html#cb31-5" tabindex="-1"></a><span class="co">#&gt; [1] &quot;foo&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="summarizedexperiment-review.html#cb32-1" tabindex="-1"></a><span class="fu">assayNames</span>(se)[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="st">&quot;counts&quot;</span></span></code></pre></div>
 <p class="exercise">
 <strong>Exercise 3</strong>:
 Explore the metadata and add a new column that has the library size of each sample.
 </p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="summarizedexperiment-review.html#cb24-1" tabindex="-1"></a><span class="do">## To calculate the library size use</span></span>
-<span id="cb24-2"><a href="summarizedexperiment-review.html#cb24-2" tabindex="-1"></a></span>
-<span id="cb24-3"><a href="summarizedexperiment-review.html#cb24-3" tabindex="-1"></a><span class="fu">apply</span>(<span class="fu">assay</span>(se), <span class="dv">2</span>, sum)</span>
-<span id="cb24-4"><a href="summarizedexperiment-review.html#cb24-4" tabindex="-1"></a><span class="co">#&gt; SRR1039508 SRR1039509 SRR1039512 SRR1039513 SRR1039516 SRR1039517 SRR1039520 SRR1039521 </span></span>
-<span id="cb24-5"><a href="summarizedexperiment-review.html#cb24-5" tabindex="-1"></a><span class="co">#&gt;   20637971   18809481   25348649   15163415   24448408   30818215   19126151   21164133</span></span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="summarizedexperiment-review.html#cb33-1" tabindex="-1"></a><span class="do">## To calculate the library size use</span></span>
+<span id="cb33-2"><a href="summarizedexperiment-review.html#cb33-2" tabindex="-1"></a></span>
+<span id="cb33-3"><a href="summarizedexperiment-review.html#cb33-3" tabindex="-1"></a><span class="fu">apply</span>(<span class="fu">assay</span>(se), <span class="dv">2</span>, sum)</span>
+<span id="cb33-4"><a href="summarizedexperiment-review.html#cb33-4" tabindex="-1"></a><span class="co">#&gt; SRR1039508 SRR1039509 SRR1039512 SRR1039513 SRR1039516 SRR1039517 SRR1039520 SRR1039521 </span></span>
+<span id="cb33-5"><a href="summarizedexperiment-review.html#cb33-5" tabindex="-1"></a><span class="co">#&gt;   20637971   18809481   25348649   15163415   24448408   30818215   19126151   21164133</span></span></code></pre></div>
 </div>
 <div id="solutions-1" class="section level2 hasAnchor" number="3.4">
 <h2><span class="header-section-number">3.4</span> Solutions<a href="summarizedexperiment-review.html#solutions-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -598,39 +598,39 @@ font-family: sans-serif;
 <p class="solution">
 <strong>Solution 1</strong>:
 </p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="summarizedexperiment-review.html#cb25-1" tabindex="-1"></a><span class="do">## For a), dim() gives the desired answer</span></span>
-<span id="cb25-2"><a href="summarizedexperiment-review.html#cb25-2" tabindex="-1"></a></span>
-<span id="cb25-3"><a href="summarizedexperiment-review.html#cb25-3" tabindex="-1"></a><span class="fu">dim</span>(se)</span>
-<span id="cb25-4"><a href="summarizedexperiment-review.html#cb25-4" tabindex="-1"></a><span class="co">#&gt; [1] 63677     8</span></span>
-<span id="cb25-5"><a href="summarizedexperiment-review.html#cb25-5" tabindex="-1"></a></span>
-<span id="cb25-6"><a href="summarizedexperiment-review.html#cb25-6" tabindex="-1"></a><span class="do">## For b),</span></span>
-<span id="cb25-7"><a href="summarizedexperiment-review.html#cb25-7" tabindex="-1"></a></span>
-<span id="cb25-8"><a href="summarizedexperiment-review.html#cb25-8" tabindex="-1"></a><span class="fu">colData</span>(se)[<span class="fu">colData</span>(se)<span class="sc">$</span>dex <span class="sc">==</span> <span class="st">&quot;trt&quot;</span>, ]</span>
-<span id="cb25-9"><a href="summarizedexperiment-review.html#cb25-9" tabindex="-1"></a><span class="co">#&gt; DataFrame with 4 rows and 9 columns</span></span>
-<span id="cb25-10"><a href="summarizedexperiment-review.html#cb25-10" tabindex="-1"></a><span class="co">#&gt;            SampleName     cell      dex    albut        Run avgLength Experiment    Sample    BioSample</span></span>
-<span id="cb25-11"><a href="summarizedexperiment-review.html#cb25-11" tabindex="-1"></a><span class="co">#&gt;              &lt;factor&gt; &lt;factor&gt; &lt;factor&gt; &lt;factor&gt;   &lt;factor&gt; &lt;integer&gt;   &lt;factor&gt;  &lt;factor&gt;     &lt;factor&gt;</span></span>
-<span id="cb25-12"><a href="summarizedexperiment-review.html#cb25-12" tabindex="-1"></a><span class="co">#&gt; SRR1039509 GSM1275863  N61311       trt    untrt SRR1039509       126  SRX384346 SRS508567 SAMN02422675</span></span>
-<span id="cb25-13"><a href="summarizedexperiment-review.html#cb25-13" tabindex="-1"></a><span class="co">#&gt; SRR1039513 GSM1275867  N052611      trt    untrt SRR1039513        87  SRX384350 SRS508572 SAMN02422670</span></span>
-<span id="cb25-14"><a href="summarizedexperiment-review.html#cb25-14" tabindex="-1"></a><span class="co">#&gt; SRR1039517 GSM1275871  N080611      trt    untrt SRR1039517       126  SRX384354 SRS508576 SAMN02422673</span></span>
-<span id="cb25-15"><a href="summarizedexperiment-review.html#cb25-15" tabindex="-1"></a><span class="co">#&gt; SRR1039521 GSM1275875  N061011      trt    untrt SRR1039521        98  SRX384358 SRS508580 SAMN02422677</span></span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="summarizedexperiment-review.html#cb34-1" tabindex="-1"></a><span class="do">## For a), dim() gives the desired answer</span></span>
+<span id="cb34-2"><a href="summarizedexperiment-review.html#cb34-2" tabindex="-1"></a></span>
+<span id="cb34-3"><a href="summarizedexperiment-review.html#cb34-3" tabindex="-1"></a><span class="fu">dim</span>(se)</span>
+<span id="cb34-4"><a href="summarizedexperiment-review.html#cb34-4" tabindex="-1"></a><span class="co">#&gt; [1] 63677     8</span></span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="summarizedexperiment-review.html#cb35-1" tabindex="-1"></a></span>
+<span id="cb35-2"><a href="summarizedexperiment-review.html#cb35-2" tabindex="-1"></a><span class="do">## For b),</span></span>
+<span id="cb35-3"><a href="summarizedexperiment-review.html#cb35-3" tabindex="-1"></a></span>
+<span id="cb35-4"><a href="summarizedexperiment-review.html#cb35-4" tabindex="-1"></a><span class="fu">colData</span>(se)[<span class="fu">colData</span>(se)<span class="sc">$</span>dex <span class="sc">==</span> <span class="st">&quot;trt&quot;</span>, ]</span>
+<span id="cb35-5"><a href="summarizedexperiment-review.html#cb35-5" tabindex="-1"></a><span class="co">#&gt; DataFrame with 4 rows and 9 columns</span></span>
+<span id="cb35-6"><a href="summarizedexperiment-review.html#cb35-6" tabindex="-1"></a><span class="co">#&gt;            SampleName     cell      dex    albut        Run avgLength Experiment    Sample    BioSample</span></span>
+<span id="cb35-7"><a href="summarizedexperiment-review.html#cb35-7" tabindex="-1"></a><span class="co">#&gt;              &lt;factor&gt; &lt;factor&gt; &lt;factor&gt; &lt;factor&gt;   &lt;factor&gt; &lt;integer&gt;   &lt;factor&gt;  &lt;factor&gt;     &lt;factor&gt;</span></span>
+<span id="cb35-8"><a href="summarizedexperiment-review.html#cb35-8" tabindex="-1"></a><span class="co">#&gt; SRR1039509 GSM1275863  N61311       trt    untrt SRR1039509       126  SRX384346 SRS508567 SAMN02422675</span></span>
+<span id="cb35-9"><a href="summarizedexperiment-review.html#cb35-9" tabindex="-1"></a><span class="co">#&gt; SRR1039513 GSM1275867  N052611      trt    untrt SRR1039513        87  SRX384350 SRS508572 SAMN02422670</span></span>
+<span id="cb35-10"><a href="summarizedexperiment-review.html#cb35-10" tabindex="-1"></a><span class="co">#&gt; SRR1039517 GSM1275871  N080611      trt    untrt SRR1039517       126  SRX384354 SRS508576 SAMN02422673</span></span>
+<span id="cb35-11"><a href="summarizedexperiment-review.html#cb35-11" tabindex="-1"></a><span class="co">#&gt; SRR1039521 GSM1275875  N061011      trt    untrt SRR1039521        98  SRX384358 SRS508580 SAMN02422677</span></span></code></pre></div>
 <p class="solution">
 <strong>Solution 2</strong>:
 </p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="summarizedexperiment-review.html#cb26-1" tabindex="-1"></a><span class="do">## There are multiple ways to do it</span></span>
-<span id="cb26-2"><a href="summarizedexperiment-review.html#cb26-2" tabindex="-1"></a></span>
-<span id="cb26-3"><a href="summarizedexperiment-review.html#cb26-3" tabindex="-1"></a><span class="fu">assay</span>(se, <span class="st">&quot;logcounts&quot;</span>) <span class="ot">&lt;-</span> <span class="fu">log10</span>(<span class="fu">assay</span>(se, <span class="st">&quot;counts&quot;</span>))</span>
-<span id="cb26-4"><a href="summarizedexperiment-review.html#cb26-4" tabindex="-1"></a></span>
-<span id="cb26-5"><a href="summarizedexperiment-review.html#cb26-5" tabindex="-1"></a><span class="fu">assays</span>(se)<span class="sc">$</span>logcounts_v2 <span class="ot">&lt;-</span> <span class="fu">log10</span>(<span class="fu">assays</span>(se)<span class="sc">$</span>counts)</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="summarizedexperiment-review.html#cb36-1" tabindex="-1"></a><span class="do">## There are multiple ways to do it</span></span>
+<span id="cb36-2"><a href="summarizedexperiment-review.html#cb36-2" tabindex="-1"></a></span>
+<span id="cb36-3"><a href="summarizedexperiment-review.html#cb36-3" tabindex="-1"></a><span class="fu">assay</span>(se, <span class="st">&quot;logcounts&quot;</span>) <span class="ot">&lt;-</span> <span class="fu">log10</span>(<span class="fu">assay</span>(se, <span class="st">&quot;counts&quot;</span>))</span>
+<span id="cb36-4"><a href="summarizedexperiment-review.html#cb36-4" tabindex="-1"></a></span>
+<span id="cb36-5"><a href="summarizedexperiment-review.html#cb36-5" tabindex="-1"></a><span class="fu">assays</span>(se)<span class="sc">$</span>logcounts_v2 <span class="ot">&lt;-</span> <span class="fu">log10</span>(<span class="fu">assays</span>(se)<span class="sc">$</span>counts)</span></code></pre></div>
 <p class="solution">
 <strong>Solution 3</strong>:
 </p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="summarizedexperiment-review.html#cb27-1" tabindex="-1"></a><span class="do">## To add the library size we an use..</span></span>
-<span id="cb27-2"><a href="summarizedexperiment-review.html#cb27-2" tabindex="-1"></a></span>
-<span id="cb27-3"><a href="summarizedexperiment-review.html#cb27-3" tabindex="-1"></a><span class="fu">colData</span>(se)<span class="sc">$</span>library_size <span class="ot">&lt;-</span> <span class="fu">apply</span>(<span class="fu">assay</span>(se), <span class="dv">2</span>, sum)</span>
-<span id="cb27-4"><a href="summarizedexperiment-review.html#cb27-4" tabindex="-1"></a></span>
-<span id="cb27-5"><a href="summarizedexperiment-review.html#cb27-5" tabindex="-1"></a><span class="fu">names</span>(<span class="fu">colData</span>(se))</span>
-<span id="cb27-6"><a href="summarizedexperiment-review.html#cb27-6" tabindex="-1"></a><span class="co">#&gt;  [1] &quot;SampleName&quot;   &quot;cell&quot;         &quot;dex&quot;          &quot;albut&quot;        &quot;Run&quot;          &quot;avgLength&quot;    &quot;Experiment&quot;  </span></span>
-<span id="cb27-7"><a href="summarizedexperiment-review.html#cb27-7" tabindex="-1"></a><span class="co">#&gt;  [8] &quot;Sample&quot;       &quot;BioSample&quot;    &quot;library_size&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="summarizedexperiment-review.html#cb37-1" tabindex="-1"></a><span class="do">## To add the library size we an use..</span></span>
+<span id="cb37-2"><a href="summarizedexperiment-review.html#cb37-2" tabindex="-1"></a></span>
+<span id="cb37-3"><a href="summarizedexperiment-review.html#cb37-3" tabindex="-1"></a><span class="fu">colData</span>(se)<span class="sc">$</span>library_size <span class="ot">&lt;-</span> <span class="fu">apply</span>(<span class="fu">assay</span>(se), <span class="dv">2</span>, sum)</span>
+<span id="cb37-4"><a href="summarizedexperiment-review.html#cb37-4" tabindex="-1"></a></span>
+<span id="cb37-5"><a href="summarizedexperiment-review.html#cb37-5" tabindex="-1"></a><span class="fu">names</span>(<span class="fu">colData</span>(se))</span>
+<span id="cb37-6"><a href="summarizedexperiment-review.html#cb37-6" tabindex="-1"></a><span class="co">#&gt;  [1] &quot;SampleName&quot;   &quot;cell&quot;         &quot;dex&quot;          &quot;albut&quot;        &quot;Run&quot;          &quot;avgLength&quot;    &quot;Experiment&quot;  </span></span>
+<span id="cb37-7"><a href="summarizedexperiment-review.html#cb37-7" tabindex="-1"></a><span class="co">#&gt;  [8] &quot;Sample&quot;       &quot;BioSample&quot;    &quot;library_size&quot;</span></span></code></pre></div>
 
 </div>
 </div>
