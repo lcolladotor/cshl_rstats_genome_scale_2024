@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>24 Interactive SummarizedExperiment visualizations | Statistical Analysis of Genome Scale Data 2024</title>
-  <meta name="description" content="24 Interactive SummarizedExperiment visualizations | Statistical Analysis of Genome Scale Data 2024" />
+  <title>25 scRNA-seq data analysis overview | Statistical Analysis of Genome Scale Data 2024</title>
+  <meta name="description" content="25 scRNA-seq data analysis overview | Statistical Analysis of Genome Scale Data 2024" />
   <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="24 Interactive SummarizedExperiment visualizations | Statistical Analysis of Genome Scale Data 2024" />
+  <meta property="og:title" content="25 scRNA-seq data analysis overview | Statistical Analysis of Genome Scale Data 2024" />
   <meta property="og:type" content="book" />
   
   
   <meta name="github-repo" content="lcolladotor/cshl_rstats_genome_scale_2024" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="24 Interactive SummarizedExperiment visualizations | Statistical Analysis of Genome Scale Data 2024" />
+  <meta name="twitter:title" content="25 scRNA-seq data analysis overview | Statistical Analysis of Genome Scale Data 2024" />
   
   
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="icon_32.png" type="image/x-icon" />
-<link rel="prev" href="making-your-own-website-with-postcards.html"/>
-<link rel="next" href="scrna-seq-data-analysis-overview.html"/>
+<link rel="prev" href="interactive-summarizedexperiment-visualizations.html"/>
+
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -426,319 +426,45 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="interactive-summarizedexperiment-visualizations" class="section level1 hasAnchor" number="24">
-<h1><span class="header-section-number">24</span> Interactive SummarizedExperiment visualizations<a href="interactive-summarizedexperiment-visualizations.html#interactive-summarizedexperiment-visualizations" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>Instructor: Melissa Mayén Quiroz</p>
-<blockquote>
-<p>How can you make plots from “SummarizedExperiment” objects without having to write any code?</p>
-<p>The answer is with “iSEE”</p>
-</blockquote>
-<ul>
-<li><a href="http://bioconductor.org/packages/iSEE" class="uri">http://bioconductor.org/packages/iSEE</a></li>
-<li><a href="http://bioconductor.org/packages/release/bioc/vignettes/iSEE/inst/doc/basic.html" class="uri">http://bioconductor.org/packages/release/bioc/vignettes/iSEE/inst/doc/basic.html</a></li>
-</ul>
-<p>iSEE is a Bioconductor package that provides an interactive Shiny-based graphical user interface for exploring data stored in SummarizedExperiment objects (Rue-Albrecht et al. 2018).</p>
-<div id="classes-for-isee" class="section level2 hasAnchor" number="24.1">
-<h2><span class="header-section-number">24.1</span> Classes for iSEE<a href="interactive-summarizedexperiment-visualizations.html#classes-for-isee" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>SummarizedExperiment (SE) and SingleCellExperiment (SCE) are classes in R. Classes serve as templates for creating objects that contain data and methods for manipulating those data.</p>
-<div id="summarizedexperiment-class" class="section level3 hasAnchor" number="24.1.1">
-<h3><span class="header-section-number">24.1.1</span> SummarizedExperiment class<a href="interactive-summarizedexperiment-visualizations.html#summarizedexperiment-class" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<ul>
-<li><p>Assay Data: The primary data matrix containing quantitative measurements, such as gene expression values or read counts. Rows represent features (e.g., genes, transcripts) and columns represent samples (e.g., experimental conditions, individuals).</p></li>
-<li><p>Row Metadata (rowData): Additional information about the features in the assay data. This can include annotations, identifiers, genomic coordinates, and other relevant information.</p></li>
-<li><p>Column Metadata (colData): Additional information about the samples in the assay data. This can include sample annotations, experimental conditions, treatment groups, and other relevant information.</p></li>
-<li><p>Metadata: Additional information about the experiment.</p></li>
-</ul>
+<div id="scrna-seq-data-analysis-overview" class="section level1 hasAnchor" number="25">
+<h1><span class="header-section-number">25</span> scRNA-seq data analysis overview<a href="scrna-seq-data-analysis-overview.html#scrna-seq-data-analysis-overview" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="single-cell-rna-sequencing-overview" class="section level2 hasAnchor" number="25.1">
+<h2><span class="header-section-number">25.1</span> Single cell RNA sequencing overview<a href="scrna-seq-data-analysis-overview.html#single-cell-rna-sequencing-overview" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 </div>
-<div id="singlecellexperiment" class="section level3 hasAnchor" number="24.1.2">
-<h3><span class="header-section-number">24.1.2</span> SingleCellExperiment<a href="interactive-summarizedexperiment-visualizations.html#singlecellexperiment" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>This object is specifically designed to store and analyze single-cell RNA sequencing (scRNA-seq) data. It extends the SummarizedExperiment class to include specialized features for single-cell data, such as cell identifiers, dimensionality reduction results, and methods for quality control and normalization.</p>
-<ul>
-<li><p>Assay Data: The primary data matrix containing gene expression values or other measurements. Rows represent genes and columns represent cells.</p></li>
-<li><p>ColData (Column Metadata): Additional information about each cell, such as cell type, experimental condition, or any other relevant metadata.</p></li>
-<li><p>RowData (Row Metadata): Additional information about each gene, such as gene symbols, genomic coordinates, or functional annotations.</p></li>
-<li><p>ReducedDims: Dimensionality reduction results, such as “principal component analysis” (PCA), “t-distributed stochastic neighbor embedding” (t-SNE), and
-“Uniform Manifold Approximation and Projection” (UMAP), used for visualizing and clustering cells.</p></li>
-<li><p>SpikeNames and pikeMatrix: Names of spike-in control genes used for normalization and Spike-in counts matrix, if spike-in controls are used</p></li>
-<li><p>Metadata: Additional metadata about the experiment.</p></li>
-</ul>
+<div id="the-singlecellexperiment-class" class="section level2 hasAnchor" number="25.2">
+<h2><span class="header-section-number">25.2</span> The SingleCellExperiment class<a href="scrna-seq-data-analysis-overview.html#the-singlecellexperiment-class" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>*** Agregar library(“scRNAseq”) !!! <strong><em>
+</em></strong> BiocManager::install(“OSCA.intro”) !!! ***</p>
 </div>
+<div id="quality-control" class="section level2 hasAnchor" number="25.3">
+<h2><span class="header-section-number">25.3</span> Quality Control<a href="scrna-seq-data-analysis-overview.html#quality-control" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 </div>
-<div id="getting-started-with-isee" class="section level2 hasAnchor" number="24.2">
-<h2><span class="header-section-number">24.2</span> Getting Started with iSEE<a href="interactive-summarizedexperiment-visualizations.html#getting-started-with-isee" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p><a href="chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://bioconductor.org/packages/3.19/bioc/manuals/iSEE/man/iSEE.pdf">Reference manual</a></p>
-<p>Adapted from <a href="https://www.bioconductor.org/packages/release/bioc/vignettes/iSEE/inst/doc/basic.html">The iSEE User’s Guide</a></p>
-<ul>
-<li>Installation (version “4.4”). In this case, the package is already installed so we just need to load it.</li>
-</ul>
-<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="interactive-summarizedexperiment-visualizations.html#cb171-1" tabindex="-1"></a><span class="co"># if (!require(&quot;BiocManager&quot;, quietly = TRUE))</span></span>
-<span id="cb171-2"><a href="interactive-summarizedexperiment-visualizations.html#cb171-2" tabindex="-1"></a><span class="co">#     install.packages(&quot;BiocManager&quot;)</span></span>
-<span id="cb171-3"><a href="interactive-summarizedexperiment-visualizations.html#cb171-3" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb171-4"><a href="interactive-summarizedexperiment-visualizations.html#cb171-4" tabindex="-1"></a><span class="co"># BiocManager::install(&quot;iSEE&quot;)</span></span>
-<span id="cb171-5"><a href="interactive-summarizedexperiment-visualizations.html#cb171-5" tabindex="-1"></a></span>
-<span id="cb171-6"><a href="interactive-summarizedexperiment-visualizations.html#cb171-6" tabindex="-1"></a><span class="fu">library</span>(iSEE)</span></code></pre></div>
-<ul>
-<li>Documentation</li>
-</ul>
-<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="interactive-summarizedexperiment-visualizations.html#cb172-1" tabindex="-1"></a><span class="fu">browseVignettes</span>(<span class="st">&quot;iSEE&quot;</span>)</span></code></pre></div>
-<ul>
-<li>Use (simple launch):</li>
-</ul>
-<p>If you have a “SummarizedExperiment” object (se) or an instance of a subclass, like a “SingleCellExperiment” object (sce), you can launch an iSEE app by running:</p>
-<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="interactive-summarizedexperiment-visualizations.html#cb173-1" tabindex="-1"></a><span class="do">## Launch iSEE for the se (&quot;SummarizedExperiment&quot; object)</span></span>
-<span id="cb173-2"><a href="interactive-summarizedexperiment-visualizations.html#cb173-2" tabindex="-1"></a><span class="fu">iSEE</span>(se)</span>
-<span id="cb173-3"><a href="interactive-summarizedexperiment-visualizations.html#cb173-3" tabindex="-1"></a></span>
-<span id="cb173-4"><a href="interactive-summarizedexperiment-visualizations.html#cb173-4" tabindex="-1"></a><span class="do">## Launch iSEE for the sce (&quot;SingleCellExperiment&quot; object)</span></span>
-<span id="cb173-5"><a href="interactive-summarizedexperiment-visualizations.html#cb173-5" tabindex="-1"></a><span class="fu">iSEE</span>(sce)</span></code></pre></div>
+<div id="normalization" class="section level2 hasAnchor" number="25.4">
+<h2><span class="header-section-number">25.4</span> Normalization<a href="scrna-seq-data-analysis-overview.html#normalization" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 </div>
-<div id="description-of-the-user-interface" class="section level2 hasAnchor" number="24.3">
-<h2><span class="header-section-number">24.3</span> Description of the user interface<a href="interactive-summarizedexperiment-visualizations.html#description-of-the-user-interface" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>** Insertat imángen !!! **</p>
-<p>By default, the app starts with a dashboard that contains one panel or table of each type. By opening the collapsible panels named “Data parameters”, “Visual parameters”, and “Selection parameters” under each plot, we can control the content and appearance of each panel.</p>
-<p>** introductory tour:</p>
-<p>In the upper right corner there is a question mark icon. Clicking it and then on the hand button you can have an introductory tour. During this tour, you will be taken through the different components of the iSEE user interface and learn the basic usage mechanisms by doing small actions guided by the tutorial: the highlighted elements will be responding to your actions, while the rest of the UI will be shaded.
-**</p>
-<div id="header" class="section level3 hasAnchor" number="24.3.1">
-<h3><span class="header-section-number">24.3.1</span> Header<a href="interactive-summarizedexperiment-visualizations.html#header" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>The layout of the iSEE user interface uses the “shinydashboard” package. The dashboard header contains four dropdown menus.</p>
-<ul>
-<li>The “Organization” menu, which is identified by an icon displaying multiple windows</li>
-<li>“Export” dropdown menu, which is identified by a download icon</li>
-<li>The “Documentation” dropdown menu which is identified by aquestion mark icon</li>
-<li>The “Additional Information” dropdown menu which is identified by the information icon (i)</li>
-</ul>
-<div id="organization-menu" class="section level4 hasAnchor" number="24.3.1.1">
-<h4><span class="header-section-number">24.3.1.1</span> Organization menu<a href="interactive-summarizedexperiment-visualizations.html#organization-menu" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>The “Organization” dropdown menu, dentified by an icon displaying multiple windows, includes:</p>
-<ul>
-<li>“Organize panels” button opens a modal window that contains:
-<ul>
-<li>A selectize input to add, remove, and reorder panels in the main interface.</li>
-<li>Two inputs to control the width and height, respectively, of each panel selected above.</li>
-</ul></li>
-<li>The “Examine panel chart” feature, identified by a chain icon, allows you to visualize the relationships and point selections among your visible plot and table panels. Each panel is represented by a node, color-coded to match the app. (This functionality is particularly useful in sessions with many panels, helping you to see the structure of how panels send and receive data point selections).</li>
-</ul>
-<p>** #### Export dropdown menu</p>
-<p>The “Export” dropdown menu, identified by a download icon, includes:</p>
-<ul>
-<li><p>The “Download panel output” feature that allows you to download a zip folder containing the currently displayed panel content, including high-resolution figures and table contents as CSV files.</p></li>
-<li><p>The “Extract the R code” feature which provides a way to record the exact code that reproduces the current state of each plot. Clicking on this button opens a popup window with a text editor displaying the formatted code with syntax highlighting. You can copy this code, including initial lines and sessionInfo() commands, to your clipboard for inclusion in your analysis report or script. This code can then be further edited for publication.</p></li>
-<li><p>“Display panel settings” lets you export the code defining the current state of the panels in the interface. This is useful for pre-configuring an iSEE instance to start in the current state rather than with the default set of panels.
-**</p></li>
-</ul>
+<div id="feature-selection" class="section level2 hasAnchor" number="25.5">
+<h2><span class="header-section-number">25.5</span> Feature selection<a href="scrna-seq-data-analysis-overview.html#feature-selection" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 </div>
-<div id="documentation-menu" class="section level4 hasAnchor" number="24.3.1.2">
-<h4><span class="header-section-number">24.3.1.2</span> Documentation Menu<a href="interactive-summarizedexperiment-visualizations.html#documentation-menu" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>The “Documentation” dropdown, accessible through the question mark icon, includes:</p>
-<ul>
-<li><p>Interactive Tour: Launches a guided tour of iSEE, teaching basic usage interactively.</p></li>
-<li><p>Open Vignette: Displays the iSEE vignette, either locally or from the Bioconductor project site.</p></li>
-</ul>
+<div id="dimensionality-reduction" class="section level2 hasAnchor" number="25.6">
+<h2><span class="header-section-number">25.6</span> Dimensionality reduction<a href="scrna-seq-data-analysis-overview.html#dimensionality-reduction" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 </div>
-<div id="additional-information-menu" class="section level4 hasAnchor" number="24.3.1.3">
-<h4><span class="header-section-number">24.3.1.3</span> Additional Information Menu<a href="interactive-summarizedexperiment-visualizations.html#additional-information-menu" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>The “Additional Information” dropdown, accessible through the information icon (i), includes:</p>
-<ul>
-<li>About this Session: Shows the output of the sessionInfo() function in a popup.</li>
-<li>About iSEE: Provides information on the development team, licensing, citation, and links to the GitHub repository for following development and contributing suggestions.</li>
-</ul>
+<div id="clustering" class="section level2 hasAnchor" number="25.7">
+<h2><span class="header-section-number">25.7</span> Clustering<a href="scrna-seq-data-analysis-overview.html#clustering" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 </div>
+<div id="marker-gene-detection" class="section level2 hasAnchor" number="25.8">
+<h2><span class="header-section-number">25.8</span> Marker gene detection<a href="scrna-seq-data-analysis-overview.html#marker-gene-detection" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 </div>
-<div id="panel-types" class="section level3 hasAnchor" number="24.3.2">
-<h3><span class="header-section-number">24.3.2</span> Panel types<a href="interactive-summarizedexperiment-visualizations.html#panel-types" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>The main element in the body of iSEE is the combination of panels, generated (and optionally linked to one another) according to your actions. There are currently eight standard panel types that can be generated with iSEE:</p>
-<ul>
-<li>Reduced dimension plot</li>
-<li>Column data table</li>
-<li>Column data plot</li>
-<li>Feature assay plot</li>
-<li>Row data table</li>
-<li>Row data plot</li>
-<li>Sample assay plot</li>
-<li>Complex heatmap</li>
-</ul>
-<p>In addition, custom panel types can be defined.</p>
-</div>
-<div id="parameter-sets" class="section level3 hasAnchor" number="24.3.3">
-<h3><span class="header-section-number">24.3.3</span> Parameter sets<a href="interactive-summarizedexperiment-visualizations.html#parameter-sets" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>For each standard plot panel, three different sets of parameters will be available in collapsible boxes:</p>
-<ul>
-<li><p>“Data parameters”, to control parameters specific to each type of plot.</p></li>
-<li><p>“Visual parameters”, to specify parameter s that will determine the aspect of the plot, in terms of coloring, point features, and more (e.g., legend placement, font size).</p></li>
-<li><p>“Selection parameters” to control the incoming point selection and link relationships to other plots.</p></li>
-</ul>
-</div>
-<div id="reduced-dimension-plots" class="section level3 hasAnchor" number="24.3.4">
-<h3><span class="header-section-number">24.3.4</span> Reduced dimension plots<a href="interactive-summarizedexperiment-visualizations.html#reduced-dimension-plots" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>If a “SingleCellExperiment” object is supplied to the iSEE function, reduced dimension results are extracted from the reducedDim slot.
-Examples include low-dimensional embeddings from principal components analysis (PCA) or t-distributed stochastic neighbour embedding (t-SNE). These results are used to construct a two-dimensional Reduced dimension plot where each point is a sample, to facilitate efficient exploration of high-dimensional datasets. The “Data parameters” control the reducedDim slot to be displayed, as well as the two dimensions to plot against each other.</p>
-<p>** Note that this builtin panel does not compute reduced dimension embeddings; they must be precomputed and available in the object provided to the iSEE function. Nevertheless, custom panels - such as the iSEEu DynamicReducedDimensionPlot can be developed and used to enable such features. **</p>
-</div>
-<div id="column-data-plots" class="section level3 hasAnchor" number="24.3.5">
-<h3><span class="header-section-number">24.3.5</span> Column data plots<a href="interactive-summarizedexperiment-visualizations.html#column-data-plots" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>A Column data plot visualizes sample metadata contained in column metadata. Different fields can be used for the x- and y-axes by selecting appropriate values in the “Data parameters” box. This plot can assume various forms, depending on the nature of the data on the x- and y-axes:</p>
-<ul>
-<li><p>If the y-axis is continuous and the x-axis is categorical, violin plots are generated (grouped by the x-axis factor).</p></li>
-<li><p>If the y-axis is categorical and the x-axis is continuous, horizontal violin plots are generated (grouped by the y-axis factor).</p></li>
-<li><p>If both axes are continuous, a scatter plot is generated. This enables the use of contours that are overlaid on top of the plot, check the “Other” box to see the available options.</p></li>
-<li><p>If both axes are categorical, a plot of squares (Hinton plot) is generated where the area of each square is proportional to the number of samples within each combination of factor levels.</p></li>
-</ul>
-</div>
-<div id="feature-assay-plots" class="section level3 hasAnchor" number="24.3.6">
-<h3><span class="header-section-number">24.3.6</span> Feature assay plots<a href="interactive-summarizedexperiment-visualizations.html#feature-assay-plots" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>A Feature assay plot visualizes the assayed values (e.g., gene expression) for a particular feature (e.g., gene) across the samples on the y-axis. This usually results in a (grouped) violin plot, if the x-axis is set to “None” or a categorical variable; or a scatter plot, if the x-axis is another continuous variable.</p>
-<p>** Gene selection for the y-axis can be achieved by using a linked row data table in another panel. Clicking on a row in the table automatically changes the assayed values plotted on the y-axis. Alternatively, the row name can be directly entered as text that corresponds to an entry of rownames(se). (This is not effective if se does not contain row names.) **</p>
-</div>
-<div id="row-data-plots" class="section level3 hasAnchor" number="24.3.7">
-<h3><span class="header-section-number">24.3.7</span> Row data plots<a href="interactive-summarizedexperiment-visualizations.html#row-data-plots" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>A Row data plot allows the visualization of information stored in the rowData slot of a “SummarizedExperiment” object. Its behavior mirrors the implementation for the Column data plot, and correspondingly this plot can assume various forms depending on whether the data are categorical or continuous.</p>
-</div>
-<div id="sample-assay-plots" class="section level3 hasAnchor" number="24.3.8">
-<h3><span class="header-section-number">24.3.8</span> Sample assay plots<a href="interactive-summarizedexperiment-visualizations.html#sample-assay-plots" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>A Sample assay plot visualizes the assayed values (e.g., gene expression) for a particular sample (e.g., cell) across the features on the y-axis.</p>
-<p>This usually results in a (grouped) violin plot, if the x-axis is set to “None” or a categorical variable (e.g., gene biotype); or a scatter plot, if the x-axis is another continuous variable.</p>
-<p>Notably, the x-axis covariate can also be set to:</p>
-<ul>
-<li><p>A discrete row data covariates (e.g., gene biotype), to stratify the distribution of assayed values</p></li>
-<li><p>A continuous row data covariate (e.g., count of cells expressing each gene)</p></li>
-<li><p>Another sample, to visualize and compare the assayed values in any two samples.</p></li>
-</ul>
-</div>
-<div id="row-data-tables" class="section level3 hasAnchor" number="24.3.9">
-<h3><span class="header-section-number">24.3.9</span> Row data tables<a href="interactive-summarizedexperiment-visualizations.html#row-data-tables" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>A Row data table contains the values of the rowData slot. If none are available, a column named Present is added and set to TRUE for all features, to avoid issues with ‘DT::datatable’ and an ‘empty DataFrame’.</p>
-<p>** Typically, these tables are used to link to other plots to determine the features to use for plotting or coloring. **</p>
-</div>
-<div id="column-data-tables" class="section level3 hasAnchor" number="24.3.10">
-<h3><span class="header-section-number">24.3.10</span> Column data tables<a href="interactive-summarizedexperiment-visualizations.html#column-data-tables" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>A Column data table contains the values of the colData slot. Its behavior mirrors the implementation for the Row data table. Correspondingly, if none are available, a column named Present is added and set to TRUE for all samples.</p>
-<p>** Typically, these tables are used to link to other plots to determine the samples to use for plotting or coloring. **</p>
-</div>
-<div id="heat-maps-1" class="section level3 hasAnchor" number="24.3.11">
-<h3><span class="header-section-number">24.3.11</span> Heat maps<a href="interactive-summarizedexperiment-visualizations.html#heat-maps-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Heat map panels provide a compact overview of the data for multiple features in the form of color-coded matrices. These correspond to the assays stored in the SCE/SE object, where features (e.g., genes) are the rows and samples are the columns.</p>
-<p>User can select features (rows) to display from the selectize widget (which supports autocompletion), or also via other panels, like row data plots or row data tables. In addition, users can rapidly import custom lists of feature names using a modal popup that provides an Ace editor where they can directly type of paste feature names, and a file upload button that accepts text files containing one feature name per line. Users should remember to click the “Apply” button before closing the modal, to update the heat map with the new list of features.</p>
-<p>The “Suggest feature order” button clusters the rows, and also rearranges the elements in the selectize according to the clustering.</p>
-<p>It is also possible to choose which assay type is displayed (“logcounts” being the default choice, if available).</p>
-<p>Samples in the heat map can also be annotated, simply by selecting relevant column metadata.</p>
-<p>A zooming functionality is also available, restricted to the y-axis (i.e., allowing closer inspection on the individual features included).</p>
-</div>
-<div id="description-of-isee-functionality" class="section level3 hasAnchor" number="24.3.12">
-<h3><span class="header-section-number">24.3.12</span> Description of iSEE functionality<a href="interactive-summarizedexperiment-visualizations.html#description-of-isee-functionality" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div id="coloring-plots-by-sample-attributes" class="section level4 hasAnchor" number="24.3.12.1">
-<h4><span class="header-section-number">24.3.12.1</span> Coloring plots by sample attributes<a href="interactive-summarizedexperiment-visualizations.html#coloring-plots-by-sample-attributes" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<div id="column-based-plots" class="section level5 hasAnchor" number="24.3.12.1.1">
-<h5><span class="header-section-number">24.3.12.1.1</span> Column-based plots<a href="interactive-summarizedexperiment-visualizations.html#column-based-plots" class="anchor-section" aria-label="Anchor link to header"></a></h5>
-<p>Column-based plots are:</p>
-<ul>
-<li><p>reduced dimension</p></li>
-<li><p>feature assay</p></li>
-<li><p>column data plots</p></li>
-</ul>
-<p>Where each data point represents a sample. Here, data points can be colored in different ways:</p>
-<ul>
-<li><p>The default is no color scheme (“None” in the radio button).</p></li>
-<li><p>Any column of colData(se) can be used. The plot automatically adjusts the scale to use based on whether the chosen column is continuous or categorical.</p></li>
-<li><p>The assay values of a particular feature in each sample can be used. The feature can be chosen either via a linked row table or selectize input (as described for the Feature assay plot panel). Users can also specify the assays from which values are extracted.</p></li>
-<li><p>The identity of a particular sample can be used, which will be highlighted on the plot in a user-specified color. The sample can be chosen either via a linked column table or via a selectize input.</p></li>
-</ul>
-</div>
-<div id="row-based-plots" class="section level5 hasAnchor" number="24.3.12.1.2">
-<h5><span class="header-section-number">24.3.12.1.2</span> Row-based plots<a href="interactive-summarizedexperiment-visualizations.html#row-based-plots" class="anchor-section" aria-label="Anchor link to header"></a></h5>
-<p>For row-based plots (i.e., the sample assay and row data plots), each data point represents a feature. Like the column-based plots, data points can be colored by:</p>
-<ul>
-<li><p>“None”, yielding data points of fixed color.</p></li>
-<li><p>Any column of rowData(se).</p></li>
-<li><p>The identity of a particular feature, which is highlighted in the user-specified color.</p></li>
-<li><p>Assay values for a particular sample.</p></li>
-</ul>
-</div>
-</div>
-<div id="controlling-point-aesthetics" class="section level4 hasAnchor" number="24.3.12.2">
-<h4><span class="header-section-number">24.3.12.2</span> Controlling point aesthetics<a href="interactive-summarizedexperiment-visualizations.html#controlling-point-aesthetics" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>Data points can be set to different shapes according to categorical factors in colData(se) (for column-based plots) or rowData(se) (for row-based plots). This is achieved by checking the “Shape” box to reveal the shape-setting options. The size and opacity of the data points can be modified via the options available by checking the “Point” box. This may be useful for aesthetically pleasing visualizations when the number of points is very large or small.</p>
-</div>
-<div id="faceting" class="section level4 hasAnchor" number="24.3.12.3">
-<h4><span class="header-section-number">24.3.12.3</span> Faceting<a href="interactive-summarizedexperiment-visualizations.html#faceting" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>Each point-based plot can be split into multiple facets using the options in the “Facet” checkbox. Users can facet by row and/or column, using categorical factors in colData(se) (for column-based plots) or rowData(se) (for row-based plots). This provides a convenient way to stratify points in a single plot by multiple factors of interest. Note that point selection can only occur within a single facet at a time; points cannot be selected across facets.</p>
-</div>
-<div id="zooming-in-and-out" class="section level4 hasAnchor" number="24.3.12.4">
-<h4><span class="header-section-number">24.3.12.4</span> Zooming in and out<a href="interactive-summarizedexperiment-visualizations.html#zooming-in-and-out" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>Zooming in is possible by first selecting a region of interest in a plot using the brush (drag and select); double-clicking on the brushed area then zooms into the selected area. To zoom out to the original plot, simply double-click at any location in the plot.</p>
-</div>
-</div>
-</div>
-<div id="lets-practice" class="section level2 hasAnchor" number="24.4">
-<h2><span class="header-section-number">24.4</span> Let’s practice!<a href="interactive-summarizedexperiment-visualizations.html#lets-practice" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="setting-up-the-data" class="section level3 hasAnchor" number="24.4.1">
-<h3><span class="header-section-number">24.4.1</span> Setting up the data<a href="interactive-summarizedexperiment-visualizations.html#setting-up-the-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<ul>
-<li>We’ll download a <code>SingleCellExperiment</code> object, which is similar to <code>SummarizedExperiment</code> as it extends it.
-<ul>
-<li><a href="http://bioconductor.org/packages/SingleCellExperiment" class="uri">http://bioconductor.org/packages/SingleCellExperiment</a></li>
-<li><a href="http://bioconductor.org/packages/spatialLIBD" class="uri">http://bioconductor.org/packages/spatialLIBD</a></li>
-<li><a href="https://doi.org/10.1038/s41593-020-00787-0" class="uri">https://doi.org/10.1038/s41593-020-00787-0</a></li>
-<li><a href="https://osca.bioconductor.org/" class="uri">https://osca.bioconductor.org/</a></li>
-<li><a href="https://www.nature.com/articles/s41592-019-0654-x" class="uri">https://www.nature.com/articles/s41592-019-0654-x</a> Figures 2 and 3</li>
-</ul></li>
-</ul>
-<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="interactive-summarizedexperiment-visualizations.html#cb174-1" tabindex="-1"></a><span class="do">## Lets get some data using spatialLIBD</span></span>
-<span id="cb174-2"><a href="interactive-summarizedexperiment-visualizations.html#cb174-2" tabindex="-1"></a>sce_layer <span class="ot">&lt;-</span> spatialLIBD<span class="sc">::</span><span class="fu">fetch_data</span>(<span class="st">&quot;sce_layer&quot;</span>)</span>
-<span id="cb174-3"><a href="interactive-summarizedexperiment-visualizations.html#cb174-3" tabindex="-1"></a>sce_layer</span>
-<span id="cb174-4"><a href="interactive-summarizedexperiment-visualizations.html#cb174-4" tabindex="-1"></a><span class="co"># class: SingleCellExperiment </span></span>
-<span id="cb174-5"><a href="interactive-summarizedexperiment-visualizations.html#cb174-5" tabindex="-1"></a><span class="co"># dim: 22331 76 </span></span>
-<span id="cb174-6"><a href="interactive-summarizedexperiment-visualizations.html#cb174-6" tabindex="-1"></a><span class="co"># metadata(0):</span></span>
-<span id="cb174-7"><a href="interactive-summarizedexperiment-visualizations.html#cb174-7" tabindex="-1"></a><span class="co"># assays(2): counts logcounts</span></span>
-<span id="cb174-8"><a href="interactive-summarizedexperiment-visualizations.html#cb174-8" tabindex="-1"></a><span class="co"># rownames(22331): ENSG00000243485 ENSG00000238009 ... ENSG00000278384 ENSG00000271254</span></span>
-<span id="cb174-9"><a href="interactive-summarizedexperiment-visualizations.html#cb174-9" tabindex="-1"></a><span class="co"># rowData names(10): source type ... is_top_hvg is_top_hvg_sce_layer</span></span>
-<span id="cb174-10"><a href="interactive-summarizedexperiment-visualizations.html#cb174-10" tabindex="-1"></a><span class="co"># colnames(76): 151507_Layer1 151507_Layer2 ... 151676_Layer6 151676_WM</span></span>
-<span id="cb174-11"><a href="interactive-summarizedexperiment-visualizations.html#cb174-11" tabindex="-1"></a><span class="co"># colData names(13): sample_name layer_guess ... layer_guess_reordered_short spatialLIBD</span></span>
-<span id="cb174-12"><a href="interactive-summarizedexperiment-visualizations.html#cb174-12" tabindex="-1"></a><span class="co"># reducedDimNames(6): PCA TSNE_perplexity5 ... UMAP_neighbors15 PCAsub</span></span>
-<span id="cb174-13"><a href="interactive-summarizedexperiment-visualizations.html#cb174-13" tabindex="-1"></a><span class="co"># mainExpName: NULL</span></span>
-<span id="cb174-14"><a href="interactive-summarizedexperiment-visualizations.html#cb174-14" tabindex="-1"></a><span class="co"># altExpNames(0):</span></span>
-<span id="cb174-15"><a href="interactive-summarizedexperiment-visualizations.html#cb174-15" tabindex="-1"></a><span class="co"># 33.99 MB</span></span>
-<span id="cb174-16"><a href="interactive-summarizedexperiment-visualizations.html#cb174-16" tabindex="-1"></a></span>
-<span id="cb174-17"><a href="interactive-summarizedexperiment-visualizations.html#cb174-17" tabindex="-1"></a><span class="do">## We can check how big the object is with lobstr</span></span>
-<span id="cb174-18"><a href="interactive-summarizedexperiment-visualizations.html#cb174-18" tabindex="-1"></a>lobstr<span class="sc">::</span><span class="fu">obj_size</span>(sce_layer)</span>
-<span id="cb174-19"><a href="interactive-summarizedexperiment-visualizations.html#cb174-19" tabindex="-1"></a><span class="co"># 33.99 MB</span></span></code></pre></div>
-<p>Now we can deploy <code>iSEE()</code> to explore the data.</p>
-<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="interactive-summarizedexperiment-visualizations.html#cb175-1" tabindex="-1"></a><span class="do">## Load ilibrary</span></span>
-<span id="cb175-2"><a href="interactive-summarizedexperiment-visualizations.html#cb175-2" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;iSEE&quot;</span>)</span>
-<span id="cb175-3"><a href="interactive-summarizedexperiment-visualizations.html#cb175-3" tabindex="-1"></a></span>
-<span id="cb175-4"><a href="interactive-summarizedexperiment-visualizations.html#cb175-4" tabindex="-1"></a><span class="do">## Deploy</span></span>
-<span id="cb175-5"><a href="interactive-summarizedexperiment-visualizations.html#cb175-5" tabindex="-1"></a><span class="fu">iSEE</span>(sce_layer)</span></code></pre></div>
-<style>
-p.exercise  {
-background-color: #E4EDE2;
-padding: 9px;
-border: 1px solid black;
-border-radius: 10px;
-font-family: sans-serif;
-}
-</style>
-<p class="exercise">
-<strong>Question 1</strong>:
-Which panel Type is displaying the following plot?
-</p>
-<p class="exercise">
-<strong>Exercise 1</strong>:
-Recreate the following plot
-</p>
-<p class="exercise">
-<strong>Question 2</strong>:
-What is different between this 2 plots?
-</p>
-<p class="exercise">
-<strong>Exercise 2</strong>:
-Recreate the following plot
-</p>
-</div>
-</div>
-<div id="references-5" class="section level2 hasAnchor" number="24.5">
-<h2><span class="header-section-number">24.5</span> References<a href="interactive-summarizedexperiment-visualizations.html#references-5" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="cell-type-annotation" class="section level2 hasAnchor" number="25.9">
+<h2><span class="header-section-number">25.9</span> Cell type annotation<a href="scrna-seq-data-analysis-overview.html#cell-type-annotation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 
 </div>
 </div>
+
+
+
+
+
+
 <div class="container">
     <footer class="site-footer">
 
@@ -787,8 +513,8 @@ Published with <a href="https://bookdown.org/" target="_blank" rel="noopener">Bo
           </div>
         </div>
       </div>
-<a href="making-your-own-website-with-postcards.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="scrna-seq-data-analysis-overview.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="interactive-summarizedexperiment-visualizations.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

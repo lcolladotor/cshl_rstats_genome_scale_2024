@@ -180,3 +180,13 @@ zooming-in-and-out
 lets-practice
 setting-up-the-data
 references-5
+scrna-seq-data-analysis-overview
+single-cell-rna-sequencing-overview
+the-singlecellexperiment-class
+quality-control
+normalization
+feature-selection
+dimensionality-reduction
+clustering
+marker-gene-detection
+cell-type-annotation
