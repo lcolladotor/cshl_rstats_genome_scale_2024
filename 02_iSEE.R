@@ -35,9 +35,9 @@ curl::curl_version()$version
 ## ## Install homebrew from https://brew.sh/
 ## brew install curl
 
-## -------------------------------------------------------------------------------------------
-Sys.setenv(PKG_CONFIG_PATH = "/opt/homebrew/opt/curl/lib/pkgconfig")
-install.packages("curl", type = "source")
+## ----eval = FALSE---------------------------------------------------------------------------
+## Sys.setenv(PKG_CONFIG_PATH = "/opt/homebrew/opt/curl/lib/pkgconfig")
+## install.packages("curl", type = "source")
 
 
 ## ----explore_iSEE, eval = FALSE-------------------------------------------------------------
