@@ -1,5 +1,6 @@
-
 # scRNA-seq data analysis overview
+
+Instructor: Melissa Mayén Quiroz
 
 
 
