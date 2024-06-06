@@ -603,29 +603,50 @@ Examples include low-dimensional embeddings from principal components analysis (
 </ul>
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="interactive-summarizedexperiment-visualizations.html#cb28-1" tabindex="-1"></a><span class="do">## Lets get some data using spatialLIBD</span></span>
 <span id="cb28-2"><a href="interactive-summarizedexperiment-visualizations.html#cb28-2" tabindex="-1"></a>sce_layer <span class="ot">&lt;-</span> spatialLIBD<span class="sc">::</span><span class="fu">fetch_data</span>(<span class="st">&quot;sce_layer&quot;</span>)</span>
-<span id="cb28-3"><a href="interactive-summarizedexperiment-visualizations.html#cb28-3" tabindex="-1"></a>sce_layer</span>
-<span id="cb28-4"><a href="interactive-summarizedexperiment-visualizations.html#cb28-4" tabindex="-1"></a><span class="co"># class: SingleCellExperiment</span></span>
-<span id="cb28-5"><a href="interactive-summarizedexperiment-visualizations.html#cb28-5" tabindex="-1"></a><span class="co"># dim: 22331 76</span></span>
-<span id="cb28-6"><a href="interactive-summarizedexperiment-visualizations.html#cb28-6" tabindex="-1"></a><span class="co"># metadata(0):</span></span>
-<span id="cb28-7"><a href="interactive-summarizedexperiment-visualizations.html#cb28-7" tabindex="-1"></a><span class="co"># assays(2): counts logcounts</span></span>
-<span id="cb28-8"><a href="interactive-summarizedexperiment-visualizations.html#cb28-8" tabindex="-1"></a><span class="co"># rownames(22331): ENSG00000243485 ENSG00000238009 ... ENSG00000278384 ENSG00000271254</span></span>
-<span id="cb28-9"><a href="interactive-summarizedexperiment-visualizations.html#cb28-9" tabindex="-1"></a><span class="co"># rowData names(10): source type ... is_top_hvg is_top_hvg_sce_layer</span></span>
-<span id="cb28-10"><a href="interactive-summarizedexperiment-visualizations.html#cb28-10" tabindex="-1"></a><span class="co"># colnames(76): 151507_Layer1 151507_Layer2 ... 151676_Layer6 151676_WM</span></span>
-<span id="cb28-11"><a href="interactive-summarizedexperiment-visualizations.html#cb28-11" tabindex="-1"></a><span class="co"># colData names(13): sample_name layer_guess ... layer_guess_reordered_short spatialLIBD</span></span>
-<span id="cb28-12"><a href="interactive-summarizedexperiment-visualizations.html#cb28-12" tabindex="-1"></a><span class="co"># reducedDimNames(6): PCA TSNE_perplexity5 ... UMAP_neighbors15 PCAsub</span></span>
-<span id="cb28-13"><a href="interactive-summarizedexperiment-visualizations.html#cb28-13" tabindex="-1"></a><span class="co"># mainExpName: NULL</span></span>
-<span id="cb28-14"><a href="interactive-summarizedexperiment-visualizations.html#cb28-14" tabindex="-1"></a><span class="co"># altExpNames(0):</span></span>
-<span id="cb28-15"><a href="interactive-summarizedexperiment-visualizations.html#cb28-15" tabindex="-1"></a><span class="co"># 33.99 MB</span></span>
-<span id="cb28-16"><a href="interactive-summarizedexperiment-visualizations.html#cb28-16" tabindex="-1"></a></span>
-<span id="cb28-17"><a href="interactive-summarizedexperiment-visualizations.html#cb28-17" tabindex="-1"></a><span class="do">## We can check how big the object is with lobstr</span></span>
-<span id="cb28-18"><a href="interactive-summarizedexperiment-visualizations.html#cb28-18" tabindex="-1"></a>lobstr<span class="sc">::</span><span class="fu">obj_size</span>(sce_layer)</span>
-<span id="cb28-19"><a href="interactive-summarizedexperiment-visualizations.html#cb28-19" tabindex="-1"></a><span class="co"># 33.99 MB</span></span></code></pre></div>
+<span id="cb28-3"><a href="interactive-summarizedexperiment-visualizations.html#cb28-3" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;https://www.dropbox.com/s/bg8xwysh2vnjwvg/Human_DLPFC_Visium_processedData_sce_scran_sce_layer_spatialLIBD.Rdata?dl=1&#39;</span></span>
+<span id="cb28-4"><a href="interactive-summarizedexperiment-visualizations.html#cb28-4" tabindex="-1"></a><span class="co">#&gt; 2024-06-06 18:56:43.801886 loading file /github/home/.cache/R/BiocFileCache/3834033e201_Human_DLPFC_Visium_processedData_sce_scran_sce_layer_spatialLIBD.Rdata%3Fdl%3D1</span></span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="interactive-summarizedexperiment-visualizations.html#cb29-1" tabindex="-1"></a>sce_layer</span>
+<span id="cb29-2"><a href="interactive-summarizedexperiment-visualizations.html#cb29-2" tabindex="-1"></a><span class="co">#&gt; class: SingleCellExperiment </span></span>
+<span id="cb29-3"><a href="interactive-summarizedexperiment-visualizations.html#cb29-3" tabindex="-1"></a><span class="co">#&gt; dim: 22331 76 </span></span>
+<span id="cb29-4"><a href="interactive-summarizedexperiment-visualizations.html#cb29-4" tabindex="-1"></a><span class="co">#&gt; metadata(0):</span></span>
+<span id="cb29-5"><a href="interactive-summarizedexperiment-visualizations.html#cb29-5" tabindex="-1"></a><span class="co">#&gt; assays(2): counts logcounts</span></span>
+<span id="cb29-6"><a href="interactive-summarizedexperiment-visualizations.html#cb29-6" tabindex="-1"></a><span class="co">#&gt; rownames(22331): ENSG00000243485 ENSG00000238009 ... ENSG00000278384 ENSG00000271254</span></span>
+<span id="cb29-7"><a href="interactive-summarizedexperiment-visualizations.html#cb29-7" tabindex="-1"></a><span class="co">#&gt; rowData names(10): source type ... is_top_hvg is_top_hvg_sce_layer</span></span>
+<span id="cb29-8"><a href="interactive-summarizedexperiment-visualizations.html#cb29-8" tabindex="-1"></a><span class="co">#&gt; colnames(76): 151507_Layer1 151507_Layer2 ... 151676_Layer6 151676_WM</span></span>
+<span id="cb29-9"><a href="interactive-summarizedexperiment-visualizations.html#cb29-9" tabindex="-1"></a><span class="co">#&gt; colData names(13): sample_name layer_guess ... layer_guess_reordered_short spatialLIBD</span></span>
+<span id="cb29-10"><a href="interactive-summarizedexperiment-visualizations.html#cb29-10" tabindex="-1"></a><span class="co">#&gt; reducedDimNames(6): PCA TSNE_perplexity5 ... UMAP_neighbors15 PCAsub</span></span>
+<span id="cb29-11"><a href="interactive-summarizedexperiment-visualizations.html#cb29-11" tabindex="-1"></a><span class="co">#&gt; mainExpName: NULL</span></span>
+<span id="cb29-12"><a href="interactive-summarizedexperiment-visualizations.html#cb29-12" tabindex="-1"></a><span class="co">#&gt; altExpNames(0):</span></span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="interactive-summarizedexperiment-visualizations.html#cb30-1" tabindex="-1"></a></span>
+<span id="cb30-2"><a href="interactive-summarizedexperiment-visualizations.html#cb30-2" tabindex="-1"></a><span class="do">## We can check how big the object is with lobstr</span></span>
+<span id="cb30-3"><a href="interactive-summarizedexperiment-visualizations.html#cb30-3" tabindex="-1"></a>lobstr<span class="sc">::</span><span class="fu">obj_size</span>(sce_layer)</span>
+<span id="cb30-4"><a href="interactive-summarizedexperiment-visualizations.html#cb30-4" tabindex="-1"></a><span class="co">#&gt; 33.99 MB</span></span></code></pre></div>
+<div style="background-color:#E0EEE0; padding:20px; font-family: sans-serif">
+<p>NOTE: if you run into this error:</p>
+<pre><code>Error in `BiocFileCache::bfcrpath()`:
+! not all &#39;rnames&#39; found or unique.
+Backtrace:
+ 1. spatialLIBD::fetch_data(&quot;sce_layer&quot;)
+ 3. BiocFileCache::bfcrpath(bfc, url)</code></pre>
+<p>check the output of</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="interactive-summarizedexperiment-visualizations.html#cb32-1" tabindex="-1"></a>curl<span class="sc">::</span><span class="fu">curl_version</span>()<span class="sc">$</span>version</span>
+<span id="cb32-2"><a href="interactive-summarizedexperiment-visualizations.html#cb32-2" tabindex="-1"></a><span class="co">#&gt; [1] &quot;7.81.0&quot;</span></span></code></pre></div>
+<p>If it’s version 8.6.0, you likely need to upgrade to version 8.8.0. For macOS users, you can do this via <code>Homebrew</code> with</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb33-1"><a href="interactive-summarizedexperiment-visualizations.html#cb33-1" tabindex="-1"></a><span class="co">## Install homebrew from https://brew.sh/</span></span>
+<span id="cb33-2"><a href="interactive-summarizedexperiment-visualizations.html#cb33-2" tabindex="-1"></a><span class="ex">brew</span> install curl</span></code></pre></div>
+<p>then install <code>curl</code> from source with:</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="interactive-summarizedexperiment-visualizations.html#cb34-1" tabindex="-1"></a><span class="fu">Sys.setenv</span>(<span class="at">PKG_CONFIG_PATH =</span> <span class="st">&quot;/opt/homebrew/opt/curl/lib/pkgconfig&quot;</span>)</span>
+<span id="cb34-2"><a href="interactive-summarizedexperiment-visualizations.html#cb34-2" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;curl&quot;</span>, <span class="at">type =</span> <span class="st">&quot;source&quot;</span>)</span>
+<span id="cb34-3"><a href="interactive-summarizedexperiment-visualizations.html#cb34-3" tabindex="-1"></a><span class="co">#&gt; Installing package into &#39;/__w/_temp/Library&#39;</span></span>
+<span id="cb34-4"><a href="interactive-summarizedexperiment-visualizations.html#cb34-4" tabindex="-1"></a><span class="co">#&gt; (as &#39;lib&#39; is unspecified)</span></span></code></pre></div>
+<p>For all the gory details, check <a href="https://github.com/curl/curl/issues/13725" class="uri">https://github.com/curl/curl/issues/13725</a>, <a href="https://github.com/Bioconductor/BiocFileCache/issues/48" class="uri">https://github.com/Bioconductor/BiocFileCache/issues/48</a>, and related issues.</p>
+</div>
 <p>Now we can deploy <code>iSEE()</code> to explore the data.</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="interactive-summarizedexperiment-visualizations.html#cb29-1" tabindex="-1"></a><span class="do">## Load library</span></span>
-<span id="cb29-2"><a href="interactive-summarizedexperiment-visualizations.html#cb29-2" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;iSEE&quot;</span>)</span>
-<span id="cb29-3"><a href="interactive-summarizedexperiment-visualizations.html#cb29-3" tabindex="-1"></a></span>
-<span id="cb29-4"><a href="interactive-summarizedexperiment-visualizations.html#cb29-4" tabindex="-1"></a><span class="do">## Deploy</span></span>
-<span id="cb29-5"><a href="interactive-summarizedexperiment-visualizations.html#cb29-5" tabindex="-1"></a><span class="fu">iSEE</span>(sce_layer)</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="interactive-summarizedexperiment-visualizations.html#cb35-1" tabindex="-1"></a><span class="do">## Load library</span></span>
+<span id="cb35-2"><a href="interactive-summarizedexperiment-visualizations.html#cb35-2" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;iSEE&quot;</span>)</span>
+<span id="cb35-3"><a href="interactive-summarizedexperiment-visualizations.html#cb35-3" tabindex="-1"></a></span>
+<span id="cb35-4"><a href="interactive-summarizedexperiment-visualizations.html#cb35-4" tabindex="-1"></a><span class="do">## Deploy</span></span>
+<span id="cb35-5"><a href="interactive-summarizedexperiment-visualizations.html#cb35-5" tabindex="-1"></a><span class="fu">iSEE</span>(sce_layer)</span></code></pre></div>
 <style>
 p.exercise  {
 background-color: #E4EDE2;
