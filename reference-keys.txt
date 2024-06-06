@@ -69,12 +69,6 @@ example-3
 exercise-1
 to-learn-more
 community-1
-differential-gene-expression-analysis-with-limma
-srp045638-data
-data-normalization-1
-differential-expression
-visualizing-degs
-community-2
 dge-model-building-with-variancepartition
 canonical-correlation-analysis
 fit-model-and-extract-fraction-of-variance-explained
@@ -99,7 +93,7 @@ biocthis-introduction
 related-past-materials
 biocthis-main-commands
 live-demo
-community-3
+community-2
 scrna-seq-data-analysis-overview
 single-cell-rna-sequencing-overview
 the-singlecellexperiment-class
