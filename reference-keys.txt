@@ -76,15 +76,6 @@ examine-the-expression-of-most-affected-genes-by-each-sample-variable
 differential-gene-expression-exercise
 recap
 exercise-2
-expression-heatmaps-with-complexheatmap
-introduction
-complexheatmap
-heatmap-with-expression-data
-download-data
-prepare-the-data
-create-annotations
-plot-our-heatmap
-complexheatmap-exercise-solution
 research-talks
 fentanyl-rat-study
 cg-hb-cell-projectors-study
