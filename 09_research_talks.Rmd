@@ -1,0 +1,15 @@
+# Research talks
+
+## Fentanyl rat study
+
+Daianna
+
+## Cg Hb cell projectors study
+
+Melissa
+
+## deconvolution-benchmark
+
+Leonardo
+
+<script defer class="speakerdeck-embed" data-id="fd1854eec3e545a3b411b9a0bac31125" data-ratio="1.7772511848341233" src="//speakerdeck.com/assets/embed.js"></script>

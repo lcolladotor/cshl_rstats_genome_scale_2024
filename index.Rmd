@@ -96,6 +96,9 @@ BiocManager::install(
         "usethis", ## Utilities
         "BiocFileCache",
         "RefManageR",
+        "gitcreds",
+        "gert",
+        "gh",
         "here",
         "Hmisc",
         "biocthis",
@@ -112,6 +115,7 @@ BiocManager::install(
         "limma",
         "recount3",
         "rlang",
+        "scRNAseq",
         "pheatmap", ## Visualization
         "ggplot2",
         "ggrepel",
@@ -147,6 +151,9 @@ library("sessioninfo")
 library("BiocFileCache")
 library("BiocStyle")
 library("biocthis")
+library("gitcreds")
+library("gert")
+library("gh")
 library("here")
 library("lobstr")
 library("postcards")
@@ -155,6 +162,7 @@ library("sessioninfo")
 
 ## Data
 library("smokingMouse")
+library("scRNAseq")
 
 ## Main containers / vis
 library("SummarizedExperiment")

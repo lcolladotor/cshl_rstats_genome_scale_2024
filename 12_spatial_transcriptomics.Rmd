@@ -1,5 +1,7 @@
 # Introduction to spatial transcriptomics
 
+Instructor: Daianna Gonzalez-Padilla
+
 In recent years, with constant improvements in the current sequencing technologies and the generation of more sophisticated omics methodologies and bioinformatic pipelines, we have been constantly demonstrating that specific cell types and cell-to-cell interactions play critical roles in the definition of numerous diseases and development-related processes. In fact, cell type-specific associations have been established for a number of diseases and disorders. Thus, understanding the cellular context and the spatial location in which normal and deregulated cellular events occur is necessary to unveil the molecular underpinnings of disease pathologies and malfunctions of the organisms.
 
 Spatial transcriptomics technologies are molecular profiling methods developed to measure gene expression levels in a tissue sample at the spatial resolution. These methods have been improved and expanded over time and are widely applied to study a wide range of biological processes and have provided numerous insights into disease and development mechanisms. 

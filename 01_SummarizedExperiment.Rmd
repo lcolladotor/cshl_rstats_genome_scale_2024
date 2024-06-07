@@ -1,6 +1,6 @@
-# SummarizedExperiment review
+# SummarizedExperiment overview
 
-Instructor: Renee
+Instructor: Leo
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(

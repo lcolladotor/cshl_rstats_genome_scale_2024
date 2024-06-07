@@ -1,0 +1,50 @@
+# scRNA-seq data analysis overview
+
+Instructor: Melissa Mayén Quiroz
+
+
+
+## Single cell RNA sequencing overview
+
+
+
+
+## The SingleCellExperiment class
+
+*** Agregar library("scRNAseq") !!! ***
+*** BiocManager::install("OSCA.intro") !!! ***
+
+
+
+## Quality Control
+
+
+
+
+##  Normalization
+
+
+
+
+## Feature selection
+
+
+
+
+## Dimensionality reduction
+
+
+
+
+## Clustering
+
+
+
+
+## Marker gene detection
+
+
+
+
+## Cell type annotation
+
