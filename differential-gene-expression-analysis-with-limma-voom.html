@@ -528,10 +528,10 @@ where <span class="math inline">\(n\)</span> is the number of samples.</p>
 <span id="cb49-16"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb49-16" tabindex="-1"></a><span class="co">#&gt; 4         0.7786461    25905     -84.91929</span></span>
 <span id="cb49-17"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb49-17" tabindex="-1"></a><span class="co">#&gt;  [ reached getOption(&quot;max.print&quot;) -- omitted 2 rows ]</span></span></code></pre></div>
 <p class="question">
-❓ <strong>Which variables to include as covariates in the models?</strong> A straightforward strategy is to keep the model as <strong>simple as possible</strong> and after fitting the model evaluate the comparisons of interest [3]. In <strong>Chapter XX</strong> we have discussed how correlation and variance partition analyses can help us to set up the best models.
+❓ <strong>Which variables to include as covariates in the models?</strong> A straightforward strategy is to keep the model as <strong>simple as possible</strong> and after fitting the model evaluate the comparisons of interest [3]. In <strong>Chapter 7</strong> we have discussed how correlation and variance partition analyses can help us to set up the best models.
 </p>
 <p class="alert">
-⚠️ <strong>Very important</strong>: always check which condition group is set as the reference in you model for the coefficient/contrast of interest (column named as <code>[Coefficient_name][Reference_Group]</code>) as this determines if a DEG is up or downregulated in the given condition compared to the other.
+⚠️ <strong>Very important</strong>: always check which condition group is set as the reference in you model for the coefficient/contrast of interest (column named as <code>[Coefficient_name][Reference_Group]</code>; corresponding reference group set to 1) as this determines if a DEG is up or downregulated in the given condition compared to the other.
 </p>
 <div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb50-1" tabindex="-1"></a><span class="do">## Comparison of interest: Group</span></span>
 <span id="cb50-2"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb50-2" tabindex="-1"></a>coef <span class="ot">&lt;-</span> <span class="st">&quot;GroupExperimental&quot;</span></span></code></pre></div>
