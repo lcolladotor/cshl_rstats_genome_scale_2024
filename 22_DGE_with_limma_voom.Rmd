@@ -209,11 +209,11 @@ head(model)
 ```
 
 <p class="question">
-❓ **Which variables to include as covariates in the models?** A straightforward strategy is to keep the model as **simple as possible** and after fitting the model evaluate the comparisons of interest [3]. In **Chapter XX** we have discussed how correlation and variance partition analyses can help us to set up the best models.
+❓ **Which variables to include as covariates in the models?** A straightforward strategy is to keep the model as **simple as possible** and after fitting the model evaluate the comparisons of interest [3]. In **Chapter 7** we have discussed how correlation and variance partition analyses can help us to set up the best models.
  </p>
 
 <p class="alert">
-⚠️ **Very important**: always check which condition group is set as the reference in you model for the coefficient/contrast of interest (column named as `[Coefficient_name][Reference_Group]`) as this determines if a DEG is up or downregulated in the given condition compared to the other.</p>
+⚠️ **Very important**: always check which condition group is set as the reference in you model for the coefficient/contrast of interest (column named as `[Coefficient_name][Reference_Group]`; corresponding reference group set to 1) as this determines if a DEG is up or downregulated in the given condition compared to the other.</p>
 
 ```{r coeff}
 ## Comparison of interest: Group 

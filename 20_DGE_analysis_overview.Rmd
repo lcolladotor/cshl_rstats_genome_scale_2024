@@ -50,7 +50,7 @@ font-family: sans-serif;
 </style>
 
 <p class="link">
-    👉🏼 More details of this pipeline are provided in the [original manuscript](https://doi.org/10.1186/s12859-021-04142-3), the [documentation website](http://research.libd.org/SPEAQeasy/index.html), and other in [created resources](http://research.libd.org/SPEAQeasy-example/).
+    👉🏼 More details of this pipeline are provided in the [original manuscript](https://doi.org/10.1186/s12859-021-04142-3), the [documentation website](http://research.libd.org/SPEAQeasy/index.html), and in other [created resources](http://research.libd.org/SPEAQeasy-example/).
 </p>
 
 
