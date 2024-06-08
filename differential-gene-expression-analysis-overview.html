@@ -342,7 +342,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="differential-gene-expression-analysis-overview" class="section level1 hasAnchor" number="4">
 <h1><span class="header-section-number">4</span> Differential Gene Expression analysis overview<a href="differential-gene-expression-analysis-overview.html#differential-gene-expression-analysis-overview" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>Instructor: Daianna</p>
+<p>Instructor: Daianna González Padilla</p>
 <p>Differential Gene Expression (DGE) analyses are common statistical analyses of gene expression data that aim to discover genes significantly altered in their expression levels between experimental groups, which can be given by a condition, treatment, experimental procedure/exposure, diagnostic, time points, by biological origins (e.g. differences in sex, tissue, age, species), and even by different technical methodologies. These genes are known as Differentially Expressed Genes (DEGs) and can be either up- or down-regulated if their expression is greater or less in one group with respect to the other(s), respectively. Diverse methods exist to perform DGE and multiple downstream analyses can be applied on DEGs, but a series of non-skippable preliminary steps exists which are necessary to correctly perform previous to any statistical testing.</p>
 <p>Below a classic workflow for DGE is depicted. It takes as input the gene expression matrix with raw read counts for genes (as rows) across all samples (as columns). Among the preliminary steps, there is an initial data processing step encompassing count normalization and filtering of lowly-expressed genes. Secondly, Exploratory Data Analysis (EDA) involves assessment of Quality Control (QC) metrics of the samples and filtering of poor-quality ones, as well as an examination of the gene expression profiles between sample groups, potential detection of additional atypical samples to remove, and the exploration of the correlations between sample-level variables and their contributions in the expression variance of each gene to guide the covariate selection for DGE models.</p>
 <figure>
@@ -350,7 +350,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <figcaption style="color: gray; line-height: 0.9; text-align: justify">
 <p><font size="-1.8">
 <b>Figure 1</b>: <b> Summary of the analyses for differential expression. </b></p>
-<p><b> 1. RNA-seq data processing</b>: raw counts are normalized and log-scaled (lognorm-counts) and the lowly-expressed genes are filtered out.</p>
+<p><b> 1. RNA-seq data processing</b>: raw counts are normalized and log-scaled (lognorm counts) and the lowly-expressed genes are filtered out.</p>
 <p><b> 2. Exploratory Data Analysis</b>: quality metrics of the samples are compared across groups, the poor-quality samples are filtered and both sample-level and gene-level effects of sample variables are explored to identify those that are main drivers of gene expression variation to include in the models for DGE.</p>
 <p><b> 3. Differential Expression Analysis</b>: under the <em>limma</em>-<em>voom</em> pipeline the expression of each gene is linearly modeled by the selected variables in the previous step; after fitting the model gene-wise log2-fold changes (log2FC) and <em>p</em>-values are obtained for the variable of interest and other statistics of differential expression are also computed and compared. Here DEGs are determined based on the significance threshold (controlling for the False Discovery Rate or FDR).</p>
 <p><b> 4. Functional Enrichment Analysis</b>: an overrepresentation analysis (ORA) is performed to find statistically significant associations between our groups of DEGs and gene sets annotated in GO terms and KEGG pathways; here we identify biological processes, cellular functions and components, and pathways potentially affected or involved in the experimental condition under study.</p>
@@ -381,14 +381,14 @@ font-family: sans-serif;
 </p>
 <div id="rna-seq-data-processing" class="section level3 hasAnchor" number="4.1.1">
 <h3><span class="header-section-number">4.1.1</span> RNA-seq data processing<a href="differential-gene-expression-analysis-overview.html#rna-seq-data-processing" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Once the gene expression matrix has been generated we can proceed to process the read counts. Raw counts are typically zero-enriched and not normally-distributed, which is required for the application of several statistical methods. Furthermore, raw gene expression values may reflect protocol-specific biases and biological factors other than the one of interest. Therefore raw counts must be normalized and lowly-expressed genes filtered out.</p>
+<p>Once the gene expression matrix has been generated we can proceed to process the read counts. Raw counts are typically zero-enriched and not normally-distributed, opposite to what is required for the application of several statistical methods. Furthermore, raw gene expression values may reflect protocol-specific biases and biological factors other than the one of interest. Therefore raw counts must be normalized and lowly-expressed genes filtered out.</p>
 <div id="data-normalization" class="section level4 hasAnchor" number="4.1.1.1">
 <h4><span class="header-section-number">4.1.1.1</span> Data normalization<a href="differential-gene-expression-analysis-overview.html#data-normalization" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Differences between samples such as library sizes (sequencing depths), and RNA composition, as well as different gene lengths and GC contents make raw gene expression data not comparable between samples. Several normalization strategies can be applied to surpass such differences; commonly counts-per-million (cpm) are used. In addition to count normalization, a log-transformation is required to make cpm follow an approximately normal distribution.</p>
 </div>
 <div id="gene-filtering" class="section level4 hasAnchor" number="4.1.1.2">
 <h4><span class="header-section-number">4.1.1.2</span> Gene filtering<a href="differential-gene-expression-analysis-overview.html#gene-filtering" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>Often the expression profiling platform (microarray or RNA-seq) includes genes that <strong>do not appear to be expressed</strong> to a worthwhile degree in any or most of the samples. This might occur, for instance, in cases where genes are not expressed in any of the cell types being experimentally profiled [1]. We want to remove those genes prior to posterior analyses, which is justified on both biological and statistical grounds [2]:</p>
+<p>Often the expression profiling platform (microarray or RNA-seq) includes genes that do not appear to be expressed to a worthwhile degree in any or most of the samples. This might occur, for instance, in cases where genes are not expressed in any of the cell types being experimentally profiled [1]. We want to remove those genes prior to posterior analyses, which is justified on both biological and statistical grounds [2]:</p>
 <ul>
 <li>Biologically, it is considered that a gene must have a minimal expression level to be translated into a protein or to be of biological importance.</li>
 <li>Statistically, lowly-expressed genes are unlikely to be detected as DE because low counts don’t provide the required statistical evidence to assess differential expression.</li>
@@ -403,7 +403,7 @@ font-family: sans-serif;
 <p><font size="-1.8">
 <b>Figure 2</b>: <b> RNA-seq data processing steps. </b></p>
 <b> 1. Count log-normalization</b>: distribution of read counts before and after normalization and log-transformation into <span class="math inline">\(log_2(cpm+0.5)\)</span> using <code>calcNormFactors()</code> and <code>cpm()</code> of <a href="https://bioconductor.org/packages/3.17/bioc/html/edgeR.html"><em>edgeR</em></a>.<br />
-<b> 2. Gene filtering</b>: distribution of <span class="math inline">\(log_2(cpm+0.5)\)</span> before and after filtering lowly-expressed genes; note the elimination of originally zero-expressed genes.
+<b> 2. Gene filtering</b>: distribution of <span class="math inline">\(log_2(cpm+0.5)\)</span> before and after filtering lowly-expressed genes; note the elimination of counts that were originally zeros.
 </font>
 </figcaption>
 </figure>
@@ -421,10 +421,10 @@ In this process we basically create tons of plots, charts and graphs to visualiz
 <li>Identify punctual samples or groups of samples of poor quality that may have arisen by technical causes during experimental steps.<br />
 </li>
 <li>Evaluate if samples from the groups of interest for DGE (diagnostic, treatment, etc.) differ in their quality metrics as these can represent confounding factors for differential expression.</li>
-<li>Detect high biological variability to subsequently support data partition to perform subanalyses of the data.</li>
+<li>Detect high biological variability to subsequently support data partition to perform subanalyses from the data.</li>
 </ol>
 <p>Further, we are also interested in investigating trends and relationships between sample variables to unveil underlying technical and biological aspects of the observed data (<strong>Figure 3</strong>: step 2).</p>
-<p>After having identified poor-quality samples, we have to remove them to not include the unreliable expression data they provide in downstream analyses. Cutoffs can be defined for specific QC metrics to decide which samples to keep; this however, is not strongly recommended as no consolidated references exist to define them and therefore rather represent arbitrary values.
+<p>After having identified poor-quality samples, we have to remove them to not include the unreliable expression data they provide in downstream analyses. Cutoffs can be defined for specific QC metrics to decide which samples to keep; this however, is not strongly recommended as no consolidated references exist to define such cutoffs and therefore rather represent arbitrary values.
 Other approaches include identifying outlier QC metrics (<strong>Figure 3</strong>: step 3), but again, caution must be taken as outlier definition is also arbitrary and we could be discarding good-quality samples.</p>
 <figure>
 <img src="Figures/QCA.png" width="700px" align=center />
@@ -459,17 +459,17 @@ Other approaches include identifying outlier QC metrics (<strong>Figure 3</stron
 <h4><span class="header-section-number">4.1.2.3</span> Model building: covariate selection for <em>limma</em>-<em>voom</em><a href="differential-gene-expression-analysis-overview.html#model-building-covariate-selection-for-limma-voom" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>DGE methods fitting linear models to gene expression data to assess if a covariate impacts significantly on the expression of a gene, require the selection of sample-level variables to model transcriptomic data.
 If very few variables are present, normally they are all included in the model but that’s not often the case with RNA-seq and it doesn’t represent a well founded strategy. Usually, multiple technical and biological variables are implicated in the experiments and sample QC metrics can affect the gene expression levels, even after count normalization, whereas other variables are redundant and/or minimally informative. Therefore, we’d like to identify an optimal set of variables to adjust gene expression for, in addition to the covariate of interest.</p>
-<p>We have already introduced one first approximation to that with PCA as this analysis allows us to identify variables explaining high percentages of gene expression variance between samples. In <strong>Chapter XX</strong> we will review how correlation and variance partition analyses at the gene level can help us determine a suitable set of highly explanatory variables.</p>
+<p>We have already introduced one first approximation to that with PCA as this analysis allows us to identify variables explaining high percentages of gene expression variance between samples. In <strong>Chapter 7</strong> we will review how correlation and variance partition analyses at the gene level can help us determine a suitable set of highly explanatory variables.</p>
 </div>
 </div>
 </div>
 <div id="differential-gene-expression" class="section level2 hasAnchor" number="4.2">
 <h2><span class="header-section-number">4.2</span> Differential Gene Expression<a href="differential-gene-expression-analysis-overview.html#differential-gene-expression" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Different mathematical and statistical approaches exist to compare gene expression between two or more conditions. In <strong>Chapter XX</strong> we’ll briefly introduce methods based on the negative binomial distribution and address how to perform DGE under the empirical Bayes <em>limma</em>-<em>voom</em> framework, distinguishing how it operates, its main specifications, inputs, and outputs.</p>
+<p>Different mathematical and statistical approaches exist to compare gene expression between two or more conditions. In <strong>Chapter 5</strong> we’ll briefly introduce methods based on the negative binomial distribution and address how to perform DGE under the empirical Bayes <em>limma</em>-<em>voom</em> framework, distinguishing how it operates, its main specifications, inputs, and outputs.</p>
 </div>
 <div id="downstream-analyses" class="section level2 hasAnchor" number="4.3">
 <h2><span class="header-section-number">4.3</span> Downstream analyses<a href="differential-gene-expression-analysis-overview.html#downstream-analyses" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>After finding DEGs, volcano plots and heat maps are commonly used to graphically represent them, plotting relevant information about them and their expression levels, respectively. In <strong>Chapter XX</strong> we’ll also check how to create and interpret these plots.</p>
+<p>After finding DEGs, volcano plots and heat maps are commonly used to graphically represent them, plotting relevant information about them and their expression levels, respectively. In <strong>Chapter 5</strong> we’ll also check how to create and interpret these plots.</p>
 </div>
 <div id="references-1" class="section level2 unnumbered hasAnchor">
 <h2>References<a href="differential-gene-expression-analysis-overview.html#references-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
