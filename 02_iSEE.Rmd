@@ -543,3 +543,8 @@ initial_double <- list(
 
 ## References
 
+https://www.bioconductor.org/packages/release/bioc/html/iSEE.html
+https://github.com/iSEE/iSEE
+https://shiny.posit.co/r/gallery/life-sciences/isee/
+https://bioconductor.org/packages/release/bioc/vignettes/iSEE/inst/doc/basic.html
+https://github.com/iSEE/iSEE/issues/650
