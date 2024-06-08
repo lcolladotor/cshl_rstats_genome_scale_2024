@@ -51,6 +51,7 @@ Imports:
     recount3,
     rlang,
     scater,
+	scRNAseq,
     sessioninfo,
     smokingMouse,
     spatialLIBD,
