@@ -1,7 +1,7 @@
 
 # Differential Gene Expression analysis with *limma*-*voom*
 
-Instructor: Daianna
+Instructor: Daianna González Padilla
 
 In this chapter you'll learn how DGE analysis is performed under the empirical Bayes framework of the popular *limma*-*voom* pipeline, highlighting key assumptions and concepts, and main differences with other methodologies.
 
@@ -37,7 +37,7 @@ Nevertheless, one limitation NB-based methods face is that they set dispersion o
 
 [*limma*](https://bioconductor.org/packages/release/bioc/html/limma.html) is a package for the analysis of gene expression data arising from microarray or RNA-seq technologies. It has features that make the analyses stable even for experiments with small number of arrays or samples —this is achieved by borrowing information across genes. It is specially designed for analyzing complex experiments with a variety of experimental conditions and predictors [3].
 
-Usually, *limma* DGE analysis is carried out in five main steps, the last four of them completed by *limma* `R` functions, as described below. We'll continue using our bulk RNA-seq data from [*smokingMouse*](https://bioconductor.org/packages/release/data/experiment/html/smokingMouse.html) to exemplify the steps. 
+Usually, *limma* DGE analysis is carried out in five main steps, the last four of them completed by *limma* `R` functions, as described below. We'll use bulk RNA-seq data from the [*smokingMouse*](https://bioconductor.org/packages/release/data/experiment/html/smokingMouse.html) package to exemplify these steps. 
 
 ```{r download_data_DGE, warning=FALSE, message=FALSE}
 ## Load the container package for RSE
@@ -75,7 +75,7 @@ assays(rse_gene_filt)$logcounts[1:3, 1:5]
 head(colData(rse_gene_filt), 2)
 ```
 <p class="exercise">
-📝 **Exercise 1**: in order for you to perform a DGE analysis, locate your own RNA-seq datasets if you have any, or download expression data from a study of your interest and build a `RSE` object using *recount3* (see **chapter XX: recount3 introduction**). A third option you have is to download data from the *smokingMouse* package used here. 
+📝 **Exercise 1**: in order for you to perform a DGE analysis, locate your own RNA-seq datasets if you have any, or download expression data from a study of your interest and build a `RSE` object using *recount3* (see **Chapter 3: recount3 introduction**). A third option you have is to download gene expression data from the [*smokingMouse*](http://research.libd.org/smokingMouse/index.html) package used here. 
 <p/>
 
 ### `model.matrix()`
@@ -218,7 +218,7 @@ coef <- "GroupExperimental"
 ```
 
 <p class="exercise">
-📝 **Exercise 2**: perform a variance partition analysis (see **Chapter XX:DGE model building with variancePartition**) to select the sample variables to include in your models for DGE based on your data and create the respective design matrix. 
+📝 **Exercise 2**: identify the sample data of your study and create the respective design matrix. Which is the reference group for your main variable of interest?
 <p/>
 
 

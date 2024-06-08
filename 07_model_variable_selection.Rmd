@@ -1,6 +1,6 @@
 # DGE model building with *variancePartition*
 
-Instructor: Daianna
+Instructor: Daianna González-Padilla
 
 After having processed RNA-seq data and assessed the quality and the variability of the samples the next step for DGE is to explore the variance in the expression of the genes themselves according to sample groups, or in other words, to quantify the contribution of the multiple sample variables in the gene expression variation.
 
