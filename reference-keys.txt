@@ -7,6 +7,7 @@ interactive-summarizedexperiment-visualizations
 classes-for-isee
 summarizedexperiment-class
 singlecellexperiment
+spatialexperiment
 getting-started-with-isee
 description-of-the-user-interface
 header
@@ -32,6 +33,11 @@ faceting
 zooming-in-and-out
 lets-practice
 setting-up-the-data
+explore-the-data
+introduction-to-advanced-isee-features
+selecting-cells-based-on-a-single-gene-expression
+using-a-single-plot-for-two-gene-co-expression
+selecting-cells-based-on-the-co-expression-of-two-or-more-genes
 references
 recount3-introduction
 recount-projects

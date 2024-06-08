@@ -159,6 +159,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="2.1.1" data-path="interactive-summarizedexperiment-visualizations.html"><a href="interactive-summarizedexperiment-visualizations.html#summarizedexperiment-class"><i class="fa fa-check"></i><b>2.1.1</b> SummarizedExperiment class</a></li>
 <li class="chapter" data-level="2.1.2" data-path="interactive-summarizedexperiment-visualizations.html"><a href="interactive-summarizedexperiment-visualizations.html#singlecellexperiment"><i class="fa fa-check"></i><b>2.1.2</b> SingleCellExperiment</a></li>
+<li class="chapter" data-level="2.1.3" data-path="interactive-summarizedexperiment-visualizations.html"><a href="interactive-summarizedexperiment-visualizations.html#spatialexperiment"><i class="fa fa-check"></i><b>2.1.3</b> SpatialExperiment</a></li>
 </ul></li>
 <li class="chapter" data-level="2.2" data-path="interactive-summarizedexperiment-visualizations.html"><a href="interactive-summarizedexperiment-visualizations.html#getting-started-with-isee"><i class="fa fa-check"></i><b>2.2</b> Getting Started with iSEE</a></li>
 <li class="chapter" data-level="2.3" data-path="interactive-summarizedexperiment-visualizations.html"><a href="interactive-summarizedexperiment-visualizations.html#description-of-the-user-interface"><i class="fa fa-check"></i><b>2.3</b> Description of the user interface</a>
@@ -179,8 +180,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.4" data-path="interactive-summarizedexperiment-visualizations.html"><a href="interactive-summarizedexperiment-visualizations.html#lets-practice"><i class="fa fa-check"></i><b>2.4</b> Let’s practice!</a>
 <ul>
 <li class="chapter" data-level="2.4.1" data-path="interactive-summarizedexperiment-visualizations.html"><a href="interactive-summarizedexperiment-visualizations.html#setting-up-the-data"><i class="fa fa-check"></i><b>2.4.1</b> Setting up the data</a></li>
+<li class="chapter" data-level="2.4.2" data-path="interactive-summarizedexperiment-visualizations.html"><a href="interactive-summarizedexperiment-visualizations.html#explore-the-data"><i class="fa fa-check"></i><b>2.4.2</b> Explore the Data</a></li>
 </ul></li>
-<li class="chapter" data-level="2.5" data-path="interactive-summarizedexperiment-visualizations.html"><a href="interactive-summarizedexperiment-visualizations.html#references"><i class="fa fa-check"></i><b>2.5</b> References</a></li>
+<li class="chapter" data-level="2.5" data-path="interactive-summarizedexperiment-visualizations.html"><a href="interactive-summarizedexperiment-visualizations.html#introduction-to-advanced-isee-features"><i class="fa fa-check"></i><b>2.5</b> Introduction to Advanced iSEE Features</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="interactive-summarizedexperiment-visualizations.html"><a href="interactive-summarizedexperiment-visualizations.html#selecting-cells-based-on-a-single-gene-expression"><i class="fa fa-check"></i><b>2.5.1</b> Selecting Cells Based on a Single Gene Expression</a></li>
+<li class="chapter" data-level="2.5.2" data-path="interactive-summarizedexperiment-visualizations.html"><a href="interactive-summarizedexperiment-visualizations.html#using-a-single-plot-for-two-gene-co-expression"><i class="fa fa-check"></i><b>2.5.2</b> Using a Single Plot for Two Gene Co-Expression</a></li>
+<li class="chapter" data-level="2.5.3" data-path="interactive-summarizedexperiment-visualizations.html"><a href="interactive-summarizedexperiment-visualizations.html#selecting-cells-based-on-the-co-expression-of-two-or-more-genes"><i class="fa fa-check"></i><b>2.5.3</b> Selecting Cells Based on the Co-Expression of Two or more Genes</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="interactive-summarizedexperiment-visualizations.html"><a href="interactive-summarizedexperiment-visualizations.html#references"><i class="fa fa-check"></i><b>2.6</b> References</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="recount3-introduction.html"><a href="recount3-introduction.html"><i class="fa fa-check"></i><b>3</b> recount3 introduction</a>
 <ul>
@@ -381,8 +389,8 @@ its companion documentation website at
 <a href="https://lcolladotor.github.io/cshl2023pkg/" class="uri">https://lcolladotor.github.io/cshl2023pkg/</a>. Note that you will currently need
 the development version of <code>biocthis</code> which addresses the issues documented at
 <a href="https://github.com/r-lib/usethis/issues/1856" class="uri">https://github.com/r-lib/usethis/issues/1856</a>.</p>
-<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="biocthis-introduction.html#cb108-1" tabindex="-1"></a><span class="do">## Install biocthis development version</span></span>
-<span id="cb108-2"><a href="biocthis-introduction.html#cb108-2" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">&quot;lcolladotor/biocthis&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="biocthis-introduction.html#cb112-1" tabindex="-1"></a><span class="do">## Install biocthis development version</span></span>
+<span id="cb112-2"><a href="biocthis-introduction.html#cb112-2" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">&quot;lcolladotor/biocthis&quot;</span>)</span></code></pre></div>
 <p>Check the git commit history at
 <a href="https://github.com/lcolladotor/cshl2023pkg/commits/devel" class="uri">https://github.com/lcolladotor/cshl2023pkg/commits/devel</a> and the GitHub Actions
 history at <a href="https://github.com/lcolladotor/cshl2023pkg/actions" class="uri">https://github.com/lcolladotor/cshl2023pkg/actions</a>. We can see at
