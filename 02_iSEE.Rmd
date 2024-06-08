@@ -46,6 +46,24 @@ This object is specifically designed to store and analyze single-cell RNA sequen
 
 - Metadata: Additional metadata about the experiment.
 
+### SpatialExperiment
+
+This object extends the SingleCellExperiment class and is designed to store and analyze spatially-resolved transcriptomics data. Spatial transcriptomics combines gene expression data with spatial information, providing insights into the spatial organization of tissues.
+
+- Assay Data: The primary data matrix containing gene expression values or other measurements. Rows represent genes and columns represent spatial spots or pixels.
+
+- ColData (Column Metadata): Additional information about each spatial spot or pixel, such as spatial coordinates, tissue section, or any other relevant metadata.
+
+- RowData (Row Metadata): Additional information about each gene, such as gene symbols, genomic coordinates, or functional annotations.
+
+- SpatialCoords: A matrix or data frame containing the spatial coordinates (e.g., x and y coordinates) of each spot or pixel, which is crucial for spatial analyses and visualization.
+
+- ImageData: Links to image data associated with the spatial transcriptomics experiment, such as histology images or microscopy images, which provide the spatial context for the transcriptomics data.
+
+- ReducedDims: Dimensionality reduction results for visualizing and clustering spatial spots or pixels, similar to the SingleCellExperiment class.
+
+- Metadata: Additional metadata about the experiment.
+
 
 ## Getting Started with iSEE
 
@@ -55,7 +73,7 @@ Adapted from [The iSEE User's Guide](https://www.bioconductor.org/packages/relea
 
 - Installation (version "4.4"). In this case, the package is already installed so we just need to load it.
 
-```{r, load_iSEE, eval=FALSE, warning=FALSE, message=FALSE}
+```{r, load_iSEE}
 # if (!require("BiocManager", quietly = TRUE))
 #     install.packages("BiocManager")
 #
@@ -66,7 +84,7 @@ library(iSEE)
 
 - Documentation
 
-```{r, vignettes_iSEE, eval=FALSE, warning=FALSE, message=FALSE}
+```{r, vignettes_iSEE, eval=FALSE}
 browseVignettes("iSEE")
 ```
 
@@ -74,7 +92,7 @@ browseVignettes("iSEE")
 
 If you have a "SummarizedExperiment" object (se) or an instance of a subclass, like a "SingleCellExperiment" object (sce), you can launch an iSEE app by running:
 
-```{r, quick_launch, eval=FALSE, warning=FALSE, message=FALSE}
+```{r, quick_launch, eval=FALSE}
 ## Launch iSEE for the se ("SummarizedExperiment" object)
 iSEE(se)
 
@@ -85,9 +103,7 @@ iSEE(sce)
 
 ## Description of the user interface 
 
-
-** Insertat imángen !!! **
-
+![](https://raw.githubusercontent.com/lcolladotor/cshl_rstats_genome_scale_2024/devel/Figures/iSEE.png)
 
 By default, the app starts with a dashboard that contains one panel or table of each type. By opening the collapsible panels named “Data parameters”, “Visual parameters”, and “Selection parameters” under each plot, we can control the content and appearance of each panel.
 
@@ -288,6 +304,8 @@ Zooming in is possible by first selecting a region of interest in a plot using t
 
 ## Let's practice!
 
+<script defer class="speakerdeck-embed" data-id="32acbf51b837497d92b59ca110ed8f29" data-ratio="1.7777777777777777" src="//speakerdeck.com/assets/embed.js"></script>
+
 ### Setting up the data
 
 * We'll download a `SingleCellExperiment` object, which is similar to `SummarizedExperiment` as it extends it.
@@ -297,7 +315,7 @@ Zooming in is possible by first selecting a region of interest in a plot using t
     - https://osca.bioconductor.org/
     - https://www.nature.com/articles/s41592-019-0654-x Figures 2 and 3
 
-```{r, download_iSEEdata} 
+```{r, download_sce_layer} 
 ## Lets get some data using spatialLIBD
 sce_layer <- spatialLIBD::fetch_data("sce_layer")
 sce_layer
@@ -342,6 +360,8 @@ For all the gory details, check https://github.com/curl/curl/issues/13725, https
 
 </div>
 
+### Explore the Data
+
 Now we can deploy `iSEE()` to explore the data.
 
 ```{r explore_iSEE, eval = FALSE}
@@ -367,20 +387,159 @@ font-family: sans-serif;
  Which panel Type is displaying the following plot?
 </p>
 
+![](https://raw.githubusercontent.com/lcolladotor/cshl_rstats_genome_scale_2024/devel/Figures/iSEE_01_02.PNG)
+
 <p class="exercise">
 **Exercise 1**:
- Recreate the following plot
+ Recreate the following plot.
 </p>
+
+![](https://raw.githubusercontent.com/lcolladotor/cshl_rstats_genome_scale_2024/devel/Figures/iSEE_01_02.PNG)
 
 <p class="exercise">
 **Question 2**:
  What is different between this 2 plots?
 </p>
 
+![](https://raw.githubusercontent.com/lcolladotor/cshl_rstats_genome_scale_2024/devel/Figures/iSEE_03.PNG)
+
 <p class="exercise">
 **Exercise 2**:
+ Recreate the following plot.
+</p>
+
+![](https://raw.githubusercontent.com/lcolladotor/cshl_rstats_genome_scale_2024/devel/Figures/iSEE_04.PNG)
+
+<p class="exercise">
+**Question 3**:
+ What is different between this 2 plots?
+</p>
+
+![](https://raw.githubusercontent.com/lcolladotor/cshl_rstats_genome_scale_2024/devel/Figures/iSEE_05.PNG)
+
+<p class="exercise">
+**Exercise 3**:
  Recreate the following plot
+ Ensembl IDs:
+    ENSG00000177757
+    ENSG00000237491
+    ENSG00000238009
+    ENSG00000243485
+</p>
+
+![](https://raw.githubusercontent.com/lcolladotor/cshl_rstats_genome_scale_2024/devel/Figures/iSEE_06.PNG)
+
+<p class="exercise">
+**Exercise 4**:
+ Recreate the following plot. What would you change from the last one?
+ 
+ Ensembl IDs:
+    ENSG00000177757
+    ENSG00000237491
+    ENSG00000238009
+    ENSG00000243485
+
+</p>
+
+![](https://raw.githubusercontent.com/lcolladotor/cshl_rstats_genome_scale_2024/devel/Figures/iSEE_07.PNG)
+
+<p class="exercise">
+**Exercise 5**:
+ Recreate the following plot. What would you change from the last one?
+ Ensembl IDs:
+    ENSG00000177757
+    ENSG00000237491
+    ENSG00000238009
+    ENSG00000243485
+</p>
+
+![](https://raw.githubusercontent.com/lcolladotor/cshl_rstats_genome_scale_2024/devel/Figures/iSEE_08.PNG)
+
+<p class="exercise">
+**Exercise 6**:
+ Download only the last plot (Final HeatMap)
+</p>
+
+<p class="exercise">
+**Exercise 7**:
+ Extract the R code only for the last plot.(Final HeatMap)
 </p>
 
 
+## Introduction to Advanced iSEE Features
+
+Adapted from the GitHub Issue: https://github.com/iSEE/iSEE/issues/650
+
+Beyond its basic functionalities, "iSEE" offers advanced features that allow users to perform complex data manipulations interactively. This includes the ability to subset and filter cells based on gene expression criteria.
+
+To begin with, we will load the necessary libraries and dataset. In this case we will be using "ReprocessedAllenData" from the "scRNAseq" package, a dataset of 379 mouse brain cells from Tasic et al. (2016).
+After loading the dataset, we normalize the counts and perform a PCA (Principal Component Analysis) to prepare the data for visualization. 
+
+```{r, load_scRNAseq_data}
+library(scRNAseq)
+library(scater)
+library(iSEE)
+
+# Load the dataset
+sce <- ReprocessedAllenData(assays="tophat_counts")
+
+# Normalize counts and perform PCA
+sce <- logNormCounts(sce, exprs_values="tophat_counts")
+sce <- runPCA(sce, ncomponents=4)
+```
+
+### Selecting Cells Based on a Single Gene Expression
+
+To select cells based on the expression of a single gene using iSEE, we need to *create an initial list of panels that will be displayed when we launch iSEE*. The first panel in our list is a "FeatureAssayPlot", which will show the expression levels of the gene "Serpine2". By visualizing this plot, we can interactively select cells that express "Serpine2".
+
+To complement this, we add a "ReducedDimensionPlot" to our panel list. This plot will visualize the PCA and highlight the cells that we selected based on "Serpine2" expression. The linkage between these two panels allows us to see how the selected cells are distributed in the reduced dimensional space (PCA).
+
+```{r, single_geneExpr}
+## Initial settings for a single gene expression
+initial_single <- list(
+  FeatureAssayPlot(Assay = "logcounts", YAxisFeatureName = "Serpine2"),
+  ReducedDimensionPlot(Type = "PCA", ColorBy = "Column selection", ColumnSelectionSource = "FeatureAssayPlot1")
+)
+
+## Launch iSEE with the initial settings
+# iSEE(sce, initial = initial_single)
+```
+
+### Using a Single Plot for Two Gene Co-Expression
+
+To select cells based on the expression of two gene, we can use a single "FeatureAssayPlot" panel. In this setup, one gene is plotted on the x-axis and the other gene on the y-axis. This method allows us to directly visualize and select cells that express both genes simultaneously.
+
+By adding a "ReducedDimensionPlot" to our initial panel list, we can again see how these selected cells are distributed in the PCA plot. This approach is simpler when dealing with only two genes and provides an intuitive way to explore co-expression patterns.
+
+```{r, 2_genesExpr}
+## Initial settings for 2 genes expression on the same "FeatureAssayPlot"
+initial_combined <- list(
+  FeatureAssayPlot(Assay = "logcounts", XAxis = "Feature name", XAxisFeatureName = "Serpine2", YAxisFeatureName = "Bcl6"),
+  ReducedDimensionPlot(Type = "PCA", ColorBy = "Column selection", ColumnSelectionSource = "FeatureAssayPlot1")
+)
+
+## Launch iSEE with the initial settings
+# iSEE(sce, initial = initial_combined)
+```
+
+### Selecting Cells Based on the Co-Expression of Two or more Genes
+
+In situations where we want to select cells based on the expression of two or more genes, we need to chain multiple "FeatureAssayPlot" panels together. For instance, if we are interested in cells that express both "Serpine2" and "Bcl6", we start by creating a "FeatureAssayPlot" for "Serpine2". Then, we add another "FeatureAssayPlot" for "Bcl6", but this time we specify that the selection source for this plot is the "FeatureAssayPlot" for "Serpine2". This setup ensures that only cells that were selected in the first plot (based on "Serpine2") are displayed in the second plot (for" Bcl6").
+
+Finally, we include a ReducedDimensionPlot to visualize the PCA, highlighting the cells that meet both criteria. This chained selection process allows for more refined filtering based on multiple gene expressions.
+
+```{r, chain_FeatureAssayPlots}
+## Initial settings chainning multiple "FeatureAssayPlot"
+initial_double <- list(
+  FeatureAssayPlot(Assay = "logcounts", YAxisFeatureName = "Serpine2"),
+  FeatureAssayPlot(Assay = "logcounts", YAxisFeatureName = "Bcl6", ColumnSelectionSource = "FeatureAssayPlot1", ColumnSelectionRestrict = TRUE),
+  ReducedDimensionPlot(Type = "PCA", ColorBy = "Column selection", ColumnSelectionSource = "FeatureAssayPlot2")
+)
+
+## Launch iSEE with the initial settings
+# iSEE(sce, initial = initial_double)
+
+```
+
 ## References
+
