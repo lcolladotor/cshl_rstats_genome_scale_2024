@@ -469,7 +469,7 @@ usethis::use_github()
 
 ### Choose a Template
 
-```{r, choose_template}
+```{r, choose_template, eval=FALSE}
 ## Choose only one template (the one you like the most)
 postcards::create_postcard(template = "jolla")
 postcards::create_postcard(template = "jolla-blue")
