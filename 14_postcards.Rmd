@@ -113,7 +113,7 @@ Usage:
 
 All use_* functions operate on the current directory.
 
-```{r, use_*}
+```{r, use_*, eval=FALSE}
 ## usethis::use_*()
 usethis::use_r()
 usethis::use_git()
