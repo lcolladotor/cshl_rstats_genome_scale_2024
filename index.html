@@ -412,13 +412,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb2-19"><a href="index.html#cb2-19" tabindex="-1"></a>        <span class="st">&quot;postcards&quot;</span>,</span>
 <span id="cb2-20"><a href="index.html#cb2-20" tabindex="-1"></a>        <span class="st">&quot;scater&quot;</span>,</span>
 <span id="cb2-21"><a href="index.html#cb2-21" tabindex="-1"></a>        <span class="st">&quot;sessioninfo&quot;</span>,</span>
-<span id="cb2-22"><a href="index.html#cb2-22" tabindex="-1"></a>        <span class="st">&quot;smokingMouse&quot;</span>,</span>
-<span id="cb2-23"><a href="index.html#cb2-23" tabindex="-1"></a>        <span class="st">&quot;stringr&quot;</span>,</span>
-<span id="cb2-24"><a href="index.html#cb2-24" tabindex="-1"></a>        <span class="st">&quot;SummarizedExperiment&quot;</span>, <span class="do">## Main containers / vis</span></span>
-<span id="cb2-25"><a href="index.html#cb2-25" tabindex="-1"></a>        <span class="st">&quot;iSEE&quot;</span>,</span>
-<span id="cb2-26"><a href="index.html#cb2-26" tabindex="-1"></a>        <span class="st">&quot;edgeR&quot;</span>, <span class="do">## RNA-seq</span></span>
-<span id="cb2-27"><a href="index.html#cb2-27" tabindex="-1"></a>        <span class="st">&quot;ExploreModelMatrix&quot;</span>,</span>
-<span id="cb2-28"><a href="index.html#cb2-28" tabindex="-1"></a>        <span class="st">&quot;limma&quot;</span>,</span>
+<span id="cb2-22"><a href="index.html#cb2-22" tabindex="-1"></a>        <span class="st">&quot;stringr&quot;</span>,</span>
+<span id="cb2-23"><a href="index.html#cb2-23" tabindex="-1"></a>        <span class="st">&quot;SummarizedExperiment&quot;</span>, <span class="do">## Main containers / vis</span></span>
+<span id="cb2-24"><a href="index.html#cb2-24" tabindex="-1"></a>        <span class="st">&quot;iSEE&quot;</span>,</span>
+<span id="cb2-25"><a href="index.html#cb2-25" tabindex="-1"></a>        <span class="st">&quot;edgeR&quot;</span>, <span class="do">## RNA-seq</span></span>
+<span id="cb2-26"><a href="index.html#cb2-26" tabindex="-1"></a>        <span class="st">&quot;ExploreModelMatrix&quot;</span>,</span>
+<span id="cb2-27"><a href="index.html#cb2-27" tabindex="-1"></a>        <span class="st">&quot;limma&quot;</span>,</span>
+<span id="cb2-28"><a href="index.html#cb2-28" tabindex="-1"></a>        <span class="st">&quot;smokingMouse&quot;</span>,</span>
 <span id="cb2-29"><a href="index.html#cb2-29" tabindex="-1"></a>        <span class="st">&quot;recount3&quot;</span>,</span>
 <span id="cb2-30"><a href="index.html#cb2-30" tabindex="-1"></a>        <span class="st">&quot;rlang&quot;</span>,</span>
 <span id="cb2-31"><a href="index.html#cb2-31" tabindex="-1"></a>        <span class="st">&quot;scRNAseq&quot;</span>,</span>
@@ -433,14 +433,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb2-40"><a href="index.html#cb2-40" tabindex="-1"></a>        <span class="st">&quot;spatialLIBD&quot;</span>, <span class="do">## Advanced</span></span>
 <span id="cb2-41"><a href="index.html#cb2-41" tabindex="-1"></a>        <span class="st">&quot;variancePartition&quot;</span></span>
 <span id="cb2-42"><a href="index.html#cb2-42" tabindex="-1"></a>    )</span>
-<span id="cb2-43"><a href="index.html#cb2-43" tabindex="-1"></a>)</span>
-<span id="cb2-44"><a href="index.html#cb2-44" tabindex="-1"></a></span>
-<span id="cb2-45"><a href="index.html#cb2-45" tabindex="-1"></a><span class="do">## Install smokingMouse, which is currently under review at Bioconductor</span></span>
-<span id="cb2-46"><a href="index.html#cb2-46" tabindex="-1"></a><span class="do">## at https://github.com/Bioconductor/Contributions/issues/3024.</span></span>
-<span id="cb2-47"><a href="index.html#cb2-47" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">&quot;LieberInstitute/smokingMouse&quot;</span>)</span>
-<span id="cb2-48"><a href="index.html#cb2-48" tabindex="-1"></a></span>
-<span id="cb2-49"><a href="index.html#cb2-49" tabindex="-1"></a><span class="do">## Required to access some recent bug fixes on biocthis</span></span>
-<span id="cb2-50"><a href="index.html#cb2-50" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">&quot;lcolladotor/biocthis&quot;</span>)</span></code></pre></div>
+<span id="cb2-43"><a href="index.html#cb2-43" tabindex="-1"></a>)</span></code></pre></div>
 <p>You will also need to install <a href="https://rstudio.com/products/rstudio/download/#download">RStudio</a> version 2024.04.0+735 or newer.</p>
 </div>
 <div id="r-session-information" class="section level2 unnumbered hasAnchor">
@@ -765,8 +758,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</code></pre>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="index.html#cb6-1" tabindex="-1"></a><span class="fu">proc.time</span>()</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##  13.808   0.992  14.631</code></pre>
-<p>This interactive book was last updated at 2024-06-09 00:22:45.840038.</p>
+##  13.574   1.061  14.463</code></pre>
+<p>This interactive book was last updated at 2024-06-09 01:53:02.73073.</p>
 </div>
 <div id="license" class="section level2 unnumbered hasAnchor">
 <h2>License<a href="index.html#license" class="anchor-section" aria-label="Anchor link to header"></a></h2>
