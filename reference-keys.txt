@@ -1,6 +1,5 @@
 summarizedexperiment-overview
 overview-1
-quiz
 exercises
 solutions
 interactive-summarizedexperiment-visualizations
