@@ -19,17 +19,16 @@ output:
 
 Here you can find the files for the June 2024 _Statistical Analysis of Genome Scale Data_ course at [CSHL](https://meetings.cshl.edu/courses.aspx?course=C-DATA&year=24) portion taught by Leo and his team (June 9-11).
 
-<!-- See [CSHLData2023](https://seandavi.github.io/CSHLData2023/) for a list of all instructors and related materials. -->
-
 Instructor:
 
 * [**Leonardo Collado-Torres**](http://lcolladotor.github.io/), [Twitter](https://twitter.com/lcolladotor)
 
-Teach assistants:
+Teaching assistants:
 
 * [Daianna González Padilla](https://daianna21.github.io/), [Twitter](https://twitter.com/daianna_glez)
 * [Melissa Mayén Quiroz](http://Melii99.github.io/), [Twitter](http://twitter.com/meli_mq99)
 
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Thanks again Sean Davis for inviting us to help teach <a href="https://t.co/KulvuQ3XK8">https://t.co/KulvuQ3XK8</a> at <a href="https://twitter.com/cshlcourses?ref_src=twsrc%5Etfw">@cshlcourses</a>!<br><br>Our teaching materials are available at <a href="https://t.co/OP2YYZmqwh">https://t.co/OP2YYZmqwh</a> 📚 <br><br>It’s an honor to teach with <a href="https://twitter.com/lcgunam?ref_src=twsrc%5Etfw">@lcgunam</a> students &amp; remote <a href="https://twitter.com/LieberInstitute?ref_src=twsrc%5Etfw">@LieberInstitute</a> team members<a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> <a href="https://twitter.com/Bioconductor?ref_src=twsrc%5Etfw">@Bioconductor</a> <a href="https://t.co/U4DzQuPvIn">pic.twitter.com/U4DzQuPvIn</a></p>&mdash; 🇲🇽 Leonardo Collado-Torres (@lcolladotor) <a href="https://twitter.com/lcolladotor/status/1799946273870782585?ref_src=twsrc%5Etfw">June 9, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 ## Download course materials {-}
 
