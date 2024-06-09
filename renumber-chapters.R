@@ -1,6 +1,6 @@
 rmds <- dir(pattern = "^[[:digit:]]+.*\\.Rmd$")
 rmd_num <- as.integer(substr(rmds, 0, 2))
-start_i <- 7
+start_i <- 9
 i <- seq(start_i, length(rmds))
 rmd_num[i] <- rmd_num[i] - 1
 

@@ -481,11 +481,11 @@ library(scater)
 library(iSEE)
 
 # Load the dataset
-sce <- ReprocessedAllenData(assays="tophat_counts")
+sce <- ReprocessedAllenData(assays = "tophat_counts")
 
 # Normalize counts and perform PCA
-sce <- logNormCounts(sce, exprs_values="tophat_counts")
-sce <- runPCA(sce, ncomponents=4)
+sce <- logNormCounts(sce, exprs_values = "tophat_counts")
+sce <- runPCA(sce, ncomponents = 4)
 ```
 
 ### Selecting Cells Based on a Single Gene Expression
@@ -497,8 +497,8 @@ To complement this, we add a "ReducedDimensionPlot" to our panel list. This plot
 ```{r, single_geneExpr}
 ## Initial settings for a single gene expression
 initial_single <- list(
-  FeatureAssayPlot(Assay = "logcounts", YAxisFeatureName = "Serpine2"),
-  ReducedDimensionPlot(Type = "PCA", ColorBy = "Column selection", ColumnSelectionSource = "FeatureAssayPlot1")
+    FeatureAssayPlot(Assay = "logcounts", YAxisFeatureName = "Serpine2"),
+    ReducedDimensionPlot(Type = "PCA", ColorBy = "Column selection", ColumnSelectionSource = "FeatureAssayPlot1")
 )
 
 ## Launch iSEE with the initial settings
@@ -514,8 +514,8 @@ By adding a "ReducedDimensionPlot" to our initial panel list, we can again see h
 ```{r, 2_genesExpr}
 ## Initial settings for 2 genes expression on the same "FeatureAssayPlot"
 initial_combined <- list(
-  FeatureAssayPlot(Assay = "logcounts", XAxis = "Feature name", XAxisFeatureName = "Serpine2", YAxisFeatureName = "Bcl6"),
-  ReducedDimensionPlot(Type = "PCA", ColorBy = "Column selection", ColumnSelectionSource = "FeatureAssayPlot1")
+    FeatureAssayPlot(Assay = "logcounts", XAxis = "Feature name", XAxisFeatureName = "Serpine2", YAxisFeatureName = "Bcl6"),
+    ReducedDimensionPlot(Type = "PCA", ColorBy = "Column selection", ColumnSelectionSource = "FeatureAssayPlot1")
 )
 
 ## Launch iSEE with the initial settings
@@ -531,14 +531,13 @@ Finally, we include a ReducedDimensionPlot to visualize the PCA, highlighting th
 ```{r, chain_FeatureAssayPlots}
 ## Initial settings chainning multiple "FeatureAssayPlot"
 initial_double <- list(
-  FeatureAssayPlot(Assay = "logcounts", YAxisFeatureName = "Serpine2"),
-  FeatureAssayPlot(Assay = "logcounts", YAxisFeatureName = "Bcl6", ColumnSelectionSource = "FeatureAssayPlot1", ColumnSelectionRestrict = TRUE),
-  ReducedDimensionPlot(Type = "PCA", ColorBy = "Column selection", ColumnSelectionSource = "FeatureAssayPlot2")
+    FeatureAssayPlot(Assay = "logcounts", YAxisFeatureName = "Serpine2"),
+    FeatureAssayPlot(Assay = "logcounts", YAxisFeatureName = "Bcl6", ColumnSelectionSource = "FeatureAssayPlot1", ColumnSelectionRestrict = TRUE),
+    ReducedDimensionPlot(Type = "PCA", ColorBy = "Column selection", ColumnSelectionSource = "FeatureAssayPlot2")
 )
 
 ## Launch iSEE with the initial settings
 # iSEE(sce, initial = initial_double)
-
 ```
 
 ## References
