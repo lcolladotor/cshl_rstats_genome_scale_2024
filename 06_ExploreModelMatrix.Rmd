@@ -107,6 +107,13 @@ _“Model matrix not full rank”_
 
 Some of the `ExploreModelMatrix` authors:
 
-* https://twitter.com/CSoneson
+* https://bsky.app/profile/csoneson.bsky.social
 * https://twitter.com/FedeBioinfo
 * https://twitter.com/mikelove
+
+Some of the `edgeR` and `limma` authors:
+
+* https://twitter.com/mritchieau
+* https://twitter.com/davisjmcc
+* https://twitter.com/markrobinsonca
+* https://twitter.com/AliciaOshlack
