@@ -8,6 +8,10 @@ You might also be interested in this recent blog post by Leo https://lcolladotor
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/HGioWKuI3ek?si=Bq5FT1UphMSQRO-E" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
+For a journal club presentation on the `HumanPilot` paper, check this video:
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/qloLbG5-IPM?si=QsWfmCuW8ueypPek" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
 </div>
 
 In recent years, with constant improvements in the current sequencing technologies and the generation of more sophisticated omics methodologies and bioinformatic pipelines, we have been constantly demonstrating that specific cell types and cell-to-cell interactions play critical roles in the definition of numerous diseases and development-related processes. In fact, cell type-specific associations have been established for a number of diseases and disorders. Thus, understanding the cellular context and the spatial location in which normal and deregulated cellular events occur is necessary to unveil the molecular underpinnings of disease pathologies and malfunctions of the organisms.
