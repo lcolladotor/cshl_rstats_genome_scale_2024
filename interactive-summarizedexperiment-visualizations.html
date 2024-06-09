@@ -665,7 +665,7 @@ Examples include low-dimensional embeddings from principal components analysis (
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="interactive-summarizedexperiment-visualizations.html#cb32-1" tabindex="-1"></a><span class="do">## Lets get some data using spatialLIBD</span></span>
 <span id="cb32-2"><a href="interactive-summarizedexperiment-visualizations.html#cb32-2" tabindex="-1"></a>sce_layer <span class="ot">&lt;-</span> spatialLIBD<span class="sc">::</span><span class="fu">fetch_data</span>(<span class="st">&quot;sce_layer&quot;</span>)</span>
 <span id="cb32-3"><a href="interactive-summarizedexperiment-visualizations.html#cb32-3" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;https://www.dropbox.com/s/bg8xwysh2vnjwvg/Human_DLPFC_Visium_processedData_sce_scran_sce_layer_spatialLIBD.Rdata?dl=1&#39;</span></span>
-<span id="cb32-4"><a href="interactive-summarizedexperiment-visualizations.html#cb32-4" tabindex="-1"></a><span class="co">#&gt; 2024-06-09 15:55:14.079038 loading file /github/home/.cache/R/BiocFileCache/39a2ca9bac7_Human_DLPFC_Visium_processedData_sce_scran_sce_layer_spatialLIBD.Rdata%3Fdl%3D1</span></span></code></pre></div>
+<span id="cb32-4"><a href="interactive-summarizedexperiment-visualizations.html#cb32-4" tabindex="-1"></a><span class="co">#&gt; 2024-06-09 17:10:35.920665 loading file /github/home/.cache/R/BiocFileCache/39b6b40bb2a_Human_DLPFC_Visium_processedData_sce_scran_sce_layer_spatialLIBD.Rdata%3Fdl%3D1</span></span></code></pre></div>
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="interactive-summarizedexperiment-visualizations.html#cb33-1" tabindex="-1"></a>sce_layer</span>
 <span id="cb33-2"><a href="interactive-summarizedexperiment-visualizations.html#cb33-2" tabindex="-1"></a><span class="co">#&gt; class: SingleCellExperiment </span></span>
 <span id="cb33-3"><a href="interactive-summarizedexperiment-visualizations.html#cb33-3" tabindex="-1"></a><span class="co">#&gt; dim: 22331 76 </span></span>
@@ -703,11 +703,12 @@ Backtrace:
 <div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="interactive-summarizedexperiment-visualizations.html#cb39-1" tabindex="-1"></a>tmp_sce_layer <span class="ot">&lt;-</span> <span class="fu">tempfile</span>(<span class="st">&quot;sce_layer.RData&quot;</span>)</span>
 <span id="cb39-2"><a href="interactive-summarizedexperiment-visualizations.html#cb39-2" tabindex="-1"></a><span class="fu">download.file</span>(</span>
 <span id="cb39-3"><a href="interactive-summarizedexperiment-visualizations.html#cb39-3" tabindex="-1"></a>    <span class="st">&quot;https://www.dropbox.com/s/bg8xwysh2vnjwvg/Human_DLPFC_Visium_processedData_sce_scran_sce_layer_spatialLIBD.Rdata?dl=1&quot;</span>,</span>
-<span id="cb39-4"><a href="interactive-summarizedexperiment-visualizations.html#cb39-4" tabindex="-1"></a>    tmp_sce_layer</span>
-<span id="cb39-5"><a href="interactive-summarizedexperiment-visualizations.html#cb39-5" tabindex="-1"></a>)</span>
-<span id="cb39-6"><a href="interactive-summarizedexperiment-visualizations.html#cb39-6" tabindex="-1"></a><span class="fu">load</span>(tmp_sce_layer, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb39-7"><a href="interactive-summarizedexperiment-visualizations.html#cb39-7" tabindex="-1"></a><span class="co">#&gt; Loading objects:</span></span>
-<span id="cb39-8"><a href="interactive-summarizedexperiment-visualizations.html#cb39-8" tabindex="-1"></a><span class="co">#&gt;   sce_layer</span></span></code></pre></div>
+<span id="cb39-4"><a href="interactive-summarizedexperiment-visualizations.html#cb39-4" tabindex="-1"></a>    tmp_sce_layer,</span>
+<span id="cb39-5"><a href="interactive-summarizedexperiment-visualizations.html#cb39-5" tabindex="-1"></a>    <span class="at">mode =</span> <span class="st">&quot;wb&quot;</span></span>
+<span id="cb39-6"><a href="interactive-summarizedexperiment-visualizations.html#cb39-6" tabindex="-1"></a>)</span>
+<span id="cb39-7"><a href="interactive-summarizedexperiment-visualizations.html#cb39-7" tabindex="-1"></a><span class="fu">load</span>(tmp_sce_layer, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb39-8"><a href="interactive-summarizedexperiment-visualizations.html#cb39-8" tabindex="-1"></a><span class="co">#&gt; Loading objects:</span></span>
+<span id="cb39-9"><a href="interactive-summarizedexperiment-visualizations.html#cb39-9" tabindex="-1"></a><span class="co">#&gt;   sce_layer</span></span></code></pre></div>
 <div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="interactive-summarizedexperiment-visualizations.html#cb40-1" tabindex="-1"></a>sce_layer</span>
 <span id="cb40-2"><a href="interactive-summarizedexperiment-visualizations.html#cb40-2" tabindex="-1"></a><span class="co">#&gt; class: SingleCellExperiment </span></span>
 <span id="cb40-3"><a href="interactive-summarizedexperiment-visualizations.html#cb40-3" tabindex="-1"></a><span class="co">#&gt; dim: 22331 76 </span></span>
