@@ -45,7 +45,8 @@ curl::curl_version()$version
 tmp_sce_layer <- tempfile("sce_layer.RData")
 download.file(
     "https://www.dropbox.com/s/bg8xwysh2vnjwvg/Human_DLPFC_Visium_processedData_sce_scran_sce_layer_spatialLIBD.Rdata?dl=1",
-    tmp_sce_layer
+    tmp_sce_layer,
+    mode = "wb"
 )
 load(tmp_sce_layer, verbose = TRUE)
 sce_layer
