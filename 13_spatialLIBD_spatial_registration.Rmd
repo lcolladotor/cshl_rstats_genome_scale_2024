@@ -10,6 +10,26 @@ In 2023, Louise A. Huuki-Myers contributed a new vignette to `spatialLIBD` as no
 
 You should be able to run without any issues the code Louise explained at http://research.libd.org/spatialLIBD/articles/guide_to_spatial_registration.html. This same information is displayed at https://bioconductor.org/packages/release/data/experiment/vignettes/spatialLIBD/inst/doc/guide_to_spatial_registration.html.
 
+```{r "download_modeling_results"}
+## get reference layer enrichment statistics
+layer_modeling_results <- spatialLIBD::fetch_data(type = "modeling_results")
+```
+
+If the above doesn't work, related to the `curl` issue [we previously discussed](https://lcolladotor.github.io/cshl_rstats_genome_scale_2024/interactive-summarizedexperiment-visualizations.html#setting-up-the-data), then use this workaround:
+
+```{r "layer_modeling_results_workaround"}
+tmp_modeling_results <- tempfile("modeling_results.RData")
+download.file(
+    "https://www.dropbox.com/s/se6rrgb9yhm5gfh/Human_DLPFC_Visium_modeling_results.Rdata?dl=1",
+    tmp_modeling_results,
+    mode = "wb"
+)
+load(tmp_modeling_results, verbose = TRUE)
+layer_modeling_results <- modeling_results
+```
+
+
+
 <div style="background-color:#E0EEE0; padding:20px; font-family: sans-serif">
 
 This journal club style video of the main results of the `spatialDLPFC` paper does explain the basics of *spatial registration*:
