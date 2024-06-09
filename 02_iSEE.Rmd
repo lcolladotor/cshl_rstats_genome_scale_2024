@@ -578,3 +578,12 @@ if (interactive()) {
 * https://shiny.posit.co/r/gallery/life-sciences/isee/
 * https://bioconductor.org/packages/release/bioc/vignettes/iSEE/inst/doc/basic.html
 * https://github.com/iSEE/iSEE/issues/650
+
+## Community
+
+`iSEE` authors:
+
+* Kévin Rue-Albrecht https://twitter.com/KevinRUE67
+* Federico Marini https://twitter.com/FedeBioinfo
+* Charlotte Soneson https://bsky.app/profile/csoneson.bsky.social
+* Aaron Lun https://twitter.com/realAaronLun

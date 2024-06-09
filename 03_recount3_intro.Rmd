@@ -127,6 +127,7 @@ Use `iSEE` to reproduce the following image
     - Use information from columns (samples) for the X axis
     - Use information from columns (samples) for the colors
 * (optional) Create your free account at https://www.shinyapps.io/ and share your `iSEE` app with the world.
+  - Regrettably `iSEE::iSEE()` will need more than the default free 1 GB RAM option available from https://www.shinyapps.io/.
   - Real examples used on a paper: https://github.com/LieberInstitute/10xPilot_snRNAseq-human#explore-the-data-interactively.
   - Example from another course: https://libd.shinyapps.io/SRP009615/. It was created with https://github.com/lcolladotor/rnaseq_2023_notas_en_vivo/blob/main/app.R.
 
@@ -136,7 +137,7 @@ Use `iSEE` to reproduce the following image
     - https://twitter.com/chrisnwilks
     - https://twitter.com/BenLangmead
     - https://twitter.com/KasperDHansen
-    - https://twitter.com/AbhiNellore
+    - https://bsky.app/profile/nav.bsky.social
     - https://twitter.com/Shannon_E_Ellis
     - https://twitter.com/jtleek
 * More about the different types of counts:
