@@ -39,11 +39,12 @@ selecting-cells-based-on-a-single-gene-expression
 using-a-single-plot-for-two-gene-co-expression
 selecting-cells-based-on-the-co-expression-of-two-or-more-genes
 references
+community
 recount3-introduction
 recount-projects
 using-recount3
 exercise
-community
+community-1
 differential-gene-expression-analysis-overview
 preliminary-steps
 rna-seq-data-processing
@@ -74,7 +75,7 @@ example-2
 example-3
 exercise-1
 to-learn-more
-community-1
+community-2
 dge-model-building-with-variancepartition
 canonical-correlation-analysis
 fit-model-and-extract-fraction-of-variance-explained
@@ -90,7 +91,7 @@ biocthis-introduction
 related-past-materials
 biocthis-main-commands
 live-demo
-community-2
+community-3
 scrna-seq-data-analysis-overview
 single-cell-rna-sequencing-overview
 the-singlecellexperiment-class

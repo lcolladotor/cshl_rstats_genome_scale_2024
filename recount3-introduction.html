@@ -188,13 +188,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.5.3" data-path="interactive-summarizedexperiment-visualizations.html"><a href="interactive-summarizedexperiment-visualizations.html#selecting-cells-based-on-the-co-expression-of-two-or-more-genes"><i class="fa fa-check"></i><b>2.5.3</b> Selecting Cells Based on the Co-Expression of Two or more Genes</a></li>
 </ul></li>
 <li class="chapter" data-level="2.6" data-path="interactive-summarizedexperiment-visualizations.html"><a href="interactive-summarizedexperiment-visualizations.html#references"><i class="fa fa-check"></i><b>2.6</b> References</a></li>
+<li class="chapter" data-level="2.7" data-path="interactive-summarizedexperiment-visualizations.html"><a href="interactive-summarizedexperiment-visualizations.html#community"><i class="fa fa-check"></i><b>2.7</b> Community</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="recount3-introduction.html"><a href="recount3-introduction.html"><i class="fa fa-check"></i><b>3</b> recount3 introduction</a>
 <ul>
 <li class="chapter" data-level="3.1" data-path="recount3-introduction.html"><a href="recount3-introduction.html#recount-projects"><i class="fa fa-check"></i><b>3.1</b> recount projects</a></li>
 <li class="chapter" data-level="3.2" data-path="recount3-introduction.html"><a href="recount3-introduction.html#using-recount3"><i class="fa fa-check"></i><b>3.2</b> Using recount3</a></li>
 <li class="chapter" data-level="3.3" data-path="recount3-introduction.html"><a href="recount3-introduction.html#exercise"><i class="fa fa-check"></i><b>3.3</b> Exercise</a></li>
-<li class="chapter" data-level="3.4" data-path="recount3-introduction.html"><a href="recount3-introduction.html#community"><i class="fa fa-check"></i><b>3.4</b> Community</a></li>
+<li class="chapter" data-level="3.4" data-path="recount3-introduction.html"><a href="recount3-introduction.html#community-1"><i class="fa fa-check"></i><b>3.4</b> Community</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="differential-gene-expression-analysis-overview.html"><a href="differential-gene-expression-analysis-overview.html"><i class="fa fa-check"></i><b>4</b> Differential Gene Expression analysis overview</a>
 <ul>
@@ -234,7 +235,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.5" data-path="interpreting-model-coefficients-with-exploremodelmatrix.html"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#example-3"><i class="fa fa-check"></i><b>6.5</b> Example 3</a></li>
 <li class="chapter" data-level="6.6" data-path="interpreting-model-coefficients-with-exploremodelmatrix.html"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#exercise-1"><i class="fa fa-check"></i><b>6.6</b> Exercise</a></li>
 <li class="chapter" data-level="6.7" data-path="interpreting-model-coefficients-with-exploremodelmatrix.html"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#to-learn-more"><i class="fa fa-check"></i><b>6.7</b> To learn more</a></li>
-<li class="chapter" data-level="6.8" data-path="interpreting-model-coefficients-with-exploremodelmatrix.html"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#community-1"><i class="fa fa-check"></i><b>6.8</b> Community</a></li>
+<li class="chapter" data-level="6.8" data-path="interpreting-model-coefficients-with-exploremodelmatrix.html"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#community-2"><i class="fa fa-check"></i><b>6.8</b> Community</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="dge-model-building-with-variancepartition.html"><a href="dge-model-building-with-variancepartition.html"><i class="fa fa-check"></i><b>7</b> DGE model building with <em>variancePartition</em></a>
 <ul>
@@ -259,7 +260,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="10.1" data-path="biocthis-introduction.html"><a href="biocthis-introduction.html#related-past-materials"><i class="fa fa-check"></i><b>10.1</b> Related past materials</a></li>
 <li class="chapter" data-level="10.2" data-path="biocthis-introduction.html"><a href="biocthis-introduction.html#biocthis-main-commands"><i class="fa fa-check"></i><b>10.2</b> biocthis main commands</a></li>
 <li class="chapter" data-level="10.3" data-path="biocthis-introduction.html"><a href="biocthis-introduction.html#live-demo"><i class="fa fa-check"></i><b>10.3</b> Live demo</a></li>
-<li class="chapter" data-level="10.4" data-path="biocthis-introduction.html"><a href="biocthis-introduction.html#community-2"><i class="fa fa-check"></i><b>10.4</b> Community</a></li>
+<li class="chapter" data-level="10.4" data-path="biocthis-introduction.html"><a href="biocthis-introduction.html#community-3"><i class="fa fa-check"></i><b>10.4</b> Community</a></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="scrna-seq-data-analysis-overview.html"><a href="scrna-seq-data-analysis-overview.html"><i class="fa fa-check"></i><b>11</b> scRNA-seq data analysis overview</a>
 <ul>
@@ -382,11 +383,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Next we need to identify a study of interest as well as choose whether we want the data at the gene, exon, or some other feature level. Once we have identified our study of interest, we can download the files and build a <code>SummarizedExperiment</code> object using <code>recount3::create_rse()</code> as we’ll show next. <code>create_rse()</code> has arguments through which we can control what <em>annotation</em> we want to use (they are organism-dependent).</p>
 <div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="recount3-introduction.html#cb45-1" tabindex="-1"></a><span class="do">## Lets download all the available projects</span></span>
 <span id="cb45-2"><a href="recount3-introduction.html#cb45-2" tabindex="-1"></a>human_projects <span class="ot">&lt;-</span> <span class="fu">available_projects</span>()</span>
-<span id="cb45-3"><a href="recount3-introduction.html#cb45-3" tabindex="-1"></a><span class="co">#&gt; 2024-06-09 02:12:47.160166 caching file sra.recount_project.MD.gz.</span></span>
+<span id="cb45-3"><a href="recount3-introduction.html#cb45-3" tabindex="-1"></a><span class="co">#&gt; 2024-06-09 02:18:47.930064 caching file sra.recount_project.MD.gz.</span></span>
 <span id="cb45-4"><a href="recount3-introduction.html#cb45-4" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;http://duffel.rail.bio/recount3/human/data_sources/sra/metadata/sra.recount_project.MD.gz&#39;</span></span>
-<span id="cb45-5"><a href="recount3-introduction.html#cb45-5" tabindex="-1"></a><span class="co">#&gt; 2024-06-09 02:12:48.164659 caching file gtex.recount_project.MD.gz.</span></span>
+<span id="cb45-5"><a href="recount3-introduction.html#cb45-5" tabindex="-1"></a><span class="co">#&gt; 2024-06-09 02:18:49.22762 caching file gtex.recount_project.MD.gz.</span></span>
 <span id="cb45-6"><a href="recount3-introduction.html#cb45-6" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;http://duffel.rail.bio/recount3/human/data_sources/gtex/metadata/gtex.recount_project.MD.gz&#39;</span></span>
-<span id="cb45-7"><a href="recount3-introduction.html#cb45-7" tabindex="-1"></a><span class="co">#&gt; 2024-06-09 02:12:49.133194 caching file tcga.recount_project.MD.gz.</span></span>
+<span id="cb45-7"><a href="recount3-introduction.html#cb45-7" tabindex="-1"></a><span class="co">#&gt; 2024-06-09 02:18:50.053371 caching file tcga.recount_project.MD.gz.</span></span>
 <span id="cb45-8"><a href="recount3-introduction.html#cb45-8" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;http://duffel.rail.bio/recount3/human/data_sources/tcga/metadata/tcga.recount_project.MD.gz&#39;</span></span></code></pre></div>
 <div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="recount3-introduction.html#cb46-1" tabindex="-1"></a></span>
 <span id="cb46-2"><a href="recount3-introduction.html#cb46-2" tabindex="-1"></a><span class="do">## Find your project of interest. Here we&#39;ll use</span></span>
@@ -398,24 +399,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb46-8"><a href="recount3-introduction.html#cb46-8" tabindex="-1"></a><span class="do">## Build a RangedSummarizedExperiment (RSE) object</span></span>
 <span id="cb46-9"><a href="recount3-introduction.html#cb46-9" tabindex="-1"></a><span class="do">## with the information at the gene level</span></span>
 <span id="cb46-10"><a href="recount3-introduction.html#cb46-10" tabindex="-1"></a>rse_gene_SRP009615 <span class="ot">&lt;-</span> <span class="fu">create_rse</span>(proj_info)</span>
-<span id="cb46-11"><a href="recount3-introduction.html#cb46-11" tabindex="-1"></a><span class="co">#&gt; 2024-06-09 02:12:52.043546 downloading and reading the metadata.</span></span>
-<span id="cb46-12"><a href="recount3-introduction.html#cb46-12" tabindex="-1"></a><span class="co">#&gt; 2024-06-09 02:12:52.412291 caching file sra.sra.SRP009615.MD.gz.</span></span>
+<span id="cb46-11"><a href="recount3-introduction.html#cb46-11" tabindex="-1"></a><span class="co">#&gt; 2024-06-09 02:18:52.855448 downloading and reading the metadata.</span></span>
+<span id="cb46-12"><a href="recount3-introduction.html#cb46-12" tabindex="-1"></a><span class="co">#&gt; 2024-06-09 02:18:53.144056 caching file sra.sra.SRP009615.MD.gz.</span></span>
 <span id="cb46-13"><a href="recount3-introduction.html#cb46-13" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;http://duffel.rail.bio/recount3/human/data_sources/sra/metadata/15/SRP009615/sra.sra.SRP009615.MD.gz&#39;</span></span>
-<span id="cb46-14"><a href="recount3-introduction.html#cb46-14" tabindex="-1"></a><span class="co">#&gt; 2024-06-09 02:12:53.236734 caching file sra.recount_project.SRP009615.MD.gz.</span></span>
+<span id="cb46-14"><a href="recount3-introduction.html#cb46-14" tabindex="-1"></a><span class="co">#&gt; 2024-06-09 02:18:54.076072 caching file sra.recount_project.SRP009615.MD.gz.</span></span>
 <span id="cb46-15"><a href="recount3-introduction.html#cb46-15" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;http://duffel.rail.bio/recount3/human/data_sources/sra/metadata/15/SRP009615/sra.recount_project.SRP009615.MD.gz&#39;</span></span>
-<span id="cb46-16"><a href="recount3-introduction.html#cb46-16" tabindex="-1"></a><span class="co">#&gt; 2024-06-09 02:12:54.116958 caching file sra.recount_qc.SRP009615.MD.gz.</span></span>
+<span id="cb46-16"><a href="recount3-introduction.html#cb46-16" tabindex="-1"></a><span class="co">#&gt; 2024-06-09 02:18:54.955892 caching file sra.recount_qc.SRP009615.MD.gz.</span></span>
 <span id="cb46-17"><a href="recount3-introduction.html#cb46-17" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;http://duffel.rail.bio/recount3/human/data_sources/sra/metadata/15/SRP009615/sra.recount_qc.SRP009615.MD.gz&#39;</span></span>
-<span id="cb46-18"><a href="recount3-introduction.html#cb46-18" tabindex="-1"></a><span class="co">#&gt; 2024-06-09 02:12:54.982021 caching file sra.recount_seq_qc.SRP009615.MD.gz.</span></span>
+<span id="cb46-18"><a href="recount3-introduction.html#cb46-18" tabindex="-1"></a><span class="co">#&gt; 2024-06-09 02:18:55.773734 caching file sra.recount_seq_qc.SRP009615.MD.gz.</span></span>
 <span id="cb46-19"><a href="recount3-introduction.html#cb46-19" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;http://duffel.rail.bio/recount3/human/data_sources/sra/metadata/15/SRP009615/sra.recount_seq_qc.SRP009615.MD.gz&#39;</span></span>
-<span id="cb46-20"><a href="recount3-introduction.html#cb46-20" tabindex="-1"></a><span class="co">#&gt; 2024-06-09 02:12:55.832196 caching file sra.recount_pred.SRP009615.MD.gz.</span></span>
+<span id="cb46-20"><a href="recount3-introduction.html#cb46-20" tabindex="-1"></a><span class="co">#&gt; 2024-06-09 02:18:56.675938 caching file sra.recount_pred.SRP009615.MD.gz.</span></span>
 <span id="cb46-21"><a href="recount3-introduction.html#cb46-21" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;http://duffel.rail.bio/recount3/human/data_sources/sra/metadata/15/SRP009615/sra.recount_pred.SRP009615.MD.gz&#39;</span></span>
-<span id="cb46-22"><a href="recount3-introduction.html#cb46-22" tabindex="-1"></a><span class="co">#&gt; 2024-06-09 02:12:56.424714 downloading and reading the feature information.</span></span>
-<span id="cb46-23"><a href="recount3-introduction.html#cb46-23" tabindex="-1"></a><span class="co">#&gt; 2024-06-09 02:12:56.692239 caching file human.gene_sums.G026.gtf.gz.</span></span>
+<span id="cb46-22"><a href="recount3-introduction.html#cb46-22" tabindex="-1"></a><span class="co">#&gt; 2024-06-09 02:18:57.364033 downloading and reading the feature information.</span></span>
+<span id="cb46-23"><a href="recount3-introduction.html#cb46-23" tabindex="-1"></a><span class="co">#&gt; 2024-06-09 02:18:57.64711 caching file human.gene_sums.G026.gtf.gz.</span></span>
 <span id="cb46-24"><a href="recount3-introduction.html#cb46-24" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;http://duffel.rail.bio/recount3/human/annotations/gene_sums/human.gene_sums.G026.gtf.gz&#39;</span></span>
-<span id="cb46-25"><a href="recount3-introduction.html#cb46-25" tabindex="-1"></a><span class="co">#&gt; 2024-06-09 02:12:57.693859 downloading and reading the counts: 12 samples across 63856 features.</span></span>
-<span id="cb46-26"><a href="recount3-introduction.html#cb46-26" tabindex="-1"></a><span class="co">#&gt; 2024-06-09 02:12:57.957762 caching file sra.gene_sums.SRP009615.G026.gz.</span></span>
+<span id="cb46-25"><a href="recount3-introduction.html#cb46-25" tabindex="-1"></a><span class="co">#&gt; 2024-06-09 02:18:58.894712 downloading and reading the counts: 12 samples across 63856 features.</span></span>
+<span id="cb46-26"><a href="recount3-introduction.html#cb46-26" tabindex="-1"></a><span class="co">#&gt; 2024-06-09 02:18:59.144001 caching file sra.gene_sums.SRP009615.G026.gz.</span></span>
 <span id="cb46-27"><a href="recount3-introduction.html#cb46-27" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;http://duffel.rail.bio/recount3/human/data_sources/sra/gene_sums/15/SRP009615/sra.gene_sums.SRP009615.G026.gz&#39;</span></span>
-<span id="cb46-28"><a href="recount3-introduction.html#cb46-28" tabindex="-1"></a><span class="co">#&gt; 2024-06-09 02:12:58.726067 constructing the RangedSummarizedExperiment (rse) object.</span></span></code></pre></div>
+<span id="cb46-28"><a href="recount3-introduction.html#cb46-28" tabindex="-1"></a><span class="co">#&gt; 2024-06-09 02:19:00.02524 constructing the RangedSummarizedExperiment (rse) object.</span></span></code></pre></div>
 <div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="recount3-introduction.html#cb47-1" tabindex="-1"></a><span class="do">## Explore the resulting object</span></span>
 <span id="cb47-2"><a href="recount3-introduction.html#cb47-2" tabindex="-1"></a>rse_gene_SRP009615</span>
 <span id="cb47-3"><a href="recount3-introduction.html#cb47-3" tabindex="-1"></a><span class="co">#&gt; class: RangedSummarizedExperiment </span></span>
@@ -493,20 +494,21 @@ Use <code>iSEE</code> to reproduce the following image
 </ul></li>
 <li>(optional) Create your free account at <a href="https://www.shinyapps.io/" class="uri">https://www.shinyapps.io/</a> and share your <code>iSEE</code> app with the world.
 <ul>
+<li>Regrettably <code>iSEE::iSEE()</code> will need more than the default free 1 GB RAM option available from <a href="https://www.shinyapps.io/" class="uri">https://www.shinyapps.io/</a>.</li>
 <li>Real examples used on a paper: <a href="https://github.com/LieberInstitute/10xPilot_snRNAseq-human#explore-the-data-interactively" class="uri">https://github.com/LieberInstitute/10xPilot_snRNAseq-human#explore-the-data-interactively</a>.</li>
 <li>Example from another course: <a href="https://libd.shinyapps.io/SRP009615/" class="uri">https://libd.shinyapps.io/SRP009615/</a>. It was created with <a href="https://github.com/lcolladotor/rnaseq_2023_notas_en_vivo/blob/main/app.R" class="uri">https://github.com/lcolladotor/rnaseq_2023_notas_en_vivo/blob/main/app.R</a>.</li>
 </ul></li>
 </ul>
 </div>
-<div id="community" class="section level2 hasAnchor" number="3.4">
-<h2><span class="header-section-number">3.4</span> Community<a href="recount3-introduction.html#community" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="community-1" class="section level2 hasAnchor" number="3.4">
+<h2><span class="header-section-number">3.4</span> Community<a href="recount3-introduction.html#community-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <ul>
 <li>recount2 and 3 authors on Twitter:
 <ul>
 <li><a href="https://twitter.com/chrisnwilks" class="uri">https://twitter.com/chrisnwilks</a></li>
 <li><a href="https://twitter.com/BenLangmead" class="uri">https://twitter.com/BenLangmead</a></li>
 <li><a href="https://twitter.com/KasperDHansen" class="uri">https://twitter.com/KasperDHansen</a></li>
-<li><a href="https://twitter.com/AbhiNellore" class="uri">https://twitter.com/AbhiNellore</a></li>
+<li><a href="https://bsky.app/profile/nav.bsky.social" class="uri">https://bsky.app/profile/nav.bsky.social</a></li>
 <li><a href="https://twitter.com/Shannon_E_Ellis" class="uri">https://twitter.com/Shannon_E_Ellis</a></li>
 <li><a href="https://twitter.com/jtleek" class="uri">https://twitter.com/jtleek</a></li>
 </ul></li>
