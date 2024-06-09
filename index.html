@@ -463,18 +463,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb2-29"><a href="index.html#cb2-29" tabindex="-1"></a>        <span class="st">&quot;recount3&quot;</span>,</span>
 <span id="cb2-30"><a href="index.html#cb2-30" tabindex="-1"></a>        <span class="st">&quot;rlang&quot;</span>,</span>
 <span id="cb2-31"><a href="index.html#cb2-31" tabindex="-1"></a>        <span class="st">&quot;scRNAseq&quot;</span>,</span>
-<span id="cb2-32"><a href="index.html#cb2-32" tabindex="-1"></a>        <span class="st">&quot;pheatmap&quot;</span>, <span class="do">## Visualization</span></span>
-<span id="cb2-33"><a href="index.html#cb2-33" tabindex="-1"></a>        <span class="st">&quot;ggplot2&quot;</span>,</span>
-<span id="cb2-34"><a href="index.html#cb2-34" tabindex="-1"></a>        <span class="st">&quot;ggrepel&quot;</span>,</span>
-<span id="cb2-35"><a href="index.html#cb2-35" tabindex="-1"></a>        <span class="st">&quot;patchwork&quot;</span>,</span>
-<span id="cb2-36"><a href="index.html#cb2-36" tabindex="-1"></a>        <span class="st">&quot;RColorBrewer&quot;</span>,</span>
-<span id="cb2-37"><a href="index.html#cb2-37" tabindex="-1"></a>        <span class="st">&quot;ComplexHeatmap&quot;</span>,</span>
-<span id="cb2-38"><a href="index.html#cb2-38" tabindex="-1"></a>        <span class="st">&quot;cowplot&quot;</span>,</span>
-<span id="cb2-39"><a href="index.html#cb2-39" tabindex="-1"></a>        <span class="st">&quot;Polychrome&quot;</span>,</span>
-<span id="cb2-40"><a href="index.html#cb2-40" tabindex="-1"></a>        <span class="st">&quot;spatialLIBD&quot;</span>, <span class="do">## Advanced</span></span>
-<span id="cb2-41"><a href="index.html#cb2-41" tabindex="-1"></a>        <span class="st">&quot;variancePartition&quot;</span></span>
-<span id="cb2-42"><a href="index.html#cb2-42" tabindex="-1"></a>    )</span>
-<span id="cb2-43"><a href="index.html#cb2-43" tabindex="-1"></a>)</span></code></pre></div>
+<span id="cb2-32"><a href="index.html#cb2-32" tabindex="-1"></a>        <span class="st">&quot;airway&quot;</span>,</span>
+<span id="cb2-33"><a href="index.html#cb2-33" tabindex="-1"></a>        <span class="st">&quot;pheatmap&quot;</span>, <span class="do">## Visualization</span></span>
+<span id="cb2-34"><a href="index.html#cb2-34" tabindex="-1"></a>        <span class="st">&quot;ggplot2&quot;</span>,</span>
+<span id="cb2-35"><a href="index.html#cb2-35" tabindex="-1"></a>        <span class="st">&quot;ggrepel&quot;</span>,</span>
+<span id="cb2-36"><a href="index.html#cb2-36" tabindex="-1"></a>        <span class="st">&quot;patchwork&quot;</span>,</span>
+<span id="cb2-37"><a href="index.html#cb2-37" tabindex="-1"></a>        <span class="st">&quot;RColorBrewer&quot;</span>,</span>
+<span id="cb2-38"><a href="index.html#cb2-38" tabindex="-1"></a>        <span class="st">&quot;ComplexHeatmap&quot;</span>,</span>
+<span id="cb2-39"><a href="index.html#cb2-39" tabindex="-1"></a>        <span class="st">&quot;cowplot&quot;</span>,</span>
+<span id="cb2-40"><a href="index.html#cb2-40" tabindex="-1"></a>        <span class="st">&quot;Polychrome&quot;</span>,</span>
+<span id="cb2-41"><a href="index.html#cb2-41" tabindex="-1"></a>        <span class="st">&quot;spatialLIBD&quot;</span>, <span class="do">## Advanced</span></span>
+<span id="cb2-42"><a href="index.html#cb2-42" tabindex="-1"></a>        <span class="st">&quot;variancePartition&quot;</span></span>
+<span id="cb2-43"><a href="index.html#cb2-43" tabindex="-1"></a>    )</span>
+<span id="cb2-44"><a href="index.html#cb2-44" tabindex="-1"></a>)</span></code></pre></div>
 <p>You will also need to install <a href="https://rstudio.com/products/rstudio/download/#download">RStudio</a> version 2024.04.0+735 or newer.</p>
 </div>
 <div id="r-session-information" class="section level2 unnumbered hasAnchor">
@@ -505,32 +506,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb3-23"><a href="index.html#cb3-23" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;iSEE&quot;</span>)</span>
 <span id="cb3-24"><a href="index.html#cb3-24" tabindex="-1"></a></span>
 <span id="cb3-25"><a href="index.html#cb3-25" tabindex="-1"></a><span class="do">## RNA-seq</span></span>
-<span id="cb3-26"><a href="index.html#cb3-26" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;edgeR&quot;</span>)</span>
-<span id="cb3-27"><a href="index.html#cb3-27" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;ExploreModelMatrix&quot;</span>)</span>
-<span id="cb3-28"><a href="index.html#cb3-28" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;limma&quot;</span>)</span>
-<span id="cb3-29"><a href="index.html#cb3-29" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;recount3&quot;</span>)</span>
-<span id="cb3-30"><a href="index.html#cb3-30" tabindex="-1"></a></span>
-<span id="cb3-31"><a href="index.html#cb3-31" tabindex="-1"></a><span class="do">## QCA</span></span>
-<span id="cb3-32"><a href="index.html#cb3-32" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;scater&quot;</span>)</span>
-<span id="cb3-33"><a href="index.html#cb3-33" tabindex="-1"></a></span>
-<span id="cb3-34"><a href="index.html#cb3-34" tabindex="-1"></a><span class="do">## Variance Partition</span></span>
-<span id="cb3-35"><a href="index.html#cb3-35" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;variancePartition&quot;</span>)</span>
-<span id="cb3-36"><a href="index.html#cb3-36" tabindex="-1"></a></span>
-<span id="cb3-37"><a href="index.html#cb3-37" tabindex="-1"></a><span class="do">## Visualization: plots &amp; text</span></span>
-<span id="cb3-38"><a href="index.html#cb3-38" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;ComplexHeatmap&quot;</span>)</span>
-<span id="cb3-39"><a href="index.html#cb3-39" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;ggplot2&quot;</span>)</span>
-<span id="cb3-40"><a href="index.html#cb3-40" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;patchwork&quot;</span>)</span>
-<span id="cb3-41"><a href="index.html#cb3-41" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;pheatmap&quot;</span>)</span>
-<span id="cb3-42"><a href="index.html#cb3-42" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;RColorBrewer&quot;</span>)</span>
-<span id="cb3-43"><a href="index.html#cb3-43" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;Hmisc&quot;</span>)</span>
-<span id="cb3-44"><a href="index.html#cb3-44" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;stringr&quot;</span>)</span>
-<span id="cb3-45"><a href="index.html#cb3-45" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;cowplot&quot;</span>)</span>
-<span id="cb3-46"><a href="index.html#cb3-46" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;rlang&quot;</span>)</span>
-<span id="cb3-47"><a href="index.html#cb3-47" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;ggrepel&quot;</span>)</span>
-<span id="cb3-48"><a href="index.html#cb3-48" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;Polychrome&quot;</span>)</span>
-<span id="cb3-49"><a href="index.html#cb3-49" tabindex="-1"></a></span>
-<span id="cb3-50"><a href="index.html#cb3-50" tabindex="-1"></a><span class="do">## Spatial transcriptomics</span></span>
-<span id="cb3-51"><a href="index.html#cb3-51" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;spatialLIBD&quot;</span>)</span></code></pre></div>
+<span id="cb3-26"><a href="index.html#cb3-26" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;airway&quot;</span>)</span>
+<span id="cb3-27"><a href="index.html#cb3-27" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;edgeR&quot;</span>)</span>
+<span id="cb3-28"><a href="index.html#cb3-28" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;ExploreModelMatrix&quot;</span>)</span>
+<span id="cb3-29"><a href="index.html#cb3-29" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;limma&quot;</span>)</span>
+<span id="cb3-30"><a href="index.html#cb3-30" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;recount3&quot;</span>)</span>
+<span id="cb3-31"><a href="index.html#cb3-31" tabindex="-1"></a></span>
+<span id="cb3-32"><a href="index.html#cb3-32" tabindex="-1"></a><span class="do">## QCA</span></span>
+<span id="cb3-33"><a href="index.html#cb3-33" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;scater&quot;</span>)</span>
+<span id="cb3-34"><a href="index.html#cb3-34" tabindex="-1"></a></span>
+<span id="cb3-35"><a href="index.html#cb3-35" tabindex="-1"></a><span class="do">## Variance Partition</span></span>
+<span id="cb3-36"><a href="index.html#cb3-36" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;variancePartition&quot;</span>)</span>
+<span id="cb3-37"><a href="index.html#cb3-37" tabindex="-1"></a></span>
+<span id="cb3-38"><a href="index.html#cb3-38" tabindex="-1"></a><span class="do">## Visualization: plots &amp; text</span></span>
+<span id="cb3-39"><a href="index.html#cb3-39" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;ComplexHeatmap&quot;</span>)</span>
+<span id="cb3-40"><a href="index.html#cb3-40" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;ggplot2&quot;</span>)</span>
+<span id="cb3-41"><a href="index.html#cb3-41" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;patchwork&quot;</span>)</span>
+<span id="cb3-42"><a href="index.html#cb3-42" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;pheatmap&quot;</span>)</span>
+<span id="cb3-43"><a href="index.html#cb3-43" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;RColorBrewer&quot;</span>)</span>
+<span id="cb3-44"><a href="index.html#cb3-44" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;Hmisc&quot;</span>)</span>
+<span id="cb3-45"><a href="index.html#cb3-45" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;stringr&quot;</span>)</span>
+<span id="cb3-46"><a href="index.html#cb3-46" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;cowplot&quot;</span>)</span>
+<span id="cb3-47"><a href="index.html#cb3-47" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;rlang&quot;</span>)</span>
+<span id="cb3-48"><a href="index.html#cb3-48" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;ggrepel&quot;</span>)</span>
+<span id="cb3-49"><a href="index.html#cb3-49" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;Polychrome&quot;</span>)</span>
+<span id="cb3-50"><a href="index.html#cb3-50" tabindex="-1"></a></span>
+<span id="cb3-51"><a href="index.html#cb3-51" tabindex="-1"></a><span class="do">## Spatial transcriptomics</span></span>
+<span id="cb3-52"><a href="index.html#cb3-52" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;spatialLIBD&quot;</span>)</span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="index.html#cb4-1" tabindex="-1"></a><span class="do">## Reproducibility information</span></span>
 <span id="cb4-2"><a href="index.html#cb4-2" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
 <span id="cb4-3"><a href="index.html#cb4-3" tabindex="-1"></a><span class="fu">session_info</span>()</span></code></pre></div>
@@ -550,6 +552,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## ─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
 ##  package              * version     date (UTC) lib source
 ##  abind                  1.4-5       2016-07-21 [1] RSPM (R 4.4.0)
+##  airway               * 1.24.0      2024-05-02 [1] Bioconductor 3.19 (R 4.4.0)
 ##  alabaster.base         1.4.1       2024-05-03 [1] Bioconductor 3.19 (R 4.4.0)
 ##  alabaster.matrix       1.4.0       2024-04-30 [1] Bioconductor 3.19 (R 4.4.0)
 ##  alabaster.ranges       1.4.1       2024-05-21 [1] Bioconductor 3.19 (R 4.4.0)
@@ -799,7 +802,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</code></pre>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="index.html#cb6-1" tabindex="-1"></a><span class="fu">proc.time</span>()</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##  13.873   1.045  14.699</code></pre>
+##  14.724   1.098  15.626</code></pre>
 <p>System <code>curl</code> version:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="index.html#cb8-1" tabindex="-1"></a>curl<span class="sc">::</span><span class="fu">curl_version</span>()</span></code></pre></div>
 <pre><code>## $version
@@ -833,7 +836,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 
 ## $idn
 ## [1] TRUE</code></pre>
-<p>This interactive book was last updated at 2024-06-09 18:29:29.982121.</p>
+<p>This interactive book was last updated at 2024-06-09 20:52:12.002327.</p>
 </div>
 <div id="license" class="section level2 unnumbered hasAnchor">
 <h2>License<a href="index.html#license" class="anchor-section" aria-label="Anchor link to header"></a></h2>
