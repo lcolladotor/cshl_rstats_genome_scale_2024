@@ -1,4 +1,4 @@
-## ----load_here------------------------------------------------------------------
+## ----load_here------------------------------------------------------------------------
 ## Install the package manually
 # install.packages("here")
 
@@ -6,16 +6,16 @@
 library("here")
 
 
-## ----here::here-----------------------------------------------------------------
+## ----here::here-----------------------------------------------------------------------
 here::here()
 
 
-## ----check_paths, eval=FALSE----------------------------------------------------
+## ----check_paths, eval=FALSE----------------------------------------------------------
 ## getwd() # returns the current path
 ## setwd("desired/directory") # changes to the specified path
 
 
-## ----bestpractice, eval=FALSE---------------------------------------------------
+## ----bestpractice, eval=FALSE---------------------------------------------------------
 ## ## Instead of "C:/Users/user/Desktop/data/myfile.csv"
 ## 
 ## ## Use here to construct file paths
@@ -24,7 +24,7 @@ here::here()
 ## data <- read.csv(file_path)
 
 
-## ----here_examples--------------------------------------------------------------
+## ----here_examples--------------------------------------------------------------------
 ## Example: save data to a file and load it
 a <- 1
 c <- 23
@@ -51,7 +51,7 @@ list.files(here(), recursive = TRUE)
 # list.files(here:here(), recursive = TRUE)
 
 
-## ----load_usethis---------------------------------------------------------------
+## ----load_usethis---------------------------------------------------------------------
 ## Install the package manually
 # install.packages("usethis")
 
@@ -59,19 +59,19 @@ list.files(here(), recursive = TRUE)
 library("usethis")
 
 
-## ----use_*, eval=FALSE----------------------------------------------------------
+## ----use_*, eval=FALSE----------------------------------------------------------------
 ## ## usethis::use_*()
 ## usethis::use_r()
 ## usethis::use_git()
 ## usethis::use_readme_md()
 
 
-## ----usethis_example------------------------------------------------------------
+## ----usethis_example------------------------------------------------------------------
 ## For example, create a README file
 usethis::use_readme_md()
 
 
-## ----install_gitreq, eval=FALSE, warning=FALSE, message=FALSE-------------------
+## ----install_gitreq, eval=FALSE, warning=FALSE, message=FALSE-------------------------
 ## # install.packages(c("gitcreds", "gert", "gh"))
 ## 
 ## ## Load them separately
@@ -80,18 +80,18 @@ usethis::use_readme_md()
 ## library("gh")
 
 
-## ----token, eval=FALSE----------------------------------------------------------
+## ----token, eval=FALSE----------------------------------------------------------------
 ## ## Initiate connection with GitHub
 ## usethis::create_github_token() # redirects to GitHub where you'll choose a specific name for the token
 
 
-## ----gitcreds, eval=FALSE-------------------------------------------------------
+## ----gitcreds, eval=FALSE-------------------------------------------------------------
 ## gitcreds::gitcreds_set() # here you place the token (NOT your GitHub password!!!)
 
 
-## ----git_config, eval=FALSE-----------------------------------------------------
+## ----git_config, eval=FALSE-----------------------------------------------------------
 ## ## Configure GitHub user
-## usethis::edit_git_config() # opens the .gitconfig file
+## usethis::edit_git_config() # opens the global .gitconfig file
 ## 
 ## ## Place the name and email of your GitHub account.
 ## ## JUST remove the "#" and respect the other spaces
@@ -101,7 +101,7 @@ usethis::use_readme_md()
 ## #   email = github_email
 
 
-## ----git_repo, eval=FALSE-------------------------------------------------------
+## ----git_repo, eval=FALSE-------------------------------------------------------------
 ## ## Initialize the Git repository
 ## usethis::use_git()
 ## 
@@ -109,11 +109,11 @@ usethis::use_readme_md()
 ## usethis::use_github()
 
 
-## ----gh_whoami, eval=FALSE------------------------------------------------------
+## ----gh_whoami, eval=FALSE------------------------------------------------------------
 ## gh::gh_whoami()
 
 
-## ----git_commands, eval=FALSE---------------------------------------------------
+## ----git_commands, eval=FALSE---------------------------------------------------------
 ## ## Write a new file, using here::here to specify the path
 ## writeLines("hello", here::here("R", "test-here.R"))
 ## 
@@ -133,11 +133,11 @@ usethis::use_readme_md()
 ## gert::git_push() # IMPORTANT COMMAND
 
 
-## ----render_site, eval=FALSE----------------------------------------------------
+## ----render_site, eval=FALSE----------------------------------------------------------
 ## rmarkdown::render_site()
 
 
-## ----install_postcards----------------------------------------------------------
+## ----install_postcards----------------------------------------------------------------
 ## You can install Postcards with the following command:
 # install.packages("postcards")
 
@@ -145,18 +145,18 @@ usethis::use_readme_md()
 # remotes::install_github("seankross/postcards@main")
 
 
-## ----postcards_project, eval=FALSE----------------------------------------------
+## ----postcards_project, eval=FALSE----------------------------------------------------
 ## ## Create a new project
 ## usethis::create_project("Your_Username.github.io")
 
 
-## ----setup_gitpcds, eval=FALSE--------------------------------------------------
+## ----setup_gitpcds, eval=FALSE--------------------------------------------------------
 ## ## Set up Git and GitHub
 ## usethis::use_git() # Restart the session
 ## usethis::use_github()
 
 
-## ----choose_template, eval=FALSE------------------------------------------------
+## ----choose_template, eval=FALSE------------------------------------------------------
 ## ## Choose only one template (the one you like the most)
 ## postcards::create_postcard(template = "jolla")
 ## postcards::create_postcard(template = "jolla-blue")
@@ -165,7 +165,7 @@ usethis::use_readme_md()
 ## postcards::create_postcard(template = "solana")
 
 
-## ----deploy_postcards, eval=FALSE-----------------------------------------------
+## ----deploy_postcards, eval=FALSE-----------------------------------------------------
 ## ## Deploy the GitHub page
 ## rmarkdown::render("index.Rmd")
 
