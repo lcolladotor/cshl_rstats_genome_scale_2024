@@ -78,9 +78,7 @@ head(colData(rse_gene_filt), 2)
 ```
 
 <p class="exercise">
-📝 **Exercise 1**: in order for you to perform a DGE analysis, locate your own RNA-seq datasets if you have any, or download expression data from a study of your interest and build a `RSE` object using *recount3* (see **Chapter 3: recount3 introduction**). A third option you have is to download gene expression data from the [*smokingMouse*](http://research.libd.org/smokingMouse/index.html) package used here. A fourth option is to download data from GEO as Sean Davis will explain next.
-
-We'll have more time tomorrow for doing this exercise with data of your choosing.
+📝 **Exercise 1**: in order for you to perform a DGE analysis, locate your own RNA-seq datasets if you have any, or download expression data from a study of your interest and build a `RSE` object using *recount3* (see **Chapter 3: recount3 introduction**). A third option you have is to download gene expression data from the [*smokingMouse*](http://research.libd.org/smokingMouse/index.html) package used here. A fourth option is to download data from GEO as Sean Davis will explain next. We'll have more time tomorrow for doing this exercise with data of your choosing.
 <p/>
 
 ### `model.matrix()`
@@ -224,7 +222,6 @@ coef <- "GroupExperimental"
 
 <p class="exercise">
 📝 **Exercise 2**: identify the sample data of your study and create the respective design matrix. Which is the reference group for your main variable of interest?
-
 Tomorrow we will learn how to use `ExploreModelMatrix` for helping us interpret coefficients.
 <p/>
 
