@@ -389,54 +389,54 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Linear regression review <a href="https://lcolladotor.github.io/bioc_team_ds/helping-others.html#linear-regression-example" class="uri">https://lcolladotor.github.io/bioc_team_ds/helping-others.html#linear-regression-example</a></li>
 <li>With R, we use the <code>model.matrix()</code> to build regression models using the <code>Y ~ X1 + X2</code> formula syntax as exemplified below.</li>
 </ul>
-<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb92-1" tabindex="-1"></a><span class="do">## ?model.matrix</span></span>
-<span id="cb92-2"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb92-2" tabindex="-1"></a>mat <span class="ot">&lt;-</span> <span class="fu">with</span>(trees, <span class="fu">model.matrix</span>(<span class="fu">log</span>(Volume) <span class="sc">~</span> <span class="fu">log</span>(Height) <span class="sc">+</span> <span class="fu">log</span>(Girth)))</span>
-<span id="cb92-3"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb92-3" tabindex="-1"></a>mat</span>
-<span id="cb92-4"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb92-4" tabindex="-1"></a><span class="co">#&gt;    (Intercept) log(Height) log(Girth)</span></span>
-<span id="cb92-5"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb92-5" tabindex="-1"></a><span class="co">#&gt; 1            1    4.248495   2.116256</span></span>
-<span id="cb92-6"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb92-6" tabindex="-1"></a><span class="co">#&gt; 2            1    4.174387   2.151762</span></span>
-<span id="cb92-7"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb92-7" tabindex="-1"></a><span class="co">#&gt; 3            1    4.143135   2.174752</span></span>
-<span id="cb92-8"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb92-8" tabindex="-1"></a><span class="co">#&gt; 4            1    4.276666   2.351375</span></span>
-<span id="cb92-9"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb92-9" tabindex="-1"></a><span class="co">#&gt; 5            1    4.394449   2.370244</span></span>
-<span id="cb92-10"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb92-10" tabindex="-1"></a><span class="co">#&gt; 6            1    4.418841   2.379546</span></span>
-<span id="cb92-11"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb92-11" tabindex="-1"></a><span class="co">#&gt; 7            1    4.189655   2.397895</span></span>
-<span id="cb92-12"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb92-12" tabindex="-1"></a><span class="co">#&gt; 8            1    4.317488   2.397895</span></span>
-<span id="cb92-13"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb92-13" tabindex="-1"></a><span class="co">#&gt; 9            1    4.382027   2.406945</span></span>
-<span id="cb92-14"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb92-14" tabindex="-1"></a><span class="co">#&gt; 10           1    4.317488   2.415914</span></span>
-<span id="cb92-15"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb92-15" tabindex="-1"></a><span class="co">#&gt; 11           1    4.369448   2.424803</span></span>
-<span id="cb92-16"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb92-16" tabindex="-1"></a><span class="co">#&gt; 12           1    4.330733   2.433613</span></span>
-<span id="cb92-17"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb92-17" tabindex="-1"></a><span class="co">#&gt; 13           1    4.330733   2.433613</span></span>
-<span id="cb92-18"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb92-18" tabindex="-1"></a><span class="co">#&gt; 14           1    4.234107   2.459589</span></span>
-<span id="cb92-19"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb92-19" tabindex="-1"></a><span class="co">#&gt; 15           1    4.317488   2.484907</span></span>
-<span id="cb92-20"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb92-20" tabindex="-1"></a><span class="co">#&gt; 16           1    4.304065   2.557227</span></span>
-<span id="cb92-21"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb92-21" tabindex="-1"></a><span class="co">#&gt;  [ reached getOption(&quot;max.print&quot;) -- omitted 15 rows ]</span></span>
-<span id="cb92-22"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb92-22" tabindex="-1"></a><span class="co">#&gt; attr(,&quot;assign&quot;)</span></span>
-<span id="cb92-23"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb92-23" tabindex="-1"></a><span class="co">#&gt; [1] 0 1 2</span></span></code></pre></div>
-<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb93-1" tabindex="-1"></a><span class="fu">colnames</span>(mat)</span>
-<span id="cb93-2"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb93-2" tabindex="-1"></a><span class="co">#&gt; [1] &quot;(Intercept)&quot; &quot;log(Height)&quot; &quot;log(Girth)&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb94-1" tabindex="-1"></a><span class="do">## ?model.matrix</span></span>
+<span id="cb94-2"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb94-2" tabindex="-1"></a>mat <span class="ot">&lt;-</span> <span class="fu">with</span>(trees, <span class="fu">model.matrix</span>(<span class="fu">log</span>(Volume) <span class="sc">~</span> <span class="fu">log</span>(Height) <span class="sc">+</span> <span class="fu">log</span>(Girth)))</span>
+<span id="cb94-3"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb94-3" tabindex="-1"></a>mat</span>
+<span id="cb94-4"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb94-4" tabindex="-1"></a><span class="co">#&gt;    (Intercept) log(Height) log(Girth)</span></span>
+<span id="cb94-5"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb94-5" tabindex="-1"></a><span class="co">#&gt; 1            1    4.248495   2.116256</span></span>
+<span id="cb94-6"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb94-6" tabindex="-1"></a><span class="co">#&gt; 2            1    4.174387   2.151762</span></span>
+<span id="cb94-7"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb94-7" tabindex="-1"></a><span class="co">#&gt; 3            1    4.143135   2.174752</span></span>
+<span id="cb94-8"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb94-8" tabindex="-1"></a><span class="co">#&gt; 4            1    4.276666   2.351375</span></span>
+<span id="cb94-9"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb94-9" tabindex="-1"></a><span class="co">#&gt; 5            1    4.394449   2.370244</span></span>
+<span id="cb94-10"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb94-10" tabindex="-1"></a><span class="co">#&gt; 6            1    4.418841   2.379546</span></span>
+<span id="cb94-11"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb94-11" tabindex="-1"></a><span class="co">#&gt; 7            1    4.189655   2.397895</span></span>
+<span id="cb94-12"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb94-12" tabindex="-1"></a><span class="co">#&gt; 8            1    4.317488   2.397895</span></span>
+<span id="cb94-13"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb94-13" tabindex="-1"></a><span class="co">#&gt; 9            1    4.382027   2.406945</span></span>
+<span id="cb94-14"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb94-14" tabindex="-1"></a><span class="co">#&gt; 10           1    4.317488   2.415914</span></span>
+<span id="cb94-15"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb94-15" tabindex="-1"></a><span class="co">#&gt; 11           1    4.369448   2.424803</span></span>
+<span id="cb94-16"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb94-16" tabindex="-1"></a><span class="co">#&gt; 12           1    4.330733   2.433613</span></span>
+<span id="cb94-17"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb94-17" tabindex="-1"></a><span class="co">#&gt; 13           1    4.330733   2.433613</span></span>
+<span id="cb94-18"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb94-18" tabindex="-1"></a><span class="co">#&gt; 14           1    4.234107   2.459589</span></span>
+<span id="cb94-19"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb94-19" tabindex="-1"></a><span class="co">#&gt; 15           1    4.317488   2.484907</span></span>
+<span id="cb94-20"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb94-20" tabindex="-1"></a><span class="co">#&gt; 16           1    4.304065   2.557227</span></span>
+<span id="cb94-21"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb94-21" tabindex="-1"></a><span class="co">#&gt;  [ reached getOption(&quot;max.print&quot;) -- omitted 15 rows ]</span></span>
+<span id="cb94-22"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb94-22" tabindex="-1"></a><span class="co">#&gt; attr(,&quot;assign&quot;)</span></span>
+<span id="cb94-23"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb94-23" tabindex="-1"></a><span class="co">#&gt; [1] 0 1 2</span></span></code></pre></div>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb95-1" tabindex="-1"></a><span class="fu">colnames</span>(mat)</span>
+<span id="cb95-2"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb95-2" tabindex="-1"></a><span class="co">#&gt; [1] &quot;(Intercept)&quot; &quot;log(Height)&quot; &quot;log(Girth)&quot;</span></span></code></pre></div>
 <ul>
 <li>How do we interpret the columns of our model matrix <code>mat</code>?</li>
 </ul>
-<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb94-1" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(<span class="fu">log</span>(Volume) <span class="sc">~</span> <span class="fu">log</span>(Height) <span class="sc">+</span> <span class="fu">log</span>(Girth), <span class="at">data =</span> trees))</span>
-<span id="cb94-2"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb94-2" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb94-3"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb94-3" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
-<span id="cb94-4"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb94-4" tabindex="-1"></a><span class="co">#&gt; lm(formula = log(Volume) ~ log(Height) + log(Girth), data = trees)</span></span>
-<span id="cb94-5"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb94-5" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb94-6"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb94-6" tabindex="-1"></a><span class="co">#&gt; Residuals:</span></span>
-<span id="cb94-7"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb94-7" tabindex="-1"></a><span class="co">#&gt;       Min        1Q    Median        3Q       Max </span></span>
-<span id="cb94-8"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb94-8" tabindex="-1"></a><span class="co">#&gt; -0.168561 -0.048488  0.002431  0.063637  0.129223 </span></span>
-<span id="cb94-9"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb94-9" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb94-10"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb94-10" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
-<span id="cb94-11"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb94-11" tabindex="-1"></a><span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
-<span id="cb94-12"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb94-12" tabindex="-1"></a><span class="co">#&gt; (Intercept) -6.63162    0.79979  -8.292 5.06e-09 ***</span></span>
-<span id="cb94-13"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb94-13" tabindex="-1"></a><span class="co">#&gt; log(Height)  1.11712    0.20444   5.464 7.81e-06 ***</span></span>
-<span id="cb94-14"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb94-14" tabindex="-1"></a><span class="co">#&gt; log(Girth)   1.98265    0.07501  26.432  &lt; 2e-16 ***</span></span>
-<span id="cb94-15"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb94-15" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
-<span id="cb94-16"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb94-16" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
-<span id="cb94-17"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb94-17" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb94-18"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb94-18" tabindex="-1"></a><span class="co">#&gt; Residual standard error: 0.08139 on 28 degrees of freedom</span></span>
-<span id="cb94-19"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb94-19" tabindex="-1"></a><span class="co">#&gt; Multiple R-squared:  0.9777, Adjusted R-squared:  0.9761 </span></span>
-<span id="cb94-20"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb94-20" tabindex="-1"></a><span class="co">#&gt; F-statistic: 613.2 on 2 and 28 DF,  p-value: &lt; 2.2e-16</span></span></code></pre></div>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb96-1" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(<span class="fu">log</span>(Volume) <span class="sc">~</span> <span class="fu">log</span>(Height) <span class="sc">+</span> <span class="fu">log</span>(Girth), <span class="at">data =</span> trees))</span>
+<span id="cb96-2"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb96-2" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb96-3"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb96-3" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb96-4"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb96-4" tabindex="-1"></a><span class="co">#&gt; lm(formula = log(Volume) ~ log(Height) + log(Girth), data = trees)</span></span>
+<span id="cb96-5"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb96-5" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb96-6"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb96-6" tabindex="-1"></a><span class="co">#&gt; Residuals:</span></span>
+<span id="cb96-7"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb96-7" tabindex="-1"></a><span class="co">#&gt;       Min        1Q    Median        3Q       Max </span></span>
+<span id="cb96-8"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb96-8" tabindex="-1"></a><span class="co">#&gt; -0.168561 -0.048488  0.002431  0.063637  0.129223 </span></span>
+<span id="cb96-9"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb96-9" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb96-10"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb96-10" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb96-11"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb96-11" tabindex="-1"></a><span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb96-12"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb96-12" tabindex="-1"></a><span class="co">#&gt; (Intercept) -6.63162    0.79979  -8.292 5.06e-09 ***</span></span>
+<span id="cb96-13"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb96-13" tabindex="-1"></a><span class="co">#&gt; log(Height)  1.11712    0.20444   5.464 7.81e-06 ***</span></span>
+<span id="cb96-14"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb96-14" tabindex="-1"></a><span class="co">#&gt; log(Girth)   1.98265    0.07501  26.432  &lt; 2e-16 ***</span></span>
+<span id="cb96-15"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb96-15" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb96-16"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb96-16" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb96-17"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb96-17" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb96-18"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb96-18" tabindex="-1"></a><span class="co">#&gt; Residual standard error: 0.08139 on 28 degrees of freedom</span></span>
+<span id="cb96-19"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb96-19" tabindex="-1"></a><span class="co">#&gt; Multiple R-squared:  0.9777, Adjusted R-squared:  0.9761 </span></span>
+<span id="cb96-20"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb96-20" tabindex="-1"></a><span class="co">#&gt; F-statistic: 613.2 on 2 and 28 DF,  p-value: &lt; 2.2e-16</span></span></code></pre></div>
 </div>
 <div id="exploremodelmatrix" class="section level2 hasAnchor" number="6.2">
 <h2><span class="header-section-number">6.2</span> ExploreModelMatrix<a href="interpreting-model-coefficients-with-exploremodelmatrix.html#exploremodelmatrix" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -451,41 +451,41 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="example-1" class="section level2 hasAnchor" number="6.3">
 <h2><span class="header-section-number">6.3</span> Example 1<a href="interpreting-model-coefficients-with-exploremodelmatrix.html#example-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb95-1" tabindex="-1"></a><span class="do">## Load ExploreModelMatrix</span></span>
-<span id="cb95-2"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb95-2" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;ExploreModelMatrix&quot;</span>)</span>
-<span id="cb95-3"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb95-3" tabindex="-1"></a></span>
-<span id="cb95-4"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb95-4" tabindex="-1"></a><span class="do">## Example data</span></span>
-<span id="cb95-5"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb95-5" tabindex="-1"></a>(sampleData <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb95-6"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb95-6" tabindex="-1"></a>    <span class="at">genotype =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>), <span class="at">each =</span> <span class="dv">4</span>),</span>
-<span id="cb95-7"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb95-7" tabindex="-1"></a>    <span class="at">treatment =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;ctrl&quot;</span>, <span class="st">&quot;trt&quot;</span>), <span class="dv">4</span>)</span>
-<span id="cb95-8"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb95-8" tabindex="-1"></a>))</span>
-<span id="cb95-9"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb95-9" tabindex="-1"></a><span class="co">#&gt;   genotype treatment</span></span>
-<span id="cb95-10"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb95-10" tabindex="-1"></a><span class="co">#&gt; 1        A      ctrl</span></span>
-<span id="cb95-11"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb95-11" tabindex="-1"></a><span class="co">#&gt; 2        A       trt</span></span>
-<span id="cb95-12"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb95-12" tabindex="-1"></a><span class="co">#&gt; 3        A      ctrl</span></span>
-<span id="cb95-13"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb95-13" tabindex="-1"></a><span class="co">#&gt; 4        A       trt</span></span>
-<span id="cb95-14"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb95-14" tabindex="-1"></a><span class="co">#&gt; 5        B      ctrl</span></span>
-<span id="cb95-15"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb95-15" tabindex="-1"></a><span class="co">#&gt; 6        B       trt</span></span>
-<span id="cb95-16"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb95-16" tabindex="-1"></a><span class="co">#&gt; 7        B      ctrl</span></span>
-<span id="cb95-17"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb95-17" tabindex="-1"></a><span class="co">#&gt; 8        B       trt</span></span></code></pre></div>
-<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb96-1" tabindex="-1"></a></span>
-<span id="cb96-2"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb96-2" tabindex="-1"></a><span class="do">## Let&#39;s make the visual aids provided by ExploreModelMatrix</span></span>
-<span id="cb96-3"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb96-3" tabindex="-1"></a>vd <span class="ot">&lt;-</span> ExploreModelMatrix<span class="sc">::</span><span class="fu">VisualizeDesign</span>(</span>
-<span id="cb96-4"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb96-4" tabindex="-1"></a>    <span class="at">sampleData =</span> sampleData,</span>
-<span id="cb96-5"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb96-5" tabindex="-1"></a>    <span class="at">designFormula =</span> <span class="sc">~</span> genotype <span class="sc">+</span> treatment,</span>
-<span id="cb96-6"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb96-6" tabindex="-1"></a>    <span class="at">textSizeFitted =</span> <span class="dv">4</span></span>
-<span id="cb96-7"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb96-7" tabindex="-1"></a>)</span>
-<span id="cb96-8"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb96-8" tabindex="-1"></a></span>
-<span id="cb96-9"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb96-9" tabindex="-1"></a><span class="do">## Now lets plot these images</span></span>
-<span id="cb96-10"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb96-10" tabindex="-1"></a>cowplot<span class="sc">::</span><span class="fu">plot_grid</span>(<span class="at">plotlist =</span> vd<span class="sc">$</span>plotlist)</span></code></pre></div>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb97-1" tabindex="-1"></a><span class="do">## Load ExploreModelMatrix</span></span>
+<span id="cb97-2"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb97-2" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;ExploreModelMatrix&quot;</span>)</span>
+<span id="cb97-3"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb97-3" tabindex="-1"></a></span>
+<span id="cb97-4"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb97-4" tabindex="-1"></a><span class="do">## Example data</span></span>
+<span id="cb97-5"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb97-5" tabindex="-1"></a>(sampleData <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb97-6"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb97-6" tabindex="-1"></a>    <span class="at">genotype =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>), <span class="at">each =</span> <span class="dv">4</span>),</span>
+<span id="cb97-7"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb97-7" tabindex="-1"></a>    <span class="at">treatment =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;ctrl&quot;</span>, <span class="st">&quot;trt&quot;</span>), <span class="dv">4</span>)</span>
+<span id="cb97-8"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb97-8" tabindex="-1"></a>))</span>
+<span id="cb97-9"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb97-9" tabindex="-1"></a><span class="co">#&gt;   genotype treatment</span></span>
+<span id="cb97-10"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb97-10" tabindex="-1"></a><span class="co">#&gt; 1        A      ctrl</span></span>
+<span id="cb97-11"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb97-11" tabindex="-1"></a><span class="co">#&gt; 2        A       trt</span></span>
+<span id="cb97-12"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb97-12" tabindex="-1"></a><span class="co">#&gt; 3        A      ctrl</span></span>
+<span id="cb97-13"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb97-13" tabindex="-1"></a><span class="co">#&gt; 4        A       trt</span></span>
+<span id="cb97-14"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb97-14" tabindex="-1"></a><span class="co">#&gt; 5        B      ctrl</span></span>
+<span id="cb97-15"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb97-15" tabindex="-1"></a><span class="co">#&gt; 6        B       trt</span></span>
+<span id="cb97-16"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb97-16" tabindex="-1"></a><span class="co">#&gt; 7        B      ctrl</span></span>
+<span id="cb97-17"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb97-17" tabindex="-1"></a><span class="co">#&gt; 8        B       trt</span></span></code></pre></div>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb98-1" tabindex="-1"></a></span>
+<span id="cb98-2"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb98-2" tabindex="-1"></a><span class="do">## Let&#39;s make the visual aids provided by ExploreModelMatrix</span></span>
+<span id="cb98-3"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb98-3" tabindex="-1"></a>vd <span class="ot">&lt;-</span> ExploreModelMatrix<span class="sc">::</span><span class="fu">VisualizeDesign</span>(</span>
+<span id="cb98-4"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb98-4" tabindex="-1"></a>    <span class="at">sampleData =</span> sampleData,</span>
+<span id="cb98-5"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb98-5" tabindex="-1"></a>    <span class="at">designFormula =</span> <span class="sc">~</span> genotype <span class="sc">+</span> treatment,</span>
+<span id="cb98-6"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb98-6" tabindex="-1"></a>    <span class="at">textSizeFitted =</span> <span class="dv">4</span></span>
+<span id="cb98-7"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb98-7" tabindex="-1"></a>)</span>
+<span id="cb98-8"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb98-8" tabindex="-1"></a></span>
+<span id="cb98-9"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb98-9" tabindex="-1"></a><span class="do">## Now lets plot these images</span></span>
+<span id="cb98-10"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb98-10" tabindex="-1"></a>cowplot<span class="sc">::</span><span class="fu">plot_grid</span>(<span class="at">plotlist =</span> vd<span class="sc">$</span>plotlist)</span></code></pre></div>
 <p><img src="_main_files/figure-html/EMM_example1-1.png" width="672" /></p>
 <p>Interactively, we can run the following code:</p>
-<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb97-1" tabindex="-1"></a><span class="do">## We are using shiny again here</span></span>
-<span id="cb97-2"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb97-2" tabindex="-1"></a>app <span class="ot">&lt;-</span> <span class="fu">ExploreModelMatrix</span>(</span>
-<span id="cb97-3"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb97-3" tabindex="-1"></a>    <span class="at">sampleData =</span> sampleData,</span>
-<span id="cb97-4"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb97-4" tabindex="-1"></a>    <span class="at">designFormula =</span> <span class="sc">~</span> genotype <span class="sc">+</span> treatment</span>
-<span id="cb97-5"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb97-5" tabindex="-1"></a>)</span>
-<span id="cb97-6"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb97-6" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">interactive</span>()) shiny<span class="sc">::</span><span class="fu">runApp</span>(app)</span></code></pre></div>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb99-1" tabindex="-1"></a><span class="do">## We are using shiny again here</span></span>
+<span id="cb99-2"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb99-2" tabindex="-1"></a>app <span class="ot">&lt;-</span> <span class="fu">ExploreModelMatrix</span>(</span>
+<span id="cb99-3"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb99-3" tabindex="-1"></a>    <span class="at">sampleData =</span> sampleData,</span>
+<span id="cb99-4"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb99-4" tabindex="-1"></a>    <span class="at">designFormula =</span> <span class="sc">~</span> genotype <span class="sc">+</span> treatment</span>
+<span id="cb99-5"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb99-5" tabindex="-1"></a>)</span>
+<span id="cb99-6"><a href="interpreting-model-coefficients-with-exploremodelmatrix.html#cb99-6" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">interactive</span>()) shiny<span class="sc">::</span><span class="fu">runApp</span>(app)</span></code></pre></div>
 </div>
 <div id="example-2" class="section level2 hasAnchor" number="6.4">
 <h2><span class="header-section-number">6.4</span> Example 2<a href="interpreting-model-coefficients-with-exploremodelmatrix.html#example-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
