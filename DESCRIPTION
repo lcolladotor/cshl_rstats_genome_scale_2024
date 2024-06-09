@@ -1,7 +1,7 @@
 Package: cshlcourse
 Title: CSHL Statistical Analysis of Genome Scale Data 2024
 Version: 0.99.0
-Date: 2024-04-12
+Date: 2024-06-09
 Authors@R:
     c(
     person("Leonardo", "Collado-Torres", role = c("aut", "cre"),
