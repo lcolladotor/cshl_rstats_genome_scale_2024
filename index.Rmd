@@ -186,6 +186,13 @@ session_info()
 proc.time()
 ```
 
+System `curl` version:
+
+```{r "check_curl"}
+curl::curl_version()
+```
+
+
 This interactive book was last updated at `r Sys.time()`.
 
 ## License  {-}

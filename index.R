@@ -104,3 +104,7 @@ options(width = 120)
 session_info()
 proc.time()
 
+
+## ----"check_curl"---------------------------------------------------------------
+curl::curl_version()
+
