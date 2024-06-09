@@ -354,12 +354,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li>sometimes we need to clean them up a bit before we can use them</li>
 </ul></li>
-<li>use <code>edgeR::calcNormFactors()</code> to reduce <em>composition bias</em></li>
+<li>use <code>edgeR::calcNormFactors()</code> to reduce <em>composition bias</em>
+<ul>
+<li>We didn’t show it explicitly this time</li>
+</ul></li>
 <li>build a differential gene expression model with <code>model.matrix()</code></li>
 <li>explore and interpret the model with <code>ExploreModelMatrix</code></li>
 <li>use <code>limma::voom()</code> and related functions to compute the differential gene expression statistics</li>
 <li>extract the DEG statistics with <code>limma::topTable(sort.by = "none")</code></li>
-<li>use some <code>limma</code> functions for making MA or volcano plots</li>
 </ul>
 <p>among several other plots and tools we learned along the way.</p>
 <p>Alternatively to <code>recount3</code>, we have learned about the <code>RangedSummarizedExperiment</code> objects produced by <code>SPEAQeasy</code> and in particular the one we are using on the <code>smokingMouse</code> project.</p>
@@ -391,7 +393,7 @@ This will be an open ended exercise. Think of it as time to practice what we’v
 </ol>
 <ul>
 <li>If you don’t want to choose another <code>recount3</code> study, you could use the <code>smokingMouse</code> data and subset it once to the pups in nicotine arm of the study and a second time for the pups in the smoking arm of the study.</li>
-<li>Or you could use the GTEx brain data from <code>recount3</code>, subset it to the prefrontal cortex (PFC), and compute age related expression changes. That would be in addition to SRA study SRP045638 that we used previously.</li>
+<li>Or you could use the GTEx brain data from <code>recount3</code>, subset it to the prefrontal cortex (PFC), and compute age related expression changes. That would be in addition to SRA study SRP045638 as was showcased in <a href="https://lcolladotor.github.io/cshl_rstats_genome_scale_2023/differential-gene-expression-analysis-with-limma.html#srp045638-data">the 2023 version of this course</a>.</li>
 </ul>
 <div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="differential-gene-expression-exercise.html#cb115-1" tabindex="-1"></a>recount3<span class="sc">::</span><span class="fu">create_rse_manual</span>(</span>
 <span id="cb115-2"><a href="differential-gene-expression-exercise.html#cb115-2" tabindex="-1"></a>    <span class="at">project =</span> <span class="st">&quot;BRAIN&quot;</span>,</span>
@@ -404,7 +406,7 @@ This will be an open ended exercise. Think of it as time to practice what we’v
 <li>Make a scatterplot of the t-statistics between the two datasets to assess correlation / concordance. You might want to use <code>GGally::ggpairs()</code> for this <a href="https://ggobi.github.io/ggally/reference/ggpairs.html" class="uri">https://ggobi.github.io/ggally/reference/ggpairs.html</a>. Or <code>ggpubr::ggscatter()</code> <a href="https://rpkgs.datanovia.com/ggpubr/reference/ggscatter.html" class="uri">https://rpkgs.datanovia.com/ggpubr/reference/ggscatter.html</a>.</li>
 </ol>
 <ul>
-<li>For example, between the GTEx PFC data and the data we used previously from SRA study SRP045638.</li>
+<li>For example, between the GTEx PFC data and the data from SRA study SRP045638 provided by <code>recount3</code>.</li>
 <li>Or between the nicotine-exposed pups and the smoking-exposed pups in <code>smokingMouse</code>.</li>
 <li>Or using the two <code>recount3</code> studies you chose.</li>
 </ul>

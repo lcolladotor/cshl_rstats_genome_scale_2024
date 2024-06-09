@@ -386,7 +386,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb52-16"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb52-16" tabindex="-1"></a></span>
 <span id="cb52-17"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb52-17" tabindex="-1"></a><span class="do">## Retain only expressed genes (passed the filtering step)</span></span>
 <span id="cb52-18"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb52-18" tabindex="-1"></a>rse_gene_filt <span class="ot">&lt;-</span> rse_gene_nic[</span>
-<span id="cb52-19"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb52-19" tabindex="-1"></a>    <span class="fu">rowData</span>(rse_gene_nic)<span class="sc">$</span>retained_after_feature_filtering <span class="sc">==</span> <span class="cn">TRUE</span>,</span>
+<span id="cb52-19"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb52-19" tabindex="-1"></a>    <span class="fu">rowData</span>(rse_gene_nic)<span class="sc">$</span>retained_after_feature_filtering,</span>
 <span id="cb52-20"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb52-20" tabindex="-1"></a>]</span></code></pre></div>
 <p>Let’s explore a little the data.</p>
 <div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb53-1" tabindex="-1"></a><span class="do">## Data dimensions: number of genes and samples</span></span>
