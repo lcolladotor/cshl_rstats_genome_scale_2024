@@ -579,7 +579,7 @@ We can perform PCA on the log-normalized expression values using the `fixedPCA()
 
 Here, we use only the top 2000 genes with the largest biological components to reduce both computational work and high-dimensional random noise. In particular, while PCA is robust to random noise, an excess of it may cause the earlier PCs to capture noise instead of biological structure (Johnstone and Lu 2009). 
 
-```{r, HVGs_zeisel}
+```{r, getHVGs_zeisel}
 library("scran")
 
 ## Top 2000 HVGs
