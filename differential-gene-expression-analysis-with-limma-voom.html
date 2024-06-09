@@ -422,8 +422,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb56-14"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb56-14" tabindex="-1"></a><span class="co">#&gt;   retained_after_manual_sample_filtering</span></span>
 <span id="cb56-15"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb56-15" tabindex="-1"></a><span class="co">#&gt;  [ reached getOption(&quot;max.print&quot;) -- omitted 3 rows ]</span></span></code></pre></div>
 <p class="exercise">
-<p>📝 <strong>Exercise 1</strong>: in order for you to perform a DGE analysis, locate your own RNA-seq datasets if you have any, or download expression data from a study of your interest and build a <code>RSE</code> object using <em>recount3</em> (see <strong>Chapter 3: recount3 introduction</strong>). A third option you have is to download gene expression data from the <a href="http://research.libd.org/smokingMouse/index.html"><em>smokingMouse</em></a> package used here. A fourth option is to download data from GEO as Sean Davis will explain next.</p>
-We’ll have more time tomorrow for doing this exercise with data of your choosing.
+📝 <strong>Exercise 1</strong>: in order for you to perform a DGE analysis, locate your own RNA-seq datasets if you have any, or download expression data from a study of your interest and build a <code>RSE</code> object using <em>recount3</em> (see <strong>Chapter 3: recount3 introduction</strong>). A third option you have is to download gene expression data from the <a href="http://research.libd.org/smokingMouse/index.html"><em>smokingMouse</em></a> package used here. A fourth option is to download data from GEO as Sean Davis will explain next. We’ll have more time tomorrow for doing this exercise with data of your choosing.
 <p/>
 <div id="model.matrix" class="section level3 hasAnchor" number="5.2.1">
 <h3><span class="header-section-number">5.2.1</span> <code>model.matrix()</code><a href="differential-gene-expression-analysis-with-limma-voom.html#model.matrix" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -547,7 +546,7 @@ where <span class="math inline">\(n\)</span> is the number of samples.</p>
 <div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb58-1" tabindex="-1"></a><span class="do">## Comparison of interest: Group</span></span>
 <span id="cb58-2"><a href="differential-gene-expression-analysis-with-limma-voom.html#cb58-2" tabindex="-1"></a>coef <span class="ot">&lt;-</span> <span class="st">&quot;GroupExperimental&quot;</span></span></code></pre></div>
 <p class="exercise">
-<p>📝 <strong>Exercise 2</strong>: identify the sample data of your study and create the respective design matrix. Which is the reference group for your main variable of interest?</p>
+📝 <strong>Exercise 2</strong>: identify the sample data of your study and create the respective design matrix. Which is the reference group for your main variable of interest?
 Tomorrow we will learn how to use <code>ExploreModelMatrix</code> for helping us interpret coefficients.
 <p/>
 </div>
