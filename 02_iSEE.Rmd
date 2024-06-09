@@ -445,49 +445,50 @@ font-family: sans-serif;
 <p class="exercise">
 **Exercise 3**:
  Recreate the following plot
- Ensembl IDs:
+</p>
+
+Ensembl IDs:
     ENSG00000177757
     ENSG00000237491
     ENSG00000238009
     ENSG00000243485
-</p>
 
 ![](https://raw.githubusercontent.com/lcolladotor/cshl_rstats_genome_scale_2024/devel/Figures/iSEE_06.PNG)
 
 <p class="exercise">
 **Exercise 4**:
  Recreate the following plot. What would you change from the last one?
- 
- Ensembl IDs:
+</p>
+
+Ensembl IDs:
     ENSG00000177757
     ENSG00000237491
     ENSG00000238009
     ENSG00000243485
-
-</p>
 
 ![](https://raw.githubusercontent.com/lcolladotor/cshl_rstats_genome_scale_2024/devel/Figures/iSEE_07.PNG)
 
 <p class="exercise">
 **Exercise 5**:
  Recreate the following plot. What would you change from the last one?
- Ensembl IDs:
+</p>
+
+Ensembl IDs:
     ENSG00000177757
     ENSG00000237491
     ENSG00000238009
     ENSG00000243485
-</p>
 
 ![](https://raw.githubusercontent.com/lcolladotor/cshl_rstats_genome_scale_2024/devel/Figures/iSEE_08.PNG)
 
 <p class="exercise">
 **Exercise 6**:
- Download only the last plot (Final HeatMap)
+ Download only the last plot (Final HeatMap)
 </p>
 
 <p class="exercise">
 **Exercise 7**:
- Extract the R code only for the last plot.(Final HeatMap)
+ Extract the R code only for the last plot(Final HeatMap)
 </p>
 
 
