@@ -12,11 +12,11 @@ So far we know how to:
 * expand _Sequence Read Archive_ (SRA) attributes
   - sometimes we need to clean them up a bit before we can use them
 * use `edgeR::calcNormFactors()` to reduce _composition bias_
+  - We didn't show it explicitly this time
 * build a differential gene expression model with `model.matrix()`
 * explore and interpret the model with `ExploreModelMatrix`
 * use `limma::voom()` and related functions to compute the differential gene expression statistics
 * extract the DEG statistics with `limma::topTable(sort.by = "none")`
-* use some `limma` functions for making MA or volcano plots
 
 among several other plots and tools we learned along the way.
 
@@ -52,7 +52,7 @@ If you prefer a more structured exercise:
 1. Choose two `recount3` studies that can be used to study similar research questions. For example, two studies with brain samples across age.
 2. Download and process each dataset independently, up to the point where you have differential expression t-statistics for both. Skip most of the exploratory data analyses steps as for the purpose of this exercise, we are most interested in the DEG t-statistics.
   - If you don't want to choose another `recount3` study, you could use the `smokingMouse` data and subset it once to the pups in nicotine arm of the study and a second time for the pups in the smoking arm of the study.
-  - Or you could use the GTEx brain data from `recount3`, subset it to the prefrontal cortex (PFC), and compute age related expression changes. That would be in addition to SRA study SRP045638 that we used previously.
+  - Or you could use the GTEx brain data from `recount3`, subset it to the prefrontal cortex (PFC), and compute age related expression changes. That would be in addition to SRA study SRP045638 as was showcased in [the 2023 version of this course](https://lcolladotor.github.io/cshl_rstats_genome_scale_2023/differential-gene-expression-analysis-with-limma.html#srp045638-data).
  
 ```{r eval = FALSE}
 recount3::create_rse_manual(
@@ -65,7 +65,7 @@ recount3::create_rse_manual(
 ```
 
 3. Make a scatterplot of the t-statistics between the two datasets to assess correlation / concordance. You might want to use `GGally::ggpairs()` for this https://ggobi.github.io/ggally/reference/ggpairs.html. Or `ggpubr::ggscatter()` https://rpkgs.datanovia.com/ggpubr/reference/ggscatter.html.
-  - For example, between the GTEx PFC data and the data we used previously from SRA study SRP045638.
+  - For example, between the GTEx PFC data and the data from SRA study SRP045638 provided by `recount3`.
   - Or between the nicotine-exposed pups and the smoking-exposed pups in `smokingMouse`.
   - Or using the two `recount3` studies you chose.
 4. Are there any DEGs FDR < 5% in both datasets? Or FDR < 5% in dataset 1 that have a p-value < 5% in the other one?

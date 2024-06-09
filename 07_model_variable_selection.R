@@ -1,4 +1,4 @@
-## ----download_data, warning=FALSE, message=FALSE--------------------------------
+## ----download_data, warning=FALSE, message=FALSE--------------------------------------
 ## Load the container package for this type of data
 library("SummarizedExperiment")
 
@@ -13,17 +13,25 @@ myfiles <- query(eh, "smokingMouse")
 rse_gene <- myfiles[["EH8313"]]
 
 ## Keep samples from nicotine experiment and pups only
-rse_gene_nic <- rse_gene[, which(rse_gene$Expt == "Nicotine" & rse_gene$Age == "Pup")]
+rse_gene_nic <- rse_gene[
+    ,
+    which(rse_gene$Expt == "Nicotine" & rse_gene$Age == "Pup")
+]
 
 ## Use expressed genes only (i.e. that passed the filtering step)
-rse_gene_filt <- rse_gene_nic[rowData(rse_gene_nic)$retained_after_feature_filtering == TRUE, ]
+rse_gene_filt <- rse_gene_nic[
+    rowData(rse_gene_nic)$retained_after_feature_filtering,
+]
 
 ## Keep samples that passed QC and manual sample filtering steps (all passed)
-rse_gene_filt <- rse_gene_filt[, rse_gene_filt$retained_after_QC_sample_filtering == TRUE &
-    rse_gene_filt$retained_after_manual_sample_filtering == TRUE]
+rse_gene_filt <- rse_gene_filt[
+    ,
+    rse_gene_filt$retained_after_QC_sample_filtering &
+        rse_gene_filt$retained_after_manual_sample_filtering
+]
 
 
-## ----CCA, message=FALSE, warning=FALSE, out.height=7, out.width=7---------------
+## ----CCA, message=FALSE, warning=FALSE, out.height=7, out.width=7---------------------
 library("variancePartition")
 library("pheatmap")
 
@@ -44,7 +52,7 @@ pheatmap(
 )
 
 
-## ----message=FALSE, warning=FALSE-----------------------------------------------
+## ----message=FALSE, warning=FALSE-----------------------------------------------------
 library("ggplot2")
 library("cowplot")
 
@@ -154,43 +162,43 @@ corr_plots <- function(sample_var1, sample_var2, sample_color) {
 }
 
 
-## ----message=FALSE, warning=FALSE-----------------------------------------------
+## ----message=FALSE, warning=FALSE-----------------------------------------------------
 ## Correlation plot for Group and plate
 p <- corr_plots("Group", "plate", NULL)
 p + theme(plot.margin = unit(c(1, 5.5, 1, 5.5), "cm"))
 
 
-## ----message=FALSE, warning=FALSE-----------------------------------------------
+## ----message=FALSE, warning=FALSE-----------------------------------------------------
 ## Correlation plot for overallMapRate and rRNA_rate
 p <- corr_plots("overallMapRate", "rRNA_rate", "Group")
 p + theme(plot.margin = unit(c(2, 3.5, 2, 3.5), "cm"))
 
 
-## ----message=FALSE, warning=FALSE-----------------------------------------------
+## ----message=FALSE, warning=FALSE-----------------------------------------------------
 ## Correlation plot for overallMapRate and plate
 p <- corr_plots("plate", "overallMapRate", NULL)
 p + theme(plot.margin = unit(c(2, 5, 2, 5), "cm"))
 
 
-## ----message=FALSE, warning=FALSE-----------------------------------------------
+## ----message=FALSE, warning=FALSE-----------------------------------------------------
 ## Correlation plot for overallMapRate and flowcell
 p <- corr_plots("flowcell", "overallMapRate", NULL)
 p + theme(plot.margin = unit(c(2, 5, 2, 5), "cm"))
 
 
-## ----message=FALSE, warning=FALSE-----------------------------------------------
+## ----message=FALSE, warning=FALSE-----------------------------------------------------
 ## Correlation plots for sum and detected
 p <- corr_plots("sum", "detected", "Group")
 p + theme(plot.margin = unit(c(2, 3.5, 2, 3.5), "cm"))
 
 
-## ----message=FALSE, warning=FALSE-----------------------------------------------
+## ----message=FALSE, warning=FALSE-----------------------------------------------------
 p <- corr_plots("Group", "flowcell", NULL)
 plots <- plot_grid(p)
 plots + theme(plot.margin = unit(c(0.5, 5, 0.5, 5), "cm"))
 
 
-## ----message=FALSE, warning=FALSE, eval=FALSE-----------------------------------
+## ----message=FALSE, warning=FALSE, eval=FALSE-----------------------------------------
 ## ## Fit a linear mixed model (LMM) that takes continuous variables as fixed effects and categorical variables as random effects
 ## 
 ## varPartAnalysis <- function(formula) {
@@ -211,7 +219,7 @@ plots + theme(plot.margin = unit(c(0.5, 5, 0.5, 5), "cm"))
 ## }
 
 
-## ----message=FALSE, warning=FALSE, eval=FALSE-----------------------------------
+## ----message=FALSE, warning=FALSE, eval=FALSE-----------------------------------------
 ## #####  Fit model with all variables  #####
 ## 
 ## # sum, detected, and ERCCsumLogErr are not included as they are in very different scales!
@@ -225,7 +233,7 @@ plots + theme(plot.margin = unit(c(0.5, 5, 0.5, 5), "cm"))
 ## )
 
 
-## ----message=FALSE, warning=FALSE, eval=FALSE-----------------------------------
+## ----message=FALSE, warning=FALSE, eval=FALSE-----------------------------------------
 ## #####  Fit model without correlated variables  #####
 ## 
 ## ## Pup plots without overallMapRate and plate
@@ -240,7 +248,7 @@ plots + theme(plot.margin = unit(c(0.5, 5, 0.5, 5), "cm"))
 ## )
 
 
-## ----message=FALSE, warning=FALSE, eval=FALSE-----------------------------------
+## ----message=FALSE, warning=FALSE, eval=FALSE-----------------------------------------
 ## library("rlang")
 ## 
 ## ## Plot of gene expression lognorm counts vs. sample variable
@@ -323,7 +331,7 @@ plots + theme(plot.margin = unit(c(0.5, 5, 0.5, 5), "cm"))
 ## }
 
 
-## ----message=FALSE, warning=FALSE, eval=FALSE-----------------------------------
+## ----message=FALSE, warning=FALSE, eval=FALSE-----------------------------------------
 ## ## Function to plot gene expression vs sample variable data for top 3 most affected genes
 ## 
 ## plot_gene_expr_sample <- function(sample_var) {
@@ -339,7 +347,7 @@ plots + theme(plot.margin = unit(c(0.5, 5, 0.5, 5), "cm"))
 ## }
 
 
-## ----message=FALSE, warning=FALSE, eval=FALSE-----------------------------------
+## ----message=FALSE, warning=FALSE, eval=FALSE-----------------------------------------
 ## ## Plots for top affected genes by 'overallMapRate'
 ## plots <- plot_gene_expr_sample("overallMapRate")
 ## plots + theme(plot.margin = unit(c(3, 1, 2, 3), "cm"))
@@ -357,7 +365,7 @@ plots + theme(plot.margin = unit(c(0.5, 5, 0.5, 5), "cm"))
 ## plots + theme(plot.margin = unit(c(3, 1, 2, 3), "cm"))
 
 
-## ----exercise1_varPart, message=FALSE, warning=FALSE, echo=FALSE, eval=FALSE----
+## ----exercise1_varPart, message=FALSE, warning=FALSE, echo=FALSE, eval=FALSE----------
 ## ## Solution
 ## 
 ## ## Gene ID
@@ -397,7 +405,7 @@ plots + theme(plot.margin = unit(c(0.5, 5, 0.5, 5), "cm"))
 ## plot
 
 
-## ----exercise2_varPart, message=FALSE, warning=FALSE, echo=FALSE, eval=FALSE----
+## ----exercise2_varPart, message=FALSE, warning=FALSE, echo=FALSE, eval=FALSE----------
 ## ## Solution
 ## 
 ## ## Gene ID

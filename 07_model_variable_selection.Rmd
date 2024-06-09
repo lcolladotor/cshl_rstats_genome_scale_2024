@@ -4,10 +4,10 @@ Instructor: Daianna González-Padilla
 
 After having processed RNA-seq data and assessed the quality and the variability of the samples the next step for DGE is to explore the variance in the expression of the genes themselves according to sample groups, or in other words, to quantify the contribution of the multiple sample variables in the gene expression variation.
 
-To determine which variables are the major drivers of expression variability, and importantly to define if the technical variability of RNA-seq data is low enough to study the condition of interest, we can implement an analysis of variance partition. [*variancePartition*](https://www.bioconductor.org/packages/release/bioc/html/variancePartition.html) is a package that decomposes for each gene the expression variation into fractions of variance explained (FVE) by the sample variables in the experimental design of high-throughput genomics studies [1].
+To determine which variables are the major drivers of expression variability, and importantly to define if the technical variability of RNA-seq data is low enough to study the condition of interest, we can implement an analysis of variance partition. [*variancePartition*](https://www.bioconductor.org/packages/variancePartition) is a package that decomposes for each gene the expression variation into fractions of variance explained (FVE) by the sample variables in the experimental design of high-throughput genomics studies [1].
 
 
-In order to exemplify how to implement this analysis and the type of conclusions that can be drawn from it, we'll use bulk RNA-seq data from the [*smokingMouse*](https://bioconductor.org/packages/release/data/experiment/html/smokingMouse.html) package.
+In order to exemplify how to implement this analysis and the type of conclusions that can be drawn from it, we'll use bulk RNA-seq data from the [*smokingMouse*](https://bioconductor.org/packages/smokingMouse) package.
 
 ```{r download_data, warning=FALSE, message=FALSE}
 ## Load the container package for this type of data
@@ -24,14 +24,22 @@ myfiles <- query(eh, "smokingMouse")
 rse_gene <- myfiles[["EH8313"]]
 
 ## Keep samples from nicotine experiment and pups only
-rse_gene_nic <- rse_gene[, which(rse_gene$Expt == "Nicotine" & rse_gene$Age == "Pup")]
+rse_gene_nic <- rse_gene[
+    ,
+    which(rse_gene$Expt == "Nicotine" & rse_gene$Age == "Pup")
+]
 
 ## Use expressed genes only (i.e. that passed the filtering step)
-rse_gene_filt <- rse_gene_nic[rowData(rse_gene_nic)$retained_after_feature_filtering == TRUE, ]
+rse_gene_filt <- rse_gene_nic[
+    rowData(rse_gene_nic)$retained_after_feature_filtering,
+]
 
 ## Keep samples that passed QC and manual sample filtering steps (all passed)
-rse_gene_filt <- rse_gene_filt[, rse_gene_filt$retained_after_QC_sample_filtering == TRUE &
-    rse_gene_filt$retained_after_manual_sample_filtering == TRUE]
+rse_gene_filt <- rse_gene_filt[
+    ,
+    rse_gene_filt$retained_after_QC_sample_filtering &
+        rse_gene_filt$retained_after_manual_sample_filtering
+]
 ```
 
 

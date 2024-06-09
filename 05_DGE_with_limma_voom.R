@@ -17,7 +17,7 @@ rse_gene_nic <- rse_gene[, which(rse_gene$Expt == "Nicotine" & rse_gene$Age == "
 
 ## Retain only expressed genes (passed the filtering step)
 rse_gene_filt <- rse_gene_nic[
-    rowData(rse_gene_nic)$retained_after_feature_filtering == TRUE,
+    rowData(rse_gene_nic)$retained_after_feature_filtering,
 ]
 
 
