@@ -349,7 +349,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <iframe width="560" height="315" src="https://www.youtube.com/embed/aMTxkYsM-8o" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen>
 </iframe>
 <script defer class="speakerdeck-embed" data-id="f2e58b59b83244179f062c2852af25ff" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
-<p>and more recently, these are the <a href="https://docs.google.com/document/d/117p0sKFKpMSZy90ZWc56_J-MhwfSMEnMVkqAVqZStaA/edit?usp=sharing"><em>LIBD rstats club 2023-03-10 notes</em></a>. <a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
+<p>and more recently, these are the <a href="https://docs.google.com/document/d/117p0sKFKpMSZy90ZWc56_J-MhwfSMEnMVkqAVqZStaA/edit?usp=sharing"><em>LIBD rstats club 2023-03-10 notes</em></a>.</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Rbadjup630w?si=MEvPQQVKeVs7H_5E" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+</iframe>
 </div>
 <div id="biocthis-main-commands" class="section level2 hasAnchor" number="10.2">
 <h2><span class="header-section-number">10.2</span> biocthis main commands<a href="biocthis-introduction.html#biocthis-main-commands" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -366,7 +368,7 @@ with <code>biocthis</code>:</p>
 <li>You first will need to create a package using a command from <code>usethis</code>.</li>
 </ol>
 <ul>
-<li>For example: <code>usethis::create_package("~/Desktop/cshl2023pkg")</code></li>
+<li>For example: <code>usethis::create_package("~/Desktop/cshl2024pkg")</code></li>
 </ul>
 <ol start="2" style="list-style-type: decimal">
 <li>Now that you have a package, we can use <code>biocthis</code> to create 4 template R
@@ -374,7 +376,7 @@ scripts that will guide you and help you make the full structure for a
 Bioconductor R package.</li>
 </ol>
 <ul>
-<li>On your new R package (<code>cshl2023pkg</code>), we can now use <code>biocthis::use_bioc_pkg_templates()</code>.</li>
+<li>On your new R package (<code>cshl2024pkg</code>), we can now use <code>biocthis::use_bioc_pkg_templates()</code>.</li>
 </ul>
 <p>In part these commands were born out of my own self interest to make it easier
 to make new packages instead of copy-pasting the contents of an older one, then
@@ -386,11 +388,7 @@ involved in.</p>
 <h2><span class="header-section-number">10.3</span> Live demo<a href="biocthis-introduction.html#live-demo" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Here is the live demo result <a href="https://github.com/lcolladotor/cshl2023pkg/" class="uri">https://github.com/lcolladotor/cshl2023pkg/</a> with
 its companion documentation website at
-<a href="https://lcolladotor.github.io/cshl2023pkg/" class="uri">https://lcolladotor.github.io/cshl2023pkg/</a>. Note that you will currently need
-the development version of <code>biocthis</code> which addresses the issues documented at
-<a href="https://github.com/r-lib/usethis/issues/1856" class="uri">https://github.com/r-lib/usethis/issues/1856</a>.</p>
-<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="biocthis-introduction.html#cb116-1" tabindex="-1"></a><span class="do">## Install biocthis development version</span></span>
-<span id="cb116-2"><a href="biocthis-introduction.html#cb116-2" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">&quot;lcolladotor/biocthis&quot;</span>)</span></code></pre></div>
+<a href="https://lcolladotor.github.io/cshl2023pkg/" class="uri">https://lcolladotor.github.io/cshl2023pkg/</a> from 2023.</p>
 <p>Check the git commit history at
 <a href="https://github.com/lcolladotor/cshl2023pkg/commits/devel" class="uri">https://github.com/lcolladotor/cshl2023pkg/commits/devel</a> and the GitHub Actions
 history at <a href="https://github.com/lcolladotor/cshl2023pkg/actions" class="uri">https://github.com/lcolladotor/cshl2023pkg/actions</a>. We can see at
@@ -411,12 +409,6 @@ I’m on a Friday night mood now enjoying <a href="https://twitter.com/lmwebr?re
 <p>Do you want to play an active role? Join the <a href="https://community-bioc.slack.com/archives/C04NPB74Y78"><code>cloud-working-group</code></a> Slack channel.</p>
 
 </div>
-</div>
-<div class="footnotes">
-<hr />
-<ol start="1">
-<li id="fn1"><p>Soon I’ll process and upload the video to YouTube. By soon, I mean, later this summer.<a href="biocthis-introduction.html#fnref1" class="footnote-back">↩︎</a></p></li>
-</ol>
 </div>
 <div class="container">
     <footer class="site-footer">
