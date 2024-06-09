@@ -1,25 +1,26 @@
-## ----load_iSEE------------------------------------------------------------------
+## ----load_iSEE------------------------------------------------------------------------
 # if (!require("BiocManager", quietly = TRUE))
 #     install.packages("BiocManager")
 #
 # BiocManager::install("iSEE")
 
-library(iSEE)
+packageVersion("iSEE")
+library("iSEE")
 
 
-## ----vignettes_iSEE, eval=FALSE-------------------------------------------------
+## ----vignettes_iSEE, eval=FALSE-------------------------------------------------------
 ## browseVignettes("iSEE")
 
 
-## ----quick_launch, eval=FALSE---------------------------------------------------
-## ## Launch iSEE for the se ("SummarizedExperiment" object)
-## iSEE(se)
-## 
-## ## Launch iSEE for the sce ("SingleCellExperiment" object)
-## iSEE(sce)
+## ----quick_launch, eval=interactive()-------------------------------------------------
+## Launch iSEE for the se ("SummarizedExperiment" object)
+iSEE(se)
+
+## Launch iSEE for the sce ("SingleCellExperiment" object)
+iSEE(sce)
 
 
-## ----download_sce_layer---------------------------------------------------------
+## ----download_sce_layer---------------------------------------------------------------
 ## Lets get some data using spatialLIBD
 sce_layer <- spatialLIBD::fetch_data("sce_layer")
 sce_layer
@@ -28,19 +29,19 @@ sce_layer
 lobstr::obj_size(sce_layer)
 
 
-## -------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------
 curl::curl_version()$version
 
 
 ## ## Install homebrew from https://brew.sh/
 ## brew install curl
 
-## ----eval = FALSE---------------------------------------------------------------
+## ----eval = FALSE---------------------------------------------------------------------
 ## Sys.setenv(PKG_CONFIG_PATH = "/opt/homebrew/opt/curl/lib/pkgconfig")
 ## install.packages("curl", type = "source")
 
 
-## ----explore_iSEE, eval = FALSE-------------------------------------------------
+## ----explore_iSEE, eval = FALSE-------------------------------------------------------
 ## ## Load library
 ## library("iSEE")
 ## 
@@ -48,10 +49,10 @@ curl::curl_version()$version
 ## iSEE(sce_layer)
 
 
-## ----load_scRNAseq_data---------------------------------------------------------
-library(scRNAseq)
-library(scater)
-library(iSEE)
+## ----load_scRNAseq_data---------------------------------------------------------------
+library("scRNAseq")
+library("scater")
+library("iSEE")
 
 # Load the dataset
 sce <- ReprocessedAllenData(assays = "tophat_counts")
@@ -61,7 +62,7 @@ sce <- logNormCounts(sce, exprs_values = "tophat_counts")
 sce <- runPCA(sce, ncomponents = 4)
 
 
-## ----single_geneExpr------------------------------------------------------------
+## ----single_geneExpr------------------------------------------------------------------
 ## Initial settings for a single gene expression
 initial_single <- list(
     FeatureAssayPlot(Assay = "logcounts", YAxisFeatureName = "Serpine2"),
@@ -69,10 +70,12 @@ initial_single <- list(
 )
 
 ## Launch iSEE with the initial settings
-# iSEE(sce, initial = initial_single)
+if (interactive()) {
+    iSEE(sce, initial = initial_single)
+}
 
 
-## ----2_genesExpr----------------------------------------------------------------
+## ----2_genesExpr----------------------------------------------------------------------
 ## Initial settings for 2 genes expression on the same "FeatureAssayPlot"
 initial_combined <- list(
     FeatureAssayPlot(Assay = "logcounts", XAxis = "Feature name", XAxisFeatureName = "Serpine2", YAxisFeatureName = "Bcl6"),
@@ -80,10 +83,12 @@ initial_combined <- list(
 )
 
 ## Launch iSEE with the initial settings
-# iSEE(sce, initial = initial_combined)
+if (interactive()) {
+    iSEE(sce, initial = initial_combined)
+}
 
 
-## ----chain_FeatureAssayPlots----------------------------------------------------
+## ----chain_FeatureAssayPlots----------------------------------------------------------
 ## Initial settings chainning multiple "FeatureAssayPlot"
 initial_double <- list(
     FeatureAssayPlot(Assay = "logcounts", YAxisFeatureName = "Serpine2"),
@@ -92,5 +97,7 @@ initial_double <- list(
 )
 
 ## Launch iSEE with the initial settings
-# iSEE(sce, initial = initial_double)
+if (interactive()) {
+    iSEE(sce, initial = initial_double)
+}
 
