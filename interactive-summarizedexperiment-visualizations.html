@@ -350,43 +350,43 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="http://bioconductor.org/packages/iSEE" class="uri">http://bioconductor.org/packages/iSEE</a></li>
 <li><a href="http://bioconductor.org/packages/release/bioc/vignettes/iSEE/inst/doc/basic.html" class="uri">http://bioconductor.org/packages/release/bioc/vignettes/iSEE/inst/doc/basic.html</a></li>
 </ul>
-<p>iSEE is a Bioconductor package that provides an interactive Shiny-based graphical user interface for exploring data stored in SummarizedExperiment objects (Rue-Albrecht et al. 2018).</p>
+<p><code>iSEE</code> is a Bioconductor package that provides an interactive Shiny-based graphical user interface for exploring data stored in <code>SummarizedExperiment</code> objects (Rue-Albrecht et al. 2018).</p>
 <div id="classes-for-isee" class="section level2 hasAnchor" number="2.1">
 <h2><span class="header-section-number">2.1</span> Classes for iSEE<a href="interactive-summarizedexperiment-visualizations.html#classes-for-isee" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>SummarizedExperiment (SE) and SingleCellExperiment (SCE) are classes in R. Classes serve as templates for creating objects that contain data and methods for manipulating those data.</p>
+<p><code>SummarizedExperiment</code> (SE) and <code>SingleCellExperiment</code> (SCE) are classes in R. Classes serve as templates for creating objects that contain data and methods for manipulating those data.</p>
 <div id="summarizedexperiment-class" class="section level3 hasAnchor" number="2.1.1">
 <h3><span class="header-section-number">2.1.1</span> SummarizedExperiment class<a href="interactive-summarizedexperiment-visualizations.html#summarizedexperiment-class" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li><p>Assay Data: The primary data matrix containing quantitative measurements, such as gene expression values or read counts. Rows represent features (e.g., genes, transcripts) and columns represent samples (e.g., experimental conditions, individuals).</p></li>
-<li><p>Row Metadata (rowData): Additional information about the features in the assay data. This can include annotations, identifiers, genomic coordinates, and other relevant information.</p></li>
-<li><p>Column Metadata (colData): Additional information about the samples in the assay data. This can include sample annotations, experimental conditions, treatment groups, and other relevant information.</p></li>
-<li><p>Metadata: Additional information about the experiment.</p></li>
+<li><p>Row Metadata (<code>rowData</code>): Additional information about the features in the assay data. This can include annotations, identifiers, genomic coordinates, and other relevant information.</p></li>
+<li><p>Column Metadata (<code>colData</code>): Additional information about the samples in the assay data. This can include sample annotations, experimental conditions, treatment groups, and other relevant information.</p></li>
+<li><p><code>metadata</code>: Additional information about the experiment.</p></li>
 </ul>
 </div>
 <div id="singlecellexperiment" class="section level3 hasAnchor" number="2.1.2">
 <h3><span class="header-section-number">2.1.2</span> SingleCellExperiment<a href="interactive-summarizedexperiment-visualizations.html#singlecellexperiment" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>This object is specifically designed to store and analyze single-cell RNA sequencing (scRNA-seq) data. It extends the SummarizedExperiment class to include specialized features for single-cell data, such as cell identifiers, dimensionality reduction results, and methods for quality control and normalization.</p>
+<p>This object is specifically designed to store and analyze single-cell RNA sequencing (scRNA-seq) data. It extends the <code>SummarizedExperiment</code> class to include specialized features for single-cell data, such as cell identifiers, dimensionality reduction results, and methods for quality control and normalization.</p>
 <ul>
 <li><p>Assay Data: The primary data matrix containing gene expression values or other measurements. Rows represent genes and columns represent cells.</p></li>
-<li><p>ColData (Column Metadata): Additional information about each cell, such as cell type, experimental condition, or any other relevant metadata.</p></li>
-<li><p>RowData (Row Metadata): Additional information about each gene, such as gene symbols, genomic coordinates, or functional annotations.</p></li>
-<li><p>ReducedDims: Dimensionality reduction results, such as “principal component analysis” (PCA), “t-distributed stochastic neighbor embedding” (t-SNE), and
+<li><p><code>colData</code> (Column Metadata): Additional information about each cell, such as cell type, experimental condition, or any other relevant metadata.</p></li>
+<li><p><code>rowData</code> (Row Metadata): Additional information about each gene, such as gene symbols, genomic coordinates, or functional annotations.</p></li>
+<li><p><code>reducedDims</code>: Dimensionality reduction results, such as “principal component analysis” (PCA), “t-distributed stochastic neighbor embedding” (t-SNE), and
 “Uniform Manifold Approximation and Projection” (UMAP), used for visualizing and clustering cells.</p></li>
-<li><p>SpikeNames and pikeMatrix: Names of spike-in control genes used for normalization and Spike-in counts matrix, if spike-in controls are used</p></li>
-<li><p>Metadata: Additional metadata about the experiment.</p></li>
+<li><p><code>altExpNames</code> and <code>altExps</code>: Names of alternative experiments (such as spike-in control genes used for normalization) and alternative experiment counts matrices.</p></li>
+<li><p><code>metadata</code>: Additional metadata about the experiment.</p></li>
 </ul>
 </div>
 <div id="spatialexperiment" class="section level3 hasAnchor" number="2.1.3">
 <h3><span class="header-section-number">2.1.3</span> SpatialExperiment<a href="interactive-summarizedexperiment-visualizations.html#spatialexperiment" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>This object extends the SingleCellExperiment class and is designed to store and analyze spatially-resolved transcriptomics data. Spatial transcriptomics combines gene expression data with spatial information, providing insights into the spatial organization of tissues.</p>
+<p>This object extends the <code>SingleCellExperiment</code> class and is designed to store and analyze spatially-resolved transcriptomics data. Spatial transcriptomics combines gene expression data with spatial information, providing insights into the spatial organization of tissues.</p>
 <ul>
 <li><p>Assay Data: The primary data matrix containing gene expression values or other measurements. Rows represent genes and columns represent spatial spots or pixels.</p></li>
-<li><p>ColData (Column Metadata): Additional information about each spatial spot or pixel, such as spatial coordinates, tissue section, or any other relevant metadata.</p></li>
-<li><p>RowData (Row Metadata): Additional information about each gene, such as gene symbols, genomic coordinates, or functional annotations.</p></li>
-<li><p>SpatialCoords: A matrix or data frame containing the spatial coordinates (e.g., x and y coordinates) of each spot or pixel, which is crucial for spatial analyses and visualization.</p></li>
-<li><p>ImageData: Links to image data associated with the spatial transcriptomics experiment, such as histology images or microscopy images, which provide the spatial context for the transcriptomics data.</p></li>
-<li><p>ReducedDims: Dimensionality reduction results for visualizing and clustering spatial spots or pixels, similar to the SingleCellExperiment class.</p></li>
-<li><p>Metadata: Additional metadata about the experiment.</p></li>
+<li><p><code>colData</code> (Column Metadata): Additional information about each spatial spot or pixel, such as spatial coordinates, tissue section, or any other relevant metadata.</p></li>
+<li><p><code>rowData</code> (Row Metadata): Additional information about each gene, such as gene symbols, genomic coordinates, or functional annotations.</p></li>
+<li><p><code>spatialCoords</code>: A matrix or data frame containing the spatial coordinates (e.g., x and y coordinates) of each spot or pixel, which is crucial for spatial analyses and visualization.</p></li>
+<li><p><code>imgData</code>: Links to image data associated with the spatial transcriptomics experiment, such as histology images or microscopy images, which provide the spatial context for the transcriptomics data.</p></li>
+<li><p><code>reducedDims</code>: Dimensionality reduction results for visualizing and clustering spatial spots or pixels, similar to the SingleCellExperiment class.</p></li>
+<li><p><code>metadata</code>: Additional metadata about the experiment.</p></li>
 </ul>
 </div>
 </div>
@@ -395,43 +395,46 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><a href="chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://bioconductor.org/packages/3.19/bioc/manuals/iSEE/man/iSEE.pdf">Reference manual</a></p>
 <p>Adapted from <a href="https://www.bioconductor.org/packages/release/bioc/vignettes/iSEE/inst/doc/basic.html">The iSEE User’s Guide</a></p>
 <ul>
-<li>Installation (version “4.4”). In this case, the package is already installed so we just need to load it.</li>
+<li>Installation (R version “4.4”). In this case, the package is already installed so we just need to load it.</li>
 </ul>
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="interactive-summarizedexperiment-visualizations.html#cb28-1" tabindex="-1"></a><span class="co"># if (!require(&quot;BiocManager&quot;, quietly = TRUE))</span></span>
 <span id="cb28-2"><a href="interactive-summarizedexperiment-visualizations.html#cb28-2" tabindex="-1"></a><span class="co">#     install.packages(&quot;BiocManager&quot;)</span></span>
 <span id="cb28-3"><a href="interactive-summarizedexperiment-visualizations.html#cb28-3" tabindex="-1"></a><span class="co">#</span></span>
 <span id="cb28-4"><a href="interactive-summarizedexperiment-visualizations.html#cb28-4" tabindex="-1"></a><span class="co"># BiocManager::install(&quot;iSEE&quot;)</span></span>
 <span id="cb28-5"><a href="interactive-summarizedexperiment-visualizations.html#cb28-5" tabindex="-1"></a></span>
-<span id="cb28-6"><a href="interactive-summarizedexperiment-visualizations.html#cb28-6" tabindex="-1"></a><span class="fu">library</span>(iSEE)</span></code></pre></div>
+<span id="cb28-6"><a href="interactive-summarizedexperiment-visualizations.html#cb28-6" tabindex="-1"></a><span class="fu">packageVersion</span>(<span class="st">&quot;iSEE&quot;</span>)</span>
+<span id="cb28-7"><a href="interactive-summarizedexperiment-visualizations.html#cb28-7" tabindex="-1"></a><span class="co">#&gt; [1] &#39;2.16.0&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="interactive-summarizedexperiment-visualizations.html#cb29-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;iSEE&quot;</span>)</span></code></pre></div>
 <ul>
 <li>Documentation</li>
 </ul>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="interactive-summarizedexperiment-visualizations.html#cb29-1" tabindex="-1"></a><span class="fu">browseVignettes</span>(<span class="st">&quot;iSEE&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="interactive-summarizedexperiment-visualizations.html#cb30-1" tabindex="-1"></a><span class="fu">browseVignettes</span>(<span class="st">&quot;iSEE&quot;</span>)</span></code></pre></div>
 <ul>
 <li>Use (simple launch):</li>
 </ul>
-<p>If you have a “SummarizedExperiment” object (se) or an instance of a subclass, like a “SingleCellExperiment” object (sce), you can launch an iSEE app by running:</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="interactive-summarizedexperiment-visualizations.html#cb30-1" tabindex="-1"></a><span class="do">## Launch iSEE for the se (&quot;SummarizedExperiment&quot; object)</span></span>
-<span id="cb30-2"><a href="interactive-summarizedexperiment-visualizations.html#cb30-2" tabindex="-1"></a><span class="fu">iSEE</span>(se)</span>
-<span id="cb30-3"><a href="interactive-summarizedexperiment-visualizations.html#cb30-3" tabindex="-1"></a></span>
-<span id="cb30-4"><a href="interactive-summarizedexperiment-visualizations.html#cb30-4" tabindex="-1"></a><span class="do">## Launch iSEE for the sce (&quot;SingleCellExperiment&quot; object)</span></span>
-<span id="cb30-5"><a href="interactive-summarizedexperiment-visualizations.html#cb30-5" tabindex="-1"></a><span class="fu">iSEE</span>(sce)</span></code></pre></div>
+<p>If you have a <code>SummarizedExperiment</code> object (<code>se</code>) or an instance of a subclass, like a <code>SingleCellExperiment</code> object (sce), you can launch an <code>iSEE</code> app by running:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="interactive-summarizedexperiment-visualizations.html#cb31-1" tabindex="-1"></a><span class="do">## Launch iSEE for the se (&quot;SummarizedExperiment&quot; object)</span></span>
+<span id="cb31-2"><a href="interactive-summarizedexperiment-visualizations.html#cb31-2" tabindex="-1"></a><span class="fu">iSEE</span>(se)</span>
+<span id="cb31-3"><a href="interactive-summarizedexperiment-visualizations.html#cb31-3" tabindex="-1"></a></span>
+<span id="cb31-4"><a href="interactive-summarizedexperiment-visualizations.html#cb31-4" tabindex="-1"></a><span class="do">## Launch iSEE for the sce (&quot;SingleCellExperiment&quot; object)</span></span>
+<span id="cb31-5"><a href="interactive-summarizedexperiment-visualizations.html#cb31-5" tabindex="-1"></a><span class="fu">iSEE</span>(sce)</span></code></pre></div>
 </div>
 <div id="description-of-the-user-interface" class="section level2 hasAnchor" number="2.3">
 <h2><span class="header-section-number">2.3</span> Description of the user interface<a href="interactive-summarizedexperiment-visualizations.html#description-of-the-user-interface" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><img src="https://raw.githubusercontent.com/lcolladotor/cshl_rstats_genome_scale_2024/devel/Figures/iSEE.png" /></p>
 <p>By default, the app starts with a dashboard that contains one panel or table of each type. By opening the collapsible panels named “Data parameters”, “Visual parameters”, and “Selection parameters” under each plot, we can control the content and appearance of each panel.</p>
-<p>** introductory tour:</p>
-<p>In the upper right corner there is a question mark icon. Clicking it and then on the hand button you can have an introductory tour. During this tour, you will be taken through the different components of the iSEE user interface and learn the basic usage mechanisms by doing small actions guided by the tutorial: the highlighted elements will be responding to your actions, while the rest of the UI will be shaded.
-**</p>
+<div style="background-color:#E0EEE0; padding:20px; font-family: sans-serif">
+<p>Introductory tour:</p>
+<p>In the upper right corner there is a question mark icon ❓. Clicking it and then on the hand button you can have an introductory tour. During this tour, you will be taken through the different components of the <code>iSEE</code> user interface and learn the basic usage mechanisms by doing small actions guided by the tutorial: the highlighted elements will be responding to your actions, while the rest of the UI will be shaded.</p>
+</div>
 <div id="header" class="section level3 hasAnchor" number="2.3.1">
 <h3><span class="header-section-number">2.3.1</span> Header<a href="interactive-summarizedexperiment-visualizations.html#header" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>The layout of the iSEE user interface uses the “shinydashboard” package. The dashboard header contains four dropdown menus.</p>
+<p>The layout of the <code>iSEE</code> user interface uses the <code>shinydashboard</code> package. The dashboard header contains four dropdown menus.</p>
 <ul>
 <li>The “Organization” menu, which is identified by an icon displaying multiple windows</li>
 <li>“Export” dropdown menu, which is identified by a download icon</li>
-<li>The “Documentation” dropdown menu which is identified by aquestion mark icon</li>
-<li>The “Additional Information” dropdown menu which is identified by the information icon (i)</li>
+<li>The “Documentation” dropdown menu which is identified by a question mark icon ❓</li>
+<li>The “Additional Information” dropdown menu which is identified by the information icon ℹ️</li>
 </ul>
 <div id="organization-menu" class="section level4 hasAnchor" number="2.3.1.1">
 <h4><span class="header-section-number">2.3.1.1</span> Organization menu<a href="interactive-summarizedexperiment-visualizations.html#organization-menu" class="anchor-section" aria-label="Anchor link to header"></a></h4>
@@ -444,28 +447,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li>The “Examine panel chart” feature, identified by a chain icon, allows you to visualize the relationships and point selections among your visible plot and table panels. Each panel is represented by a node, color-coded to match the app. (This functionality is particularly useful in sessions with many panels, helping you to see the structure of how panels send and receive data point selections).</li>
 </ul>
-<p>** #### Export dropdown menu</p>
+</div>
+<div id="export-dropdown-menu" class="section level4 hasAnchor" style="background-color:#E0EEE0; padding:20px; font-family: sans-serif" number="2.3.1.2">
+<h4><span class="header-section-number">2.3.1.2</span> Export dropdown menu<a href="interactive-summarizedexperiment-visualizations.html#export-dropdown-menu" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>The “Export” dropdown menu, identified by a download icon, includes:</p>
 <ul>
 <li><p>The “Download panel output” feature that allows you to download a zip folder containing the currently displayed panel content, including high-resolution figures and table contents as CSV files.</p></li>
 <li><p>The “Extract the R code” feature which provides a way to record the exact code that reproduces the current state of each plot. Clicking on this button opens a popup window with a text editor displaying the formatted code with syntax highlighting. You can copy this code, including initial lines and sessionInfo() commands, to your clipboard for inclusion in your analysis report or script. This code can then be further edited for publication.</p></li>
-<li><p>“Display panel settings” lets you export the code defining the current state of the panels in the interface. This is useful for pre-configuring an iSEE instance to start in the current state rather than with the default set of panels.
-**</p></li>
+<li><p>“Display panel settings” lets you export the code defining the current state of the panels in the interface. This is useful for pre-configuring an iSEE instance to start in the current state rather than with the default set of panels.</p></li>
 </ul>
 </div>
-<div id="documentation-menu" class="section level4 hasAnchor" number="2.3.1.2">
-<h4><span class="header-section-number">2.3.1.2</span> Documentation Menu<a href="interactive-summarizedexperiment-visualizations.html#documentation-menu" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>The “Documentation” dropdown, accessible through the question mark icon, includes:</p>
+<div id="documentation-menu" class="section level4 hasAnchor" number="2.3.1.3">
+<h4><span class="header-section-number">2.3.1.3</span> Documentation Menu<a href="interactive-summarizedexperiment-visualizations.html#documentation-menu" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>The “Documentation” dropdown, accessible through the question mark icon ❓, includes:</p>
 <ul>
-<li><p>Interactive Tour: Launches a guided tour of iSEE, teaching basic usage interactively.</p></li>
+<li><p>Interactive Tour: Launches a guided tour of <code>iSEE</code>, teaching basic usage interactively.</p></li>
 <li><p>Open Vignette: Displays the iSEE vignette, either locally or from the Bioconductor project site.</p></li>
 </ul>
 </div>
-<div id="additional-information-menu" class="section level4 hasAnchor" number="2.3.1.3">
-<h4><span class="header-section-number">2.3.1.3</span> Additional Information Menu<a href="interactive-summarizedexperiment-visualizations.html#additional-information-menu" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>The “Additional Information” dropdown, accessible through the information icon (i), includes:</p>
+<div id="additional-information-menu" class="section level4 hasAnchor" number="2.3.1.4">
+<h4><span class="header-section-number">2.3.1.4</span> Additional Information Menu<a href="interactive-summarizedexperiment-visualizations.html#additional-information-menu" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>The “Additional Information” dropdown, accessible through the information icon ℹ️, includes:</p>
 <ul>
-<li>About this Session: Shows the output of the sessionInfo() function in a popup.</li>
+<li>About this Session: Shows the output of the <code>sessionInfo()</code> function in a popup.</li>
 <li>About iSEE: Provides information on the development team, licensing, citation, and links to the GitHub repository for following development and contributing suggestions.</li>
 </ul>
 </div>
@@ -496,9 +500,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="reduced-dimension-plots" class="section level3 hasAnchor" number="2.3.4">
 <h3><span class="header-section-number">2.3.4</span> Reduced dimension plots<a href="interactive-summarizedexperiment-visualizations.html#reduced-dimension-plots" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>If a “SingleCellExperiment” object is supplied to the iSEE function, reduced dimension results are extracted from the reducedDim slot.
-Examples include low-dimensional embeddings from principal components analysis (PCA) or t-distributed stochastic neighbour embedding (t-SNE). These results are used to construct a two-dimensional Reduced dimension plot where each point is a sample, to facilitate efficient exploration of high-dimensional datasets. The “Data parameters” control the reducedDim slot to be displayed, as well as the two dimensions to plot against each other.</p>
-<p>** Note that this builtin panel does not compute reduced dimension embeddings; they must be precomputed and available in the object provided to the iSEE function. Nevertheless, custom panels - such as the iSEEu DynamicReducedDimensionPlot can be developed and used to enable such features. **</p>
+<p>If a <code>SingleCellExperiment</code> object is supplied to the <code>iSEE::iSEE()</code> function, reduced dimension results are extracted from the <code>reducedDim</code> slot.
+Examples include low-dimensional embeddings from principal components analysis (PCA) or t-distributed stochastic neighbour embedding (t-SNE). These results are used to construct a two-dimensional Reduced dimension plot where each point is a sample, to facilitate efficient exploration of high-dimensional datasets. The “Data parameters” control the <code>reducedDim</code> slot to be displayed, as well as the two dimensions to plot against each other.</p>
+<div style="background-color:#E0EEE0; padding:20px; font-family: sans-serif">
+<p>Note that this built in panel does not compute reduced dimension embeddings; they must be precomputed and available in the object provided to the <code>iSEE()</code> function. Nevertheless, custom panels - such as the <code>iSEE</code> DynamicReducedDimensionPlot can be developed and used to enable such features.</p>
+</div>
 </div>
 <div id="column-data-plots" class="section level3 hasAnchor" number="2.3.5">
 <h3><span class="header-section-number">2.3.5</span> Column data plots<a href="interactive-summarizedexperiment-visualizations.html#column-data-plots" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -513,7 +519,9 @@ Examples include low-dimensional embeddings from principal components analysis (
 <div id="feature-assay-plots" class="section level3 hasAnchor" number="2.3.6">
 <h3><span class="header-section-number">2.3.6</span> Feature assay plots<a href="interactive-summarizedexperiment-visualizations.html#feature-assay-plots" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>A Feature assay plot visualizes the assayed values (e.g., gene expression) for a particular feature (e.g., gene) across the samples on the y-axis. This usually results in a (grouped) violin plot, if the x-axis is set to “None” or a categorical variable; or a scatter plot, if the x-axis is another continuous variable.</p>
-<p>** Gene selection for the y-axis can be achieved by using a linked row data table in another panel. Clicking on a row in the table automatically changes the assayed values plotted on the y-axis. Alternatively, the row name can be directly entered as text that corresponds to an entry of rownames(se). (This is not effective if se does not contain row names.) **</p>
+<div style="background-color:#E0EEE0; padding:20px; font-family: sans-serif">
+<p>Gene selection for the y-axis can be achieved by using a linked row data table in another panel. Clicking on a row in the table automatically changes the assayed values plotted on the y-axis. Alternatively, the row name can be directly entered as text that corresponds to an entry of <code>rownames(se)</code>. (This is not effective if <code>se</code> does not contain row names.)</p>
+</div>
 </div>
 <div id="row-data-plots" class="section level3 hasAnchor" number="2.3.7">
 <h3><span class="header-section-number">2.3.7</span> Row data plots<a href="interactive-summarizedexperiment-visualizations.html#row-data-plots" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -532,20 +540,24 @@ Examples include low-dimensional embeddings from principal components analysis (
 </div>
 <div id="row-data-tables" class="section level3 hasAnchor" number="2.3.9">
 <h3><span class="header-section-number">2.3.9</span> Row data tables<a href="interactive-summarizedexperiment-visualizations.html#row-data-tables" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>A Row data table contains the values of the rowData slot. If none are available, a column named Present is added and set to TRUE for all features, to avoid issues with ‘DT::datatable’ and an ‘empty DataFrame’.</p>
-<p>** Typically, these tables are used to link to other plots to determine the features to use for plotting or coloring. **</p>
+<p>A Row data table contains the values of the <code>rowData</code> slot. If none are available, a column named Present is added and set to TRUE for all features, to avoid issues with <code>DT::datatable()</code> and an empty <code>DataFrame</code>.</p>
+<div style="background-color:#E0EEE0; padding:20px; font-family: sans-serif">
+<p>Typically, these tables are used to link to other plots to determine the features to use for plotting or coloring.</p>
+</div>
 </div>
 <div id="column-data-tables" class="section level3 hasAnchor" number="2.3.10">
 <h3><span class="header-section-number">2.3.10</span> Column data tables<a href="interactive-summarizedexperiment-visualizations.html#column-data-tables" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>A Column data table contains the values of the colData slot. Its behavior mirrors the implementation for the Row data table. Correspondingly, if none are available, a column named Present is added and set to TRUE for all samples.</p>
-<p>** Typically, these tables are used to link to other plots to determine the samples to use for plotting or coloring. **</p>
+<p>A Column data table contains the values of the <code>colData</code> slot. Its behavior mirrors the implementation for the Row data table. Correspondingly, if none are available, a column named Present is added and set to <code>TRUE</code> for all samples.</p>
+<div style="background-color:#E0EEE0; padding:20px; font-family: sans-serif">
+<p>Typically, these tables are used to link to other plots to determine the samples to use for plotting or coloring.</p>
+</div>
 </div>
 <div id="heat-maps" class="section level3 hasAnchor" number="2.3.11">
 <h3><span class="header-section-number">2.3.11</span> Heat maps<a href="interactive-summarizedexperiment-visualizations.html#heat-maps" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Heat map panels provide a compact overview of the data for multiple features in the form of color-coded matrices. These correspond to the assays stored in the SCE/SE object, where features (e.g., genes) are the rows and samples are the columns.</p>
-<p>User can select features (rows) to display from the selectize widget (which supports autocompletion), or also via other panels, like row data plots or row data tables. In addition, users can rapidly import custom lists of feature names using a modal popup that provides an Ace editor where they can directly type of paste feature names, and a file upload button that accepts text files containing one feature name per line. Users should remember to click the “Apply” button before closing the modal, to update the heat map with the new list of features.</p>
+<p>User can select features (rows) to display from the <code>selectize</code> widget (which supports autocompletion), or also via other panels, like row data plots or row data tables. In addition, users can rapidly import custom lists of feature names using a modal popup that provides an Ace editor where they can directly type of paste feature names, and a file upload button that accepts text files containing one feature name per line. Users should remember to click the “Apply” button before closing the modal, to update the heat map with the new list of features.</p>
 <p>The “Suggest feature order” button clusters the rows, and also rearranges the elements in the selectize according to the clustering.</p>
-<p>It is also possible to choose which assay type is displayed (“logcounts” being the default choice, if available).</p>
+<p>It is also possible to choose which assay type is displayed (<code>"logcounts"</code> being the default choice, if available).</p>
 <p>Samples in the heat map can also be annotated, simply by selecting relevant column metadata.</p>
 <p>A zooming functionality is also available, restricted to the y-axis (i.e., allowing closer inspection on the individual features included).</p>
 </div>
@@ -574,7 +586,7 @@ Examples include low-dimensional embeddings from principal components analysis (
 <p>For row-based plots (i.e., the sample assay and row data plots), each data point represents a feature. Like the column-based plots, data points can be colored by:</p>
 <ul>
 <li><p>“None”, yielding data points of fixed color.</p></li>
-<li><p>Any column of rowData(se).</p></li>
+<li><p>Any column of <code>rowData(se)</code>.</p></li>
 <li><p>The identity of a particular feature, which is highlighted in the user-specified color.</p></li>
 <li><p>Assay values for a particular sample.</p></li>
 </ul>
@@ -582,11 +594,11 @@ Examples include low-dimensional embeddings from principal components analysis (
 </div>
 <div id="controlling-point-aesthetics" class="section level4 hasAnchor" number="2.3.12.2">
 <h4><span class="header-section-number">2.3.12.2</span> Controlling point aesthetics<a href="interactive-summarizedexperiment-visualizations.html#controlling-point-aesthetics" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>Data points can be set to different shapes according to categorical factors in colData(se) (for column-based plots) or rowData(se) (for row-based plots). This is achieved by checking the “Shape” box to reveal the shape-setting options. The size and opacity of the data points can be modified via the options available by checking the “Point” box. This may be useful for aesthetically pleasing visualizations when the number of points is very large or small.</p>
+<p>Data points can be set to different shapes according to categorical factors in <code>colData(se)</code> (for column-based plots) or <code>rowData(se)</code> (for row-based plots). This is achieved by checking the “Shape” box to reveal the shape-setting options. The size and opacity of the data points can be modified via the options available by checking the “Point” box. This may be useful for aesthetically pleasing visualizations when the number of points is very large or small.</p>
 </div>
 <div id="faceting" class="section level4 hasAnchor" number="2.3.12.3">
 <h4><span class="header-section-number">2.3.12.3</span> Faceting<a href="interactive-summarizedexperiment-visualizations.html#faceting" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>Each point-based plot can be split into multiple facets using the options in the “Facet” checkbox. Users can facet by row and/or column, using categorical factors in colData(se) (for column-based plots) or rowData(se) (for row-based plots). This provides a convenient way to stratify points in a single plot by multiple factors of interest. Note that point selection can only occur within a single facet at a time; points cannot be selected across facets.</p>
+<p>Each point-based plot can be split into multiple facets using the options in the “Facet” checkbox. Users can facet by row and/or column, using categorical factors in <code>colData(se)</code> (for column-based plots) or <code>rowData(se)</code> (for row-based plots). This provides a convenient way to stratify points in a single plot by multiple factors of interest. Note that point selection can only occur within a single facet at a time; points cannot be selected across facets.</p>
 </div>
 <div id="zooming-in-and-out" class="section level4 hasAnchor" number="2.3.12.4">
 <h4><span class="header-section-number">2.3.12.4</span> Zooming in and out<a href="interactive-summarizedexperiment-visualizations.html#zooming-in-and-out" class="anchor-section" aria-label="Anchor link to header"></a></h4>
@@ -609,26 +621,26 @@ Examples include low-dimensional embeddings from principal components analysis (
 <li><a href="https://www.nature.com/articles/s41592-019-0654-x" class="uri">https://www.nature.com/articles/s41592-019-0654-x</a> Figures 2 and 3</li>
 </ul></li>
 </ul>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="interactive-summarizedexperiment-visualizations.html#cb31-1" tabindex="-1"></a><span class="do">## Lets get some data using spatialLIBD</span></span>
-<span id="cb31-2"><a href="interactive-summarizedexperiment-visualizations.html#cb31-2" tabindex="-1"></a>sce_layer <span class="ot">&lt;-</span> spatialLIBD<span class="sc">::</span><span class="fu">fetch_data</span>(<span class="st">&quot;sce_layer&quot;</span>)</span>
-<span id="cb31-3"><a href="interactive-summarizedexperiment-visualizations.html#cb31-3" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;https://www.dropbox.com/s/bg8xwysh2vnjwvg/Human_DLPFC_Visium_processedData_sce_scran_sce_layer_spatialLIBD.Rdata?dl=1&#39;</span></span>
-<span id="cb31-4"><a href="interactive-summarizedexperiment-visualizations.html#cb31-4" tabindex="-1"></a><span class="co">#&gt; 2024-06-09 01:54:05.805578 loading file /github/home/.cache/R/BiocFileCache/39b7c89dde6_Human_DLPFC_Visium_processedData_sce_scran_sce_layer_spatialLIBD.Rdata%3Fdl%3D1</span></span></code></pre></div>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="interactive-summarizedexperiment-visualizations.html#cb32-1" tabindex="-1"></a>sce_layer</span>
-<span id="cb32-2"><a href="interactive-summarizedexperiment-visualizations.html#cb32-2" tabindex="-1"></a><span class="co">#&gt; class: SingleCellExperiment </span></span>
-<span id="cb32-3"><a href="interactive-summarizedexperiment-visualizations.html#cb32-3" tabindex="-1"></a><span class="co">#&gt; dim: 22331 76 </span></span>
-<span id="cb32-4"><a href="interactive-summarizedexperiment-visualizations.html#cb32-4" tabindex="-1"></a><span class="co">#&gt; metadata(0):</span></span>
-<span id="cb32-5"><a href="interactive-summarizedexperiment-visualizations.html#cb32-5" tabindex="-1"></a><span class="co">#&gt; assays(2): counts logcounts</span></span>
-<span id="cb32-6"><a href="interactive-summarizedexperiment-visualizations.html#cb32-6" tabindex="-1"></a><span class="co">#&gt; rownames(22331): ENSG00000243485 ENSG00000238009 ... ENSG00000278384 ENSG00000271254</span></span>
-<span id="cb32-7"><a href="interactive-summarizedexperiment-visualizations.html#cb32-7" tabindex="-1"></a><span class="co">#&gt; rowData names(10): source type ... is_top_hvg is_top_hvg_sce_layer</span></span>
-<span id="cb32-8"><a href="interactive-summarizedexperiment-visualizations.html#cb32-8" tabindex="-1"></a><span class="co">#&gt; colnames(76): 151507_Layer1 151507_Layer2 ... 151676_Layer6 151676_WM</span></span>
-<span id="cb32-9"><a href="interactive-summarizedexperiment-visualizations.html#cb32-9" tabindex="-1"></a><span class="co">#&gt; colData names(13): sample_name layer_guess ... layer_guess_reordered_short spatialLIBD</span></span>
-<span id="cb32-10"><a href="interactive-summarizedexperiment-visualizations.html#cb32-10" tabindex="-1"></a><span class="co">#&gt; reducedDimNames(6): PCA TSNE_perplexity5 ... UMAP_neighbors15 PCAsub</span></span>
-<span id="cb32-11"><a href="interactive-summarizedexperiment-visualizations.html#cb32-11" tabindex="-1"></a><span class="co">#&gt; mainExpName: NULL</span></span>
-<span id="cb32-12"><a href="interactive-summarizedexperiment-visualizations.html#cb32-12" tabindex="-1"></a><span class="co">#&gt; altExpNames(0):</span></span></code></pre></div>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="interactive-summarizedexperiment-visualizations.html#cb33-1" tabindex="-1"></a></span>
-<span id="cb33-2"><a href="interactive-summarizedexperiment-visualizations.html#cb33-2" tabindex="-1"></a><span class="do">## We can check how big the object is with lobstr</span></span>
-<span id="cb33-3"><a href="interactive-summarizedexperiment-visualizations.html#cb33-3" tabindex="-1"></a>lobstr<span class="sc">::</span><span class="fu">obj_size</span>(sce_layer)</span>
-<span id="cb33-4"><a href="interactive-summarizedexperiment-visualizations.html#cb33-4" tabindex="-1"></a><span class="co">#&gt; 33.99 MB</span></span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="interactive-summarizedexperiment-visualizations.html#cb32-1" tabindex="-1"></a><span class="do">## Lets get some data using spatialLIBD</span></span>
+<span id="cb32-2"><a href="interactive-summarizedexperiment-visualizations.html#cb32-2" tabindex="-1"></a>sce_layer <span class="ot">&lt;-</span> spatialLIBD<span class="sc">::</span><span class="fu">fetch_data</span>(<span class="st">&quot;sce_layer&quot;</span>)</span>
+<span id="cb32-3"><a href="interactive-summarizedexperiment-visualizations.html#cb32-3" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;https://www.dropbox.com/s/bg8xwysh2vnjwvg/Human_DLPFC_Visium_processedData_sce_scran_sce_layer_spatialLIBD.Rdata?dl=1&#39;</span></span>
+<span id="cb32-4"><a href="interactive-summarizedexperiment-visualizations.html#cb32-4" tabindex="-1"></a><span class="co">#&gt; 2024-06-09 02:12:25.935544 loading file /github/home/.cache/R/BiocFileCache/3984434c6d5_Human_DLPFC_Visium_processedData_sce_scran_sce_layer_spatialLIBD.Rdata%3Fdl%3D1</span></span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="interactive-summarizedexperiment-visualizations.html#cb33-1" tabindex="-1"></a>sce_layer</span>
+<span id="cb33-2"><a href="interactive-summarizedexperiment-visualizations.html#cb33-2" tabindex="-1"></a><span class="co">#&gt; class: SingleCellExperiment </span></span>
+<span id="cb33-3"><a href="interactive-summarizedexperiment-visualizations.html#cb33-3" tabindex="-1"></a><span class="co">#&gt; dim: 22331 76 </span></span>
+<span id="cb33-4"><a href="interactive-summarizedexperiment-visualizations.html#cb33-4" tabindex="-1"></a><span class="co">#&gt; metadata(0):</span></span>
+<span id="cb33-5"><a href="interactive-summarizedexperiment-visualizations.html#cb33-5" tabindex="-1"></a><span class="co">#&gt; assays(2): counts logcounts</span></span>
+<span id="cb33-6"><a href="interactive-summarizedexperiment-visualizations.html#cb33-6" tabindex="-1"></a><span class="co">#&gt; rownames(22331): ENSG00000243485 ENSG00000238009 ... ENSG00000278384 ENSG00000271254</span></span>
+<span id="cb33-7"><a href="interactive-summarizedexperiment-visualizations.html#cb33-7" tabindex="-1"></a><span class="co">#&gt; rowData names(10): source type ... is_top_hvg is_top_hvg_sce_layer</span></span>
+<span id="cb33-8"><a href="interactive-summarizedexperiment-visualizations.html#cb33-8" tabindex="-1"></a><span class="co">#&gt; colnames(76): 151507_Layer1 151507_Layer2 ... 151676_Layer6 151676_WM</span></span>
+<span id="cb33-9"><a href="interactive-summarizedexperiment-visualizations.html#cb33-9" tabindex="-1"></a><span class="co">#&gt; colData names(13): sample_name layer_guess ... layer_guess_reordered_short spatialLIBD</span></span>
+<span id="cb33-10"><a href="interactive-summarizedexperiment-visualizations.html#cb33-10" tabindex="-1"></a><span class="co">#&gt; reducedDimNames(6): PCA TSNE_perplexity5 ... UMAP_neighbors15 PCAsub</span></span>
+<span id="cb33-11"><a href="interactive-summarizedexperiment-visualizations.html#cb33-11" tabindex="-1"></a><span class="co">#&gt; mainExpName: NULL</span></span>
+<span id="cb33-12"><a href="interactive-summarizedexperiment-visualizations.html#cb33-12" tabindex="-1"></a><span class="co">#&gt; altExpNames(0):</span></span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="interactive-summarizedexperiment-visualizations.html#cb34-1" tabindex="-1"></a></span>
+<span id="cb34-2"><a href="interactive-summarizedexperiment-visualizations.html#cb34-2" tabindex="-1"></a><span class="do">## We can check how big the object is with lobstr</span></span>
+<span id="cb34-3"><a href="interactive-summarizedexperiment-visualizations.html#cb34-3" tabindex="-1"></a>lobstr<span class="sc">::</span><span class="fu">obj_size</span>(sce_layer)</span>
+<span id="cb34-4"><a href="interactive-summarizedexperiment-visualizations.html#cb34-4" tabindex="-1"></a><span class="co">#&gt; 33.99 MB</span></span></code></pre></div>
 <div style="background-color:#E0EEE0; padding:20px; font-family: sans-serif">
 <p>NOTE: if you run into this error:</p>
 <pre><code>Error in `BiocFileCache::bfcrpath()`:
@@ -637,25 +649,25 @@ Backtrace:
  1. spatialLIBD::fetch_data(&quot;sce_layer&quot;)
  3. BiocFileCache::bfcrpath(bfc, url)</code></pre>
 <p>check the output of</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="interactive-summarizedexperiment-visualizations.html#cb35-1" tabindex="-1"></a>curl<span class="sc">::</span><span class="fu">curl_version</span>()<span class="sc">$</span>version</span>
-<span id="cb35-2"><a href="interactive-summarizedexperiment-visualizations.html#cb35-2" tabindex="-1"></a><span class="co">#&gt; [1] &quot;7.81.0&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="interactive-summarizedexperiment-visualizations.html#cb36-1" tabindex="-1"></a>curl<span class="sc">::</span><span class="fu">curl_version</span>()<span class="sc">$</span>version</span>
+<span id="cb36-2"><a href="interactive-summarizedexperiment-visualizations.html#cb36-2" tabindex="-1"></a><span class="co">#&gt; [1] &quot;7.81.0&quot;</span></span></code></pre></div>
 <p>If it’s version 8.6.0, you likely need to upgrade to version 8.8.0. For macOS users, you can do this via <code>Homebrew</code> with</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb36-1"><a href="interactive-summarizedexperiment-visualizations.html#cb36-1" tabindex="-1"></a><span class="co">## Install homebrew from https://brew.sh/</span></span>
-<span id="cb36-2"><a href="interactive-summarizedexperiment-visualizations.html#cb36-2" tabindex="-1"></a><span class="ex">brew</span> install curl</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb37-1"><a href="interactive-summarizedexperiment-visualizations.html#cb37-1" tabindex="-1"></a><span class="co">## Install homebrew from https://brew.sh/</span></span>
+<span id="cb37-2"><a href="interactive-summarizedexperiment-visualizations.html#cb37-2" tabindex="-1"></a><span class="ex">brew</span> install curl</span></code></pre></div>
 <p>then install <code>curl</code> from source with:</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="interactive-summarizedexperiment-visualizations.html#cb37-1" tabindex="-1"></a><span class="fu">Sys.setenv</span>(<span class="at">PKG_CONFIG_PATH =</span> <span class="st">&quot;/opt/homebrew/opt/curl/lib/pkgconfig&quot;</span>)</span>
-<span id="cb37-2"><a href="interactive-summarizedexperiment-visualizations.html#cb37-2" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;curl&quot;</span>, <span class="at">type =</span> <span class="st">&quot;source&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="interactive-summarizedexperiment-visualizations.html#cb38-1" tabindex="-1"></a><span class="fu">Sys.setenv</span>(<span class="at">PKG_CONFIG_PATH =</span> <span class="st">&quot;/opt/homebrew/opt/curl/lib/pkgconfig&quot;</span>)</span>
+<span id="cb38-2"><a href="interactive-summarizedexperiment-visualizations.html#cb38-2" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;curl&quot;</span>, <span class="at">type =</span> <span class="st">&quot;source&quot;</span>)</span></code></pre></div>
 <p>For all the gory details, check <a href="https://github.com/curl/curl/issues/13725" class="uri">https://github.com/curl/curl/issues/13725</a>, <a href="https://github.com/Bioconductor/BiocFileCache/issues/48" class="uri">https://github.com/Bioconductor/BiocFileCache/issues/48</a>, and related issues.</p>
 </div>
 </div>
 <div id="explore-the-data" class="section level3 hasAnchor" number="2.4.2">
 <h3><span class="header-section-number">2.4.2</span> Explore the Data<a href="interactive-summarizedexperiment-visualizations.html#explore-the-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Now we can deploy <code>iSEE()</code> to explore the data.</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="interactive-summarizedexperiment-visualizations.html#cb38-1" tabindex="-1"></a><span class="do">## Load library</span></span>
-<span id="cb38-2"><a href="interactive-summarizedexperiment-visualizations.html#cb38-2" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;iSEE&quot;</span>)</span>
-<span id="cb38-3"><a href="interactive-summarizedexperiment-visualizations.html#cb38-3" tabindex="-1"></a></span>
-<span id="cb38-4"><a href="interactive-summarizedexperiment-visualizations.html#cb38-4" tabindex="-1"></a><span class="do">## Deploy</span></span>
-<span id="cb38-5"><a href="interactive-summarizedexperiment-visualizations.html#cb38-5" tabindex="-1"></a><span class="fu">iSEE</span>(sce_layer)</span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="interactive-summarizedexperiment-visualizations.html#cb39-1" tabindex="-1"></a><span class="do">## Load library</span></span>
+<span id="cb39-2"><a href="interactive-summarizedexperiment-visualizations.html#cb39-2" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;iSEE&quot;</span>)</span>
+<span id="cb39-3"><a href="interactive-summarizedexperiment-visualizations.html#cb39-3" tabindex="-1"></a></span>
+<span id="cb39-4"><a href="interactive-summarizedexperiment-visualizations.html#cb39-4" tabindex="-1"></a><span class="do">## Deploy</span></span>
+<span id="cb39-5"><a href="interactive-summarizedexperiment-visualizations.html#cb39-5" tabindex="-1"></a><span class="fu">iSEE</span>(sce_layer)</span></code></pre></div>
 <style>
 p.exercise  {
 background-color: #E4EDE2;
@@ -733,67 +745,75 @@ Extract the R code only for the last plot.(Final HeatMap)
 <div id="introduction-to-advanced-isee-features" class="section level2 hasAnchor" number="2.5">
 <h2><span class="header-section-number">2.5</span> Introduction to Advanced iSEE Features<a href="interactive-summarizedexperiment-visualizations.html#introduction-to-advanced-isee-features" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Adapted from the GitHub Issue: <a href="https://github.com/iSEE/iSEE/issues/650" class="uri">https://github.com/iSEE/iSEE/issues/650</a></p>
-<p>Beyond its basic functionalities, “iSEE” offers advanced features that allow users to perform complex data manipulations interactively. This includes the ability to subset and filter cells based on gene expression criteria.</p>
-<p>To begin with, we will load the necessary libraries and dataset. In this case we will be using “ReprocessedAllenData” from the “scRNAseq” package, a dataset of 379 mouse brain cells from Tasic et al. (2016).
+<p>Beyond its basic functionalities, <code>iSEE</code> offers advanced features that allow users to perform complex data manipulations interactively. This includes the ability to subset and filter cells based on gene expression criteria.</p>
+<p>To begin with, we will load the necessary libraries and dataset. In this case we will be using <code>ReprocessedAllenData</code> from the <code>scRNAseq</code> package, a dataset of 379 mouse brain cells from Tasic et al. (2016).
 After loading the dataset, we normalize the counts and perform a PCA (Principal Component Analysis) to prepare the data for visualization.</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="interactive-summarizedexperiment-visualizations.html#cb39-1" tabindex="-1"></a><span class="fu">library</span>(scRNAseq)</span>
-<span id="cb39-2"><a href="interactive-summarizedexperiment-visualizations.html#cb39-2" tabindex="-1"></a><span class="fu">library</span>(scater)</span>
-<span id="cb39-3"><a href="interactive-summarizedexperiment-visualizations.html#cb39-3" tabindex="-1"></a><span class="fu">library</span>(iSEE)</span>
-<span id="cb39-4"><a href="interactive-summarizedexperiment-visualizations.html#cb39-4" tabindex="-1"></a></span>
-<span id="cb39-5"><a href="interactive-summarizedexperiment-visualizations.html#cb39-5" tabindex="-1"></a><span class="co"># Load the dataset</span></span>
-<span id="cb39-6"><a href="interactive-summarizedexperiment-visualizations.html#cb39-6" tabindex="-1"></a>sce <span class="ot">&lt;-</span> <span class="fu">ReprocessedAllenData</span>(<span class="at">assays =</span> <span class="st">&quot;tophat_counts&quot;</span>)</span>
-<span id="cb39-7"><a href="interactive-summarizedexperiment-visualizations.html#cb39-7" tabindex="-1"></a></span>
-<span id="cb39-8"><a href="interactive-summarizedexperiment-visualizations.html#cb39-8" tabindex="-1"></a><span class="co"># Normalize counts and perform PCA</span></span>
-<span id="cb39-9"><a href="interactive-summarizedexperiment-visualizations.html#cb39-9" tabindex="-1"></a>sce <span class="ot">&lt;-</span> <span class="fu">logNormCounts</span>(sce, <span class="at">exprs_values =</span> <span class="st">&quot;tophat_counts&quot;</span>)</span>
-<span id="cb39-10"><a href="interactive-summarizedexperiment-visualizations.html#cb39-10" tabindex="-1"></a>sce <span class="ot">&lt;-</span> <span class="fu">runPCA</span>(sce, <span class="at">ncomponents =</span> <span class="dv">4</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="interactive-summarizedexperiment-visualizations.html#cb40-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;scRNAseq&quot;</span>)</span>
+<span id="cb40-2"><a href="interactive-summarizedexperiment-visualizations.html#cb40-2" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;scater&quot;</span>)</span>
+<span id="cb40-3"><a href="interactive-summarizedexperiment-visualizations.html#cb40-3" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;iSEE&quot;</span>)</span>
+<span id="cb40-4"><a href="interactive-summarizedexperiment-visualizations.html#cb40-4" tabindex="-1"></a></span>
+<span id="cb40-5"><a href="interactive-summarizedexperiment-visualizations.html#cb40-5" tabindex="-1"></a><span class="co"># Load the dataset</span></span>
+<span id="cb40-6"><a href="interactive-summarizedexperiment-visualizations.html#cb40-6" tabindex="-1"></a>sce <span class="ot">&lt;-</span> <span class="fu">ReprocessedAllenData</span>(<span class="at">assays =</span> <span class="st">&quot;tophat_counts&quot;</span>)</span>
+<span id="cb40-7"><a href="interactive-summarizedexperiment-visualizations.html#cb40-7" tabindex="-1"></a></span>
+<span id="cb40-8"><a href="interactive-summarizedexperiment-visualizations.html#cb40-8" tabindex="-1"></a><span class="co"># Normalize counts and perform PCA</span></span>
+<span id="cb40-9"><a href="interactive-summarizedexperiment-visualizations.html#cb40-9" tabindex="-1"></a>sce <span class="ot">&lt;-</span> <span class="fu">logNormCounts</span>(sce, <span class="at">exprs_values =</span> <span class="st">&quot;tophat_counts&quot;</span>)</span>
+<span id="cb40-10"><a href="interactive-summarizedexperiment-visualizations.html#cb40-10" tabindex="-1"></a>sce <span class="ot">&lt;-</span> <span class="fu">runPCA</span>(sce, <span class="at">ncomponents =</span> <span class="dv">4</span>)</span></code></pre></div>
 <div id="selecting-cells-based-on-a-single-gene-expression" class="section level3 hasAnchor" number="2.5.1">
 <h3><span class="header-section-number">2.5.1</span> Selecting Cells Based on a Single Gene Expression<a href="interactive-summarizedexperiment-visualizations.html#selecting-cells-based-on-a-single-gene-expression" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>To select cells based on the expression of a single gene using iSEE, we need to <em>create an initial list of panels that will be displayed when we launch iSEE</em>. The first panel in our list is a “FeatureAssayPlot”, which will show the expression levels of the gene “Serpine2”. By visualizing this plot, we can interactively select cells that express “Serpine2”.</p>
 <p>To complement this, we add a “ReducedDimensionPlot” to our panel list. This plot will visualize the PCA and highlight the cells that we selected based on “Serpine2” expression. The linkage between these two panels allows us to see how the selected cells are distributed in the reduced dimensional space (PCA).</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="interactive-summarizedexperiment-visualizations.html#cb40-1" tabindex="-1"></a><span class="do">## Initial settings for a single gene expression</span></span>
-<span id="cb40-2"><a href="interactive-summarizedexperiment-visualizations.html#cb40-2" tabindex="-1"></a>initial_single <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb40-3"><a href="interactive-summarizedexperiment-visualizations.html#cb40-3" tabindex="-1"></a>    <span class="fu">FeatureAssayPlot</span>(<span class="at">Assay =</span> <span class="st">&quot;logcounts&quot;</span>, <span class="at">YAxisFeatureName =</span> <span class="st">&quot;Serpine2&quot;</span>),</span>
-<span id="cb40-4"><a href="interactive-summarizedexperiment-visualizations.html#cb40-4" tabindex="-1"></a>    <span class="fu">ReducedDimensionPlot</span>(<span class="at">Type =</span> <span class="st">&quot;PCA&quot;</span>, <span class="at">ColorBy =</span> <span class="st">&quot;Column selection&quot;</span>, <span class="at">ColumnSelectionSource =</span> <span class="st">&quot;FeatureAssayPlot1&quot;</span>)</span>
-<span id="cb40-5"><a href="interactive-summarizedexperiment-visualizations.html#cb40-5" tabindex="-1"></a>)</span>
-<span id="cb40-6"><a href="interactive-summarizedexperiment-visualizations.html#cb40-6" tabindex="-1"></a></span>
-<span id="cb40-7"><a href="interactive-summarizedexperiment-visualizations.html#cb40-7" tabindex="-1"></a><span class="do">## Launch iSEE with the initial settings</span></span>
-<span id="cb40-8"><a href="interactive-summarizedexperiment-visualizations.html#cb40-8" tabindex="-1"></a><span class="co"># iSEE(sce, initial = initial_single)</span></span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="interactive-summarizedexperiment-visualizations.html#cb41-1" tabindex="-1"></a><span class="do">## Initial settings for a single gene expression</span></span>
+<span id="cb41-2"><a href="interactive-summarizedexperiment-visualizations.html#cb41-2" tabindex="-1"></a>initial_single <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb41-3"><a href="interactive-summarizedexperiment-visualizations.html#cb41-3" tabindex="-1"></a>    <span class="fu">FeatureAssayPlot</span>(<span class="at">Assay =</span> <span class="st">&quot;logcounts&quot;</span>, <span class="at">YAxisFeatureName =</span> <span class="st">&quot;Serpine2&quot;</span>),</span>
+<span id="cb41-4"><a href="interactive-summarizedexperiment-visualizations.html#cb41-4" tabindex="-1"></a>    <span class="fu">ReducedDimensionPlot</span>(<span class="at">Type =</span> <span class="st">&quot;PCA&quot;</span>, <span class="at">ColorBy =</span> <span class="st">&quot;Column selection&quot;</span>, <span class="at">ColumnSelectionSource =</span> <span class="st">&quot;FeatureAssayPlot1&quot;</span>)</span>
+<span id="cb41-5"><a href="interactive-summarizedexperiment-visualizations.html#cb41-5" tabindex="-1"></a>)</span>
+<span id="cb41-6"><a href="interactive-summarizedexperiment-visualizations.html#cb41-6" tabindex="-1"></a></span>
+<span id="cb41-7"><a href="interactive-summarizedexperiment-visualizations.html#cb41-7" tabindex="-1"></a><span class="do">## Launch iSEE with the initial settings</span></span>
+<span id="cb41-8"><a href="interactive-summarizedexperiment-visualizations.html#cb41-8" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">interactive</span>()) {</span>
+<span id="cb41-9"><a href="interactive-summarizedexperiment-visualizations.html#cb41-9" tabindex="-1"></a>    <span class="fu">iSEE</span>(sce, <span class="at">initial =</span> initial_single)</span>
+<span id="cb41-10"><a href="interactive-summarizedexperiment-visualizations.html#cb41-10" tabindex="-1"></a>}</span></code></pre></div>
 </div>
 <div id="using-a-single-plot-for-two-gene-co-expression" class="section level3 hasAnchor" number="2.5.2">
 <h3><span class="header-section-number">2.5.2</span> Using a Single Plot for Two Gene Co-Expression<a href="interactive-summarizedexperiment-visualizations.html#using-a-single-plot-for-two-gene-co-expression" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>To select cells based on the expression of two gene, we can use a single “FeatureAssayPlot” panel. In this setup, one gene is plotted on the x-axis and the other gene on the y-axis. This method allows us to directly visualize and select cells that express both genes simultaneously.</p>
 <p>By adding a “ReducedDimensionPlot” to our initial panel list, we can again see how these selected cells are distributed in the PCA plot. This approach is simpler when dealing with only two genes and provides an intuitive way to explore co-expression patterns.</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="interactive-summarizedexperiment-visualizations.html#cb41-1" tabindex="-1"></a><span class="do">## Initial settings for 2 genes expression on the same &quot;FeatureAssayPlot&quot;</span></span>
-<span id="cb41-2"><a href="interactive-summarizedexperiment-visualizations.html#cb41-2" tabindex="-1"></a>initial_combined <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb41-3"><a href="interactive-summarizedexperiment-visualizations.html#cb41-3" tabindex="-1"></a>    <span class="fu">FeatureAssayPlot</span>(<span class="at">Assay =</span> <span class="st">&quot;logcounts&quot;</span>, <span class="at">XAxis =</span> <span class="st">&quot;Feature name&quot;</span>, <span class="at">XAxisFeatureName =</span> <span class="st">&quot;Serpine2&quot;</span>, <span class="at">YAxisFeatureName =</span> <span class="st">&quot;Bcl6&quot;</span>),</span>
-<span id="cb41-4"><a href="interactive-summarizedexperiment-visualizations.html#cb41-4" tabindex="-1"></a>    <span class="fu">ReducedDimensionPlot</span>(<span class="at">Type =</span> <span class="st">&quot;PCA&quot;</span>, <span class="at">ColorBy =</span> <span class="st">&quot;Column selection&quot;</span>, <span class="at">ColumnSelectionSource =</span> <span class="st">&quot;FeatureAssayPlot1&quot;</span>)</span>
-<span id="cb41-5"><a href="interactive-summarizedexperiment-visualizations.html#cb41-5" tabindex="-1"></a>)</span>
-<span id="cb41-6"><a href="interactive-summarizedexperiment-visualizations.html#cb41-6" tabindex="-1"></a></span>
-<span id="cb41-7"><a href="interactive-summarizedexperiment-visualizations.html#cb41-7" tabindex="-1"></a><span class="do">## Launch iSEE with the initial settings</span></span>
-<span id="cb41-8"><a href="interactive-summarizedexperiment-visualizations.html#cb41-8" tabindex="-1"></a><span class="co"># iSEE(sce, initial = initial_combined)</span></span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="interactive-summarizedexperiment-visualizations.html#cb42-1" tabindex="-1"></a><span class="do">## Initial settings for 2 genes expression on the same &quot;FeatureAssayPlot&quot;</span></span>
+<span id="cb42-2"><a href="interactive-summarizedexperiment-visualizations.html#cb42-2" tabindex="-1"></a>initial_combined <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb42-3"><a href="interactive-summarizedexperiment-visualizations.html#cb42-3" tabindex="-1"></a>    <span class="fu">FeatureAssayPlot</span>(<span class="at">Assay =</span> <span class="st">&quot;logcounts&quot;</span>, <span class="at">XAxis =</span> <span class="st">&quot;Feature name&quot;</span>, <span class="at">XAxisFeatureName =</span> <span class="st">&quot;Serpine2&quot;</span>, <span class="at">YAxisFeatureName =</span> <span class="st">&quot;Bcl6&quot;</span>),</span>
+<span id="cb42-4"><a href="interactive-summarizedexperiment-visualizations.html#cb42-4" tabindex="-1"></a>    <span class="fu">ReducedDimensionPlot</span>(<span class="at">Type =</span> <span class="st">&quot;PCA&quot;</span>, <span class="at">ColorBy =</span> <span class="st">&quot;Column selection&quot;</span>, <span class="at">ColumnSelectionSource =</span> <span class="st">&quot;FeatureAssayPlot1&quot;</span>)</span>
+<span id="cb42-5"><a href="interactive-summarizedexperiment-visualizations.html#cb42-5" tabindex="-1"></a>)</span>
+<span id="cb42-6"><a href="interactive-summarizedexperiment-visualizations.html#cb42-6" tabindex="-1"></a></span>
+<span id="cb42-7"><a href="interactive-summarizedexperiment-visualizations.html#cb42-7" tabindex="-1"></a><span class="do">## Launch iSEE with the initial settings</span></span>
+<span id="cb42-8"><a href="interactive-summarizedexperiment-visualizations.html#cb42-8" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">interactive</span>()) {</span>
+<span id="cb42-9"><a href="interactive-summarizedexperiment-visualizations.html#cb42-9" tabindex="-1"></a>    <span class="fu">iSEE</span>(sce, <span class="at">initial =</span> initial_combined)</span>
+<span id="cb42-10"><a href="interactive-summarizedexperiment-visualizations.html#cb42-10" tabindex="-1"></a>}</span></code></pre></div>
 </div>
 <div id="selecting-cells-based-on-the-co-expression-of-two-or-more-genes" class="section level3 hasAnchor" number="2.5.3">
 <h3><span class="header-section-number">2.5.3</span> Selecting Cells Based on the Co-Expression of Two or more Genes<a href="interactive-summarizedexperiment-visualizations.html#selecting-cells-based-on-the-co-expression-of-two-or-more-genes" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>In situations where we want to select cells based on the expression of two or more genes, we need to chain multiple “FeatureAssayPlot” panels together. For instance, if we are interested in cells that express both “Serpine2” and “Bcl6”, we start by creating a “FeatureAssayPlot” for “Serpine2”. Then, we add another “FeatureAssayPlot” for “Bcl6”, but this time we specify that the selection source for this plot is the “FeatureAssayPlot” for “Serpine2”. This setup ensures that only cells that were selected in the first plot (based on “Serpine2”) are displayed in the second plot (for” Bcl6”).</p>
 <p>Finally, we include a ReducedDimensionPlot to visualize the PCA, highlighting the cells that meet both criteria. This chained selection process allows for more refined filtering based on multiple gene expressions.</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="interactive-summarizedexperiment-visualizations.html#cb42-1" tabindex="-1"></a><span class="do">## Initial settings chainning multiple &quot;FeatureAssayPlot&quot;</span></span>
-<span id="cb42-2"><a href="interactive-summarizedexperiment-visualizations.html#cb42-2" tabindex="-1"></a>initial_double <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb42-3"><a href="interactive-summarizedexperiment-visualizations.html#cb42-3" tabindex="-1"></a>    <span class="fu">FeatureAssayPlot</span>(<span class="at">Assay =</span> <span class="st">&quot;logcounts&quot;</span>, <span class="at">YAxisFeatureName =</span> <span class="st">&quot;Serpine2&quot;</span>),</span>
-<span id="cb42-4"><a href="interactive-summarizedexperiment-visualizations.html#cb42-4" tabindex="-1"></a>    <span class="fu">FeatureAssayPlot</span>(<span class="at">Assay =</span> <span class="st">&quot;logcounts&quot;</span>, <span class="at">YAxisFeatureName =</span> <span class="st">&quot;Bcl6&quot;</span>, <span class="at">ColumnSelectionSource =</span> <span class="st">&quot;FeatureAssayPlot1&quot;</span>, <span class="at">ColumnSelectionRestrict =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb42-5"><a href="interactive-summarizedexperiment-visualizations.html#cb42-5" tabindex="-1"></a>    <span class="fu">ReducedDimensionPlot</span>(<span class="at">Type =</span> <span class="st">&quot;PCA&quot;</span>, <span class="at">ColorBy =</span> <span class="st">&quot;Column selection&quot;</span>, <span class="at">ColumnSelectionSource =</span> <span class="st">&quot;FeatureAssayPlot2&quot;</span>)</span>
-<span id="cb42-6"><a href="interactive-summarizedexperiment-visualizations.html#cb42-6" tabindex="-1"></a>)</span>
-<span id="cb42-7"><a href="interactive-summarizedexperiment-visualizations.html#cb42-7" tabindex="-1"></a></span>
-<span id="cb42-8"><a href="interactive-summarizedexperiment-visualizations.html#cb42-8" tabindex="-1"></a><span class="do">## Launch iSEE with the initial settings</span></span>
-<span id="cb42-9"><a href="interactive-summarizedexperiment-visualizations.html#cb42-9" tabindex="-1"></a><span class="co"># iSEE(sce, initial = initial_double)</span></span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="interactive-summarizedexperiment-visualizations.html#cb43-1" tabindex="-1"></a><span class="do">## Initial settings chainning multiple &quot;FeatureAssayPlot&quot;</span></span>
+<span id="cb43-2"><a href="interactive-summarizedexperiment-visualizations.html#cb43-2" tabindex="-1"></a>initial_double <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb43-3"><a href="interactive-summarizedexperiment-visualizations.html#cb43-3" tabindex="-1"></a>    <span class="fu">FeatureAssayPlot</span>(<span class="at">Assay =</span> <span class="st">&quot;logcounts&quot;</span>, <span class="at">YAxisFeatureName =</span> <span class="st">&quot;Serpine2&quot;</span>),</span>
+<span id="cb43-4"><a href="interactive-summarizedexperiment-visualizations.html#cb43-4" tabindex="-1"></a>    <span class="fu">FeatureAssayPlot</span>(<span class="at">Assay =</span> <span class="st">&quot;logcounts&quot;</span>, <span class="at">YAxisFeatureName =</span> <span class="st">&quot;Bcl6&quot;</span>, <span class="at">ColumnSelectionSource =</span> <span class="st">&quot;FeatureAssayPlot1&quot;</span>, <span class="at">ColumnSelectionRestrict =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb43-5"><a href="interactive-summarizedexperiment-visualizations.html#cb43-5" tabindex="-1"></a>    <span class="fu">ReducedDimensionPlot</span>(<span class="at">Type =</span> <span class="st">&quot;PCA&quot;</span>, <span class="at">ColorBy =</span> <span class="st">&quot;Column selection&quot;</span>, <span class="at">ColumnSelectionSource =</span> <span class="st">&quot;FeatureAssayPlot2&quot;</span>)</span>
+<span id="cb43-6"><a href="interactive-summarizedexperiment-visualizations.html#cb43-6" tabindex="-1"></a>)</span>
+<span id="cb43-7"><a href="interactive-summarizedexperiment-visualizations.html#cb43-7" tabindex="-1"></a></span>
+<span id="cb43-8"><a href="interactive-summarizedexperiment-visualizations.html#cb43-8" tabindex="-1"></a><span class="do">## Launch iSEE with the initial settings</span></span>
+<span id="cb43-9"><a href="interactive-summarizedexperiment-visualizations.html#cb43-9" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">interactive</span>()) {</span>
+<span id="cb43-10"><a href="interactive-summarizedexperiment-visualizations.html#cb43-10" tabindex="-1"></a>    <span class="fu">iSEE</span>(sce, <span class="at">initial =</span> initial_double)</span>
+<span id="cb43-11"><a href="interactive-summarizedexperiment-visualizations.html#cb43-11" tabindex="-1"></a>}</span></code></pre></div>
 </div>
 </div>
 <div id="references" class="section level2 hasAnchor" number="2.6">
 <h2><span class="header-section-number">2.6</span> References<a href="interactive-summarizedexperiment-visualizations.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p><a href="https://www.bioconductor.org/packages/release/bioc/html/iSEE.html" class="uri">https://www.bioconductor.org/packages/release/bioc/html/iSEE.html</a>
-<a href="https://github.com/iSEE/iSEE" class="uri">https://github.com/iSEE/iSEE</a>
-<a href="https://shiny.posit.co/r/gallery/life-sciences/isee/" class="uri">https://shiny.posit.co/r/gallery/life-sciences/isee/</a>
-<a href="https://bioconductor.org/packages/release/bioc/vignettes/iSEE/inst/doc/basic.html" class="uri">https://bioconductor.org/packages/release/bioc/vignettes/iSEE/inst/doc/basic.html</a>
-<a href="https://github.com/iSEE/iSEE/issues/650" class="uri">https://github.com/iSEE/iSEE/issues/650</a></p>
+<ul>
+<li><a href="https://www.bioconductor.org/packages/release/bioc/html/iSEE.html" class="uri">https://www.bioconductor.org/packages/release/bioc/html/iSEE.html</a></li>
+<li><a href="https://github.com/iSEE/iSEE" class="uri">https://github.com/iSEE/iSEE</a></li>
+<li><a href="https://shiny.posit.co/r/gallery/life-sciences/isee/" class="uri">https://shiny.posit.co/r/gallery/life-sciences/isee/</a></li>
+<li><a href="https://bioconductor.org/packages/release/bioc/vignettes/iSEE/inst/doc/basic.html" class="uri">https://bioconductor.org/packages/release/bioc/vignettes/iSEE/inst/doc/basic.html</a></li>
+<li><a href="https://github.com/iSEE/iSEE/issues/650" class="uri">https://github.com/iSEE/iSEE/issues/650</a></li>
+</ul>
 
 </div>
 </div>

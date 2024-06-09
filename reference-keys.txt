@@ -11,6 +11,7 @@ getting-started-with-isee
 description-of-the-user-interface
 header
 organization-menu
+export-dropdown-menu
 documentation-menu
 additional-information-menu
 panel-types
