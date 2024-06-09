@@ -87,6 +87,9 @@ At this level the tool allows to:
 
 * Visualize the gene expression data at the layer level in reduced dimensions
 * Plot the layer-level lognorm or raw expression of a gene across all tissue sections and extract DEGs among layers (ANOVA model), in a specific layer compared to the rest (enrichment model) or compared to another layer (pairwise model)
+
+<script defer class="speakerdeck-embed" data-slide="11" data-id="dde92cd6dfc04f9589770e074915658f" data-ratio="1.3333333333333333" src="//speakerdeck.com/assets/embed.js"></script>
+
 * Assess the enrichment of your own sets of genes of interest among the DEGs from these spatial DLPFC data
 * Correlate gene-wise statistics for DE between sn/scRNA-seq data clusters/cell populations with the DE statistics in the human DLPFC layers provided in this study. This can be used to label your sn/scRNA-seq groups or clusters with the more molecularly-defined histological layers
 
