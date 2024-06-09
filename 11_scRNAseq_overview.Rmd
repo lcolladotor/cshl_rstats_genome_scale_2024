@@ -14,7 +14,7 @@ Single-cell RNA sequencing (scRNA-seq) is a cutting-edge technology used to anal
 
 [Orchestrating Single-Cell Analysis with Bioconductor](https://bioconductor.org/books/release/OSCA/)
 
-![](https://raw.githubusercontent.com/lcolladotor/cshl_rstats_genome_scale_2024/devel/Figures/) OSCA.PNG
+![](https://raw.githubusercontent.com/lcolladotor/cshl_rstats_genome_scale_2024/devel/Figures/OSCA.PNG) 
 
 *Authors: Robert Amezquita [aut], Aaron Lun [aut], Stephanie Hicks [aut], Raphael Gottardo [aut], Alan O’Callaghan [cre]*
 
@@ -47,7 +47,7 @@ In practical terms, droplet-based technologies are the current de facto standard
 
 In the simplest case, the workflow has the following form:
 
-![](https://raw.githubusercontent.com/lcolladotor/cshl_rstats_genome_scale_2024/devel/Figures/) # scRNAseq_workflow
+![](https://raw.githubusercontent.com/lcolladotor/cshl_rstats_genome_scale_2024/devel/Figures/scRNAseq_workflow.PNG)  
 
 - We compute quality control metrics to remove low-quality cells that would interfere with downstream analyses. These cells may have been damaged during processing or may not have been fully captured by the sequencing protocol. Common metrics includes the total counts per cell, the proportion of spike-in or mitochondrial reads and the number of detected features.
 
@@ -64,7 +64,7 @@ t-stochastic neighbor embedding for visualization purposes.
 
 This object is specifically designed to store and analyze single-cell RNA sequencing (scRNA-seq) data. It extends the SummarizedExperiment class to include specialized features for single-cell data, such as cell identifiers, dimensionality reduction results, and methods for quality control and normalization.
 
-![](https://raw.githubusercontent.com/lcolladotor/cshl_rstats_genome_scale_2024/devel/Figures/) # sce_structure
+![](https://raw.githubusercontent.com/lcolladotor/cshl_rstats_genome_scale_2024/devel/Figures/sce_structure.PNG) 
 
 - Assay Data: The primary data matrix containing gene expression values or other measurements. Rows represent genes and columns represent cells.
 
@@ -361,7 +361,7 @@ lib.sf.zeisel <- librarySizeFactors(sce.zeisel)
 summary(lib.sf.zeisel)
 ```
 
-In the Zeisel brain data, the library size factors differ by up to 10-fold across cells (Figure 2.1). This is typical of the variability in coverage in scRNA-seq data.
+In the Zeisel brain data, the library size factors differ by up to 10-fold across cells. This is typical of the variability in coverage in scRNA-seq data.
 
 ```{r, hist_libSizeFactors}
 ## Plot the library size factors differences
@@ -567,13 +567,13 @@ As the name suggests, dimensionality reduction aims to reduce the number of sepa
 
 Principal components analysis (PCA) discovers axes in high-dimensional space that capture the largest amount of variation. This is best understood by imagining each axis as a line. Say we draw a line anywhere, and we move each cell in our data set onto the closest position on the line. The variance captured by this axis is defined as the variance in the positions of cells along that line.
 
-![](https://raw.githubusercontent.com/lcolladotor/cshl_rstats_genome_scale_2024/devel/Figures/) # pca_concept
+![](https://raw.githubusercontent.com/lcolladotor/cshl_rstats_genome_scale_2024/devel/Figures/pca_concept.png) 
 
 In PCA, the first axis (or “principal component”, PC) is chosen such that it maximizes this variance. The next PC is chosen such that it is orthogonal to the first and captures the greatest remaining amount of variation, and so on.
 
 By definition, the top PCs capture the dominant factors of heterogeneity in the data set. In the context of scRNA-seq, our assumption is that biological processes affect multiple genes in a coordinated manner. This means that the earlier PCs are likely to represent biological structure as more variation can be captured by considering the correlated behavior of many genes. By comparison, random technical or biological noise is expected to affect each gene independently. There is unlikely to be an axis that can capture random variation across many genes, meaning that noise should mostly be concentrated in the later PCs. This motivates the use of the earlier PCs in our downstream analyses, which concentrates the biological signal to simultaneously reduce computational work and remove noise.
 
-![](https://raw.githubusercontent.com/lcolladotor/cshl_rstats_genome_scale_2024/devel/Figures/) # PCs
+![](https://raw.githubusercontent.com/lcolladotor/cshl_rstats_genome_scale_2024/devel/Figures/PCs.png)
 
 We can perform PCA on the log-normalized expression values using the `fixedPCA()` function from scran. By default, `fixedPCA()` will compute the first 50 PCs and store them in the reducedDims() of the output SingleCellExperiment object, as shown below. 
 
