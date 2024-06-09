@@ -12,57 +12,57 @@ Instructor: Melissa Mayén Quiroz
 * http://bioconductor.org/packages/release/bioc/vignettes/iSEE/inst/doc/basic.html
 
 
-iSEE is a Bioconductor package that provides an interactive Shiny-based graphical user interface for exploring data stored in SummarizedExperiment objects (Rue-Albrecht et al. 2018). 
+`iSEE` is a Bioconductor package that provides an interactive Shiny-based graphical user interface for exploring data stored in `SummarizedExperiment` objects (Rue-Albrecht et al. 2018). 
 
 
 ## Classes for iSEE
 
-SummarizedExperiment (SE) and SingleCellExperiment (SCE) are classes in R. Classes serve as templates for creating objects that contain data and methods for manipulating those data.
+`SummarizedExperiment` (SE) and `SingleCellExperiment` (SCE) are classes in R. Classes serve as templates for creating objects that contain data and methods for manipulating those data.
 
 ### SummarizedExperiment class
 
 - Assay Data: The primary data matrix containing quantitative measurements, such as gene expression values or read counts. Rows represent features (e.g., genes, transcripts) and columns represent samples (e.g., experimental conditions, individuals).
 
-- Row Metadata (rowData): Additional information about the features in the assay data. This can include annotations, identifiers, genomic coordinates, and other relevant information.
+- Row Metadata (`rowData`): Additional information about the features in the assay data. This can include annotations, identifiers, genomic coordinates, and other relevant information.
 
-- Column Metadata (colData): Additional information about the samples in the assay data. This can include sample annotations, experimental conditions, treatment groups, and other relevant information.
+- Column Metadata (`colData`): Additional information about the samples in the assay data. This can include sample annotations, experimental conditions, treatment groups, and other relevant information.
 
-- Metadata: Additional information about the experiment.
+- `metadata`: Additional information about the experiment.
 
 ### SingleCellExperiment
 
-This object is specifically designed to store and analyze single-cell RNA sequencing (scRNA-seq) data. It extends the SummarizedExperiment class to include specialized features for single-cell data, such as cell identifiers, dimensionality reduction results, and methods for quality control and normalization.
+This object is specifically designed to store and analyze single-cell RNA sequencing (scRNA-seq) data. It extends the `SummarizedExperiment` class to include specialized features for single-cell data, such as cell identifiers, dimensionality reduction results, and methods for quality control and normalization.
 
 - Assay Data: The primary data matrix containing gene expression values or other measurements. Rows represent genes and columns represent cells.
 
-- ColData (Column Metadata): Additional information about each cell, such as cell type, experimental condition, or any other relevant metadata.
+- `colData` (Column Metadata): Additional information about each cell, such as cell type, experimental condition, or any other relevant metadata.
 
-- RowData (Row Metadata): Additional information about each gene, such as gene symbols, genomic coordinates, or functional annotations.
+- `rowData` (Row Metadata): Additional information about each gene, such as gene symbols, genomic coordinates, or functional annotations.
 
-- ReducedDims: Dimensionality reduction results, such as "principal component analysis" (PCA), "t-distributed stochastic neighbor embedding" (t-SNE), and 
+- `reducedDims`: Dimensionality reduction results, such as "principal component analysis" (PCA), "t-distributed stochastic neighbor embedding" (t-SNE), and 
 "Uniform Manifold Approximation and Projection" (UMAP), used for visualizing and clustering cells.
 
-- SpikeNames and pikeMatrix: Names of spike-in control genes used for normalization and Spike-in counts matrix, if spike-in controls are used
+- `altExpNames` and `altExps`: Names of alternative experiments (such as spike-in control genes used for normalization) and alternative experiment counts matrices.
 
-- Metadata: Additional metadata about the experiment.
+- `metadata`: Additional metadata about the experiment.
 
 ### SpatialExperiment
 
-This object extends the SingleCellExperiment class and is designed to store and analyze spatially-resolved transcriptomics data. Spatial transcriptomics combines gene expression data with spatial information, providing insights into the spatial organization of tissues.
+This object extends the `SingleCellExperiment` class and is designed to store and analyze spatially-resolved transcriptomics data. Spatial transcriptomics combines gene expression data with spatial information, providing insights into the spatial organization of tissues.
 
 - Assay Data: The primary data matrix containing gene expression values or other measurements. Rows represent genes and columns represent spatial spots or pixels.
 
-- ColData (Column Metadata): Additional information about each spatial spot or pixel, such as spatial coordinates, tissue section, or any other relevant metadata.
+- `colData` (Column Metadata): Additional information about each spatial spot or pixel, such as spatial coordinates, tissue section, or any other relevant metadata.
 
-- RowData (Row Metadata): Additional information about each gene, such as gene symbols, genomic coordinates, or functional annotations.
+- `rowData` (Row Metadata): Additional information about each gene, such as gene symbols, genomic coordinates, or functional annotations.
 
-- SpatialCoords: A matrix or data frame containing the spatial coordinates (e.g., x and y coordinates) of each spot or pixel, which is crucial for spatial analyses and visualization.
+- `spatialCoords`: A matrix or data frame containing the spatial coordinates (e.g., x and y coordinates) of each spot or pixel, which is crucial for spatial analyses and visualization.
 
-- ImageData: Links to image data associated with the spatial transcriptomics experiment, such as histology images or microscopy images, which provide the spatial context for the transcriptomics data.
+- `imgData`: Links to image data associated with the spatial transcriptomics experiment, such as histology images or microscopy images, which provide the spatial context for the transcriptomics data.
 
-- ReducedDims: Dimensionality reduction results for visualizing and clustering spatial spots or pixels, similar to the SingleCellExperiment class.
+- `reducedDims`: Dimensionality reduction results for visualizing and clustering spatial spots or pixels, similar to the SingleCellExperiment class.
 
-- Metadata: Additional metadata about the experiment.
+- `metadata`: Additional metadata about the experiment.
 
 
 ## Getting Started with iSEE
@@ -71,7 +71,7 @@ This object extends the SingleCellExperiment class and is designed to store and 
 
 Adapted from [The iSEE User's Guide](https://www.bioconductor.org/packages/release/bioc/vignettes/iSEE/inst/doc/basic.html)
 
-- Installation (version "4.4"). In this case, the package is already installed so we just need to load it.
+- Installation (R version "4.4"). In this case, the package is already installed so we just need to load it.
 
 ```{r, load_iSEE}
 # if (!require("BiocManager", quietly = TRUE))
@@ -79,7 +79,8 @@ Adapted from [The iSEE User's Guide](https://www.bioconductor.org/packages/relea
 #
 # BiocManager::install("iSEE")
 
-library(iSEE)
+packageVersion("iSEE")
+library("iSEE")
 ```
 
 - Documentation
@@ -90,9 +91,9 @@ browseVignettes("iSEE")
 
 - Use (simple launch): 
 
-If you have a "SummarizedExperiment" object (se) or an instance of a subclass, like a "SingleCellExperiment" object (sce), you can launch an iSEE app by running:
+If you have a `SummarizedExperiment` object (`se`) or an instance of a subclass, like a `SingleCellExperiment` object (sce), you can launch an `iSEE` app by running:
 
-```{r, quick_launch, eval=FALSE}
+```{r, quick_launch, eval=interactive()}
 ## Launch iSEE for the se ("SummarizedExperiment" object)
 iSEE(se)
 
@@ -107,19 +108,22 @@ iSEE(sce)
 
 By default, the app starts with a dashboard that contains one panel or table of each type. By opening the collapsible panels named “Data parameters”, “Visual parameters”, and “Selection parameters” under each plot, we can control the content and appearance of each panel.
 
-** introductory tour:
+<div style="background-color:#E0EEE0; padding:20px; font-family: sans-serif">
 
-In the upper right corner there is a question mark icon. Clicking it and then on the hand button you can have an introductory tour. During this tour, you will be taken through the different components of the iSEE user interface and learn the basic usage mechanisms by doing small actions guided by the tutorial: the highlighted elements will be responding to your actions, while the rest of the UI will be shaded. 
-**
+Introductory tour:
+
+In the upper right corner there is a question mark icon ❓. Clicking it and then on the hand button you can have an introductory tour. During this tour, you will be taken through the different components of the `iSEE` user interface and learn the basic usage mechanisms by doing small actions guided by the tutorial: the highlighted elements will be responding to your actions, while the rest of the UI will be shaded. 
+
+</div>
 
 ### Header
 
-The layout of the iSEE user interface uses the "shinydashboard" package. The dashboard header contains four dropdown menus.
+The layout of the `iSEE` user interface uses the `shinydashboard` package. The dashboard header contains four dropdown menus.
 
 - The “Organization” menu, which is identified by an icon displaying multiple windows
 - “Export” dropdown menu, which is identified by a download icon
-- The “Documentation” dropdown menu which is identified by aquestion mark icon 
-- The “Additional Information” dropdown menu which is identified by the information icon (i)
+- The “Documentation” dropdown menu which is identified by a question mark icon ❓
+- The “Additional Information” dropdown menu which is identified by the information icon ℹ️
 
 #### Organization menu
 
@@ -131,7 +135,9 @@ The "Organization" dropdown menu, dentified by an icon displaying multiple windo
 
 - The "Examine panel chart" feature, identified by a chain icon, allows you to visualize the relationships and point selections among your visible plot and table panels. Each panel is represented by a node, color-coded to match the app. (This functionality is particularly useful in sessions with many panels, helping you to see the structure of how panels send and receive data point selections).
 
-** #### Export dropdown menu
+<div style="background-color:#E0EEE0; padding:20px; font-family: sans-serif">
+
+#### Export dropdown menu
 
 The "Export” dropdown menu, identified by a download icon, includes:
 
@@ -140,21 +146,22 @@ The "Export” dropdown menu, identified by a download icon, includes:
 - The "Extract the R code" feature which provides a way to record the exact code that reproduces the current state of each plot. Clicking on this button opens a popup window with a text editor displaying the formatted code with syntax highlighting. You can copy this code, including initial lines and sessionInfo() commands, to your clipboard for inclusion in your analysis report or script. This code can then be further edited for publication.
 
 - "Display panel settings" lets you export the code defining the current state of the panels in the interface. This is useful for pre-configuring an iSEE instance to start in the current state rather than with the default set of panels.
-**
+
+</div>
 
 #### Documentation Menu
 
-The "Documentation" dropdown, accessible through the question mark icon, includes:
+The "Documentation" dropdown, accessible through the question mark icon ❓, includes:
 
-- Interactive Tour: Launches a guided tour of iSEE, teaching basic usage interactively.
+- Interactive Tour: Launches a guided tour of `iSEE`, teaching basic usage interactively.
 
 - Open Vignette: Displays the iSEE vignette, either locally or from the Bioconductor project site.
 
 #### Additional Information Menu
 
-The "Additional Information" dropdown, accessible through the information icon (i), includes:
+The "Additional Information" dropdown, accessible through the information icon ℹ️, includes:
 
-- About this Session: Shows the output of the sessionInfo() function in a popup.
+- About this Session: Shows the output of the `sessionInfo()` function in a popup.
 - About iSEE: Provides information on the development team, licensing, citation, and links to the GitHub repository for following development and contributing suggestions.
 
 
@@ -185,10 +192,15 @@ For each standard plot panel, three different sets of parameters will be availab
 
 ### Reduced dimension plots
 
-If a "SingleCellExperiment" object is supplied to the iSEE function, reduced dimension results are extracted from the reducedDim slot. 
-Examples include low-dimensional embeddings from principal components analysis (PCA) or t-distributed stochastic neighbour embedding (t-SNE). These results are used to construct a two-dimensional Reduced dimension plot where each point is a sample, to facilitate efficient exploration of high-dimensional datasets. The “Data parameters” control the reducedDim slot to be displayed, as well as the two dimensions to plot against each other.
+If a `SingleCellExperiment` object is supplied to the `iSEE::iSEE()` function, reduced dimension results are extracted from the `reducedDim` slot. 
+Examples include low-dimensional embeddings from principal components analysis (PCA) or t-distributed stochastic neighbour embedding (t-SNE). These results are used to construct a two-dimensional Reduced dimension plot where each point is a sample, to facilitate efficient exploration of high-dimensional datasets. The “Data parameters” control the `reducedDim` slot to be displayed, as well as the two dimensions to plot against each other.
 
-** Note that this builtin panel does not compute reduced dimension embeddings; they must be precomputed and available in the object provided to the iSEE function. Nevertheless, custom panels - such as the iSEEu DynamicReducedDimensionPlot can be developed and used to enable such features. **
+
+<div style="background-color:#E0EEE0; padding:20px; font-family: sans-serif">
+
+Note that this built in panel does not compute reduced dimension embeddings; they must be precomputed and available in the object provided to the `iSEE()` function. Nevertheless, custom panels - such as the `iSEE` DynamicReducedDimensionPlot can be developed and used to enable such features.
+
+</div>
 
 ### Column data plots
 
@@ -206,7 +218,12 @@ A Column data plot visualizes sample metadata contained in column metadata. Diff
 
 A Feature assay plot visualizes the assayed values (e.g., gene expression) for a particular feature (e.g., gene) across the samples on the y-axis. This usually results in a (grouped) violin plot, if the x-axis is set to "None" or a categorical variable; or a scatter plot, if the x-axis is another continuous variable.
 
-** Gene selection for the y-axis can be achieved by using a linked row data table in another panel. Clicking on a row in the table automatically changes the assayed values plotted on the y-axis. Alternatively, the row name can be directly entered as text that corresponds to an entry of rownames(se). (This is not effective if se does not contain row names.) **
+
+<div style="background-color:#E0EEE0; padding:20px; font-family: sans-serif">
+
+Gene selection for the y-axis can be achieved by using a linked row data table in another panel. Clicking on a row in the table automatically changes the assayed values plotted on the y-axis. Alternatively, the row name can be directly entered as text that corresponds to an entry of `rownames(se)`. (This is not effective if `se` does not contain row names.)
+
+</div>
 
 ### Row data plots
 
@@ -228,25 +245,33 @@ Notably, the x-axis covariate can also be set to:
 
 ### Row data tables
 
-A Row data table contains the values of the rowData slot. If none are available, a column named Present is added and set to TRUE for all features, to avoid issues with 'DT::datatable' and an 'empty DataFrame'. 
+A Row data table contains the values of the `rowData` slot. If none are available, a column named Present is added and set to TRUE for all features, to avoid issues with `DT::datatable()` and an empty `DataFrame`. 
 
-** Typically, these tables are used to link to other plots to determine the features to use for plotting or coloring. **
+<div style="background-color:#E0EEE0; padding:20px; font-family: sans-serif">
+
+Typically, these tables are used to link to other plots to determine the features to use for plotting or coloring.
+
+</div>
 
 ### Column data tables
 
-A Column data table contains the values of the colData slot. Its behavior mirrors the implementation for the Row data table. Correspondingly, if none are available, a column named Present is added and set to TRUE for all samples. 
+A Column data table contains the values of the `colData` slot. Its behavior mirrors the implementation for the Row data table. Correspondingly, if none are available, a column named Present is added and set to `TRUE` for all samples. 
 
-** Typically, these tables are used to link to other plots to determine the samples to use for plotting or coloring. **
+<div style="background-color:#E0EEE0; padding:20px; font-family: sans-serif">
+
+Typically, these tables are used to link to other plots to determine the samples to use for plotting or coloring.
+
+</div>
 
 ### Heat maps
 
 Heat map panels provide a compact overview of the data for multiple features in the form of color-coded matrices. These correspond to the assays stored in the SCE/SE object, where features (e.g., genes) are the rows and samples are the columns.
 
-User can select features (rows) to display from the selectize widget (which supports autocompletion), or also via other panels, like row data plots or row data tables. In addition, users can rapidly import custom lists of feature names using a modal popup that provides an Ace editor where they can directly type of paste feature names, and a file upload button that accepts text files containing one feature name per line. Users should remember to click the “Apply” button before closing the modal, to update the heat map with the new list of features.
+User can select features (rows) to display from the `selectize` widget (which supports autocompletion), or also via other panels, like row data plots or row data tables. In addition, users can rapidly import custom lists of feature names using a modal popup that provides an Ace editor where they can directly type of paste feature names, and a file upload button that accepts text files containing one feature name per line. Users should remember to click the “Apply” button before closing the modal, to update the heat map with the new list of features.
 
 The “Suggest feature order” button clusters the rows, and also rearranges the elements in the selectize according to the clustering.
 
-It is also possible to choose which assay type is displayed ("logcounts" being the default choice, if available). 
+It is also possible to choose which assay type is displayed (`"logcounts"` being the default choice, if available). 
 
 Samples in the heat map can also be annotated, simply by selecting relevant column metadata. 
 
@@ -283,7 +308,7 @@ For row-based plots (i.e., the sample assay and row data plots), each data point
 
 - "None", yielding data points of fixed color.
 
-- Any column of rowData(se).
+- Any column of `rowData(se)`.
 
 - The identity of a particular feature, which is highlighted in the user-specified color.
 
@@ -291,11 +316,11 @@ For row-based plots (i.e., the sample assay and row data plots), each data point
 
 #### Controlling point aesthetics
 
-Data points can be set to different shapes according to categorical factors in colData(se) (for column-based plots) or rowData(se) (for row-based plots). This is achieved by checking the "Shape" box to reveal the shape-setting options. The size and opacity of the data points can be modified via the options available by checking the "Point" box. This may be useful for aesthetically pleasing visualizations when the number of points is very large or small.
+Data points can be set to different shapes according to categorical factors in `colData(se)` (for column-based plots) or `rowData(se)` (for row-based plots). This is achieved by checking the "Shape" box to reveal the shape-setting options. The size and opacity of the data points can be modified via the options available by checking the "Point" box. This may be useful for aesthetically pleasing visualizations when the number of points is very large or small.
 
 #### Faceting
 
-Each point-based plot can be split into multiple facets using the options in the "Facet" checkbox. Users can facet by row and/or column, using categorical factors in colData(se) (for column-based plots) or rowData(se) (for row-based plots). This provides a convenient way to stratify points in a single plot by multiple factors of interest. Note that point selection can only occur within a single facet at a time; points cannot be selected across facets.
+Each point-based plot can be split into multiple facets using the options in the "Facet" checkbox. Users can facet by row and/or column, using categorical factors in `colData(se)` (for column-based plots) or `rowData(se)` (for row-based plots). This provides a convenient way to stratify points in a single plot by multiple factors of interest. Note that point selection can only occur within a single facet at a time; points cannot be selected across facets.
 
 #### Zooming in and out
 
@@ -470,22 +495,22 @@ font-family: sans-serif;
 
 Adapted from the GitHub Issue: https://github.com/iSEE/iSEE/issues/650
 
-Beyond its basic functionalities, "iSEE" offers advanced features that allow users to perform complex data manipulations interactively. This includes the ability to subset and filter cells based on gene expression criteria.
+Beyond its basic functionalities, `iSEE` offers advanced features that allow users to perform complex data manipulations interactively. This includes the ability to subset and filter cells based on gene expression criteria.
 
-To begin with, we will load the necessary libraries and dataset. In this case we will be using "ReprocessedAllenData" from the "scRNAseq" package, a dataset of 379 mouse brain cells from Tasic et al. (2016).
+To begin with, we will load the necessary libraries and dataset. In this case we will be using `ReprocessedAllenData` from the `scRNAseq` package, a dataset of 379 mouse brain cells from Tasic et al. (2016).
 After loading the dataset, we normalize the counts and perform a PCA (Principal Component Analysis) to prepare the data for visualization. 
 
 ```{r, load_scRNAseq_data}
-library(scRNAseq)
-library(scater)
-library(iSEE)
+library("scRNAseq")
+library("scater")
+library("iSEE")
 
 # Load the dataset
-sce <- ReprocessedAllenData(assays="tophat_counts")
+sce <- ReprocessedAllenData(assays = "tophat_counts")
 
 # Normalize counts and perform PCA
-sce <- logNormCounts(sce, exprs_values="tophat_counts")
-sce <- runPCA(sce, ncomponents=4)
+sce <- logNormCounts(sce, exprs_values = "tophat_counts")
+sce <- runPCA(sce, ncomponents = 4)
 ```
 
 ### Selecting Cells Based on a Single Gene Expression
@@ -497,12 +522,14 @@ To complement this, we add a "ReducedDimensionPlot" to our panel list. This plot
 ```{r, single_geneExpr}
 ## Initial settings for a single gene expression
 initial_single <- list(
-  FeatureAssayPlot(Assay = "logcounts", YAxisFeatureName = "Serpine2"),
-  ReducedDimensionPlot(Type = "PCA", ColorBy = "Column selection", ColumnSelectionSource = "FeatureAssayPlot1")
+    FeatureAssayPlot(Assay = "logcounts", YAxisFeatureName = "Serpine2"),
+    ReducedDimensionPlot(Type = "PCA", ColorBy = "Column selection", ColumnSelectionSource = "FeatureAssayPlot1")
 )
 
 ## Launch iSEE with the initial settings
-# iSEE(sce, initial = initial_single)
+if (interactive()) {
+    iSEE(sce, initial = initial_single)
+}
 ```
 
 ### Using a Single Plot for Two Gene Co-Expression
@@ -514,12 +541,14 @@ By adding a "ReducedDimensionPlot" to our initial panel list, we can again see h
 ```{r, 2_genesExpr}
 ## Initial settings for 2 genes expression on the same "FeatureAssayPlot"
 initial_combined <- list(
-  FeatureAssayPlot(Assay = "logcounts", XAxis = "Feature name", XAxisFeatureName = "Serpine2", YAxisFeatureName = "Bcl6"),
-  ReducedDimensionPlot(Type = "PCA", ColorBy = "Column selection", ColumnSelectionSource = "FeatureAssayPlot1")
+    FeatureAssayPlot(Assay = "logcounts", XAxis = "Feature name", XAxisFeatureName = "Serpine2", YAxisFeatureName = "Bcl6"),
+    ReducedDimensionPlot(Type = "PCA", ColorBy = "Column selection", ColumnSelectionSource = "FeatureAssayPlot1")
 )
 
 ## Launch iSEE with the initial settings
-# iSEE(sce, initial = initial_combined)
+if (interactive()) {
+    iSEE(sce, initial = initial_combined)
+}
 ```
 
 ### Selecting Cells Based on the Co-Expression of Two or more Genes
@@ -531,20 +560,30 @@ Finally, we include a ReducedDimensionPlot to visualize the PCA, highlighting th
 ```{r, chain_FeatureAssayPlots}
 ## Initial settings chainning multiple "FeatureAssayPlot"
 initial_double <- list(
-  FeatureAssayPlot(Assay = "logcounts", YAxisFeatureName = "Serpine2"),
-  FeatureAssayPlot(Assay = "logcounts", YAxisFeatureName = "Bcl6", ColumnSelectionSource = "FeatureAssayPlot1", ColumnSelectionRestrict = TRUE),
-  ReducedDimensionPlot(Type = "PCA", ColorBy = "Column selection", ColumnSelectionSource = "FeatureAssayPlot2")
+    FeatureAssayPlot(Assay = "logcounts", YAxisFeatureName = "Serpine2"),
+    FeatureAssayPlot(Assay = "logcounts", YAxisFeatureName = "Bcl6", ColumnSelectionSource = "FeatureAssayPlot1", ColumnSelectionRestrict = TRUE),
+    ReducedDimensionPlot(Type = "PCA", ColorBy = "Column selection", ColumnSelectionSource = "FeatureAssayPlot2")
 )
 
 ## Launch iSEE with the initial settings
-# iSEE(sce, initial = initial_double)
-
+if (interactive()) {
+    iSEE(sce, initial = initial_double)
+}
 ```
 
 ## References
 
-https://www.bioconductor.org/packages/release/bioc/html/iSEE.html
-https://github.com/iSEE/iSEE
-https://shiny.posit.co/r/gallery/life-sciences/isee/
-https://bioconductor.org/packages/release/bioc/vignettes/iSEE/inst/doc/basic.html
-https://github.com/iSEE/iSEE/issues/650
+* https://www.bioconductor.org/packages/release/bioc/html/iSEE.html
+* https://github.com/iSEE/iSEE
+* https://shiny.posit.co/r/gallery/life-sciences/isee/
+* https://bioconductor.org/packages/release/bioc/vignettes/iSEE/inst/doc/basic.html
+* https://github.com/iSEE/iSEE/issues/650
+
+## Community
+
+`iSEE` authors:
+
+* Kévin Rue-Albrecht https://twitter.com/KevinRUE67
+* Federico Marini https://twitter.com/FedeBioinfo
+* Charlotte Soneson https://bsky.app/profile/csoneson.bsky.social
+* Aaron Lun https://twitter.com/realAaronLun

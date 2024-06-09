@@ -13,3 +13,7 @@ Melissa
 Leonardo
 
 <script defer class="speakerdeck-embed" data-id="fd1854eec3e545a3b411b9a0bac31125" data-ratio="1.7772511848341233" src="//speakerdeck.com/assets/embed.js"></script>
+
+Here's Louise A. Huuki-Myers LIBD seminar if you prefer to watch the recording.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/6fTnp_hcYeI?si=aHW3JzB5lfiiu_ig" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>

@@ -31,41 +31,28 @@ options(max.print = 50)
 [_LIBD rstats club notes_](https://docs.google.com/document/d/1umDODmdQldf5w2lNDoFe-unmezHPonpCiKD270VwkrQ/edit?usp=sharing)
 
 ## Overview
-The `SummarizedExperiment` class is used to store experimental results in the form of matrixes. Objects of this class include observations (features) of the samples, as well as additional metadata. Usually, this type of object is automatically generated as the output of other software (ie. `SPEAQeasy`), but you can also build them. 
 
-One of the main characteristics of `SummarizedExperiment` is that it allows you to handle you data in a "coordinated" way. For example, if you want to subset your data, with `SummarizedExperiment` you can do so without worrying your assays and metadata unsync.
+The `SummarizedExperiment` class is used to store experimental results in the form of matrixes. Objects of this class include observations (features) of the samples, as well as additional metadata. Usually, this type of object is automatically generated as the output of other software (ie. [`SPEAQeasy`](https://doi.org/10.1186/s12859-021-04142-3)), but you can also build them. 
 
-
-## Quiz
-
-1. How many classes does the `SummarizedExperiment` class has? 
-
-2. What does **features** stand for? 
-
-3. Which is the structure of the `SummarizedExperiment` class? 
+One of the main characteristics of `SummarizedExperiment` is that it allows you to handle you data in a "coordinated" way. For example, if you want to subset your data, with `SummarizedExperiment` you can do so without worrying about keeping your assays and metadata synched.
 
 <figure>
     <img src="Figures/se_structure.png" width="700px" align=center />
 </figure>
 
 
-3. What type of data can we store on an assay?
-
-4. What information does `colData` has? 
-
-
 ## Exercises
 
-We are gonna use the same sample data set as yesterday from the `airway` library
+We are gonna use the sample data set from the `airway` library.
 
 ```{r, echo=FALSE}
-suppressPackageStartupMessages(library(SummarizedExperiment))
+suppressPackageStartupMessages(library("SummarizedExperiment"))
 suppressPackageStartupMessages(data(airway, package = "airway"))
 ```
 
 ```{r}
-library(SummarizedExperiment)
-library(airway)
+library("SummarizedExperiment")
+library("airway")
 
 data(airway, package = "airway")
 se <- airway
@@ -90,12 +77,14 @@ font-family: sans-serif;
 
 
 ```{r}
-## For a) you could only print the summary of the object but since the idea is to understand
-## how to explore the object find other function that gives you the answer.
+## For a) you could only print the summary of the object but since the idea is
+## to understand how to explore the object find other function that gives
+## you the answer.
 se
 
-## Same thing for b, you could just print the colData and count the samples, but this is not
-## efficient when our data consists in hundreds of samples. Find the answer using other tools.
+## Same thing for b, you could just print the colData and count the samples,
+## but this is not efficient when our data consists in hundreds of samples.
+## Find the answer using other tools.
 
 colData(se)
 ```
@@ -106,12 +95,13 @@ Add another assay that has the log10 of your original counts
 </p>
 
 ```{r}
-## In our object, if you look at the part that says assays, we can see that at the moment
-## we only have one with the name "counts"
+## In our object, if you look at the part that says assays, we can see that
+## at the moment we only have one with the name "counts".
 
 se
 
-## To see the data that's stored in that assay you can do either one of the next commands
+## To see the data that's stored in that assay you can do either one of the
+## next commands.
 assay(se)
 assays(se)$counts
 
@@ -122,11 +112,11 @@ assays(se)$counts
 assay(se, 1)
 assay(se, "counts")
 
-## If you use assays() without specifying the element you want to see it shows you the length
-## of the list and the name of each element
+## If you use assays() without specifying the element you want to see it
+## shows you the length of the list and the name of each element.
 assays(se)
 
-## To obtain a list of names as a vector you can do:
+## To obtain a list of names as a vector you can use:
 assayNames(se)
 
 ## Which can also be use to change the name of the assays
@@ -173,6 +163,7 @@ dim(se)
 ## For b),
 
 colData(se)[colData(se)$dex == "trt", ]
+colData(se)[se$dex == "trt", ]
 ```
 
 

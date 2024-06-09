@@ -1,7 +1,7 @@
 
 # Differential Gene Expression analysis with *limma*-*voom*
 
-Instructor: Daianna
+Instructor: Daianna González Padilla
 
 In this chapter you'll learn how DGE analysis is performed under the empirical Bayes framework of the popular *limma*-*voom* pipeline, highlighting key assumptions and concepts, and main differences with other methodologies.
 
@@ -27,17 +27,17 @@ Estimating the NB distribution parameters is necessary to assess DE of each gene
 
 4\) The test statistic is computed for each gene and 5) its associated *p*-value is calculated based on the null distribution. 6) Finally, *p*-values are corrected for multiple-testing and DEGs are determined based on an adjusted *p*-values cutoff [1].
 
-Examples of popular methods based on the NB distribution are [*edgeR*](https://bioconductor.org/packages/release/bioc/html/edgeR.html) and [*DESeq2*](https://bioconductor.org/packages/release/bioc/html/DESeq2.html). 
+Examples of popular methods based on the NB distribution are [*edgeR*](https://bioconductor.org/packages/edgeR) and [*DESeq2*](https://bioconductor.org/packages/DESeq2). 
 
-Nevertheless, one limitation NB-based methods face is that they set dispersion of the data as a known and global parameter, ignoring observation-specific variation and importantly, there's a reduced number of statistical methods for count distributions compared to the normal distribution [1,2]. Here, we'll focus on [*limma*](https://bioconductor.org/packages/release/bioc/html/limma.html) that does not rely on a certain distribution but rather works on $log_2(cpm)$ and fits linear models for DGE enabling the incorporation of additional predictors to model gene expression, a feature specially valuable for complex experimental settings.   
+Nevertheless, one limitation NB-based methods face is that they set dispersion of the data as a known and global parameter, ignoring observation-specific variation and importantly, there's a reduced number of statistical methods for count distributions compared to the normal distribution [1,2]. Here, we'll focus on [*limma*](https://bioconductor.org/packages/limma) that does not rely on a certain distribution but rather works on $log_2(cpm)$ (CPM: counts per million) and fits linear models for DGE enabling the incorporation of additional predictors to model gene expression, a feature specially valuable for complex experimental settings.   
 
 
  
 ## *limma*-*voom* pipeline
 
-[*limma*](https://bioconductor.org/packages/release/bioc/html/limma.html) is a package for the analysis of gene expression data arising from microarray or RNA-seq technologies. It has features that make the analyses stable even for experiments with small number of arrays or samples —this is achieved by borrowing information across genes. It is specially designed for analyzing complex experiments with a variety of experimental conditions and predictors [3].
+[*limma*](https://bioconductor.org/packages/limma) is a package for the analysis of gene expression data arising from microarray or RNA-seq technologies. It has features that make the analyses stable even for experiments with small number of arrays or samples —this is achieved by borrowing information across genes. It is specially designed for analyzing complex experiments with a variety of experimental conditions and predictors [3].
 
-Usually, *limma* DGE analysis is carried out in five main steps, the last four of them completed by *limma* `R` functions, as described below. We'll continue using our bulk RNA-seq data from [*smokingMouse*](https://bioconductor.org/packages/release/data/experiment/html/smokingMouse.html) to exemplify the steps. 
+Usually, *limma* DGE analysis is carried out in five main steps, the last four of them completed by *limma* `R` functions, as described below. We'll use bulk RNA-seq data from the [*smokingMouse*](https://bioconductor.org/packages/smokingMouse) package to exemplify these steps. 
 
 ```{r download_data_DGE, warning=FALSE, message=FALSE}
 ## Load the container package for RSE
@@ -57,7 +57,9 @@ rse_gene <- myfiles[["EH8313"]]
 rse_gene_nic <- rse_gene[, which(rse_gene$Expt == "Nicotine" & rse_gene$Age == "Pup")]
 
 ## Retain only expressed genes (passed the filtering step)
-rse_gene_filt <- rse_gene_nic[rowData(rse_gene_nic)$retained_after_feature_filtering == TRUE, ]
+rse_gene_filt <- rse_gene_nic[
+    rowData(rse_gene_nic)$retained_after_feature_filtering,
+]
 ```
 
 Let's explore a little the data.
@@ -74,8 +76,9 @@ assays(rse_gene_filt)$logcounts[1:3, 1:5]
 ## Data for the first 2 samples
 head(colData(rse_gene_filt), 2)
 ```
+
 <p class="exercise">
-📝 **Exercise 1**: in order for you to perform a DGE analysis, locate your own RNA-seq datasets if you have any, or download expression data from a study of your interest and build a `RSE` object using *recount3* (see **chapter XX: recount3 introduction**). A third option you have is to download data from the *smokingMouse* package used here. 
+📝 **Exercise 1**: in order for you to perform a DGE analysis, locate your own RNA-seq datasets if you have any, or download expression data from a study of your interest and build a `RSE` object using *recount3* (see **Chapter 3: recount3 introduction**). A third option you have is to download gene expression data from the [*smokingMouse*](http://research.libd.org/smokingMouse/index.html) package used here. A fourth option is to download data from GEO as Sean Davis will explain next. We'll have more time tomorrow for doing this exercise with data of your choosing.
 <p/>
 
 ### `model.matrix()`
@@ -206,7 +209,7 @@ head(model)
 ```
 
 <p class="question">
-❓ **Which variables to include as covariates in the models?** A straightforward strategy is to keep the model as **simple as possible** and after fitting the model evaluate the comparisons of interest [3]. In **Chapter 7** we have discussed how correlation and variance partition analyses can help us to set up the best models.
+❓ **Which variables to include as covariates in the models?** A straightforward strategy is to keep the model as **simple as possible** and after fitting the model evaluate the comparisons of interest [3]. In **Chapter 7** we will discuss how correlation and variance partition analyses can help us to set up the best models.
  </p>
 
 <p class="alert">
@@ -218,19 +221,20 @@ coef <- "GroupExperimental"
 ```
 
 <p class="exercise">
-📝 **Exercise 2**: perform a variance partition analysis (see **Chapter XX:DGE model building with variancePartition**) to select the sample variables to include in your models for DGE based on your data and create the respective design matrix. 
+📝 **Exercise 2**: identify the sample data of your study and create the respective design matrix. Which is the reference group for your main variable of interest?
+Tomorrow we will learn how to use `ExploreModelMatrix` for helping us interpret coefficients.
 <p/>
 
 
 ### `voom()`
 
-Compared to NB-based methods, *limma* works with $log(cpm)$ which are approximately normally distributed (as we have seen) and thus, opens the possibility to leverage a wide range of normal-based statistical tools not available for count distributions, including methods developed for microarray data. However, *limma* doesn't assume nor require data to follow a normal distribution, but it does apply normal-based microarray-like statistical methods to RNA-seq read counts [2].
+Compared to NB-based methods, *limma* works with $log2(cpm)$ which are approximately normally distributed (as we have seen) and thus, opens the possibility to leverage a wide range of normal-based statistical tools not available for count distributions, including methods developed for microarray data. However, *limma* doesn't assume nor require data to follow a normal distribution, but it does apply normal-based microarray-like statistical methods to RNA-seq read counts [2].
 
 >  "... limma does not make any assumption that the data appears normal in a histogram." 
 <div align="right"> \- Gordon Smyth, author of *limma*, in the [Bioconductor support website](https://support.bioconductor.org/p/9140296/#9156131) 2021. </div>
 
 
-The benefit of using $log(cpm)$, however, is not immediate. One limitation for the direct application of normal-based methods to log-counts is that reads counts have unequal variabilities even after a log-transformation depending on the count sizes: probability distributions for counts are naturally heteroscedastic, with log-cpm not having constant variances (larger variances for larger counts) [2]. It has been proposed that to design powerful statistical analysis for RNA-seq, it is more important to model the relationship between the mean and the variance in the data than to specify which probabilistic distribution to use for the counts [2]. And importantly, converting count data taking such relationship into account does open up access to their analysis with normal-based methods. That’s why we use `voom()`. 
+The benefit of using $log2(cpm)$, however, is not immediate. One limitation for the direct application of normal-based methods to log-counts is that reads counts have unequal variabilities even after a log-transformation depending on the count sizes: probability distributions for counts are naturally heteroscedastic, with log-cpm not having constant variances (larger variances for larger counts) [2]. It has been proposed that to design powerful statistical analysis for RNA-seq, it is more important to model the relationship between the mean and the variance in the data than to specify which probabilistic distribution to use for the counts [2]. And importantly, converting count data taking such relationship into account does open up access to their analysis with normal-based methods. That’s why we use `voom()`. 
 
 What `voom()` does is:
 
@@ -326,7 +330,7 @@ identical(vGene$targets$lib.size, colSums(assay(rse_gene_filt)))
 
 
 <p class="exercise">
-📝 **Exercise 3**: compute the $log(cpm)$ and the residual variance weights for each observation in your data using `voom()`.
+📝 **Exercise 3**: compute the $log2(cpm)$ and the residual variance weights for each observation in your data using `voom()`.
 <p/>
 
 

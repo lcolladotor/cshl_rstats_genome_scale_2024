@@ -1,4 +1,4 @@
-## ----install, eval = FALSE---------------------------------------------------------------------------------------------------
+## ----install, eval = FALSE------------------------------------------------------
 ## ## For installing Bioconductor packages
 ## if (!requireNamespace("BiocManager", quietly = TRUE)) {
 ##     install.packages("BiocManager")
@@ -20,13 +20,13 @@
 ##         "postcards",
 ##         "scater",
 ##         "sessioninfo",
-##         "smokingMouse",
 ##         "stringr",
 ##         "SummarizedExperiment", ## Main containers / vis
 ##         "iSEE",
 ##         "edgeR", ## RNA-seq
 ##         "ExploreModelMatrix",
 ##         "limma",
+##         "smokingMouse",
 ##         "recount3",
 ##         "rlang",
 ##         "scRNAseq",
@@ -42,16 +42,9 @@
 ##         "variancePartition"
 ##     )
 ## )
-## 
-## ## Install smokingMouse, which is currently under review at Bioconductor
-## ## at https://github.com/Bioconductor/Contributions/issues/3024.
-## BiocManager::install("LieberInstitute/smokingMouse")
-## 
-## ## Required to access some recent bug fixes on biocthis
-## BiocManager::install("lcolladotor/biocthis")
 
 
-## ----session_packages, eval = TRUE, message = FALSE--------------------------------------------------------------------------
+## ----session_packages, eval = TRUE, message = FALSE-----------------------------
 ## Load the package at the top of your script
 library("sessioninfo")
 
@@ -105,9 +98,13 @@ library("Polychrome")
 library("spatialLIBD")
 
 
-## ----session_info------------------------------------------------------------------------------------------------------------
+## ----session_info---------------------------------------------------------------
 ## Reproducibility information
 options(width = 120)
 session_info()
 proc.time()
+
+
+## ----"check_curl"---------------------------------------------------------------
+curl::curl_version()
 
