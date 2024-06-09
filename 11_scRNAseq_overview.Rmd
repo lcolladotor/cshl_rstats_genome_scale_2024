@@ -2,7 +2,7 @@
 
 Instructor: Melissa Mayén Quiroz
 
-Adapted from: [Basics of Single-Cell Analysis with Bioconductor](https://bioconductor.org/books/3.18/OSCA.basic/) 
+Adapted from: [OSCA: Basics of Single-Cell Analysis with Bioconductor](https://bioconductor.org/books/3.19/OSCA.basic/) 
 
 ## Single cell RNA sequencing 
 
@@ -20,7 +20,7 @@ Single-cell RNA sequencing (scRNA-seq) is a cutting-edge technology used to anal
 
 ### Pre-processing of scRNA-seq Data (Before R)
 
--Quality Control of the reads (FastQC):
+- Quality Control of the reads (FastQC):
 
 Assess the quality of raw sequencing reads. Check GC content, overrepresented sequences, presence of N bases, and other quality metrics.
 
@@ -32,11 +32,11 @@ Align sequencing reads to a reference transcriptome. Generate aligned read files
 
 Quantify gene expression levels by counting the number of reads mapped to each gene.
 Create a matrix with genes as rows and cells as columns, where each entry represents the count of reads for a specific gene in a specific cell.
-For 10X Genomics data, the Cellranger software suite (Zheng et al. 2017) provides a custom pipeline to obtain a count matrix. This uses STAR to align reads to the reference genome and then counts the number of unique UMIs mapped to each gene.
+For 10x Genomics data, the Cellranger software suite (Zheng et al. 2017) provides a custom pipeline to obtain a count matrix. This uses STAR to align reads to the reference genome and then counts the number of unique UMIs mapped to each gene.
 
 ### Different Technologies
 
-- Droplet-based: 10X Genomics, inDrop, Drop-seq
+- Droplet-based: 10x Genomics, inDrop, Drop-seq
 - Plate-based with unique molecular identifiers (UMIs): CEL-seq, MARS-seq
 - Plate-based with reads: Smart-seq2
 - Other: sci-RNA-seq, Seq-Well
@@ -62,22 +62,22 @@ t-stochastic neighbor embedding for visualization purposes.
 
 ## The SingleCellExperiment class
 
-This object is specifically designed to store and analyze single-cell RNA sequencing (scRNA-seq) data. It extends the SummarizedExperiment class to include specialized features for single-cell data, such as cell identifiers, dimensionality reduction results, and methods for quality control and normalization.
+This object is specifically designed to store and analyze single-cell RNA sequencing (scRNA-seq) data. It extends the `SummarizedExperiment` class to include specialized features for single-cell data, such as cell identifiers, dimensionality reduction results, and methods for quality control and normalization.
 
 ![](https://raw.githubusercontent.com/lcolladotor/cshl_rstats_genome_scale_2024/devel/Figures/sce_structure.PNG) 
 
 - Assay Data: The primary data matrix containing gene expression values or other measurements. Rows represent genes and columns represent cells.
 
-- ColData (Column Metadata): Additional information about each cell, such as cell type, experimental condition, or any other relevant metadata.
+- `colData` (Column Metadata): Additional information about each cell, such as cell type, experimental condition, or any other relevant metadata.
 
-- RowData (Row Metadata): Additional information about each gene, such as gene symbols, genomic coordinates, or functional annotations.
+- `rowData` (Row Metadata): Additional information about each gene, such as gene symbols, genomic coordinates, or functional annotations.
 
-- ReducedDims: Dimensionality reduction results, such as "principal component analysis" (PCA), "t-distributed stochastic neighbor embedding" (t-SNE), and 
+- `reducedDims`: Dimensionality reduction results, such as "principal component analysis" (PCA), "t-distributed stochastic neighbor embedding" (t-SNE), and 
 "Uniform Manifold Approximation and Projection" (UMAP), used for visualizing and clustering cells.
 
-- SpikeNames and pikeMatrix: Names of spike-in control genes used for normalization and Spike-in counts matrix, if spike-in controls are used
+- `altExpNames` and `altExps`: Names of alternative experiments (such as spike-in control genes used for normalization) and alternative experiment counts matrices.
 
-- Metadata: Additional metadata about the experiment.
+- `metadata`: Additional metadata about the experiment.
 
 ### Data Loading 
 
@@ -90,7 +90,7 @@ library("AnnotationHub")
 library("scater")
 
 ## Load the data set
-sce.416b <- LunSpikeInData(which="416b") 
+sce.416b <- LunSpikeInData(which = "416b")
 
 ## We convert the blocking factor to a factor so that downstream steps do not treat it as an integer.
 sce.416b$block <- factor(sce.416b$block)
@@ -98,13 +98,19 @@ sce.416b$block <- factor(sce.416b$block)
 ## rename the rows with the symbols, reverting to Ensembl identifiers
 ens.mm.v97 <- AnnotationHub()[["AH73905"]]
 rowData(sce.416b)$ENSEMBL <- rownames(sce.416b)
-rowData(sce.416b)$SYMBOL <- mapIds(ens.mm.v97, keys=rownames(sce.416b),
-    keytype="GENEID", column="SYMBOL")
-rowData(sce.416b)$SEQNAME <- mapIds(ens.mm.v97, keys=rownames(sce.416b),
-    keytype="GENEID", column="SEQNAME")
+rowData(sce.416b)$SYMBOL <- mapIds(ens.mm.v97,
+    keys = rownames(sce.416b),
+    keytype = "GENEID", column = "SYMBOL"
+)
+rowData(sce.416b)$SEQNAME <- mapIds(ens.mm.v97,
+    keys = rownames(sce.416b),
+    keytype = "GENEID", column = "SEQNAME"
+)
 
-rownames(sce.416b) <- uniquifyFeatureNames(rowData(sce.416b)$ENSEMBL, 
-    rowData(sce.416b)$SYMBOL)
+rownames(sce.416b) <- uniquifyFeatureNames(
+    rowData(sce.416b)$ENSEMBL,
+    rowData(sce.416b)$SYMBOL
+)
 ```
 
 ### Basics of your SCE
@@ -121,10 +127,10 @@ assay(sce.416b, "counts")[110:113, 1:2] # gene, cell
 counts(sce.416b)[110:113, 1:2]
 
 ## We could add more assays to our SCE
-sce.416b <- logNormCounts(sce.416b) 
+sce.416b <- logNormCounts(sce.416b)
 sce.416b
 
-## Acces to the column names (cell identifyers) 
+## Acces to the column names (cell identifyers)
 head(colnames(sce.416b))
 
 ## Acces to the column data (cell information)
@@ -141,7 +147,7 @@ sce_2 <- sce.416b[110:130, 1:2]
 sce_2
 ```
 
-As in the "SummarizedExperiment" $ is the operator used to access a specific column within the cell metadata. 
+As in the `SummarizedExperiment`, `$` is the operator used to access a specific column within the cell metadata. That is, it's a shortcut for `colData(obj)$`.
 
 ```{r, $_operator}
 head(sce.416b$`cell type`)
@@ -160,14 +166,14 @@ reducedDimNames(sce_2)
 
 ## Quality Control
 
-Low-quality libraries in scRNA-seq data can arise from a variety of sources such as cell damage during dissociation or failure in library preparation (e.g., inefficient reverse transcription or PCR amplification). These usually manifest as “cells” with low total counts, few expressed genes and high mitochondrial or spike-in proportions. These low-quality libraries are problematic as they can contribute to misleading results in downstream analyses
+Low-quality libraries in scRNA-seq data can arise from a variety of sources such as cell damage during dissociation or failure in library preparation (e.g., inefficient reverse transcription or PCR amplification). These usually manifest as “cells” with low total counts, few expressed genes and high mitochondrial or spike-in proportions. These low-quality libraries are problematic as they can contribute to misleading results in downstream analyses.
 
 ### Common choices of QC metrics
 
-For each cell, we calculate these QC metrics using the perCellQCMetrics() function from the scater package (McCarthy et al. 2017). The sum column contains the total count for each cell and the detected column contains the number of detected genes. The subsets_Mito_percent column contains the percentage of reads mapped to mitochondrial transcripts. Finally, the altexps_ERCC_percent column contains the percentage of reads mapped to ERCC transcripts.
+For each cell, we calculate these QC metrics using the `perCellQCMetrics()` function from the `scater` package (McCarthy et al. 2017). The sum column contains the total count for each cell and the detected column contains the number of detected genes. The `subsets_Mito_percent` column contains the percentage of reads mapped to mitochondrial transcripts. Finally, the `altexps_ERCC_percent` column contains the percentage of reads mapped to ERCC transcripts.
 
 ```{r, identify_mito_percellQC}
-library(scuttle)
+library("scuttle")
 
 ## Identify mitochondrial genes (those with SEQNAME equal to "MT") in the row data
 mito <- which(rowData(sce.416b)$SEQNAME == "MT")
@@ -176,16 +182,16 @@ mito <- which(rowData(sce.416b)$SEQNAME == "MT")
 stats <- perCellQCMetrics(sce.416b, subsets = list(Mt = mito))
 
 summary(stats$sum) # total library sizes for all cells
-summary(stats$detected) # detected features (genes) 
+summary(stats$detected) # detected features (genes)
 summary(stats$subsets_Mt_percent) # percentage of reads mapping to mitochondrial genes
-summary(stats$altexps_ERCC_percent) # percentage of reads mapping to spike-in controls 
+summary(stats$altexps_ERCC_percent) # percentage of reads mapping to spike-in controls
 ```
 
-Alternatively, users may prefer to use the addPerCellQC() function. This computes and appends the per-cell QC statistics to the colData of the SingleCellExperiment object, allowing us to retain all relevant information in a single object for later manipulation.
+Alternatively, users may prefer to use the `addPerCellQC()` function. This computes and appends the per-cell QC statistics to the colData of the `SingleCellExperiment` object, allowing us to retain all relevant information in a single object for later manipulation.
 
 ```{r, addpercellQC_subMito}
 ## Compute addPerCellQCMetrics, including a subset for mitochondrial genes
-sce.416b <- addPerCellQCMetrics(sce.416b, subsets=list(Mito=mito))
+sce.416b <- addPerCellQCMetrics(sce.416b, subsets = list(Mito = mito))
 colnames(colData(sce.416b))
 ```
 
@@ -214,11 +220,11 @@ discard <- c.lib | qc.nexprs | qc.spike | qc.mito
 
 ## Summarize the number of cells removed for each reason.
 DataFrame(
-  LibSize = sum(c.lib),            # Number of cells removed due to low library size
-  NExprs = sum(qc.nexprs),         # Number of cells removed due to low number of detected features
-  SpikeProp = sum(qc.spike),       # Number of cells removed due to high spike-in proportion
-  MitoProp = sum(qc.mito),         # Number of cells removed due to high mitochondrial proportion
-  Total = sum(discard)             # Total number of cells removed
+    LibSize = sum(c.lib), # Number of cells removed due to low library size
+    NExprs = sum(qc.nexprs), # Number of cells removed due to low number of detected features
+    SpikeProp = sum(qc.spike), # Number of cells removed due to high spike-in proportion
+    MitoProp = sum(qc.mito), # Number of cells removed due to high mitochondrial proportion
+    Total = sum(discard) # Total number of cells removed
 )
 ```
 
@@ -226,11 +232,11 @@ While simple, this strategy requires considerable experience to determine approp
 
 #### With adaptive threshold
 
-Here, we assume that most of the dataset consists of high-quality cells. We then identify cells that are outliers for the various QC metrics, based on the median absolute deviation (MAD) from the median value of each metric across all cells.
+Here, we assume that most of the dataset consists of high-quality cells. We then identify cells that are outliers for the various QC metrics, based on the **median absolute deviation** (MAD) from the median value of each metric across all cells.
 
 By default, we consider a value to be an outlier if it is more than 3 MADs from the median in the “problematic” direction.
 
-We can do that using the `perCellQCFilters()` function. It will allow to identify cells with log-transformed library sizes that are more than 3 MADs below the median. A log-transformation is used to improve resolution at small values when type="lower" and to avoid negative thresholds that would be meaningless for a non-negative metric.
+We can do that using the `perCellQCFilters()` function. It will allow to identify cells with log-transformed library sizes that are more than 3 MADs below the median. A log-transformation is used to improve resolution at small values when `type = "lower"` and to avoid negative thresholds that would be meaningless for a non-negative metric.
 
 `perCellQCFilters()` will also identify outliers for the proportion-based metrics specified in the sub.fields= arguments. These distributions frequently exhibit a heavy right tail, but unlike the two previous metrics, it is the right tail itself that contains the putative low-quality cells. Thus, we do not perform any transformation to shrink the tail - rather, our hope is that the cells in the tail are identified as large outliers.
 
@@ -238,8 +244,9 @@ A cell that is an outlier for any of these metrics is considered to be of low qu
 
 ```{r, QC_adaptiveThreshold}
 ## Identify cells that are outlier
-reasons <- perCellQCFilters(stats, 
-    sub.fields=c("subsets_Mt_percent", "altexps_ERCC_percent"))  # No transformation
+reasons <- perCellQCFilters(stats,
+    sub.fields = c("subsets_Mt_percent", "altexps_ERCC_percent")
+) # No transformation
 
 colSums(as.matrix(reasons))
 
@@ -253,10 +260,10 @@ With this strategy, the thresholds adapt to both the location and spread of the 
 
 ### Checking diagnostic plots
 
-It is good practice to inspect the distributions of QC metricsto identify possible problems. In the most ideal case, we would see normal distributions that would justify the 3 MAD threshold used in outlier detection. A large proportion of cells in another mode suggests that the QC metrics might be correlated with some biological state, potentially leading to the loss of distinct cell types during filtering; or that there were inconsistencies with library preparation for a subset of cells, a not-uncommon phenomenon in plate-based protocols.
+It is good practice to inspect the distributions of QC metrics to identify possible problems. In the most ideal case, we would see normal distributions that would justify the 3 MAD threshold used in outlier detection. A large proportion of cells in another mode suggests that the QC metrics might be correlated with some biological state, potentially leading to the loss of distinct cell types during filtering; or that there were inconsistencies with library preparation for a subset of cells, a not-uncommon phenomenon in plate-based protocols.
 
 ```{r, QC_sce416b_plots}
-library(scater)
+library("scater")
 
 ## Add the information to the SCE columns
 colData(sce.416b) <- cbind(colData(sce.416b), stats)
@@ -267,26 +274,34 @@ sce.416b$discard <- reasons$discard
 ## Plot
 gridExtra::grid.arrange(
     ## Diccard low total counts
-    plotColData(sce.416b, x="block", y="sum", colour_by="discard",
-        other_fields="phenotype") + facet_wrap(~phenotype) + 
+    plotColData(sce.416b,
+        x = "block", y = "sum", colour_by = "discard",
+        other_fields = "phenotype"
+    ) + facet_wrap(~phenotype) +
         scale_y_log10() + ggtitle("Total count"),
     ## Discard low detected genes
-    plotColData(sce.416b, x="block", y="detected", colour_by="discard", 
-        other_fields="phenotype") + facet_wrap(~phenotype) + 
+    plotColData(sce.416b,
+        x = "block", y = "detected", colour_by = "discard",
+        other_fields = "phenotype"
+    ) + facet_wrap(~phenotype) +
         scale_y_log10() + ggtitle("Detected features"),
     ## Discard high mitocondrial percentage
-    plotColData(sce.416b, x="block", y="subsets_Mito_percent", 
-        colour_by="discard", other_fields="phenotype") + 
+    plotColData(sce.416b,
+        x = "block", y = "subsets_Mito_percent",
+        colour_by = "discard", other_fields = "phenotype"
+    ) +
         facet_wrap(~phenotype) + ggtitle("Mito percent"),
     ## Discard high
-    plotColData(sce.416b, x="block", y="altexps_ERCC_percent", 
-        colour_by="discard", other_fields="phenotype") + 
+    plotColData(sce.416b,
+        x = "block", y = "altexps_ERCC_percent",
+        colour_by = "discard", other_fields = "phenotype"
+    ) +
         facet_wrap(~phenotype) + ggtitle("ERCC percent"),
-    ncol=1
+    ncol = 1
 )
 ```
 
-You can also create some plots via iSEE :)
+You can also create some plots via `iSEE` :)
 
 <style>
 p.exercise  {
@@ -305,18 +320,18 @@ font-family: sans-serif;
  *Clue: Use the Column Data Plot 1 panel*
 </p>
 
-```{r, eval=FALSE}
+```{r, eval=interactive()}
 library("iSEE")
 iSEE(sce.416b)
 ```
 
 ### Removing low-quality cells
 
-Once low-quality cells have been identified, we can choose to either remove them or mark them. Removal is the most straightforward option and is achieved by subsetting the SingleCellExperiment by column. In this case, we use the previous low-quality calls to generate a subsetted SingleCellExperiment that we would use for downstream analyses.
+Once low-quality cells have been identified, we can choose to either remove them or mark them. Removal is the most straightforward option and is achieved by subsetting the `SingleCellExperiment` by column. In this case, we use the previous low-quality calls to generate a subsetted `SingleCellExperiment` that we would use for downstream analyses.
 
 ```{r, discard_sce416b}
 ## Keep the columns we DON'T want to discard.
-filtered <- sce.416b[,!reasons$discard]
+filtered <- sce.416b[, !reasons$discard]
 ```
 
 Other option is to simply mark the low-quality cells as such and retain them in the downstream analysis.
@@ -333,16 +348,20 @@ library("scater")
 
 ## Load dataset
 sce.zeisel <- ZeiselBrainData()
-sce.zeisel <- aggregateAcrossFeatures(sce.zeisel, 
-    ids=sub("_loc[0-9]+$", "", rownames(sce.zeisel)))
+sce.zeisel <- aggregateAcrossFeatures(sce.zeisel,
+    ids = sub("_loc[0-9]+$", "", rownames(sce.zeisel))
+)
 ## Compute perCellQCMetrics
-stats <- perCellQCMetrics(sce.zeisel, subsets=list(
-    Mt=rowData(sce.zeisel)$featureType=="mito"))
+stats <- perCellQCMetrics(sce.zeisel, subsets = list(
+    Mt = rowData(sce.zeisel)$featureType == "mito"
+))
 ## Compute quickPerCellQC
-qc <- quickPerCellQC(stats, percent_subsets=c("altexps_ERCC_percent", 
-    "subsets_Mt_percent"))
+qc <- quickPerCellQC(stats, percent_subsets = c(
+    "altexps_ERCC_percent",
+    "subsets_Mt_percent"
+))
 ## Discard low quality cells
-sce.zeisel <- sce.zeisel[,!qc$discard]
+sce.zeisel <- sce.zeisel[, !qc$discard]
 ```
 
 **Scaling normalization**
@@ -365,7 +384,7 @@ In the Zeisel brain data, the library size factors differ by up to 10-fold acros
 
 ```{r, hist_libSizeFactors}
 ## Plot the library size factors differences
-hist(log10(lib.sf.zeisel), xlab="Log10[Size factor]", col='grey80')
+hist(log10(lib.sf.zeisel), xlab = "Log10[Size factor]", col = "grey80")
 ```
 
 Strictly speaking, the use of library size factors assumes that there is no “imbalance” in the differentially expressed (DE) genes between any pair of cells. 
@@ -377,22 +396,22 @@ Although, in practice, normalization accuracy is not a major consideration for e
 composition biases will be present when any unbalanced differential expression exists between samples. Consider the simple example of two cells where a single gene "X" is upregulated in one cell "A" compared to the other cell "B". This upregulation means that either more sequencing resources are devoted to "X in "A", thus decreasing coverage of all other non-DE genes when the total library size of each cell is experimentally fixed; or the library size of "A" increases when "X" is assigned more reads or UMIs.
 
 The removal of composition biases is a well-studied problem for bulk RNA sequencing data analysis.
-- `estimateSizeFactorsFromMatrix()` function in the DESeq2 package (Anders and Huber 2010; Love, Huber, and Anders 2014)
-- `calcNormFactors()`function in the edgeR package (Robinson and Oshlack 2010).
+- `estimateSizeFactorsFromMatrix()` function in the `DESeq2` package (Anders and Huber 2010; Love, Huber, and Anders 2014)
+- `calcNormFactors()`function in the `edgeR` package (Robinson and Oshlack 2010).
 
-Single-cell data can be problematic for these bulk normalization methods due to the dominance of low and zero counts. To overcome this, we pool counts from many cells to increase the size of the counts for accurate size factor estimation (Lun, Bach, and Marioni 2016). Pool-based size factors are then “deconvolved” into cell-based factors for normalization of each cell’s expression profile. This is performed using the calculateSumFactors() function from scran.
+Single-cell data can be problematic for these bulk normalization methods due to the dominance of low and zero counts. To overcome this, we pool counts from many cells to increase the size of the counts for accurate size factor estimation (Lun, Bach, and Marioni 2016). Pool-based size factors are then “deconvolved” into cell-based factors for normalization of each cell’s expression profile. This is performed using the `calculateSumFactors()` function from `scran`.
 
-First we have a pre-clustering step with `quickCluster()` where cells in each cluster are normalized separately and the size factors are rescaled to be comparable across clusters. This avoids the assumption that most genes are non-DE across the entire population - only a non-DE majority is required between pairs of clusters, which is a weaker assumption for highly heterogeneous populations
+First we have a pre-clustering step with `quickCluster()` where cells in each cluster are normalized separately and the size factors are rescaled to be comparable across clusters. This avoids the assumption that most genes are non-DE across the entire population - only a non-DE majority is required between pairs of clusters, which is a weaker assumption for highly heterogeneous populations.
 
 ```{r, deconvolution_norm}
 library("scran")
 
 ## Compute quickCluster + calculateSumFactor for deconvolution normalization
 set.seed(100)
-clust.zeisel <- quickCluster(sce.zeisel) 
+clust.zeisel <- quickCluster(sce.zeisel)
 table(clust.zeisel)
 
-deconv.sf.zeisel <- calculateSumFactors(sce.zeisel, clusters=clust.zeisel)
+deconv.sf.zeisel <- calculateSumFactors(sce.zeisel, clusters = clust.zeisel)
 summary(deconv.sf.zeisel)
 ```
 
@@ -407,7 +426,7 @@ To demonstrate the use of spike-in normalization on a different dataset involvin
 ```{r, spike-ins_norm}
 library("scRNAseq")
 sce.richard <- RichardTCellData()
-sce.richard <- sce.richard[,sce.richard$`single cell quality`=="OK"]
+sce.richard <- sce.richard[, sce.richard$`single cell quality` == "OK"]
 sce.richard
 ```
 
@@ -422,10 +441,10 @@ summary(sizeFactors(sce.richard))
 
 ### Scaling and log-transforming
 
-Once we have computed the size factors, we use the `logNormCounts()` function from scater to compute normalized expression values for each cell. This is done by dividing the count for each gene/spike-in transcript with the appropriate size factor for that cell. The function also log-transforms the normalized values, creating a new assay called "logcounts". (Technically, these are “log-transformed normalized expression values”). 
+Once we have computed the size factors, we use the `logNormCounts()` function from `scater` to compute normalized expression values for each cell. This is done by dividing the count for each gene/spike-in transcript with the appropriate size factor for that cell. The function also log-transforms the normalized values, creating a new assay called `"logcounts"`. (Technically, these are “log-transformed normalized expression values”). 
 
 ```{r, logNormCounts_zeisel}
-## Compute normalized expression values and log-transformation 
+## Compute normalized expression values and log-transformation
 sce.zeisel <- logNormCounts(sce.zeisel)
 
 assayNames(sce.zeisel)
@@ -447,26 +466,28 @@ The simplest approach to feature selection is to **select the most variable gene
 
 The simplest approach to quantifying per-gene variation is to compute the variance of the log-normalized expression values (“log-counts”) for each gene across all cells (A. T. L. Lun, McCarthy, and Marioni 2016). The advantage of this approach is that the feature selection is based on the same log-values that are used for later downstream steps. In particular, genes with the largest variances in log-values will contribute most to the Euclidean distances between cells during procedures like clustering and dimensionality reduction. By using log-values here, we ensure that our quantitative definition of heterogeneity is consistent throughout the entire analysis.
 
-Calculation of the per-gene variance is simple, but feature selection requires modelling of the mean-variance relationship. The log-transformation is not a variance stabilizing transformation in most cases, which means that the total variance of a gene is driven more by its abundance than its underlying biological heterogeneity. To account for this effect, we use the modelGeneVar() function to fit a trend to the variance with respect to abundance across all genes (Figure 3.1).
+Calculation of the per-gene variance is simple, but feature selection requires modelling of the mean-variance relationship. The log-transformation is not a variance stabilizing transformation in most cases, which means that the total variance of a gene is driven more by its abundance than its underlying biological heterogeneity. To account for this effect, we use the `modelGeneVar()` function to fit a trend to the variance with respect to abundance across all genes (Figure 3.1).
 
 ```{r, modelGeneVar_zeisel}
-library(scran)
+library("scran")
 
 ## Model the mean-variance relationship
 dec.zeisel <- modelGeneVar(sce.zeisel)
 
 ## Plot the fit
 fit.zeisel <- metadata(dec.zeisel)
-plot(fit.zeisel$mean, fit.zeisel$var, xlab="Mean of log-expression",
-    ylab="Variance of log-expression")
-curve(fit.zeisel$trend(x), col="dodgerblue", add=TRUE, lwd=2)
+plot(fit.zeisel$mean, fit.zeisel$var,
+    xlab = "Mean of log-expression",
+    ylab = "Variance of log-expression"
+)
+curve(fit.zeisel$trend(x), col = "dodgerblue", add = TRUE, lwd = 2)
 ```
 
 *At any given abundance, we assume that the variation in expression for most genes is driven by uninteresting processes like sampling noise. Under this assumption, the fitted value of the trend at any given gene’s abundance represents an estimate of its uninteresting variation, which we call the technical component. We then define the biological component for each gene as the difference between its total variance and the technical component. This biological component represents the “interesting” variation for each gene and can be used as the metric for HVG selection.*
 
 ```{r, HVGs_zeisel}
 ## Order by most interesting genes for inspection
-dec.zeisel[order(dec.zeisel$bio, decreasing=TRUE),] 
+dec.zeisel[order(dec.zeisel$bio, decreasing = TRUE), ]
 ```
 
 ### Quantifying technical noise (spike-ins)
@@ -479,14 +500,16 @@ We can avoid this problem by fitting a mean-dependent trend to the variance of t
 ## Fit a mean-dependent trend to the variance of the spike-in transcripts
 dec.spike.416b <- modelGeneVarWithSpikes(sce.416b, "ERCC")
 ## Order by most interesting genes for inspection
-dec.spike.416b[order(dec.spike.416b$bio, decreasing=TRUE),]
+dec.spike.416b[order(dec.spike.416b$bio, decreasing = TRUE), ]
 
 ## Plot the fit
-plot(dec.spike.416b$mean, dec.spike.416b$total, xlab="Mean of log-expression",
-    ylab="Variance of log-expression")
+plot(dec.spike.416b$mean, dec.spike.416b$total,
+    xlab = "Mean of log-expression",
+    ylab = "Variance of log-expression"
+)
 fit.spike.416b <- metadata(dec.spike.416b)
-points(fit.spike.416b$mean, fit.spike.416b$var, col="red", pch=16)
-curve(fit.spike.416b$trend(x), col="dodgerblue", add=TRUE, lwd=2)
+points(fit.spike.416b$mean, fit.spike.416b$var, col = "red", pch = 16)
+curve(fit.spike.416b$trend(x), col = "dodgerblue", add = TRUE, lwd = 2)
 ```
 
 ### Quantifying technical noise (mean-variance trend)
@@ -499,13 +522,15 @@ set.seed(0010101)
 dec.pois.zeisel <- modelGeneVarByPoisson(sce.zeisel)
 
 ## Order by most interesting genes for inspection
-dec.pois.zeisel <- dec.pois.zeisel[order(dec.pois.zeisel$bio, decreasing=TRUE),]
+dec.pois.zeisel <- dec.pois.zeisel[order(dec.pois.zeisel$bio, decreasing = TRUE), ]
 head(dec.pois.zeisel)
 
 ## Plot the fit
-plot(dec.pois.zeisel$mean, dec.pois.zeisel$total, pch=16, xlab="Mean of log-expression",
-    ylab="Variance of log-expression")
-curve(metadata(dec.pois.zeisel)$trend(x), col="dodgerblue", add=TRUE)
+plot(dec.pois.zeisel$mean, dec.pois.zeisel$total,
+    pch = 16, xlab = "Mean of log-expression",
+    ylab = "Variance of log-expression"
+)
+curve(metadata(dec.pois.zeisel)$trend(x), col = "dodgerblue", add = TRUE)
 ```
 
 *Trends based purely on technical noise tend to yield large biological components for highly-expressed genes*. This often includes so-called “house-keeping” genes coding for essential cellular components such as ribosomal proteins, which are considered uninteresting for characterizing cellular heterogeneity. These observations suggest that a more accurate noise model does not necessarily yield a better ranking of HVGs.
@@ -517,24 +542,26 @@ Data containing multiple batches will often exhibit batch effects. We are usuall
 
 This is naturally achieved by performing trend fitting and variance decomposition separately for each batch. 
 
-We will try now this approach by treating each plate (block) in the 416B dataset as a different batch, using the modelGeneVarWithSpikes() function. (The same argument is available in all other variance-modelling functions.)
+We will try now this approach by treating each plate (block) in the 416B dataset as a different batch, using the `modelGeneVarWithSpikes()` function. (The same argument is available in all other variance-modelling functions.)
 
 ```{r, modelGeneVar_batch}
 ## Fit a mean-dependent trend to the variance of the spike-in transcripts
 ## Independently for each batch (block)
-dec.block.416b <- modelGeneVarWithSpikes(sce.416b, "ERCC", block=sce.416b$block) # block=sce.416b$block
-head(dec.block.416b[order(dec.block.416b$bio, decreasing=TRUE),1:6])
+dec.block.416b <- modelGeneVarWithSpikes(sce.416b, "ERCC", block = sce.416b$block) # block=sce.416b$block
+head(dec.block.416b[order(dec.block.416b$bio, decreasing = TRUE), 1:6])
 
 ## Plot the fit by batch (block)
-par(mfrow=c(1,2))
+par(mfrow = c(1, 2))
 blocked.stats <- dec.block.416b$per.block
 for (i in colnames(blocked.stats)) {
     current <- blocked.stats[[i]]
-    plot(current$mean, current$total, main=i, pch=16, cex=0.5,
-        xlab="Mean of log-expression", ylab="Variance of log-expression")
+    plot(current$mean, current$total,
+        main = i, pch = 16, cex = 0.5,
+        xlab = "Mean of log-expression", ylab = "Variance of log-expression"
+    )
     curfit <- metadata(current)
-    points(curfit$mean, curfit$var, col="red", pch=16)
-    curve(curfit$trend(x), col='dodgerblue', add=TRUE, lwd=2) 
+    points(curfit$mean, curfit$var, col = "red", pch = 16)
+    curve(curfit$trend(x), col = "dodgerblue", add = TRUE, lwd = 2)
 }
 ```
 
@@ -546,11 +573,11 @@ Once we have quantified the per-gene variation, the next step is to select the s
 
 The most obvious selection strategy is to take the top "n" genes with the largest values for the relevant variance metric. The main advantage of this approach is that the user can directly control the number of genes retained, which ensures that the computational complexity of downstream calculations is easily predicted. For `modelGeneVar()` and `modelGeneVarWithSpikes()`, we would select the genes with the largest biological components. 
 
-This is conveniently done for us via getTopHVgs(), as shown with n = 1000.
+This is conveniently done for us via `getTopHVgs()`, as shown with `n = 1000`.
 
 ```{r, Select_TopHVGs}
-## Top 1000 genes 
-hvg.zeisel.var <- getTopHVGs(dec.zeisel, n=1000)
+## Top 1000 genes
+hvg.zeisel.var <- getTopHVGs(dec.zeisel, n = 1000)
 str(hvg.zeisel.var)
 ```
 
@@ -575,7 +602,7 @@ By definition, the top PCs capture the dominant factors of heterogeneity in the 
 
 ![](https://raw.githubusercontent.com/lcolladotor/cshl_rstats_genome_scale_2024/devel/Figures/PCs.png)
 
-We can perform PCA on the log-normalized expression values using the `fixedPCA()` function from scran. By default, `fixedPCA()` will compute the first 50 PCs and store them in the reducedDims() of the output SingleCellExperiment object, as shown below. 
+We can perform PCA on the log-normalized expression values using the `fixedPCA()` function from scran. By default, `fixedPCA()` will compute the first 50 PCs and store them in the `reducedDims()` of the output `SingleCellExperiment` object, as shown below. 
 
 Here, we use only the top 2000 genes with the largest biological components to reduce both computational work and high-dimensional random noise. In particular, while PCA is robust to random noise, an excess of it may cause the earlier PCs to capture noise instead of biological structure (Johnstone and Lu 2009). 
 
@@ -583,11 +610,11 @@ Here, we use only the top 2000 genes with the largest biological components to r
 library("scran")
 
 ## Top 2000 HVGs
-top.zeisel <- getTopHVGs(dec.zeisel, n=2000)
+top.zeisel <- getTopHVGs(dec.zeisel, n = 2000)
 
 ## Principal component analysis using top 2000 HVGs, 50 PCs
-set.seed(100) 
-sce.zeisel <- fixedPCA(sce.zeisel, subset.row=top.zeisel) 
+set.seed(100)
+sce.zeisel <- fixedPCA(sce.zeisel, subset.row = top.zeisel)
 
 reducedDimNames(sce.zeisel)
 ```
@@ -603,7 +630,7 @@ Most practitioners will simply set to a “reasonable” but arbitrary value, ty
 ```{r, VarExplained_PCs}
 ## Variance explained by PCs
 percent.var <- attr(reducedDim(sce.zeisel), "percentVar")
-plot(percent.var, log="y", xlab="PC", ylab="Variance explained (%)")
+plot(percent.var, log = "y", xlab = "PC", ylab = "Variance explained (%)")
 ```
 
 ### Visualizing the PCs
@@ -612,8 +639,8 @@ Algorithms are more than happy to operate on 10-50 PCs, but these are still too 
 
 ```{r, PCs_zeisel}
 library("scater")
-## Plot PCA (Top 2 PCs for 2 dimentional visualization)       
-plotReducedDim(sce.zeisel, dimred="PCA", colour_by="level1class")
+## Plot PCA (Top 2 PCs for 2 dimentional visualization)
+plotReducedDim(sce.zeisel, dimred = "PCA", colour_by = "level1class")
 ```
 
 The problem is that PCA is a linear technique, i.e., only variation along a line in high-dimensional space is captured by each PC. As such, it cannot efficiently pack differences in *d* dimensions into the first 2 PCs.
@@ -622,7 +649,7 @@ One workaround is to plot several of the top PCs against each other in pairwise 
 
 ```{r, Plot_multiplePCA_PCs}
 ## plot top 4 PCs against each other in pairwise plots
-plotReducedDim(sce.zeisel, dimred="PCA", ncomponents=4, colour_by="level1class")
+plotReducedDim(sce.zeisel, dimred = "PCA", ncomponents = 4, colour_by = "level1class")
 ```
 
 ### Non-linear methods for visualization
@@ -634,9 +661,9 @@ The de facto standard for visualization of scRNA-seq data is the t-stochastic ne
 ```{r, runTSNE_zeisel}
 ## TSNE using runTSNE() stores the t-SNE coordinates in the reducedDims
 set.seed(100)
-sce.zeisel <- runTSNE(sce.zeisel, dimred="PCA")
+sce.zeisel <- runTSNE(sce.zeisel, dimred = "PCA")
 ## Plot TSNE
-plotReducedDim(sce.zeisel, dimred="TSNE", colour_by="level1class")
+plotReducedDim(sce.zeisel, dimred = "TSNE", colour_by = "level1class")
 ```
 
 The “perplexity” is another important parameter that determines the granularity of the visualization. Low perplexities will favor resolution of finer structure, possibly to the point that the visualization is compromised by random noise. Thus, it is advisable to test different perplexity values to ensure that the choice of perplexity does not drive the interpretation of the plot.
@@ -646,38 +673,44 @@ The “perplexity” is another important parameter that determines the granular
 
 ## TSNE using perplexity = 5
 set.seed(100)
-sce.zeisel <- runTSNE(sce.zeisel, dimred="PCA", perplexity=5)
-out5 <- plotReducedDim(sce.zeisel, dimred="TSNE",
-    colour_by="level1class") + ggtitle("perplexity = 5")
+sce.zeisel <- runTSNE(sce.zeisel, dimred = "PCA", perplexity = 5)
+out5 <- plotReducedDim(sce.zeisel,
+    dimred = "TSNE",
+    colour_by = "level1class"
+) + ggtitle("perplexity = 5")
 ## TSNE using perplexity = 20
 set.seed(100)
-sce.zeisel <- runTSNE(sce.zeisel, dimred="PCA", perplexity=20)
-out20 <- plotReducedDim(sce.zeisel, dimred="TSNE",
-    colour_by="level1class") + ggtitle("perplexity = 20")
+sce.zeisel <- runTSNE(sce.zeisel, dimred = "PCA", perplexity = 20)
+out20 <- plotReducedDim(sce.zeisel,
+    dimred = "TSNE",
+    colour_by = "level1class"
+) + ggtitle("perplexity = 20")
 ## TSNE using perplexity = 80
 set.seed(100)
-sce.zeisel <- runTSNE(sce.zeisel, dimred="PCA", perplexity=80)
-out80 <- plotReducedDim(sce.zeisel, dimred="TSNE", 
-    colour_by="level1class") + ggtitle("perplexity = 80")
+sce.zeisel <- runTSNE(sce.zeisel, dimred = "PCA", perplexity = 80)
+out80 <- plotReducedDim(sce.zeisel,
+    dimred = "TSNE",
+    colour_by = "level1class"
+) + ggtitle("perplexity = 80")
 ## Combine plots
-gridExtra::grid.arrange(out5, out20, out80, ncol=3)
+gridExtra::grid.arrange(out5, out20, out80, ncol = 3)
 ```
 
 #### Uniform manifold approximation and projection
 
-The uniform manifold approximation and projection (UMAP) method (McInnes, Healy, and Melville 2018) is an alternative to TSNE for non-linear dimensionality reduction. It is roughly similar to TSNE in that it also tries to find a low-dimensional representation that preserves relationships between neighbors in high-dimensional space. However, the two methods are based on different theory, represented by differences in the various graph weighting equations. This manifests as a different visualization.
+The uniform manifold approximation and projection (UMAP) method (McInnes, Healy, and Melville 2018) is an alternative to TSNE for non-linear dimensionality reduction. It is roughly similar to tSNE in that it also tries to find a low-dimensional representation that preserves relationships between neighbors in high-dimensional space. However, the two methods are based on different theory, represented by differences in the various graph weighting equations. This manifests as a different visualization.
 
 ```{r, Umap_zeisel}
 ## UMAP using runUMAP() stores the coordinates in the reducedDims
 set.seed(100)
-sce.zeisel <- runUMAP(sce.zeisel, dimred="PCA")
+sce.zeisel <- runUMAP(sce.zeisel, dimred = "PCA")
 ## Plot UMAP
-plotReducedDim(sce.zeisel, dimred="UMAP", colour_by="level1class")
+plotReducedDim(sce.zeisel, dimred = "UMAP", colour_by = "level1class")
 ```
 
-Compared to TSNE, the UMAP visualization tends to have more compact visual clusters with more empty space between them. It also attempts to preserve more of the global structure than TSNE. From a practical perspective, UMAP is much faster than TSNE, which may be an important consideration for large datasets. UMAP also involves a series of randomization steps so setting the seed is critical.
+Compared to tSNE, the UMAP visualization tends to have more compact visual clusters with more empty space between them. It also attempts to preserve more of the global structure than tSNE. From a practical perspective, UMAP is much faster than tSNE, which may be an important consideration for large datasets. UMAP also involves a series of randomization steps so setting the seed is critical.
 
-It is arguable whether the UMAP or TSNE visualizations are more useful or aesthetically pleasing. UMAP aims to preserve more global structure but this necessarily reduces resolution within each visual cluster. However, UMAP is unarguably much faster, and for that reason alone, it is increasingly displacing TSNE as the method of choice for visualizing large scRNA-seq data sets.
+It is arguable whether the UMAP or tSNE visualizations are more useful or aesthetically pleasing. UMAP aims to preserve more global structure but this necessarily reduces resolution within each visual cluster. However, UMAP is unarguably much faster, and for that reason alone, it is increasingly displacing TSNE as the method of choice for visualizing large scRNA-seq data sets.
 
 ## Clustering
 
@@ -704,35 +737,37 @@ By default, `clusterCells()` uses the 10 nearest neighbors of each cell to const
 ```{r, Clustering_clusterCells}
 library("scran")
 ## Cluster using "scran::clusterCells"
-nn.clusters <- clusterCells(sce.zeisel, use.dimred="PCA")
+nn.clusters <- clusterCells(sce.zeisel, use.dimred = "PCA")
 ## Cluster assignments
 table(nn.clusters)
 ```
-We assign the cluster assignments back into our SingleCellExperiment object as a factor in the column metadata. This allows us to conveniently visualize the distribution of clusters in a TSNE plot:
+We assign the cluster assignments back into our `SingleCellExperiment` object as a factor in the column metadata. This allows us to conveniently visualize the distribution of clusters in a tSNE plot:
  
 ```{r, plot_clusters_zeisel}
 ## Save the cluster assignments
 colLabels(sce.zeisel) <- nn.clusters
 ## Plot TSNE coloured by cluster assignments
-plotReducedDim(sce.zeisel, "TSNE", colour_by="label")
+plotReducedDim(sce.zeisel, "TSNE", colour_by = "label")
 ```
 
-If we want to explicitly specify all of these parameters, we would use the more verbose call below. This uses a `SNNGraphParam` object from the bluster package to instruct `clusterCells()` to detect communities from a shared nearest-neighbor graph with the specified parameters. The appeal of this interface is that it allows us to easily switch to a different clustering algorithm by simply changing the BLUSPARAM= argument.
+If we want to explicitly specify all of these parameters, we would use the more verbose call below. This uses a `SNNGraphParam` object from the bluster package to instruct `clusterCells()` to detect communities from a shared nearest-neighbor graph with the specified parameters. The appeal of this interface is that it allows us to easily switch to a different clustering algorithm by simply changing the `BLUSPARAM` argument.
 
 ```{r, clustering_specify_K}
 library(bluster)
 
 ## Clustering using k=10
-nn.clusters2 <- clusterCells(sce.zeisel, use.dimred="PCA", 
-    BLUSPARAM=SNNGraphParam(k=10, type="rank", cluster.fun="walktrap"))
+nn.clusters2 <- clusterCells(sce.zeisel,
+    use.dimred = "PCA",
+    BLUSPARAM = SNNGraphParam(k = 10, type = "rank", cluster.fun = "walktrap")
+)
 
 table(nn.clusters2)
 ```
-We could also obtain the graph itself by specifying full=TRUE in the clusterCells() call. Doing so will return all intermediate structures that are used during clustering, including a graph object from the igraph package.
+We could also obtain the graph itself by specifying full=TRUE in the `clusterCells()` call. Doing so will return all intermediate structures that are used during clustering, including a graph object from the `igraph` package.
 
 ```{r, ClusterCells_graph}
 ## Obtain the graph
-nn.clust.info <- clusterCells(sce.zeisel, use.dimred="PCA", full=TRUE)
+nn.clust.info <- clusterCells(sce.zeisel, use.dimred = "PCA", full = TRUE)
 head(nn.clust.info$objects$graph)
 ```
 
@@ -750,59 +785,77 @@ One of the most important parameters is k, the number of nearest neighbors used 
 
 ```{r, moreRes_clustering}
 ## More resolved clustering using a smaller k (k=5)
-clust.5 <- clusterCells(sce.zeisel, use.dimred="PCA", BLUSPARAM=NNGraphParam(k=5))
+clust.5 <- clusterCells(sce.zeisel, use.dimred = "PCA", BLUSPARAM = NNGraphParam(k = 5))
 table(clust.5)
 ```
 
 ```{r, lessRes_clustering}
 ## Less resolved clustering using a larger k (k=50)
-clust.50 <- clusterCells(sce.zeisel, use.dimred="PCA", BLUSPARAM=NNGraphParam(k=50))
+clust.50 <- clusterCells(sce.zeisel, use.dimred = "PCA", BLUSPARAM = NNGraphParam(k = 50))
 table(clust.50)
 ```
 **Edge weighting scheme**
 
-Further tweaking can be performed by changing the edge weighting scheme during graph construction. Setting type="number" will weight edges based on the number of nearest neighbors that are shared between two cells. Similarly, type="jaccard" will weight edges according to the Jaccard index of the two sets of neighbors. We can also disable weighting altogether by using a simple  
+Further tweaking can be performed by changing the edge weighting scheme during graph construction. Setting `type = "number"` will weight edges based on the number of nearest neighbors that are shared between two cells. Similarly, `type = "jaccard"` will weight edges according to the Jaccard index of the two sets of neighbors. We can also disable weighting altogether by using a simple  
 k-nearest neighbor graph, which is occasionally useful for downstream graph operations that do not support weights.
 
 ```{r, weighting_scheme}
 ## Cluster using the number of shared nearest neighbors (type="number")
-clust.num <- clusterCells(sce.zeisel, use.dimred="PCA", 
-    BLUSPARAM=NNGraphParam(type="number"))
+clust.num <- clusterCells(sce.zeisel,
+    use.dimred = "PCA",
+    BLUSPARAM = NNGraphParam(type = "number")
+)
 table(clust.num)
 
 ## Cluster using the Jaccard index (similarity between sample sets)
-clust.jaccard <- clusterCells(sce.zeisel, use.dimred="PCA", 
-    BLUSPARAM=NNGraphParam(type="jaccard"))
+clust.jaccard <- clusterCells(sce.zeisel,
+    use.dimred = "PCA",
+    BLUSPARAM = NNGraphParam(type = "jaccard")
+)
 table(clust.jaccard)
 
 ## Cluster without specifying a graph type (default method-KNNGraphParam)
-clust.none <- clusterCells(sce.zeisel, use.dimred="PCA", 
-    BLUSPARAM=KNNGraphParam())
+clust.none <- clusterCells(sce.zeisel,
+    use.dimred = "PCA",
+    BLUSPARAM = KNNGraphParam()
+)
 table(clust.none)
 ```
 
 **Community detection**
 
-The community detection can be performed by using any of the algorithms provided by igraph. The Walktrap approach is a common one, but many others are available to choose from:
+The community detection can be performed by using any of the algorithms provided by `igraph`. The Walktrap approach is a common one, but many others are available to choose from:
 
 ```{r, community_detection, eval=FALSE}
-clust.walktrap <- clusterCells(sce.zeisel, use.dimred="PCA", 
-    BLUSPARAM=NNGraphParam(cluster.fun="walktrap"))
+clust.walktrap <- clusterCells(sce.zeisel,
+    use.dimred = "PCA",
+    BLUSPARAM = NNGraphParam(cluster.fun = "walktrap")
+)
 
-clust.louvain <- clusterCells(sce.zeisel, use.dimred="PCA", 
-    BLUSPARAM=NNGraphParam(cluster.fun="louvain"))
+clust.louvain <- clusterCells(sce.zeisel,
+    use.dimred = "PCA",
+    BLUSPARAM = NNGraphParam(cluster.fun = "louvain")
+)
 
-clust.infomap <- clusterCells(sce.zeisel use.dimred="PCA", 
-    BLUSPARAM=NNGraphParam(cluster.fun="infomap"))
+clust.infomap <- clusterCells(sce.zeisel,
+    use.dimred = "PCA",
+    BLUSPARAM = NNGraphParam(cluster.fun = "infomap")
+)
 
-clust.fast <- clusterCells(sce.zeisel, use.dimred="PCA", 
-    BLUSPARAM=NNGraphParam(cluster.fun="fast_greedy"))
+clust.fast <- clusterCells(sce.zeisel,
+    use.dimred = "PCA",
+    BLUSPARAM = NNGraphParam(cluster.fun = "fast_greedy")
+)
 
-clust.labprop <- clusterCells(sce.zeisel, use.dimred="PCA", 
-    BLUSPARAM=NNGraphParam(cluster.fun="label_prop"))
+clust.labprop <- clusterCells(sce.zeisel,
+    use.dimred = "PCA",
+    BLUSPARAM = NNGraphParam(cluster.fun = "label_prop")
+)
 
-clust.eigen <- clusterCells(sce.zeisel, use.dimred="PCA", 
-    BLUSPARAM=NNGraphParam(cluster.fun="leading_eigen"))
+clust.eigen <- clusterCells(sce.zeisel,
+    use.dimred = "PCA",
+    BLUSPARAM = NNGraphParam(cluster.fun = "leading_eigen")
+)
 ```
 
 ### Hierarchical clustering
@@ -820,12 +873,12 @@ For this case, we will use the sce.416b
 ```{r, Hierarchical_clust}
 library("scran")
 ## Top 2000 HVGs
-top.416b <- getTopHVGs(sce.416b, n=2000)
+top.416b <- getTopHVGs(sce.416b, n = 2000)
 ## Principal component analysis using top 2000 HVGs, 50 PCs
-set.seed(100) 
-sce.416b <- fixedPCA(sce.416b, subset.row=top.416b) 
+set.seed(100)
+sce.416b <- fixedPCA(sce.416b, subset.row = top.416b)
 ## TSNE
-sce.416b <- runTSNE(sce.416b, dimred="PCA")
+sce.416b <- runTSNE(sce.416b, dimred = "PCA")
 ```
 
 ```{r, plot_dendogram}
@@ -834,8 +887,10 @@ library("dendextend")
 ## Perform hierarchical clustering on the PCA-reduced data from sce.416b
 ## The BLUSPARAM argument specifies the clustering method (here "ward.D2").
 ## The full=TRUE argument ensures that additional objects related to clustering are returned.
-hclust.416b <- clusterCells(sce.416b, use.dimred="PCA", 
-    BLUSPARAM=HclustParam(method="ward.D2"), full=TRUE)
+hclust.416b <- clusterCells(sce.416b,
+    use.dimred = "PCA",
+    BLUSPARAM = HclustParam(method = "ward.D2"), full = TRUE
+)
 
 ## Extract the hierarchical clustering tree from the clustering result
 tree.416b <- hclust.416b$objects$hclust
@@ -843,22 +898,24 @@ tree.416b <- hclust.416b$objects$hclust
 ## Customize the dendrogram for better visualization
 tree.416b$labels <- seq_along(tree.416b$labels)
 ## Convert the hierarchical clustering tree to a dendrogram object
-dend <- as.dendrogram(tree.416b, hang=0.1)
-combined.fac <- paste0(sce.416b$block, ".", 
-    sub(" .*", "", sce.416b$phenotype))
+dend <- as.dendrogram(tree.416b, hang = 0.1)
+combined.fac <- paste0(
+    sce.416b$block, ".",
+    sub(" .*", "", sce.416b$phenotype)
+)
 
 labels_colors(dend) <- c(
-    "20160113.wild"="blue",
-    "20160113.induced"="red",
-    "20160325.wild"="dodgerblue",
-    "20160325.induced"="salmon"
+    "20160113.wild" = "blue",
+    "20160113.induced" = "red",
+    "20160325.wild" = "dodgerblue",
+    "20160325.induced" = "salmon"
 )[combined.fac][order.dendrogram(dend)]
 
 ## Plot the dendrogram
 plot(dend)
 ```
 
-To obtain explicit clusters, we “cut” the tree by removing internal branches such that every subtree represents a distinct cluster. This is most simply done by removing internal branches above a certain height of the tree, as performed by the `cutree()` function. A more sophisticated variant of this approach is implemented in the `dynamicTreeCut` package, which uses the shape of the branches to obtain a better partitioning for complex dendrograms. We enable this option by setting cut.dynamic=TRUE, with additional tweaking of the deepSplit= parameter to control the resolution of the resulting clusters.
+To obtain explicit clusters, we “cut” the tree by removing internal branches such that every subtree represents a distinct cluster. This is most simply done by removing internal branches above a certain height of the tree, as performed by the `cutree()` function. A more sophisticated variant of this approach is implemented in the `dynamicTreeCut` package, which uses the shape of the branches to obtain a better partitioning for complex dendrograms. We enable this option by setting `cut.dynamic = TRUE`, with additional tweaking of the `deepSplit` parameter to control the resolution of the resulting clusters.
 
 ```{r, cut_dendogram}
 library("dynamicTreeCut")
@@ -866,9 +923,13 @@ library("dynamicTreeCut")
 ## Perform hierarchical clustering with dynamic tree cut on the PCA
 ## The BLUSPARAM argument specifies the clustering method (here "ward.D2"),
 ## and enables dynamic tree cut (cut.dynamic=TRUE) with specific parameters.
-hclust.dyn <- clusterCells(sce.416b, use.dimred="PCA",
-    BLUSPARAM=HclustParam(method="ward.D2", cut.dynamic=TRUE,
-        cut.params=list(minClusterSize=10, deepSplit=1)))
+hclust.dyn <- clusterCells(sce.416b,
+    use.dimred = "PCA",
+    BLUSPARAM = HclustParam(
+        method = "ward.D2", cut.dynamic = TRUE,
+        cut.params = list(minClusterSize = 10, deepSplit = 1)
+    )
+)
 table(hclust.dyn)
 
 ## Plot dendogram
@@ -877,7 +938,7 @@ plot(dend)
 
 ## Obtain assignations and plot TSNE
 colLabels(sce.416b) <- factor(hclust.dyn)
-plotReducedDim(sce.416b, "TSNE", colour_by="label")
+plotReducedDim(sce.416b, "TSNE", colour_by = "label")
 ```
 
 ### Subclustering
@@ -887,43 +948,33 @@ Another simple approach to improving resolution is to repeat the feature selecti
 ## Marker gene detection
 
 ```{r, }
-
 ```
 
 ```{r, }
-
 ```
 
 ```{r, }
-
 ```
 
 ```{r, }
-
 ```
 
 ```{r, }
-
 ```
 
 ## Cell type annotation
 
 ```{r, }
-
 ```
 
 ```{r, }
-
 ```
 
 ```{r, }
-
 ```
 
 ```{r, }
-
 ```
 
 ```{r, }
-
 ```
