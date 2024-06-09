@@ -46,6 +46,37 @@ se
 
 colData(se)
 
+rowData(se) ## is a shortcut to mcols(rowRanges(se))
+colData(se)$avgLength
+se$avgLength
+table(se$avgLength)
+summary(se$avgLength)
+
+
+## a) Number of genes?
+rowData(se)
+dim(rowData(se))
+nrow(rowData(se))
+num_genes <- dim(rowData(se))[1]
+
+dim(se)
+dim(se)[1]
+nrow(se)
+dim(assays(se)$counts)
+dim(assays(se)$counts)[1]
+nrow(assays(se)$counts)
+
+
+## b) How many 'trt' samples do we have for 'dex'?
+se
+colData(se)
+colnames(colData(se))
+colData(se)$dex
+colData(se)[["dex"]]
+se$dex
+summary(se$dex)
+table(se$dex)
+sum(se$dex == "trt")
 
 ## -------------------------------------------------------------------------------
 ## In our object, if you look at the part that says assays, we can see that
@@ -78,11 +109,18 @@ assayNames(se)
 assayNames(se)[1] <- "counts"
 
 
+## log10(x + 0.5) transform
+assays(se)$log10 <- log10(assays(se)$counts + 0.5)
+head(assays(se[, se$dex == "trt"])$log10)
+
 ## -------------------------------------------------------------------------------
 ## To calculate the library size use
 
 apply(assay(se), 2, sum)
+colSums(assay(se))
 
+colData(se)$manual_lib_size <- colSums(assay(se))
+se$manual_lib_size_shortcut <- colSums(assay(se))
 
 ## -------------------------------------------------------------------------------
 ## For a), dim() gives the desired answer

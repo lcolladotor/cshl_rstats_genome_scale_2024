@@ -383,6 +383,19 @@ install.packages("curl", type = "source")
 
 For all the gory details, check https://github.com/curl/curl/issues/13725, https://github.com/Bioconductor/BiocFileCache/issues/48, and related issues.
 
+As a workaround, you could also run this:
+
+```{r "sce_layer_manual_workaround"}
+tmp_sce_layer <- tempfile("sce_layer.RData")
+download.file(
+    "https://www.dropbox.com/s/bg8xwysh2vnjwvg/Human_DLPFC_Visium_processedData_sce_scran_sce_layer_spatialLIBD.Rdata?dl=1",
+    tmp_sce_layer
+)
+load(tmp_sce_layer, verbose = TRUE)
+sce_layer
+```
+
+
 </div>
 
 ### Explore the Data

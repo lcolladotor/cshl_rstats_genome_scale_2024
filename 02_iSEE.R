@@ -1,4 +1,4 @@
-## ----load_iSEE------------------------------------------------------------------------
+## ----load_iSEE-------------------------------------------
 # if (!require("BiocManager", quietly = TRUE))
 #     install.packages("BiocManager")
 #
@@ -8,11 +8,11 @@ packageVersion("iSEE")
 library("iSEE")
 
 
-## ----vignettes_iSEE, eval=FALSE-------------------------------------------------------
+## ----vignettes_iSEE, eval=FALSE--------------------------
 ## browseVignettes("iSEE")
 
 
-## ----quick_launch, eval=interactive()-------------------------------------------------
+## ----quick_launch, eval=interactive()--------------------
 ## Launch iSEE for the se ("SummarizedExperiment" object)
 iSEE(se)
 
@@ -20,7 +20,7 @@ iSEE(se)
 iSEE(sce)
 
 
-## ----download_sce_layer---------------------------------------------------------------
+## ----download_sce_layer----------------------------------
 ## Lets get some data using spatialLIBD
 sce_layer <- spatialLIBD::fetch_data("sce_layer")
 sce_layer
@@ -29,19 +29,29 @@ sce_layer
 lobstr::obj_size(sce_layer)
 
 
-## -------------------------------------------------------------------------------------
+## --------------------------------------------------------
 curl::curl_version()$version
 
 
 ## ## Install homebrew from https://brew.sh/
 ## brew install curl
 
-## ----eval = FALSE---------------------------------------------------------------------
+## ----eval = FALSE----------------------------------------
 ## Sys.setenv(PKG_CONFIG_PATH = "/opt/homebrew/opt/curl/lib/pkgconfig")
 ## install.packages("curl", type = "source")
 
 
-## ----explore_iSEE, eval = FALSE-------------------------------------------------------
+## ----"sce_layer_manual_workaround"-----------------------
+tmp_sce_layer <- tempfile("sce_layer.RData")
+download.file(
+    "https://www.dropbox.com/s/bg8xwysh2vnjwvg/Human_DLPFC_Visium_processedData_sce_scran_sce_layer_spatialLIBD.Rdata?dl=1",
+    tmp_sce_layer
+)
+load(tmp_sce_layer, verbose = TRUE)
+sce_layer
+
+
+## ----explore_iSEE, eval = FALSE--------------------------
 ## ## Load library
 ## library("iSEE")
 ## 
@@ -49,7 +59,7 @@ curl::curl_version()$version
 ## iSEE(sce_layer)
 
 
-## ----load_scRNAseq_data---------------------------------------------------------------
+## ----load_scRNAseq_data----------------------------------
 library("scRNAseq")
 library("scater")
 library("iSEE")
@@ -62,7 +72,7 @@ sce <- logNormCounts(sce, exprs_values = "tophat_counts")
 sce <- runPCA(sce, ncomponents = 4)
 
 
-## ----single_geneExpr------------------------------------------------------------------
+## ----single_geneExpr-------------------------------------
 ## Initial settings for a single gene expression
 initial_single <- list(
     FeatureAssayPlot(Assay = "logcounts", YAxisFeatureName = "Serpine2"),
@@ -75,7 +85,7 @@ if (interactive()) {
 }
 
 
-## ----2_genesExpr----------------------------------------------------------------------
+## ----2_genesExpr-----------------------------------------
 ## Initial settings for 2 genes expression on the same "FeatureAssayPlot"
 initial_combined <- list(
     FeatureAssayPlot(Assay = "logcounts", XAxis = "Feature name", XAxisFeatureName = "Serpine2", YAxisFeatureName = "Bcl6"),
@@ -88,7 +98,7 @@ if (interactive()) {
 }
 
 
-## ----chain_FeatureAssayPlots----------------------------------------------------------
+## ----chain_FeatureAssayPlots-----------------------------
 ## Initial settings chainning multiple "FeatureAssayPlot"
 initial_double <- list(
     FeatureAssayPlot(Assay = "logcounts", YAxisFeatureName = "Serpine2"),
