@@ -1,4 +1,4 @@
-## ----download_data_DGE, warning=FALSE, message=FALSE----------------------------
+## ----download_data_DGE, warning=FALSE, message=FALSE----------------------------------
 ## Load the container package for RSE
 library("SummarizedExperiment")
 
@@ -16,10 +16,12 @@ rse_gene <- myfiles[["EH8313"]]
 rse_gene_nic <- rse_gene[, which(rse_gene$Expt == "Nicotine" & rse_gene$Age == "Pup")]
 
 ## Retain only expressed genes (passed the filtering step)
-rse_gene_filt <- rse_gene_nic[rowData(rse_gene_nic)$retained_after_feature_filtering == TRUE, ]
+rse_gene_filt <- rse_gene_nic[
+    rowData(rse_gene_nic)$retained_after_feature_filtering == TRUE,
+]
 
 
-## ----explore_data---------------------------------------------------------------
+## ----explore_data---------------------------------------------------------------------
 ## Data dimensions: number of genes and samples
 dim(rse_gene_filt)
 
@@ -33,7 +35,7 @@ assays(rse_gene_filt)$logcounts[1:3, 1:5]
 head(colData(rse_gene_filt), 2)
 
 
-## ----model.matrix()-------------------------------------------------------------
+## ----model.matrix()-------------------------------------------------------------------
 ## Define formula
 formula <- ~ Group + Sex + flowcell + mitoRate + overallMapRate + totalAssignedGene + detected + ERCCsumLogErr
 
@@ -42,12 +44,12 @@ model <- model.matrix(formula, data = colData(rse_gene_filt))
 head(model)
 
 
-## ----coeff----------------------------------------------------------------------
+## ----coeff----------------------------------------------------------------------------
 ## Comparison of interest: Group
 coef <- "GroupExperimental"
 
 
-## ----voom-----------------------------------------------------------------------
+## ----voom-----------------------------------------------------------------------------
 library("limma")
 
 ## voom():
@@ -61,7 +63,7 @@ library("limma")
 vGene <- voom(assay(rse_gene_filt), design = model, plot = TRUE)
 
 
-## ----voom_outs------------------------------------------------------------------
+## ----voom_outs------------------------------------------------------------------------
 ## Returned data
 names(vGene)
 
@@ -83,7 +85,7 @@ head(vGene$targets)
 identical(vGene$targets$lib.size, colSums(assay(rse_gene_filt)))
 
 
-## ----lmFit----------------------------------------------------------------------
+## ----lmFit----------------------------------------------------------------------------
 ## lmFit():
 #   1. Fit linear model for each gene to estimate logFCs
 fitGene <- lmFit(vGene)
@@ -95,7 +97,7 @@ fitGene$method
 head(fitGene$coefficients)
 
 
-## ----lm-------------------------------------------------------------------------
+## ----lm-------------------------------------------------------------------------------
 ## Lognorm expression of first gene
 rse_gene_one_gene <- rse_gene_filt[1, ]
 colData(rse_gene_one_gene) <- cbind(colData(rse_gene_one_gene),
@@ -112,7 +114,7 @@ summary(lm)
 t.test(formula, data = colData(rse_gene_one_gene), var.equal = TRUE)
 
 
-## ----eBayes---------------------------------------------------------------------
+## ----eBayes---------------------------------------------------------------------------
 ## eBayes()
 ## 1. Compute the empirical Bayes statistics for DE
 eBGene <- eBayes(fitGene)
@@ -139,7 +141,7 @@ dim(eBGene$p.value)
 eBGene$p.value[1:5, 1:5]
 
 
-## ----topTable-------------------------------------------------------------------
+## ----topTable-------------------------------------------------------------------------
 ## topTable()
 ## 1. Obtain gene-wise DE stats for Group (Nicotine vs Ctrl)
 top_genes <- topTable(eBGene, coef = coef, p.value = 1, number = nrow(rse_gene_filt), sort.by = "none")
@@ -149,11 +151,11 @@ top_genes <- topTable(eBGene, coef = coef, p.value = 1, number = nrow(rse_gene_f
 head(top_genes$logFC)
 
 
-## ----betas_logFCs---------------------------------------------------------------
+## ----betas_logFCs---------------------------------------------------------------------
 setdiff(top_genes$logFC, eBGene$coefficients[, "GroupExperimental"])
 
 
-## ----topTable2------------------------------------------------------------------
+## ----topTable2------------------------------------------------------------------------
 ##  t: moderated t-stats
 head(top_genes$t)
 
@@ -164,12 +166,12 @@ head(top_genes$P.Value)
 head(top_genes$adj.P.Val)
 
 
-## ----hist_p---------------------------------------------------------------------
+## ----hist_p---------------------------------------------------------------------------
 ## Histogram of unadjusted p-values
 hist(top_genes$P.Value, xlab = "p-values", main = "")
 
 
-## ----quantify_DEGs--------------------------------------------------------------
+## ----quantify_DEGs--------------------------------------------------------------------
 ## DEGs for FDR<0.05
 de_genes <- top_genes[which(top_genes$adj.P.Val < 0.05), ]
 
@@ -177,7 +179,7 @@ de_genes <- top_genes[which(top_genes$adj.P.Val < 0.05), ]
 dim(de_genes)
 
 
-## ----volcano plot, warning=FALSE, message=FALSE---------------------------------
+## ----volcano plot, warning=FALSE, message=FALSE---------------------------------------
 library("ggplot2")
 
 ## Define up- and down-regulated DEGs, and non-DEGs
@@ -236,7 +238,7 @@ ggplot(
     )
 
 
-## ----complexHeatmap, warning=FALSE,message=FALSE--------------------------------
+## ----complexHeatmap, warning=FALSE,message=FALSE--------------------------------------
 library("ComplexHeatmap")
 
 ## We plot lognorm counts
@@ -249,7 +251,7 @@ lognorm_data <- lognorm_data[rownames(de_genes), ]
 colnames(lognorm_data) <- paste0("Pup_", 1:dim(lognorm_data)[2])
 
 
-## ----scale_data-----------------------------------------------------------------
+## ----scale_data-----------------------------------------------------------------------
 ## Center and scale the data to make differences more evident
 lognorm_data <- (lognorm_data - rowMeans(lognorm_data)) / rowSds(lognorm_data)
 
@@ -291,7 +293,7 @@ gene_anno <- rowAnnotation(
 )
 
 
-## ----heat map, warning=FALSE, message=FALSE, fig.width=10,fig.height=6.9--------
+## ----heat map, warning=FALSE, message=FALSE, fig.width=10,fig.height=6.9--------------
 library("circlize")
 
 ## Plot
