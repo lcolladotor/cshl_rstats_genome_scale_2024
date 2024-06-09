@@ -25,6 +25,9 @@ download.file(
     mode = "wb"
 )
 load(tmp_modeling_results, verbose = TRUE)
+
+## Let's rename the object into the name used in the
+## spatial registration vignette (from spatialLIBD)
 layer_modeling_results <- modeling_results
 ```
 
