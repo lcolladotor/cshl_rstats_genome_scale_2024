@@ -10,6 +10,8 @@ Daianna
 
 Melissa
 
+<script defer class="speakerdeck-embed" data-id="95dac4bc0e2346af905e9572a5b0bbde" data-ratio="1.414516129032258" src="//speakerdeck.com/assets/embed.js"></script>
+
 ## deconvolution-benchmark
 
 Leonardo
