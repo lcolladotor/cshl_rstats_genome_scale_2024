@@ -93,6 +93,10 @@ font-family: sans-serif;
 
 Importantly, `Group` is not highly correlated with any other variable in this study, but `overallMapRate` is correlated with `rRNA_rate`, library preparation `plate`, and the sequencing `flowcell`; `sum` (library size) and `detected` (number of expressed genes) are also correlated. For a detailed definition of these variables check [here](https://lcolladotor.github.io/cshl_rstats_genome_scale_2023/smokingmouse-rse.html).
 
+<p class="exercise">
+📝 **Exercise 1**: Run a CCA analysis and determine which pairs of variables in your dataset are correlated. Is there any correlated variable with your variable of interest? 
+</p>
+
 Depending on your results there's sometimes convenient to dig a little deeper into the relationship between correlated variables and to analyze these metrics among our control and experimental samples. Let's work on that! 
 
 ```{r message=FALSE, warning=FALSE}
@@ -470,7 +474,12 @@ plot + theme(
     <img src="Figures/varPart_subset.png" width="800px" align=center />
 </figure>
 
+<p class="exercise">
+📝 **Exercise 2**: Perform a variance partition analysis and determine which of your correlated variables have higher contributions in gene expression variance. Based on that, select a set of variables to model gene expression for DGE.  
+</p>
+
 But what does it mean that a variable explains a high percentage of the expression variation of a gene? In the following section will visualize the existing relationships between the gene expression values in the samples and the sample-level variables. 
+
 
 
 ## Examine the expression of most affected genes by each sample variable
@@ -622,12 +631,12 @@ font-family: sans-serif;
 </style>
 
 <p class="exercise">
-📝 **Exercise 1**: What % of variance does `Group` explain for the gene ENSMUSG00000042348.10? Create the boxplots for its counts in control and experimental samples. Is it more likely that the gene is up-regulated or down-regulated?
+📝 **Exercise 3**: What % of variance does `Group` explain for the gene ENSMUSG00000042348.10? Create the boxplots for its counts in control and experimental samples. Is it more likely that the gene is up-regulated or down-regulated?
 </p>
 
 
 <p class="exercise">
-📝 **Exercise 2**: Do the same for the gene ENSMUSG00000064372.1. What do you observe in terms of variance percentage and sample differences?
+📝 **Exercise 3**: Do the same for the gene ENSMUSG00000064372.1. What do you observe in terms of variance percentage and sample differences?
 </p>
 
 
