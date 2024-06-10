@@ -66,6 +66,7 @@ See [CSHLData2024](https://bit.ly/cshldata2024) for the detailed schedule.
 * [Slack](https://cshldata-2024.slack.com)
 * [LieberInstitute/template_project](https://github.com/LieberInstitute/template_project)
 * [LIBD rstats club](http://research.libd.org/rstatsclub/): check the [public schedule](https://docs.google.com/spreadsheets/d/1is8dZSd0FZ9Qi1Zvq1uRhm-P1McnJRd_zxdAfCRoMfA/edit?usp=sharing)
+* [2023 course version](http://lcolladotor.github.io/cshl_rstats_genome_scale_2023)
   
 
 ## Course Prerequisites {-}
