@@ -259,7 +259,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="10.1" data-path="biocthis-introduction.html"><a href="biocthis-introduction.html#related-past-materials"><i class="fa fa-check"></i><b>10.1</b> Related past materials</a></li>
 <li class="chapter" data-level="10.2" data-path="biocthis-introduction.html"><a href="biocthis-introduction.html#biocthis-main-commands"><i class="fa fa-check"></i><b>10.2</b> biocthis main commands</a></li>
-<li class="chapter" data-level="10.3" data-path="biocthis-introduction.html"><a href="biocthis-introduction.html#live-demo"><i class="fa fa-check"></i><b>10.3</b> Live demo</a></li>
+<li class="chapter" data-level="10.3" data-path="biocthis-introduction.html"><a href="biocthis-introduction.html#live-demo"><i class="fa fa-check"></i><b>10.3</b> Live demo</a>
+<ul>
+<li class="chapter" data-level="10.3.1" data-path="biocthis-introduction.html"><a href="biocthis-introduction.html#example-function"><i class="fa fa-check"></i><b>10.3.1</b> Example function</a></li>
+</ul></li>
 <li class="chapter" data-level="10.4" data-path="biocthis-introduction.html"><a href="biocthis-introduction.html#community-3"><i class="fa fa-check"></i><b>10.4</b> Community</a></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="scrna-seq-data-analysis-overview.html"><a href="scrna-seq-data-analysis-overview.html"><i class="fa fa-check"></i><b>11</b> scRNA-seq data analysis overview</a>
@@ -438,6 +441,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 #&gt;  bluster              * 1.14.0      2024-04-30 [1] Bioconductor 3.19 (R 4.4.0)
 #&gt;  bookdown               0.39        2024-04-15 [1] RSPM (R 4.4.0)
 #&gt;  boot                   1.3-30      2024-02-26 [3] CRAN (R 4.4.0)
+#&gt;  brio                   1.1.5       2024-04-24 [2] RSPM (R 4.4.0)
 #&gt;  broom                  1.0.6       2024-05-17 [1] RSPM (R 4.4.0)
 #&gt;  bslib                  0.7.0       2024-03-29 [2] RSPM (R 4.4.0)
 #&gt;  cachem                 1.1.0       2024-05-16 [2] RSPM (R 4.4.0)
@@ -568,11 +572,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 #&gt;  pheatmap             * 1.0.12      2019-01-04 [1] RSPM (R 4.4.0)
 #&gt;  pillar                 1.9.0       2023-03-22 [2] RSPM (R 4.4.0)
 #&gt;  pkgconfig              2.0.3       2019-09-22 [2] RSPM (R 4.4.0)
+#&gt;  pkgload                1.3.4       2024-01-16 [2] RSPM (R 4.4.0)
 #&gt;  plotly                 4.10.4      2024-01-13 [1] RSPM (R 4.4.0)
 #&gt;  plyr                   1.8.9       2023-10-02 [1] RSPM (R 4.4.0)
 #&gt;  png                    0.1-8       2022-11-29 [1] RSPM (R 4.4.0)
 #&gt;  Polychrome           * 1.5.1       2022-05-03 [1] RSPM (R 4.4.0)
 #&gt;  postcards            * 0.2.3       2022-01-07 [1] RSPM (R 4.4.0)
+#&gt;  praise                 1.0.0       2015-08-11 [2] RSPM (R 4.4.0)
 #&gt;  prettyunits            1.2.0       2023-09-24 [2] RSPM (R 4.4.0)
 #&gt;  promises               1.3.0       2024-04-05 [2] RSPM (R 4.4.0)
 #&gt;  ProtGenerics           1.36.0      2024-04-30 [1] Bioconductor 3.19 (R 4.4.0)
@@ -640,6 +646,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 #&gt;  styler                 1.10.3      2024-04-07 [1] RSPM (R 4.4.0)
 #&gt;  SummarizedExperiment * 1.34.0      2024-05-01 [1] Bioconductor 3.19 (R 4.4.0)
 #&gt;  sys                    3.4.2       2023-05-23 [2] RSPM (R 4.4.0)
+#&gt;  testthat             * 3.2.1.1     2024-04-14 [2] RSPM (R 4.4.0)
 #&gt;  tibble                 3.2.1       2023-03-20 [2] RSPM (R 4.4.0)
 #&gt;  tidyr                  1.3.1       2024-01-24 [1] RSPM (R 4.4.0)
 #&gt;  tidyselect             1.2.1       2024-03-11 [1] RSPM (R 4.4.0)
@@ -669,39 +676,39 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 #&gt; 
 #&gt; ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</code></pre>
 <p>System <code>curl</code> version information:</p>
-<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="final-r-session.html#cb218-1" tabindex="-1"></a>curl<span class="sc">::</span><span class="fu">curl_version</span>()</span>
-<span id="cb218-2"><a href="final-r-session.html#cb218-2" tabindex="-1"></a><span class="co">#&gt; $version</span></span>
-<span id="cb218-3"><a href="final-r-session.html#cb218-3" tabindex="-1"></a><span class="co">#&gt; [1] &quot;7.81.0&quot;</span></span>
-<span id="cb218-4"><a href="final-r-session.html#cb218-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb218-5"><a href="final-r-session.html#cb218-5" tabindex="-1"></a><span class="co">#&gt; $ssl_version</span></span>
-<span id="cb218-6"><a href="final-r-session.html#cb218-6" tabindex="-1"></a><span class="co">#&gt; [1] &quot;OpenSSL/3.0.2&quot;</span></span>
-<span id="cb218-7"><a href="final-r-session.html#cb218-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb218-8"><a href="final-r-session.html#cb218-8" tabindex="-1"></a><span class="co">#&gt; $libz_version</span></span>
-<span id="cb218-9"><a href="final-r-session.html#cb218-9" tabindex="-1"></a><span class="co">#&gt; [1] &quot;1.2.11&quot;</span></span>
-<span id="cb218-10"><a href="final-r-session.html#cb218-10" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb218-11"><a href="final-r-session.html#cb218-11" tabindex="-1"></a><span class="co">#&gt; $libssh_version</span></span>
-<span id="cb218-12"><a href="final-r-session.html#cb218-12" tabindex="-1"></a><span class="co">#&gt; [1] &quot;libssh/0.9.6/openssl/zlib&quot;</span></span>
-<span id="cb218-13"><a href="final-r-session.html#cb218-13" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb218-14"><a href="final-r-session.html#cb218-14" tabindex="-1"></a><span class="co">#&gt; $libidn_version</span></span>
-<span id="cb218-15"><a href="final-r-session.html#cb218-15" tabindex="-1"></a><span class="co">#&gt; [1] &quot;2.3.2&quot;</span></span>
-<span id="cb218-16"><a href="final-r-session.html#cb218-16" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb218-17"><a href="final-r-session.html#cb218-17" tabindex="-1"></a><span class="co">#&gt; $host</span></span>
-<span id="cb218-18"><a href="final-r-session.html#cb218-18" tabindex="-1"></a><span class="co">#&gt; [1] &quot;x86_64-pc-linux-gnu&quot;</span></span>
-<span id="cb218-19"><a href="final-r-session.html#cb218-19" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb218-20"><a href="final-r-session.html#cb218-20" tabindex="-1"></a><span class="co">#&gt; $protocols</span></span>
-<span id="cb218-21"><a href="final-r-session.html#cb218-21" tabindex="-1"></a><span class="co">#&gt;  [1] &quot;dict&quot;    &quot;file&quot;    &quot;ftp&quot;     &quot;ftps&quot;    &quot;gopher&quot;  &quot;gophers&quot; &quot;http&quot;    &quot;https&quot;   &quot;imap&quot;    &quot;imaps&quot;   &quot;ldap&quot;   </span></span>
-<span id="cb218-22"><a href="final-r-session.html#cb218-22" tabindex="-1"></a><span class="co">#&gt; [12] &quot;ldaps&quot;   &quot;mqtt&quot;    &quot;pop3&quot;    &quot;pop3s&quot;   &quot;rtmp&quot;    &quot;rtsp&quot;    &quot;scp&quot;     &quot;sftp&quot;    &quot;smb&quot;     &quot;smbs&quot;    &quot;smtp&quot;   </span></span>
-<span id="cb218-23"><a href="final-r-session.html#cb218-23" tabindex="-1"></a><span class="co">#&gt; [23] &quot;smtps&quot;   &quot;telnet&quot;  &quot;tftp&quot;   </span></span>
-<span id="cb218-24"><a href="final-r-session.html#cb218-24" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb218-25"><a href="final-r-session.html#cb218-25" tabindex="-1"></a><span class="co">#&gt; $ipv6</span></span>
-<span id="cb218-26"><a href="final-r-session.html#cb218-26" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span>
-<span id="cb218-27"><a href="final-r-session.html#cb218-27" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb218-28"><a href="final-r-session.html#cb218-28" tabindex="-1"></a><span class="co">#&gt; $http2</span></span>
-<span id="cb218-29"><a href="final-r-session.html#cb218-29" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span>
-<span id="cb218-30"><a href="final-r-session.html#cb218-30" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb218-31"><a href="final-r-session.html#cb218-31" tabindex="-1"></a><span class="co">#&gt; $idn</span></span>
-<span id="cb218-32"><a href="final-r-session.html#cb218-32" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
-<p>This interactive book was last updated at 2024-06-10 14:49:28.935609.</p>
+<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb223-1"><a href="final-r-session.html#cb223-1" tabindex="-1"></a>curl<span class="sc">::</span><span class="fu">curl_version</span>()</span>
+<span id="cb223-2"><a href="final-r-session.html#cb223-2" tabindex="-1"></a><span class="co">#&gt; $version</span></span>
+<span id="cb223-3"><a href="final-r-session.html#cb223-3" tabindex="-1"></a><span class="co">#&gt; [1] &quot;7.81.0&quot;</span></span>
+<span id="cb223-4"><a href="final-r-session.html#cb223-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb223-5"><a href="final-r-session.html#cb223-5" tabindex="-1"></a><span class="co">#&gt; $ssl_version</span></span>
+<span id="cb223-6"><a href="final-r-session.html#cb223-6" tabindex="-1"></a><span class="co">#&gt; [1] &quot;OpenSSL/3.0.2&quot;</span></span>
+<span id="cb223-7"><a href="final-r-session.html#cb223-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb223-8"><a href="final-r-session.html#cb223-8" tabindex="-1"></a><span class="co">#&gt; $libz_version</span></span>
+<span id="cb223-9"><a href="final-r-session.html#cb223-9" tabindex="-1"></a><span class="co">#&gt; [1] &quot;1.2.11&quot;</span></span>
+<span id="cb223-10"><a href="final-r-session.html#cb223-10" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb223-11"><a href="final-r-session.html#cb223-11" tabindex="-1"></a><span class="co">#&gt; $libssh_version</span></span>
+<span id="cb223-12"><a href="final-r-session.html#cb223-12" tabindex="-1"></a><span class="co">#&gt; [1] &quot;libssh/0.9.6/openssl/zlib&quot;</span></span>
+<span id="cb223-13"><a href="final-r-session.html#cb223-13" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb223-14"><a href="final-r-session.html#cb223-14" tabindex="-1"></a><span class="co">#&gt; $libidn_version</span></span>
+<span id="cb223-15"><a href="final-r-session.html#cb223-15" tabindex="-1"></a><span class="co">#&gt; [1] &quot;2.3.2&quot;</span></span>
+<span id="cb223-16"><a href="final-r-session.html#cb223-16" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb223-17"><a href="final-r-session.html#cb223-17" tabindex="-1"></a><span class="co">#&gt; $host</span></span>
+<span id="cb223-18"><a href="final-r-session.html#cb223-18" tabindex="-1"></a><span class="co">#&gt; [1] &quot;x86_64-pc-linux-gnu&quot;</span></span>
+<span id="cb223-19"><a href="final-r-session.html#cb223-19" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb223-20"><a href="final-r-session.html#cb223-20" tabindex="-1"></a><span class="co">#&gt; $protocols</span></span>
+<span id="cb223-21"><a href="final-r-session.html#cb223-21" tabindex="-1"></a><span class="co">#&gt;  [1] &quot;dict&quot;    &quot;file&quot;    &quot;ftp&quot;     &quot;ftps&quot;    &quot;gopher&quot;  &quot;gophers&quot; &quot;http&quot;    &quot;https&quot;   &quot;imap&quot;    &quot;imaps&quot;   &quot;ldap&quot;   </span></span>
+<span id="cb223-22"><a href="final-r-session.html#cb223-22" tabindex="-1"></a><span class="co">#&gt; [12] &quot;ldaps&quot;   &quot;mqtt&quot;    &quot;pop3&quot;    &quot;pop3s&quot;   &quot;rtmp&quot;    &quot;rtsp&quot;    &quot;scp&quot;     &quot;sftp&quot;    &quot;smb&quot;     &quot;smbs&quot;    &quot;smtp&quot;   </span></span>
+<span id="cb223-23"><a href="final-r-session.html#cb223-23" tabindex="-1"></a><span class="co">#&gt; [23] &quot;smtps&quot;   &quot;telnet&quot;  &quot;tftp&quot;   </span></span>
+<span id="cb223-24"><a href="final-r-session.html#cb223-24" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb223-25"><a href="final-r-session.html#cb223-25" tabindex="-1"></a><span class="co">#&gt; $ipv6</span></span>
+<span id="cb223-26"><a href="final-r-session.html#cb223-26" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span>
+<span id="cb223-27"><a href="final-r-session.html#cb223-27" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb223-28"><a href="final-r-session.html#cb223-28" tabindex="-1"></a><span class="co">#&gt; $http2</span></span>
+<span id="cb223-29"><a href="final-r-session.html#cb223-29" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span>
+<span id="cb223-30"><a href="final-r-session.html#cb223-30" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb223-31"><a href="final-r-session.html#cb223-31" tabindex="-1"></a><span class="co">#&gt; $idn</span></span>
+<span id="cb223-32"><a href="final-r-session.html#cb223-32" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
+<p>This interactive book was last updated at 2024-06-10 15:39:34.194626.</p>
 
 </div>
 <div class="container">

@@ -259,7 +259,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="10.1" data-path="biocthis-introduction.html"><a href="biocthis-introduction.html#related-past-materials"><i class="fa fa-check"></i><b>10.1</b> Related past materials</a></li>
 <li class="chapter" data-level="10.2" data-path="biocthis-introduction.html"><a href="biocthis-introduction.html#biocthis-main-commands"><i class="fa fa-check"></i><b>10.2</b> biocthis main commands</a></li>
-<li class="chapter" data-level="10.3" data-path="biocthis-introduction.html"><a href="biocthis-introduction.html#live-demo"><i class="fa fa-check"></i><b>10.3</b> Live demo</a></li>
+<li class="chapter" data-level="10.3" data-path="biocthis-introduction.html"><a href="biocthis-introduction.html#live-demo"><i class="fa fa-check"></i><b>10.3</b> Live demo</a>
+<ul>
+<li class="chapter" data-level="10.3.1" data-path="biocthis-introduction.html"><a href="biocthis-introduction.html#example-function"><i class="fa fa-check"></i><b>10.3.1</b> Example function</a></li>
+</ul></li>
 <li class="chapter" data-level="10.4" data-path="biocthis-introduction.html"><a href="biocthis-introduction.html#community-3"><i class="fa fa-check"></i><b>10.4</b> Community</a></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="scrna-seq-data-analysis-overview.html"><a href="scrna-seq-data-analysis-overview.html"><i class="fa fa-check"></i><b>11</b> scRNA-seq data analysis overview</a>
@@ -434,6 +437,70 @@ its companion documentation website at
 history at <a href="https://github.com/lcolladotor/cshl2023pkg/actions" class="uri">https://github.com/lcolladotor/cshl2023pkg/actions</a>. We can see at
 <a href="https://app.codecov.io/gh/lcolladotor/cshl2023pkg" class="uri">https://app.codecov.io/gh/lcolladotor/cshl2023pkg</a> the <em>code coverage</em> results
 for this demonstration package.</p>
+<div id="example-function" class="section level3 hasAnchor" number="10.3.1">
+<h3><span class="header-section-number">10.3.1</span> Example function<a href="biocthis-introduction.html#example-function" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Let’s have a function to work with: <code>weekday_praise()</code>.</p>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="biocthis-introduction.html#cb118-1" tabindex="-1"></a>weekday_praise <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">date =</span> <span class="fu">Sys.Date</span>()) {</span>
+<span id="cb118-2"><a href="biocthis-introduction.html#cb118-2" tabindex="-1"></a>    date <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(date)</span>
+<span id="cb118-3"><a href="biocthis-introduction.html#cb118-3" tabindex="-1"></a>    date_weekday <span class="ot">&lt;-</span> <span class="fu">weekdays</span>(date)</span>
+<span id="cb118-4"><a href="biocthis-introduction.html#cb118-4" tabindex="-1"></a>    <span class="fu">paste0</span>(date_weekday, <span class="st">&quot;: &quot;</span>, praise<span class="sc">::</span><span class="fu">praise</span>())</span>
+<span id="cb118-5"><a href="biocthis-introduction.html#cb118-5" tabindex="-1"></a>}</span>
+<span id="cb118-6"><a href="biocthis-introduction.html#cb118-6" tabindex="-1"></a><span class="fu">weekday_praise</span>()</span>
+<span id="cb118-7"><a href="biocthis-introduction.html#cb118-7" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Monday: You are stupendous!&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="biocthis-introduction.html#cb119-1" tabindex="-1"></a><span class="fu">weekday_praise</span>(<span class="st">&quot;2024-06-09&quot;</span>)</span>
+<span id="cb119-2"><a href="biocthis-introduction.html#cb119-2" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Sunday: You are glorious!&quot;</span></span></code></pre></div>
+<p>Here’s the full code for the function and its documentation.</p>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="biocthis-introduction.html#cb120-1" tabindex="-1"></a><span class="co">#&#39; Praise a weekday</span></span>
+<span id="cb120-2"><a href="biocthis-introduction.html#cb120-2" tabindex="-1"></a><span class="co">#&#39;</span></span>
+<span id="cb120-3"><a href="biocthis-introduction.html#cb120-3" tabindex="-1"></a><span class="co">#&#39; Given a date, figure out which weekday it was, then write a positive</span></span>
+<span id="cb120-4"><a href="biocthis-introduction.html#cb120-4" tabindex="-1"></a><span class="co">#&#39; message.</span></span>
+<span id="cb120-5"><a href="biocthis-introduction.html#cb120-5" tabindex="-1"></a><span class="co">#&#39;</span></span>
+<span id="cb120-6"><a href="biocthis-introduction.html#cb120-6" tabindex="-1"></a><span class="co">#&#39; @param date A `base::Date` object or a `character()` in a format that can be</span></span>
+<span id="cb120-7"><a href="biocthis-introduction.html#cb120-7" tabindex="-1"></a><span class="co">#&#39; converted to a `base::Date` object with `base::as.Date()`.</span></span>
+<span id="cb120-8"><a href="biocthis-introduction.html#cb120-8" tabindex="-1"></a><span class="co">#&#39;</span></span>
+<span id="cb120-9"><a href="biocthis-introduction.html#cb120-9" tabindex="-1"></a><span class="co">#&#39; @importFrom praise praise</span></span>
+<span id="cb120-10"><a href="biocthis-introduction.html#cb120-10" tabindex="-1"></a><span class="co">#&#39; @export</span></span>
+<span id="cb120-11"><a href="biocthis-introduction.html#cb120-11" tabindex="-1"></a><span class="co">#&#39; @examples</span></span>
+<span id="cb120-12"><a href="biocthis-introduction.html#cb120-12" tabindex="-1"></a><span class="co">#&#39;</span></span>
+<span id="cb120-13"><a href="biocthis-introduction.html#cb120-13" tabindex="-1"></a><span class="co">#&#39; ## Praise the current weekday</span></span>
+<span id="cb120-14"><a href="biocthis-introduction.html#cb120-14" tabindex="-1"></a><span class="co">#&#39; weekday_praise()</span></span>
+<span id="cb120-15"><a href="biocthis-introduction.html#cb120-15" tabindex="-1"></a><span class="co">#&#39;</span></span>
+<span id="cb120-16"><a href="biocthis-introduction.html#cb120-16" tabindex="-1"></a><span class="co">#&#39; ## Praise the date we started teaching</span></span>
+<span id="cb120-17"><a href="biocthis-introduction.html#cb120-17" tabindex="-1"></a><span class="co">#&#39; weekday_praise(&quot;2024-06-09&quot;)</span></span>
+<span id="cb120-18"><a href="biocthis-introduction.html#cb120-18" tabindex="-1"></a><span class="co">#&#39;</span></span>
+<span id="cb120-19"><a href="biocthis-introduction.html#cb120-19" tabindex="-1"></a><span class="co">#&#39; ## Praise the current weekday in a reproducible way</span></span>
+<span id="cb120-20"><a href="biocthis-introduction.html#cb120-20" tabindex="-1"></a><span class="co">#&#39; set.seed(20240610)</span></span>
+<span id="cb120-21"><a href="biocthis-introduction.html#cb120-21" tabindex="-1"></a><span class="co">#&#39; weekday_praise()</span></span>
+<span id="cb120-22"><a href="biocthis-introduction.html#cb120-22" tabindex="-1"></a><span class="co">#&#39;</span></span>
+<span id="cb120-23"><a href="biocthis-introduction.html#cb120-23" tabindex="-1"></a><span class="co">#&#39; ## Verify that it&#39;s reproducible</span></span>
+<span id="cb120-24"><a href="biocthis-introduction.html#cb120-24" tabindex="-1"></a><span class="co">#&#39; set.seed(20240610)</span></span>
+<span id="cb120-25"><a href="biocthis-introduction.html#cb120-25" tabindex="-1"></a><span class="co">#&#39; weekday_praise()</span></span>
+<span id="cb120-26"><a href="biocthis-introduction.html#cb120-26" tabindex="-1"></a>weekday_praise <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">date =</span> <span class="fu">Sys.Date</span>()) {</span>
+<span id="cb120-27"><a href="biocthis-introduction.html#cb120-27" tabindex="-1"></a>    date <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(date)</span>
+<span id="cb120-28"><a href="biocthis-introduction.html#cb120-28" tabindex="-1"></a>    date_weekday <span class="ot">&lt;-</span> <span class="fu">weekdays</span>(date)</span>
+<span id="cb120-29"><a href="biocthis-introduction.html#cb120-29" tabindex="-1"></a>    <span class="fu">paste0</span>(date_weekday, <span class="st">&quot;: &quot;</span>, praise<span class="sc">::</span><span class="fu">praise</span>())</span>
+<span id="cb120-30"><a href="biocthis-introduction.html#cb120-30" tabindex="-1"></a>}</span></code></pre></div>
+<p>Here’s a test for our function too.</p>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="biocthis-introduction.html#cb121-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;testthat&quot;</span>)</span>
+<span id="cb121-2"><a href="biocthis-introduction.html#cb121-2" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb121-3"><a href="biocthis-introduction.html#cb121-3" tabindex="-1"></a><span class="co">#&gt; Attaching package: &#39;testthat&#39;</span></span>
+<span id="cb121-4"><a href="biocthis-introduction.html#cb121-4" tabindex="-1"></a><span class="co">#&gt; The following objects are masked from &#39;package:rlang&#39;:</span></span>
+<span id="cb121-5"><a href="biocthis-introduction.html#cb121-5" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb121-6"><a href="biocthis-introduction.html#cb121-6" tabindex="-1"></a><span class="co">#&gt;     is_false, is_null, is_true</span></span>
+<span id="cb121-7"><a href="biocthis-introduction.html#cb121-7" tabindex="-1"></a><span class="co">#&gt; The following object is masked from &#39;package:Hmisc&#39;:</span></span>
+<span id="cb121-8"><a href="biocthis-introduction.html#cb121-8" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb121-9"><a href="biocthis-introduction.html#cb121-9" tabindex="-1"></a><span class="co">#&gt;     describe</span></span></code></pre></div>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="biocthis-introduction.html#cb122-1" tabindex="-1"></a></span>
+<span id="cb122-2"><a href="biocthis-introduction.html#cb122-2" tabindex="-1"></a><span class="do">## Verify that we get the result we wanted</span></span>
+<span id="cb122-3"><a href="biocthis-introduction.html#cb122-3" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">20240610</span>)</span>
+<span id="cb122-4"><a href="biocthis-introduction.html#cb122-4" tabindex="-1"></a><span class="fu">expect_equal</span>(<span class="fu">weekday_praise</span>(<span class="st">&quot;2024-06-09&quot;</span>), <span class="st">&quot;Sunday: You are wondrous!&quot;</span>)</span>
+<span id="cb122-5"><a href="biocthis-introduction.html#cb122-5" tabindex="-1"></a></span>
+<span id="cb122-6"><a href="biocthis-introduction.html#cb122-6" tabindex="-1"></a><span class="do">## Verify that we get an error if the input is not correct</span></span>
+<span id="cb122-7"><a href="biocthis-introduction.html#cb122-7" tabindex="-1"></a><span class="fu">expect_error</span>(<span class="fu">weekday_praise</span>(<span class="st">&quot;240609&quot;</span>))</span>
+<span id="cb122-8"><a href="biocthis-introduction.html#cb122-8" tabindex="-1"></a></span>
+<span id="cb122-9"><a href="biocthis-introduction.html#cb122-9" tabindex="-1"></a><span class="do">## Should work for a vector input</span></span>
+<span id="cb122-10"><a href="biocthis-introduction.html#cb122-10" tabindex="-1"></a><span class="fu">expect_equal</span>(<span class="fu">length</span>(<span class="fu">weekday_praise</span>(<span class="fu">c</span>(<span class="st">&quot;2024-06-09&quot;</span>, <span class="st">&quot;2024-06-10&quot;</span>))), <span class="dv">2</span><span class="dt">L</span>)</span></code></pre></div>
+</div>
 </div>
 <div id="community-3" class="section level2 hasAnchor" number="10.4">
 <h2><span class="header-section-number">10.4</span> Community<a href="biocthis-introduction.html#community-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>

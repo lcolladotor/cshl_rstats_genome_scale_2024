@@ -91,6 +91,7 @@ biocthis-introduction
 related-past-materials
 biocthis-main-commands
 live-demo
+example-function
 community-3
 scrna-seq-data-analysis-overview
 single-cell-rna-sequencing
