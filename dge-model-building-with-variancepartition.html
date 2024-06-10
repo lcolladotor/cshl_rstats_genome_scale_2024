@@ -458,6 +458,9 @@ font-family: sans-serif;
 ⚠️ <strong>Very important</strong>: always inspect if there are any correlated variables with the one of interest in your study! This is extremely important as correlated variables could represent confounding factors and/or hinder the detection of significant DE events, thus yielding to misleading results.
 </p>
 <p>Importantly, <code>Group</code> is not highly correlated with any other variable in this study, but <code>overallMapRate</code> is correlated with <code>rRNA_rate</code>, library preparation <code>plate</code>, and the sequencing <code>flowcell</code>; <code>sum</code> (library size) and <code>detected</code> (number of expressed genes) are also correlated. For a detailed definition of these variables check <a href="https://lcolladotor.github.io/cshl_rstats_genome_scale_2023/smokingmouse-rse.html">here</a>.</p>
+<p class="exercise">
+📝 <strong>Exercise 1</strong>: Run a CCA analysis and determine which pairs of variables in your dataset are correlated. Is there any correlated variable with your variable of interest?
+</p>
 <p>Depending on your results there’s sometimes convenient to dig a little deeper into the relationship between correlated variables and to analyze these metrics among our control and experimental samples. Let’s work on that!</p>
 <div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="dge-model-building-with-variancepartition.html#cb102-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;ggplot2&quot;</span>)</span>
 <span id="cb102-2"><a href="dge-model-building-with-variancepartition.html#cb102-2" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;cowplot&quot;</span>)</span>
@@ -760,6 +763,9 @@ font-family: sans-serif;
 <figure>
 <img src="Figures/varPart_subset.png" width="800px" align=center />
 </figure>
+<p class="exercise">
+📝 <strong>Exercise 2</strong>: Perform a variance partition analysis and determine which of your correlated variables have higher contributions in gene expression variance. Based on that, select a set of variables to model gene expression for DGE.
+</p>
 <p>But what does it mean that a variable explains a high percentage of the expression variation of a gene? In the following section will visualize the existing relationships between the gene expression values in the samples and the sample-level variables.</p>
 </div>
 <div id="examine-the-expression-of-most-affected-genes-by-each-sample-variable" class="section level2 hasAnchor" number="7.3">
@@ -896,10 +902,10 @@ font-family: sans-serif;
 }
 </style>
 <p class="exercise">
-📝 <strong>Exercise 1</strong>: What % of variance does <code>Group</code> explain for the gene ENSMUSG00000042348.10? Create the boxplots for its counts in control and experimental samples. Is it more likely that the gene is up-regulated or down-regulated?
+📝 <strong>Exercise 3</strong>: What % of variance does <code>Group</code> explain for the gene ENSMUSG00000042348.10? Create the boxplots for its counts in control and experimental samples. Is it more likely that the gene is up-regulated or down-regulated?
 </p>
 <p class="exercise">
-📝 <strong>Exercise 2</strong>: Do the same for the gene ENSMUSG00000064372.1. What do you observe in terms of variance percentage and sample differences?
+📝 <strong>Exercise 3</strong>: Do the same for the gene ENSMUSG00000064372.1. What do you observe in terms of variance percentage and sample differences?
 </p>
 </div>
 <div id="references-3" class="section level2 unnumbered hasAnchor">
