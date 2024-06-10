@@ -38,14 +38,15 @@ involved in.
 
 ## Live demo
 
-Here is the live demo result https://github.com/lcolladotor/cshl2023pkg/ with
+Here is the live demo result https://github.com/lcolladotor/cshl2024pkg/ with
 its companion documentation website at
-https://lcolladotor.github.io/cshl2023pkg/ from 2023.
+https://lcolladotor.github.io/cshl2024pkg/. You might also want to check the
+2023 version at https://github.com/lcolladotor/cshl2024pkg/.
 
 Check the git commit history at
-https://github.com/lcolladotor/cshl2023pkg/commits/devel and the GitHub Actions
-history at https://github.com/lcolladotor/cshl2023pkg/actions. We can see at
-https://app.codecov.io/gh/lcolladotor/cshl2023pkg the _code coverage_ results
+https://github.com/lcolladotor/cshl2024pkg/commits/devel and the GitHub Actions
+history at https://github.com/lcolladotor/cshl2024pkg/actions. We can see at
+https://app.codecov.io/gh/lcolladotor/cshl2024pkg the _code coverage_ results
 for this demonstration package.
 
 ### Example function
