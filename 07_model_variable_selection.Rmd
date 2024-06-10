@@ -636,7 +636,7 @@ font-family: sans-serif;
 
 
 <p class="exercise">
-📝 **Exercise 3**: Do the same for the gene ENSMUSG00000064372.1. What do you observe in terms of variance percentage and sample differences?
+📝 **Exercise 4**: Do the same for the gene ENSMUSG00000064372.1. What do you observe in terms of variance percentage and sample differences?
 </p>
 
 
