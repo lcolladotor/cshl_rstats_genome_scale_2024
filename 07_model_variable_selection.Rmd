@@ -55,7 +55,7 @@ Additionally, the analysis is better performed with simpler models, specially wh
 Hence, to remove such variables we must first identify them. We will perform a Canonical Correlation Analysis (CCA) with `canCorPairs()` that assesses the degree to which the variables co-vary and contain the same information. With CCA, linear combinations that maximize the correlation between variable sets are estimated. CCA is just like a normal correlation analysis between 2 vectors but it can accommodate matrices as well (variable sets). Note that CCA returns correlations values between 0 and 1 [2].
 
 
-```{r CCA, message=FALSE, warning=FALSE, out.height=7, out.width=7}
+```{r CCA, message=FALSE, warning=FALSE}
 library("variancePartition")
 library("pheatmap")
 
