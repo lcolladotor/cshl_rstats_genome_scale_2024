@@ -326,13 +326,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11.10" data-path="scrna-seq-data-analysis-overview.html"><a href="scrna-seq-data-analysis-overview.html#cell-type-annotation"><i class="fa fa-check"></i><b>11.10</b> Cell type annotation</a>
 <ul>
 <li class="chapter" data-level="11.10.1" data-path="scrna-seq-data-analysis-overview.html"><a href="scrna-seq-data-analysis-overview.html#assigning-cell-labels-from-reference-data"><i class="fa fa-check"></i><b>11.10.1</b> Assigning cell labels from reference data</a></li>
+<li class="chapter" data-level="11.10.2" data-path="scrna-seq-data-analysis-overview.html"><a href="scrna-seq-data-analysis-overview.html#getting-ready-again"><i class="fa fa-check"></i><b>11.10.2</b> Getting ready again</a></li>
+<li class="chapter" data-level="11.10.3" data-path="scrna-seq-data-analysis-overview.html"><a href="scrna-seq-data-analysis-overview.html#using-existing-references"><i class="fa fa-check"></i><b>11.10.3</b> Using existing references</a></li>
+<li class="chapter" data-level="11.10.4" data-path="scrna-seq-data-analysis-overview.html"><a href="scrna-seq-data-analysis-overview.html#assigning-cell-labels-from-gene-sets"><i class="fa fa-check"></i><b>11.10.4</b> Assigning cell labels from gene sets</a></li>
 </ul></li>
-<li class="chapter" data-level="11.11" data-path="scrna-seq-data-analysis-overview.html"><a href="scrna-seq-data-analysis-overview.html#getting-ready-again"><i class="fa fa-check"></i><b>11.11</b> Getting ready again</a>
-<ul>
-<li class="chapter" data-level="11.11.1" data-path="scrna-seq-data-analysis-overview.html"><a href="scrna-seq-data-analysis-overview.html#using-existing-references"><i class="fa fa-check"></i><b>11.11.1</b> Using existing references</a></li>
-<li class="chapter" data-level="11.11.2" data-path="scrna-seq-data-analysis-overview.html"><a href="scrna-seq-data-analysis-overview.html#assigning-cell-labels-from-gene-sets"><i class="fa fa-check"></i><b>11.11.2</b> Assigning cell labels from gene sets</a></li>
-</ul></li>
-<li class="chapter" data-level="11.12" data-path="scrna-seq-data-analysis-overview.html"><a href="scrna-seq-data-analysis-overview.html#references-4"><i class="fa fa-check"></i><b>11.12</b> References</a></li>
+<li class="chapter" data-level="11.11" data-path="scrna-seq-data-analysis-overview.html"><a href="scrna-seq-data-analysis-overview.html#references-4"><i class="fa fa-check"></i><b>11.11</b> References</a></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="introduction-to-spatial-transcriptomics.html"><a href="introduction-to-spatial-transcriptomics.html"><i class="fa fa-check"></i><b>12</b> Introduction to spatial transcriptomics</a>
 <ul>
@@ -1668,9 +1666,8 @@ Interpretation of scRNA-seq data is often manual and a common bottleneck in the 
 The SingleR method (Aran et al. 2019) for cell type annotation assigns labels to cells based on the reference samples with the highest Spearman rank correlations, using only the marker genes between pairs of labels to focus on the relevant differences between cell types.</p>
 <p>It also performs a fine-tuning step for each cell where the correlations are recomputed with just the marker genes for the top-scoring labels. This aims to resolve any ambiguity between those labels by removing noise from irrelevant markers for other labels. Further details can be found in the <a href="https://bioconductor.org/books/release/SingleRBook/">SingleR book</a>.</p>
 </div>
-</div>
-<div id="getting-ready-again" class="section level2 hasAnchor" number="11.11">
-<h2><span class="header-section-number">11.11</span> Getting ready again<a href="scrna-seq-data-analysis-overview.html#getting-ready-again" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="getting-ready-again" class="section level3 hasAnchor" number="11.10.2">
+<h3><span class="header-section-number">11.10.2</span> Getting ready again<a href="scrna-seq-data-analysis-overview.html#getting-ready-again" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>We will use now one of the 10X PBMC datasets as our test. While will apply quality control, normalization and clustering for this dataset, altough this is not strictly necessary.</p>
 <p><strong>It is entirely possible to run <code>SingleR()</code> on the raw counts without any a priori quality control and filter on the annotation results at one’s leisure </strong></p>
 <div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="scrna-seq-data-analysis-overview.html#cb211-1" tabindex="-1"></a><span class="do">## Load data</span></span>
@@ -1767,8 +1764,9 @@ The SingleR method (Aran et al. 2019) for cell type annotation assigns labels t
 <div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="scrna-seq-data-analysis-overview.html#cb218-1" tabindex="-1"></a><span class="fu">plotExpression</span>(sce.pbmc, <span class="at">features=</span><span class="fu">c</span>(<span class="st">&quot;CD14&quot;</span>, <span class="st">&quot;CD68&quot;</span>,</span>
 <span id="cb218-2"><a href="scrna-seq-data-analysis-overview.html#cb218-2" tabindex="-1"></a>    <span class="st">&quot;MNDA&quot;</span>, <span class="st">&quot;FCGR3A&quot;</span>), <span class="at">x=</span><span class="st">&quot;label&quot;</span>, <span class="at">colour_by=</span><span class="st">&quot;label&quot;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/set_PBMC_dataset-2.png" width="672" /></p>
-<div id="using-existing-references" class="section level3 hasAnchor" number="11.11.1">
-<h3><span class="header-section-number">11.11.1</span> Using existing references<a href="scrna-seq-data-analysis-overview.html#using-existing-references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+</div>
+<div id="using-existing-references" class="section level3 hasAnchor" number="11.10.3">
+<h3><span class="header-section-number">11.10.3</span> Using existing references<a href="scrna-seq-data-analysis-overview.html#using-existing-references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The <code>celldex</code> contains a number of curated reference datasets, mostly assembled from bulk RNA-seq or microarray data of sorted cell types. These references are often good enough for most applications provided that they contain the cell types that are expected in the test population. Here, we will use a reference constructed from Blueprint and ENCODE data (Martens and Stunnenberg 2013; The ENCODE Project Consortium 2012); this is obtained by calling the <code>BlueprintEncode()</code> function to construct a SummarizedExperiment containing log-expression values with curated labels for each sample.</p>
 <div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb219-1"><a href="scrna-seq-data-analysis-overview.html#cb219-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;celldex&quot;</span>)</span>
 <span id="cb219-2"><a href="scrna-seq-data-analysis-overview.html#cb219-2" tabindex="-1"></a><span class="co">#&gt; </span></span>
@@ -1819,8 +1817,8 @@ The SingleR method (Aran et al. 2019) for cell type annotation assigns labels t
 <p>Applying both strategies to examine the agreement (or lack thereof) between reference label and cluster assignments could work for you. Any inconsistencies are not necessarily problematic due to the conceptual differences between the two approaches; indeed, one could use those discrepancies as the basis for further investigation to discover novel factors of variation in the data.</p>
 <p><strong>We can also apply SingleR to single-cell reference datasets that are curated and supplied by the user. This is most obviously useful when we have an existing dataset that was previously (manually) annotated and we want to use that knowledge to annotate a new dataset in an automated manner.</strong></p>
 </div>
-<div id="assigning-cell-labels-from-gene-sets" class="section level3 hasAnchor" number="11.11.2">
-<h3><span class="header-section-number">11.11.2</span> Assigning cell labels from gene sets<a href="scrna-seq-data-analysis-overview.html#assigning-cell-labels-from-gene-sets" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="assigning-cell-labels-from-gene-sets" class="section level3 hasAnchor" number="11.10.4">
+<h3><span class="header-section-number">11.10.4</span> Assigning cell labels from gene sets<a href="scrna-seq-data-analysis-overview.html#assigning-cell-labels-from-gene-sets" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>A related strategy is to explicitly identify sets of marker genes that are highly expressed in each individual cell. This does not require matching of individual cells to the expression values of the reference dataset, which is faster and more convenient when only the identities of the markers are available.</p>
 <p><em>For this example, we will be using the neuronal cell type markers derived from the Zeisel et al. (2015) study.</em></p>
 <div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="scrna-seq-data-analysis-overview.html#cb225-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;scran&quot;</span>)</span>
@@ -2162,8 +2160,8 @@ The SingleR method (Aran et al. 2019) for cell type annotation assigns labels t
 <p>the advantage of the AUCell approach is that it does not require reference expression values. This is particularly useful when dealing with gene sets derived from the literature or other qualitative forms of biological knowledge.</p>
 </div>
 </div>
-<div id="references-4" class="section level2 hasAnchor" number="11.12">
-<h2><span class="header-section-number">11.12</span> References<a href="scrna-seq-data-analysis-overview.html#references-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="references-4" class="section level2 hasAnchor" number="11.11">
+<h2><span class="header-section-number">11.11</span> References<a href="scrna-seq-data-analysis-overview.html#references-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Amezquita, R. A., Lun, A. T., Becht, E., Carey, V. J., Carpp, L. N., Geistlinger, L., … &amp; Hicks, S. C. (2020). Orchestrating single-cell analysis with Bioconductor. Nature methods, 17(2), 137-145.</p>
 <p>Aran, D., A. P. Looney, L. Liu, E. Wu, V. Fong, A. Hsu, S. Chak, et al. 2019. “Reference-based analysis of lung single-cell sequencing reveals a transitional profibrotic macrophage.” Nat. Immunol. 20 (2): 163–72.</p>
 <p>Bach, K., S. Pensa, M. Grzelak, J. Hadfield, D. J. Adams, J. C. Marioni, and W. T. Khaled. 2017. “Differentiation dynamics of mammary epithelial cells revealed by single-cell RNA sequencing.” Nat Commun 8 (1): 2128.</p>

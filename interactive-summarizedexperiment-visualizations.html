@@ -326,13 +326,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11.10" data-path="scrna-seq-data-analysis-overview.html"><a href="scrna-seq-data-analysis-overview.html#cell-type-annotation"><i class="fa fa-check"></i><b>11.10</b> Cell type annotation</a>
 <ul>
 <li class="chapter" data-level="11.10.1" data-path="scrna-seq-data-analysis-overview.html"><a href="scrna-seq-data-analysis-overview.html#assigning-cell-labels-from-reference-data"><i class="fa fa-check"></i><b>11.10.1</b> Assigning cell labels from reference data</a></li>
+<li class="chapter" data-level="11.10.2" data-path="scrna-seq-data-analysis-overview.html"><a href="scrna-seq-data-analysis-overview.html#getting-ready-again"><i class="fa fa-check"></i><b>11.10.2</b> Getting ready again</a></li>
+<li class="chapter" data-level="11.10.3" data-path="scrna-seq-data-analysis-overview.html"><a href="scrna-seq-data-analysis-overview.html#using-existing-references"><i class="fa fa-check"></i><b>11.10.3</b> Using existing references</a></li>
+<li class="chapter" data-level="11.10.4" data-path="scrna-seq-data-analysis-overview.html"><a href="scrna-seq-data-analysis-overview.html#assigning-cell-labels-from-gene-sets"><i class="fa fa-check"></i><b>11.10.4</b> Assigning cell labels from gene sets</a></li>
 </ul></li>
-<li class="chapter" data-level="11.11" data-path="scrna-seq-data-analysis-overview.html"><a href="scrna-seq-data-analysis-overview.html#getting-ready-again"><i class="fa fa-check"></i><b>11.11</b> Getting ready again</a>
-<ul>
-<li class="chapter" data-level="11.11.1" data-path="scrna-seq-data-analysis-overview.html"><a href="scrna-seq-data-analysis-overview.html#using-existing-references"><i class="fa fa-check"></i><b>11.11.1</b> Using existing references</a></li>
-<li class="chapter" data-level="11.11.2" data-path="scrna-seq-data-analysis-overview.html"><a href="scrna-seq-data-analysis-overview.html#assigning-cell-labels-from-gene-sets"><i class="fa fa-check"></i><b>11.11.2</b> Assigning cell labels from gene sets</a></li>
-</ul></li>
-<li class="chapter" data-level="11.12" data-path="scrna-seq-data-analysis-overview.html"><a href="scrna-seq-data-analysis-overview.html#references-4"><i class="fa fa-check"></i><b>11.12</b> References</a></li>
+<li class="chapter" data-level="11.11" data-path="scrna-seq-data-analysis-overview.html"><a href="scrna-seq-data-analysis-overview.html#references-4"><i class="fa fa-check"></i><b>11.11</b> References</a></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="introduction-to-spatial-transcriptomics.html"><a href="introduction-to-spatial-transcriptomics.html"><i class="fa fa-check"></i><b>12</b> Introduction to spatial transcriptomics</a>
 <ul>
@@ -685,7 +683,7 @@ Examples include low-dimensional embeddings from principal components analysis (
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="interactive-summarizedexperiment-visualizations.html#cb32-1" tabindex="-1"></a><span class="do">## Lets get some data using spatialLIBD</span></span>
 <span id="cb32-2"><a href="interactive-summarizedexperiment-visualizations.html#cb32-2" tabindex="-1"></a>sce_layer <span class="ot">&lt;-</span> spatialLIBD<span class="sc">::</span><span class="fu">fetch_data</span>(<span class="st">&quot;sce_layer&quot;</span>)</span>
 <span id="cb32-3"><a href="interactive-summarizedexperiment-visualizations.html#cb32-3" tabindex="-1"></a><span class="co">#&gt; adding rname &#39;https://www.dropbox.com/s/bg8xwysh2vnjwvg/Human_DLPFC_Visium_processedData_sce_scran_sce_layer_spatialLIBD.Rdata?dl=1&#39;</span></span>
-<span id="cb32-4"><a href="interactive-summarizedexperiment-visualizations.html#cb32-4" tabindex="-1"></a><span class="co">#&gt; 2024-06-11 10:55:10.106743 loading file /github/home/.cache/R/BiocFileCache/4764df94b32_Human_DLPFC_Visium_processedData_sce_scran_sce_layer_spatialLIBD.Rdata%3Fdl%3D1</span></span></code></pre></div>
+<span id="cb32-4"><a href="interactive-summarizedexperiment-visualizations.html#cb32-4" tabindex="-1"></a><span class="co">#&gt; 2024-06-11 11:24:44.858705 loading file /github/home/.cache/R/BiocFileCache/3c441dfbc05_Human_DLPFC_Visium_processedData_sce_scran_sce_layer_spatialLIBD.Rdata%3Fdl%3D1</span></span></code></pre></div>
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="interactive-summarizedexperiment-visualizations.html#cb33-1" tabindex="-1"></a>sce_layer</span>
 <span id="cb33-2"><a href="interactive-summarizedexperiment-visualizations.html#cb33-2" tabindex="-1"></a><span class="co">#&gt; class: SingleCellExperiment </span></span>
 <span id="cb33-3"><a href="interactive-summarizedexperiment-visualizations.html#cb33-3" tabindex="-1"></a><span class="co">#&gt; dim: 22331 76 </span></span>
