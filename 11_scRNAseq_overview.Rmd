@@ -1224,7 +1224,7 @@ The SingleR method (Aran et al. 2019) for cell type annotation assigns labels to
 
 It also performs a fine-tuning step for each cell where the correlations are recomputed with just the marker genes for the top-scoring labels. This aims to resolve any ambiguity between those labels by removing noise from irrelevant markers for other labels. Further details can be found in the [SingleR book](https://bioconductor.org/books/release/SingleRBook/).
 
-## Getting ready again
+### Getting ready again
 
 We will use now one of the 10X PBMC datasets as our test. While will apply quality control, normalization and clustering for this dataset, altough this is not strictly necessary. 
 
