@@ -793,7 +793,12 @@ table(clust.5)
 ## Less resolved clustering using a larger k (k=50)
 clust.50 <- clusterCells(sce.zeisel, use.dimred = "PCA", BLUSPARAM = NNGraphParam(k = 50))
 table(clust.50)
+
+## Plot TSNE coloured by cluster assignments again, now with clust.50 results
+colLabels(sce.zeisel) <- clust.50
+plotReducedDim(sce.zeisel, "TSNE", colour_by = "label")
 ```
+
 **Edge weighting scheme**
 
 Further tweaking can be performed by changing the edge weighting scheme during graph construction. Setting `type = "number"` will weight edges based on the number of nearest neighbors that are shared between two cells. Similarly, `type = "jaccard"` will weight edges according to the Jaccard index of the two sets of neighbors. We can also disable weighting altogether by using a simple  
@@ -947,34 +952,491 @@ Another simple approach to improving resolution is to repeat the feature selecti
 
 ## Marker gene detection
 
-```{r, }
+To interpret our clustering results, we need to identify the genes that drive separation between clusters. These marker genes allow us to assign biological meaning to each cluster based on their functional annotation. In the simplest case, we have *a priori* knowledge of the marker genes associated with particular cell types, allowing us to treat the clustering as a proxy for cell type identity.
+
+The same principle can be applied to discover more subtle differences between clusters (e.g., changes in activation or differentiation state) based on the behavior of genes in the affected pathways.
+
+The most straightforward approach to marker gene detection involves testing for differential expression between clusters. If a gene is strongly DE between clusters, it is likely to have driven the separation of cells in the clustering algorithm. 
+
+Several methods are available to quantify the differences in expression profiles between clusters and obtain a single ranking of genes for each cluster.
+
+### Scoring markers by pairwise comparisons
+
+Our general strategy is to compare each pair of clusters and compute scores quantifying the differences in the expression distributions between clusters. The scores for all pairwise comparisons involving a particular cluster are then consolidated into a single `DataFrame` for that cluster.
+
+The `scoreMarkers()` function from `scran` returns a list of DataFrames, where each DataFrame corresponds to a cluster and each row of the DataFrame corresponds to a gene. 
+
+In the DataFrame for cluster "X", the columns contain 
+
+- the "self.average": the mean log-expression in "X"
+- "other.average": the grand mean across all other clusters
+- self.detected: the proportion of cells with detected expression in "X"
+- other.detected: the mean detected proportion across all other clusters
+- a variety of effect size summaries generated from all pairwise comparisons involving "X"
+
+```{r, marker_genes_seizel1}
+library("scran")
+
+## Scoring markers by pairwise comparisons 
+marker.info <- scoreMarkers(sce.zeisel, colLabels(sce.zeisel))
+marker.info
+
+## Statistics for cluster 1
+colnames(marker.info[["1"]]) 
 ```
 
-```{r, }
+For each cluster, we can then rank candidate markers based on one of these effect size summaries
+
+```{r, rank_cluster1_mean.AUC}
+## Subset to the first cluster
+chosen <- marker.info[["1"]]
+
+## Rank candidate markers based on one of these effect size summaries
+ordered <- chosen[order(chosen$mean.AUC, decreasing=TRUE),]
+head(ordered[,1:4]) 
 ```
 
-```{r, }
+```{r, plot_markergenes1}
+library("scater")
+
+## Plot the marker gene expression by label
+plotExpression(sce.zeisel, features=head(rownames(ordered)), 
+    x="label", colour_by="label")
+# Distribution of expression values across clusters for the top potential 
+# marker genes (as determined by the mean AUC) for cluster 1
+```
+Here, we deliberately use pairwise comparisons rather than comparing each cluster to the average of all other cells. The latter approach is sensitive to the population composition, which introduces an element of unpredictability to the marker sets due to variation in cell type abundances. 
+
+In the worst case, the presence of one sub-population containing a majority of the cells will drive the selection of top markers for every other cluster, pushing out useful genes that can distinguish between the smaller sub-populations.
+
+### Effect sizes for pairwise comparisons
+
+The AUC or Cohen’s *d* is usually the best choice for general purpose marker detection, as they are effective regardless of the magnitude of the expression values. The log-fold change in the detected proportion is specifically useful for identifying binary changes in expression. 
+
+**AUC**
+
+In the context of marker detection, the area under the curve (AUC) quantifies our ability to distinguish between two distributions in a pairwise comparison. The AUC represents the probability that a randomly chosen observation from our cluster of interest is greater than a randomly chosen observation from the other cluster. 
+
+- A value of 1 corresponds to upregulation, where all values of our cluster of interest are greater than any value from the other cluster
+- A value of 0.5 means that there is no net difference in the location of the distributions
+- A value of 0 corresponds to downregulation
+
+*he AUC is closely related to the U-statistic in the Wilcoxon ranked sum test (a.k.a., Mann-Whitney U-test).*
+
+```{r, subset_auc}
+## Subset the AUC from the candidate markers of cluster 1 info
+## and rank (by AUC)
+auc.only <- chosen[,grepl("AUC", colnames(chosen))]
+auc.only[order(auc.only$mean.AUC,decreasing=TRUE),]
 ```
 
-```{r, }
+__Cohen’s *d* __
+
+Cohen’s **d** is a standardized log-fold change where the difference in the mean log-expression between groups is scaled by the average standard deviation across groups. In other words, it is the number of standard deviations that separate the means of the two groups. 
+
+The interpretation is similar to the log-fold change:
+
+- Positive values indicate that the gene is upregulated in our cluster of interest
+- Negative values indicate downregulation
+- values close to zero indicate that there is little difference. 
+
+Cohen’s **d** is roughly analogous to the t-statistic in various two-sample t-tests.
+
+```{r, subset_cohens_d}
+## Subset the "logFC.cohen" from the candidate markers of cluster 1 info
+## and rank (by Cohen’s d)
+cohen.only <- chosen[,grepl("logFC.cohen", colnames(chosen))]
+cohen.only[order(cohen.only$mean.logFC.cohen,decreasing=TRUE),]
 ```
 
-```{r, }
+**log-fold change**
+
+Finally, we also compute the log-fold change in the proportion of cells with detected expression between clusters. This ignores any information about the magnitude of expression, *only considering whether any expression is detected at all*. Again, positive values indicate that a greater proportion of cells express the gene in our cluster of interest compared to the other cluster. 
+
+*Note that a pseudo-count is added to avoid undefined log-fold changes when no cells express the gene in either group.*
+
+```{r, subset_logFC}
+## Subset the "logFC.detected" from the candidate markers of cluster 1 info 
+## and rank (by log-fold change)
+detect.only <- chosen[,grepl("logFC.detected", colnames(chosen))]
+detect.only[order(detect.only$mean.logFC.detected,decreasing=TRUE),]
 ```
+
+The AUC or Cohen’s *d* is usually the best choice for general purpose marker detection, as they are effective regardless of the magnitude of the expression values. The log-fold change in the detected proportion is specifically useful for identifying binary changes in expression.
+
+### Summaries of pairwise effects
+
+In a dataset with "N" clusters, each cluster is associated with "N" − 1 values for each type of effect size described. To simplify interpretation, we summarize the effects for each cluster into some key statistics such as the mean and median. 
+
+Each summary statistic has a different interpretation when used for ranking:
+
+- **mean**: The most obvious summary statistic is the mean. For cluster "X", a large mean effect size (>0 for the log-fold changes, >0.5 for the AUCs) indicates that the gene is upregulated in "X" compared to the average of the other groups.
+
+- **median**: a large value indicates that the gene is upregulated in "X" compared to most (>50%) other clusters. The median provides greater robustness to outliers than the mean, which may or may not be desirable. On one hand, the median avoids an inflated effect size if only a minority of comparisons have large effects; on the other hand, it will also overstate the effect size by ignoring a minority of comparisons that have opposing effects.
+
+- **minimum value:** The minimum value (min.*) is the most stringent summary for identifying upregulated genes, as a large value indicates that the gene is upregulated in "X" compared to all other clusters. Conversely, if the minimum is small (<0 for the log-fold changes, <0.5 for the AUCs), we can conclude that the gene is downregulated in "X" compared to at least one other cluster.
+
+- **maximum value:** The maximum value (max.*) is the least stringent summary for identifying upregulated genes, as a large value can be obtained if there is strong upregulation in "X" compared to any other cluster. Conversely, if the maximum is small, we can conclude that the gene is downregulated in "X" compared to all other clusters.
+
+- **minimum rank:** The minimum rank, a.k.a., “min-rank” (rank.*) is the smallest rank of each gene across all pairwise comparisons. Specifically, genes are ranked within each pairwise comparison based on decreasing effect size, and then the smallest rank across all comparisons is reported for each gene. If a gene has a small min-rank, we can conclude that it is one of the top upregulated genes in at least one comparison of "X" to another cluster.
+
+Each of these summaries is computed for each effect size, for each gene, and for each cluster. 
+
+Our next step is to choose one of these summary statistics for one of the effect sizes and to use it to rank the rows of the DataFrame. For identifying upregulated genes, ranking by the minimum is the most stringent and the maximum is the least stringent; the mean and median fall somewhere in between and are reasonable defaults for most applications. 
+
+### Choose top markers 
+
+*To continue or example, we will use the the median Cohen’s d to obtain a ranking of the marker genes*
+
+Now that we have them ranked, we can choose how many of them are interesting to us. For this example, wi will stay with only the set of markers in which Cohen’s *d* derived min-ranks is less than or equal to 5.
+
+```{r, oreder_markers_rank.logFC.cohen}
+## Order the candidate markers by "rank.logFC.cohen" for each cluster
+ordered <- chosen[order(chosen$rank.logFC.cohen),]
+
+## Choose the top marker genes for each cluster 
+top.ranked <- ordered[ordered$rank.logFC.cohen <= 10,]
+rownames(top.ranked) # Gene names
+```
+
+We can also plot the expression in a Heat Map:
+
+```{r, top_markers_heatmap}
+## Plot a heatmap for the expression of some top marker genes for each cluster
+plotGroupedHeatmap(sce.zeisel, features=rownames(top.ranked), group="label", 
+    center=TRUE, zlim=c(-3, 3))
+```
+### Using a log-fold change threshold
+
+The Cohen’s *d* and AUC calculations consider both the magnitude of the difference between clusters as well as the variability within each cluster. 
+
+If the variability is lower, it is possible for a gene to have a large effect size even if the magnitude of the difference is small. 
+
+These genes tend to be somewhat uninformative for cell type identification despite their strong differential expression (e.g., ribosomal protein genes). We would prefer genes with larger log-fold changes between clusters, even if they have higher variability.
+
+To favor the detection of such genes, we can compute the effect sizes relative to a log-fold change threshold by setting lfc= in scoreMarkers(). 
+
+```{r, marker_genes_seizel2}
+## Scoring markers by pairwise comparisons (effect sizes relative to a log-fold change)
+marker.info.lfc <- scoreMarkers(sce.zeisel, colLabels(sce.zeisel), lfc=2)
+
+## Statistics for cluster 1
+chosen2 <- marker.info.lfc[["1"]] 
+## Rank info from cluster 1 by mean.AUC
+chosen2 <- chosen2[order(chosen2$mean.AUC, decreasing=TRUE),]
+chosen2[,c("self.average", "other.average", "mean.AUC")] # Check "self.average", "other.average", "mean.AUC"
+```
+We can also create something a little bit different. Here we have a dot plot of the top potential marker genes (as determined by the mean AUC) for cluster 1.
+
+- Each row corrresponds to a marker gene and each column corresponds to a cluster. 
+- The size of each dot represents the proportion of cells with detected expression of the gene in the cluster.
+- The color is proportional to the average expression across all cells in that cluster.
+
+```{r, plotDots_markers}
+## Dot plot for the potential top markers for cluster 1
+plotDots(sce.zeisel, rownames(chosen2)[1:10], group="label")
+```
+
+### Handling blocking factors
+
+Some studies may contain factors of variation that are known and not interesting (e.g., batch effects, sex differences). If these are not modelled, they can interfere with marker gene detection, most obviously by inflating the variance within each cluster, but also by distorting the log-fold changes if the cluster composition varies across levels of the blocking factor. 
+
+To avoid these issues, we specify the blocking factor via the block= argument
+
+```{r, add_block_factor}
+## Scoring markers by pairwise comparisons using a block  factor (tissue)
+m.out <- scoreMarkers(sce.zeisel, colLabels(sce.zeisel), block=sce.zeisel$tissue)
+```
+
+For each gene, each pairwise comparison between clusters is performed separately in each level of the blocking factor - in this case, the plate of origin. By comparing within each batch, we cancel out any batch effects so that they are not conflated with the biological differences between subpopulations. The effect sizes are then averaged across batches to obtain a single value per comparison, using a weighted mean that accounts for the number of cells involved in the comparison in each batch. 
+
+A similar correction is applied to the mean log-expression and proportion of detected cells inside and outside each cluster.
+
+```{r, subset_clust1}
+## Subset the info for cluster 1
+demo <- m.out[["1"]] 
+## Order by the log-expression (which had a correction using block=sex)
+ordered <- demo[order(demo$median.logFC.cohen, decreasing=TRUE),]
+ordered[,1:4]
+```
+
+We can also plot our top marker genes expression now coloured by the block factor we used, in this case "tissue".
+
+```{r, plot_markers_byblock}
+## In case we don´t have them as factors for the coloring 
+sce.zeisel$tissue <- as.factor(sce.zeisel$tissue)
+## Plot the top marker genes expression by tissue
+plotExpression(sce.zeisel, features=rownames(ordered)[1:6],
+    x="label", colour_by="tissue")
+```
+
+The block= argument works for all effect sizes shown above and is robust to differences in the log-fold changes or variance between batches. 
+
+However, it assumes that each pair of clusters is present in at least one batch. In scenarios where cells from two clusters never co-occur in the same batch, the associated pairwise comparison will be impossible and is ignored during calculation of summary statistics.
+
+### Deconvobuddies
+
+```{r, deconvobuddies, eval=FALSE}
+if (!requireNamespace("BiocManager", quietly = TRUE)) {
+    install.packages("BiocManager")
+}
+
+BiocManager::install("DeconvoBuddies")
+```
+
+**findMarkers_1vAll**
+
+Calculate 1 vs. All standard fold change for each gene x cell type, wrapper function for scran::findMarkers
+
+https://research.libd.org/DeconvoBuddies/reference/findMarkers_1vAll.html
+
+**get_mean_ratio2**
+
+Calculate the mean ratio value and rank for each gene for each cell type in the sce object, to identify effective marker genes
+
+https://research.libd.org/DeconvoBuddies/reference/get_mean_ratio2.html
 
 ## Cell type annotation
 
-```{r, }
+The most challenging task in scRNA-seq data analysis is arguably the interpretation of the results. Obtaining clusters of cells is fairly straightforward, but it is more difficult to determine what biological state is represented by each of those clusters. Doing so requires us to bridge the gap between the current dataset and prior biological knowledge, and the latter is not always available in a consistent and quantitative manner.
+
+*Even the concept of a “cell type” is not clearly defined :( *
+Interpretation of scRNA-seq data is often manual and a common bottleneck in the analysis workflow.
+
+To expedite this step, we can try to use various computational approaches that exploit prior information to assign meaning to an uncharacterized scRNA-seq dataset. 
+
+The most obvious sources of prior information are the curated gene sets associated with particular biological processes, e.g., from the Gene Ontology (GO) or the Kyoto Encyclopedia of Genes and Genomes (KEGG) collections. Alternatively, we could directly compare our expression profiles to published reference datasets where each sample or cell has already been annotated with its putative biological state by domain experts.
+
+**It is important to have in mind that this step will largely depend on the amount of previous biological knowledge for your specific data set.**
+
+The most obvious sources of prior information are the curated gene sets associated with particular biological processes, e.g., from the Gene Ontology (GO) or the Kyoto Encyclopedia of Genes and Genomes (KEGG) collections. 
+
+Alternatively, we can directly compare our expression profiles to published reference datasets where each sample or cell has already been annotated with its putative biological state by domain experts. 
+
+### Assigning cell labels from reference data
+
+A conceptually straightforward annotation approach is to compare the single-cell expression profiles with previously annotated reference datasets. Labels can then be assigned to each cell in our uncharacterized test dataset based on the most similar reference sample(s). This is a standard classification challenge that can be tackled by standard machine learning techniques such as random forests and support vector machines. 
+
+*Any published and labelled RNA-seq dataset (bulk or single-cell) can be used as a reference*
+
+**SingleR method**
+The SingleR method (Aran et al. 2019) for cell type annotation assigns labels to cells based on the reference samples with the highest Spearman rank correlations, using only the marker genes between pairs of labels to focus on the relevant differences between cell types.
+
+It also performs a fine-tuning step for each cell where the correlations are recomputed with just the marker genes for the top-scoring labels. This aims to resolve any ambiguity between those labels by removing noise from irrelevant markers for other labels. Further details can be found in the [SingleR book](https://bioconductor.org/books/release/SingleRBook/).
+
+## Getting ready again
+
+We will use now one of the 10X PBMC datasets as our test. While will apply quality control, normalization and clustering for this dataset, altough this is not strictly necessary. 
+
+**It is entirely possible to run `SingleR()` on the raw counts without any a priori quality control and filter on the annotation results at one’s leisure **
+
+```{r, set_PBMC_dataset}
+## Load data
+library("DropletTestFiles")
+raw.path <- getTestFile("tenx-2.1.0-pbmc4k/1.0.0/raw.tar.gz")
+out.path <- file.path(tempdir(), "pbmc4k")
+untar(raw.path, exdir=out.path)
+
+library("DropletUtils")
+fname <- file.path(out.path, "raw_gene_bc_matrices/GRCh38")
+sce.pbmc <- read10xCounts(fname, col.names=TRUE)
+
+library("scater")
+rownames(sce.pbmc) <- uniquifyFeatureNames(
+    rowData(sce.pbmc)$ID, rowData(sce.pbmc)$Symbol)
+
+library("EnsDb.Hsapiens.v86")
+location <- mapIds(EnsDb.Hsapiens.v86, keys=rowData(sce.pbmc)$ID, 
+    column="SEQNAME", keytype="GENEID")
+
+### QC
+set.seed(100)
+e.out <- emptyDrops(counts(sce.pbmc))
+sce.pbmc <- sce.pbmc[,which(e.out$FDR <= 0.001)]
+unfiltered <- sce.pbmc
+stats <- perCellQCMetrics(sce.pbmc, subsets=list(Mito=which(location=="MT")))
+high.mito <- isOutlier(stats$subsets_Mito_percent, type="higher")
+sce.pbmc <- sce.pbmc[,!high.mito]
+summary(high.mito)
+
+### Normalization 
+library("scran")
+set.seed(1000)
+clusters <- quickCluster(sce.pbmc)
+sce.pbmc <- computeSumFactors(sce.pbmc, cluster=clusters)
+sce.pbmc <- logNormCounts(sce.pbmc)
+summary(sizeFactors(sce.pbmc))
+
+### Variance modelling
+set.seed(1001)
+dec.pbmc <- modelGeneVarByPoisson(sce.pbmc)
+top.pbmc <- getTopHVGs(dec.pbmc, prop=0.1)
+
+### Dimensionality reduction
+set.seed(10000)
+sce.pbmc <- denoisePCA(sce.pbmc, subset.row=top.pbmc, technical=dec.pbmc)
+set.seed(100000)
+sce.pbmc <- runTSNE(sce.pbmc, dimred="PCA")
+set.seed(1000000)
+sce.pbmc <- runUMAP(sce.pbmc, dimred="PCA")
+
+### Clustering
+g <- buildSNNGraph(sce.pbmc, k=10, use.dimred = 'PCA')
+clust <- igraph::cluster_walktrap(g)$membership
+colLabels(sce.pbmc) <- factor(clust)
+table(colLabels(sce.pbmc))
+plotTSNE(sce.pbmc, colour_by="label")
+
+### Interpretation
+markers <- findMarkers(sce.pbmc, pval.type="some", direction="up")
+marker.set <- markers[["8"]]
+as.data.frame(marker.set[1:30,1:3])
+plotExpression(sce.pbmc, features=c("CD14", "CD68",
+    "MNDA", "FCGR3A"), x="label", colour_by="label")
+
 ```
 
-```{r, }
+### Using existing references
+
+The `celldex` contains a number of curated reference datasets, mostly assembled from bulk RNA-seq or microarray data of sorted cell types. These references are often good enough for most applications provided that they contain the cell types that are expected in the test population. Here, we will use a reference constructed from Blueprint and ENCODE data (Martens and Stunnenberg 2013; The ENCODE Project Consortium 2012); this is obtained by calling the `BlueprintEncode()` function to construct a SummarizedExperiment containing log-expression values with curated labels for each sample.
+
+```{r, get_ref_celldex}
+library("celldex")
+
+ref <- BlueprintEncodeData()
+ref
 ```
 
-```{r, }
+We call the `SingleR()` function to annotate each of our PBMCs with the main cell type labels from the Blueprint/ENCODE reference. This returns a DataFrame where each row corresponds to a cell in the test dataset and contains its label assignments. Alternatively, we could use the labels in ref$label.fine, which provide more resolution at the cost of speed and increased ambiguity in the assignments.
+
+```{r, annotate_pbmc}
+library("SingleR")
+
+pred <- SingleR(test=sce.pbmc, ref=ref, labels=ref$label.main)
+table(pred$labels)
 ```
 
-```{r, }
+Now, we can inspect the results using a heatmap of the per-cell and label scores. Ideally, each cell should exhibit a high score in one label relative to all of the others, indicating that the assignment to that label was unambiguous. 
+
+In this particular case it is true for monocytes and B cells, whereas we see more ambiguity between CD4+ and CD8+ T cells (and to a lesser extent, NK cells).
+
+```{r, predicted_vs_clusters_heatmap}
+plotScoreHeatmap(pred)
 ```
 
-```{r, }
+We now compare the assignments with the clustering results to determine the identity of each cluster using a Heatmap of the distribution of cells across labels and clusters in the 10X PBMC dataset.
+
+*Here, several clusters are nested within the monocyte and B cell labels, indicating that the clustering represents finer subdivisions within the cell types. *
+
+*Interestingly, our clustering does not effectively distinguish between CD4+ and CD8+ T cell labels. This is probably due to the presence of other factors of heterogeneity within the T cell subpopulation (e.g., activation) that have a stronger influence on unsupervised methods than the a priori expected CD4+/CD8+ distinction.*
+
+```{r, assigned_vs_ann_heatmap}
+tab <- table(Assigned=pred$pruned.labels, Cluster=colLabels(sce.pbmc))
+
+# Adding a pseudo-count of 10 to avoid strong color jumps with just 1 cell.
+library(pheatmap)
+pheatmap(log2(tab+10), color=colorRampPalette(c("white", "blue"))(101))
 ```
+
+This highlights some of the differences between reference-based annotation and unsupervised clustering. The former explicitly focuses on aspects of the data that are known to be interesting, simplifying the process of biological interpretation. However, the cost is that the downstream analysis is restricted by the diversity and resolution of the available labels, a problem that is largely avoided by de novo identification of clusters. 
+
+Applying both strategies to examine the agreement (or lack thereof) between reference label and cluster assignments could work for you. Any inconsistencies are not necessarily problematic due to the conceptual differences between the two approaches; indeed, one could use those discrepancies as the basis for further investigation to discover novel factors of variation in the data.
+
+**We can also apply SingleR to single-cell reference datasets that are curated and supplied by the user. This is most obviously useful when we have an existing dataset that was previously (manually) annotated and we want to use that knowledge to annotate a new dataset in an automated manner.**
+
+### Assigning cell labels from gene sets
+
+A related strategy is to explicitly identify sets of marker genes that are highly expressed in each individual cell. This does not require matching of individual cells to the expression values of the reference dataset, which is faster and more convenient when only the identities of the markers are available. 
+
+*For this example, we will be using the neuronal cell type markers derived from the Zeisel et al. (2015) study.*
+
+```{r, labels_from_genesets}
+library("scran")
+
+wilcox.z <- pairwiseWilcox(sce.zeisel, sce.zeisel$level1class, 
+    lfc=1, direction="up")
+
+markers.z <- getTopMarkers(wilcox.z$statistics, wilcox.z$pairs,
+    pairwise=FALSE, n=50)
+
+lengths(markers.z)
+```
+*And our test dataset will be another brain scRNA-seq experiment from Tasic et al. (2016).*
+
+```{r, tasic_dataset}
+library("scRNAseq")
+
+sce.tasic <- TasicBrainData()
+sce.tasic
+```
+
+We are using the `AUCell` package to identify marker sets that are highly expressed in each cell. This method ranks genes by their expression values within each cell and constructs a response curve of the number of genes from each marker set that are present with increasing rank. 
+
+It then computes the area under the curve (AUC) for each marker set, quantifying the enrichment of those markers among the most highly expressed genes in that cell. This is roughly similar to performing a Wilcoxon rank sum test between genes in and outside of the set, but involving only the top ranking genes by expression in each cell.
+
+```{r, identify_marker_sets}
+library("GSEABase")
+library("AUCell")
+
+all.sets <- lapply(names(markers.z), function(x) {
+    GeneSet(markers.z[[x]], setName=x)        
+})
+all.sets <- GeneSetCollection(all.sets)
+
+rankings <- AUCell_buildRankings(counts(sce.tasic),
+    plotStats=FALSE, verbose=FALSE)
+
+cell.aucs <- AUCell_calcAUC(all.sets, rankings)
+
+results <- t(assay(cell.aucs))
+head(results)
+```
+
+We assign cell type identity to each cell in the test dataset by taking the marker set with the top AUC as the label for that cell. Our new labels mostly agree with the original annotation from Tasic et al. (2016), which is encouraging :)
+
+The only exception involves misassignment of oligodendrocyte precursors to astrocytes, which may be understandable given that they are derived from a common lineage. In the absence of prior annotation, a more general diagnostic check is to compare the assigned labels to cluster identities, under the expectation that most cells of a single cluster would have the same label (or, if multiple labels are present, they should at least represent closely related cell states).
+
+```{r, new_labels_annot}
+new.labels <- colnames(results)[max.col(results)]
+tab <- table(new.labels, sce.tasic$broad_type)
+tab
+```
+
+As a diagnostic measure, we examine the distribution of AUCs across cells for each label.
+
+In heterogeneous populations, the distribution for each label should be bimodal with one high-scoring peak containing cells of that cell type and a low-scoring peak containing cells of other types. 
+
+The gap between these two peaks can be used to derive a threshold for whether a label is “active” for a particular cell. (In this case, we simply take the single highest-scoring label per cell as the labels should be mutually exclusive.) In populations where a particular cell type is expected, lack of clear bimodality for the corresponding label may indicate that its gene set is not sufficiently informative.
+
+```{r, auc_explore_plots}
+par(mfrow=c(3,3))
+AUCell_exploreThresholds(cell.aucs, plotHist=TRUE, assign=TRUE) 
+```
+
+Interpretation of the AUCell results is most straightforward when the marker sets are mutually exclusive, as shown above for the cell type markers. 
+
+In other applications, one might consider computing AUCs for gene sets associated with signalling or metabolic pathways. It is likely that multiple pathways will be active in any given cell, and it is tempting to use the AUCs to quantify this activity for comparison across cells. 
+
+However, such comparisons must be interpreted with much caution as the AUCs are competitive values: any increase in one pathway’s activity will naturally reduce the AUCs for all other pathways, potentially resulting in spurious differences across the population.
+
+the advantage of the AUCell approach is that it does not require reference expression values. This is particularly useful when dealing with gene sets derived from the literature or other qualitative forms of biological knowledge.
+
+## References
+
+Amezquita, R. A., Lun, A. T., Becht, E., Carey, V. J., Carpp, L. N., Geistlinger, L., ... & Hicks, S. C. (2020). Orchestrating single-cell analysis with Bioconductor. Nature methods, 17(2), 137-145.
+
+Aran, D., A. P. Looney, L. Liu, E. Wu, V. Fong, A. Hsu, S. Chak, et al. 2019. “Reference-based analysis of lung single-cell sequencing reveals a transitional profibrotic macrophage.” Nat. Immunol. 20 (2): 163–72.
+
+Bach, K., S. Pensa, M. Grzelak, J. Hadfield, D. J. Adams, J. C. Marioni, and W. T. Khaled. 2017. “Differentiation dynamics of mammary epithelial cells revealed by single-cell RNA sequencing.” Nat Commun 8 (1): 2128.
+
+Martens, J. H., and H. G. Stunnenberg. 2013. “BLUEPRINT: mapping human blood cell epigenomes.” Haematologica 98 (10): 1487–9.
+
+Muraro, M. J., G. Dharmadhikari, D. Grun, N. Groen, T. Dielen, E. Jansen, L. van Gurp, et al. 2016. “A Single-Cell Transcriptome Atlas of the Human Pancreas.” Cell Syst 3 (4): 385–94.
+
+Segerstolpe, A., A. Palasantza, P. Eliasson, E. M. Andersson, A. C. Andreasson, X. Sun, S. Picelli, et al. 2016. “Single-Cell Transcriptome Profiling of Human Pancreatic Islets in Health and Type 2 Diabetes.” Cell Metab. 24 (4): 593–607.
+
+Tasic, B., V. Menon, T. N. Nguyen, T. K. Kim, T. Jarsky, Z. Yao, B. Levi, et al. 2016. “Adult mouse cortical cell taxonomy revealed by single cell transcriptomics.” Nat. Neurosci. 19 (2): 335–46.
+
+The ENCODE Project Consortium. 2012. “An integrated encyclopedia of DNA elements in the human genome.” Nature 489 (7414): 57–74.
+
+Zeisel, A., A. B. Munoz-Manchado, S. Codeluppi, P. Lonnerberg, G. La Manno, A. Jureus, S. Marques, et al. 2015. “Brain structure. Cell types in the mouse cortex and hippocampus revealed by single-cell RNA-seq.” Science 347 (6226): 1138–42.
