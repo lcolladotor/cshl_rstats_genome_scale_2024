@@ -665,7 +665,7 @@ plotReducedDim(sce.zeisel, dimred = "TSNE", colour_by = "level1class")
 
 The “perplexity” is another important parameter that determines the granularity of the visualization. Low perplexities will favor resolution of finer structure, possibly to the point that the visualization is compromised by random noise. Thus, it is advisable to test different perplexity values to ensure that the choice of perplexity does not drive the interpretation of the plot.
 
-```{r, TSNE_perplexity_plots}
+```{r, TSNE_perplexity_plots, fig.width = 21, fig.height = 7}
 ## run TSNE using diferent perplexity numbers and plot
 
 ## TSNE using perplexity = 5
