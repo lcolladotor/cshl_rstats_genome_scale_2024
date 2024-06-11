@@ -136,6 +136,7 @@ scoring-markers-by-pairwise-comparisons
 effect-sizes-for-pairwise-comparisons
 summaries-of-pairwise-effects
 choose-top-markers
+using-a-log-fold-change-threshold
 handling-blocking-factors
 deconvobuddies
 cell-type-annotation

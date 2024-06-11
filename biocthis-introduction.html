@@ -320,8 +320,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11.9.2" data-path="scrna-seq-data-analysis-overview.html"><a href="scrna-seq-data-analysis-overview.html#effect-sizes-for-pairwise-comparisons"><i class="fa fa-check"></i><b>11.9.2</b> Effect sizes for pairwise comparisons</a></li>
 <li class="chapter" data-level="11.9.3" data-path="scrna-seq-data-analysis-overview.html"><a href="scrna-seq-data-analysis-overview.html#summaries-of-pairwise-effects"><i class="fa fa-check"></i><b>11.9.3</b> Summaries of pairwise effects</a></li>
 <li class="chapter" data-level="11.9.4" data-path="scrna-seq-data-analysis-overview.html"><a href="scrna-seq-data-analysis-overview.html#choose-top-markers"><i class="fa fa-check"></i><b>11.9.4</b> Choose top markers</a></li>
-<li class="chapter" data-level="11.9.5" data-path="scrna-seq-data-analysis-overview.html"><a href="scrna-seq-data-analysis-overview.html#handling-blocking-factors"><i class="fa fa-check"></i><b>11.9.5</b> Handling blocking factors</a></li>
-<li class="chapter" data-level="11.9.6" data-path="scrna-seq-data-analysis-overview.html"><a href="scrna-seq-data-analysis-overview.html#deconvobuddies"><i class="fa fa-check"></i><b>11.9.6</b> Deconvobuddies</a></li>
+<li class="chapter" data-level="11.9.5" data-path="scrna-seq-data-analysis-overview.html"><a href="scrna-seq-data-analysis-overview.html#using-a-log-fold-change-threshold"><i class="fa fa-check"></i><b>11.9.5</b> Using a log-fold change threshold</a></li>
+<li class="chapter" data-level="11.9.6" data-path="scrna-seq-data-analysis-overview.html"><a href="scrna-seq-data-analysis-overview.html#handling-blocking-factors"><i class="fa fa-check"></i><b>11.9.6</b> Handling blocking factors</a></li>
+<li class="chapter" data-level="11.9.7" data-path="scrna-seq-data-analysis-overview.html"><a href="scrna-seq-data-analysis-overview.html#deconvobuddies"><i class="fa fa-check"></i><b>11.9.7</b> Deconvobuddies</a></li>
 </ul></li>
 <li class="chapter" data-level="11.10" data-path="scrna-seq-data-analysis-overview.html"><a href="scrna-seq-data-analysis-overview.html#cell-type-annotation"><i class="fa fa-check"></i><b>11.10</b> Cell type annotation</a>
 <ul>
@@ -462,9 +463,9 @@ for this demonstration package.</p>
 <span id="cb118-4"><a href="biocthis-introduction.html#cb118-4" tabindex="-1"></a>    <span class="fu">paste0</span>(date_weekday, <span class="st">&quot;: &quot;</span>, praise<span class="sc">::</span><span class="fu">praise</span>())</span>
 <span id="cb118-5"><a href="biocthis-introduction.html#cb118-5" tabindex="-1"></a>}</span>
 <span id="cb118-6"><a href="biocthis-introduction.html#cb118-6" tabindex="-1"></a><span class="fu">weekday_praise</span>()</span>
-<span id="cb118-7"><a href="biocthis-introduction.html#cb118-7" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Tuesday: You are bee&#39;s knees!&quot;</span></span></code></pre></div>
+<span id="cb118-7"><a href="biocthis-introduction.html#cb118-7" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Tuesday: You are marvelous!&quot;</span></span></code></pre></div>
 <div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="biocthis-introduction.html#cb119-1" tabindex="-1"></a><span class="fu">weekday_praise</span>(<span class="st">&quot;2024-06-09&quot;</span>)</span>
-<span id="cb119-2"><a href="biocthis-introduction.html#cb119-2" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Sunday: You are stupendous!&quot;</span></span></code></pre></div>
+<span id="cb119-2"><a href="biocthis-introduction.html#cb119-2" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Sunday: You are breathtaking!&quot;</span></span></code></pre></div>
 <p>Here’s the full code for the function and its documentation.</p>
 <div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="biocthis-introduction.html#cb120-1" tabindex="-1"></a><span class="co">#&#39; Praise a weekday</span></span>
 <span id="cb120-2"><a href="biocthis-introduction.html#cb120-2" tabindex="-1"></a><span class="co">#&#39;</span></span>

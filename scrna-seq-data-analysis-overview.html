@@ -320,8 +320,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11.9.2" data-path="scrna-seq-data-analysis-overview.html"><a href="scrna-seq-data-analysis-overview.html#effect-sizes-for-pairwise-comparisons"><i class="fa fa-check"></i><b>11.9.2</b> Effect sizes for pairwise comparisons</a></li>
 <li class="chapter" data-level="11.9.3" data-path="scrna-seq-data-analysis-overview.html"><a href="scrna-seq-data-analysis-overview.html#summaries-of-pairwise-effects"><i class="fa fa-check"></i><b>11.9.3</b> Summaries of pairwise effects</a></li>
 <li class="chapter" data-level="11.9.4" data-path="scrna-seq-data-analysis-overview.html"><a href="scrna-seq-data-analysis-overview.html#choose-top-markers"><i class="fa fa-check"></i><b>11.9.4</b> Choose top markers</a></li>
-<li class="chapter" data-level="11.9.5" data-path="scrna-seq-data-analysis-overview.html"><a href="scrna-seq-data-analysis-overview.html#handling-blocking-factors"><i class="fa fa-check"></i><b>11.9.5</b> Handling blocking factors</a></li>
-<li class="chapter" data-level="11.9.6" data-path="scrna-seq-data-analysis-overview.html"><a href="scrna-seq-data-analysis-overview.html#deconvobuddies"><i class="fa fa-check"></i><b>11.9.6</b> Deconvobuddies</a></li>
+<li class="chapter" data-level="11.9.5" data-path="scrna-seq-data-analysis-overview.html"><a href="scrna-seq-data-analysis-overview.html#using-a-log-fold-change-threshold"><i class="fa fa-check"></i><b>11.9.5</b> Using a log-fold change threshold</a></li>
+<li class="chapter" data-level="11.9.6" data-path="scrna-seq-data-analysis-overview.html"><a href="scrna-seq-data-analysis-overview.html#handling-blocking-factors"><i class="fa fa-check"></i><b>11.9.6</b> Handling blocking factors</a></li>
+<li class="chapter" data-level="11.9.7" data-path="scrna-seq-data-analysis-overview.html"><a href="scrna-seq-data-analysis-overview.html#deconvobuddies"><i class="fa fa-check"></i><b>11.9.7</b> Deconvobuddies</a></li>
 </ul></li>
 <li class="chapter" data-level="11.10" data-path="scrna-seq-data-analysis-overview.html"><a href="scrna-seq-data-analysis-overview.html#cell-type-annotation"><i class="fa fa-check"></i><b>11.10</b> Cell type annotation</a>
 <ul>
@@ -1560,12 +1561,14 @@ k-nearest neighbor graph, which is occasionally useful for downstream graph oper
 <span id="cb204-3"><a href="scrna-seq-data-analysis-overview.html#cb204-3" tabindex="-1"></a>    <span class="at">features =</span> <span class="fu">rownames</span>(top.ranked), <span class="at">group =</span> <span class="st">&quot;label&quot;</span>,</span>
 <span id="cb204-4"><a href="scrna-seq-data-analysis-overview.html#cb204-4" tabindex="-1"></a>    <span class="at">center =</span> <span class="cn">TRUE</span>, <span class="at">zlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>)</span>
 <span id="cb204-5"><a href="scrna-seq-data-analysis-overview.html#cb204-5" tabindex="-1"></a>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/top_markers_heatmap-1.png" width="672" />
-### Using a log-fold change threshold</p>
+<p><img src="_main_files/figure-html/top_markers_heatmap-1.png" width="672" /></p>
+</div>
+<div id="using-a-log-fold-change-threshold" class="section level3 hasAnchor" number="11.9.5">
+<h3><span class="header-section-number">11.9.5</span> Using a log-fold change threshold<a href="scrna-seq-data-analysis-overview.html#using-a-log-fold-change-threshold" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The Cohen’s <em>d</em> and AUC calculations consider both the magnitude of the difference between clusters as well as the variability within each cluster.</p>
 <p>If the variability is lower, it is possible for a gene to have a large effect size even if the magnitude of the difference is small.</p>
 <p>These genes tend to be somewhat uninformative for cell type identification despite their strong differential expression (e.g., ribosomal protein genes). We would prefer genes with larger log-fold changes between clusters, even if they have higher variability.</p>
-<p>To favor the detection of such genes, we can compute the effect sizes relative to a log-fold change threshold by setting lfc= in scoreMarkers().</p>
+<p>To favor the detection of such genes, we can compute the effect sizes relative to a log-fold change threshold by setting <code>lfc=</code> in <code>scoreMarkers()</code>.</p>
 <div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="scrna-seq-data-analysis-overview.html#cb205-1" tabindex="-1"></a><span class="do">## Scoring markers by pairwise comparisons (effect sizes relative to a log-fold change)</span></span>
 <span id="cb205-2"><a href="scrna-seq-data-analysis-overview.html#cb205-2" tabindex="-1"></a>marker.info.lfc <span class="ot">&lt;-</span> <span class="fu">scoreMarkers</span>(sce.zeisel, <span class="fu">colLabels</span>(sce.zeisel), <span class="at">lfc =</span> <span class="dv">2</span>)</span>
 <span id="cb205-3"><a href="scrna-seq-data-analysis-overview.html#cb205-3" tabindex="-1"></a></span>
@@ -1598,8 +1601,8 @@ k-nearest neighbor graph, which is occasionally useful for downstream graph oper
 <span id="cb206-2"><a href="scrna-seq-data-analysis-overview.html#cb206-2" tabindex="-1"></a><span class="fu">plotDots</span>(sce.zeisel, <span class="fu">rownames</span>(chosen2)[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>], <span class="at">group =</span> <span class="st">&quot;label&quot;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/plotDots_markers-1.png" width="672" /></p>
 </div>
-<div id="handling-blocking-factors" class="section level3 hasAnchor" number="11.9.5">
-<h3><span class="header-section-number">11.9.5</span> Handling blocking factors<a href="scrna-seq-data-analysis-overview.html#handling-blocking-factors" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="handling-blocking-factors" class="section level3 hasAnchor" number="11.9.6">
+<h3><span class="header-section-number">11.9.6</span> Handling blocking factors<a href="scrna-seq-data-analysis-overview.html#handling-blocking-factors" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Some studies may contain factors of variation that are known and not interesting (e.g., batch effects, sex differences). If these are not modelled, they can interfere with marker gene detection, most obviously by inflating the variance within each cluster, but also by distorting the log-fold changes if the cluster composition varies across levels of the blocking factor.</p>
 <p>To avoid these issues, we specify the blocking factor via the block= argument</p>
 <div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="scrna-seq-data-analysis-overview.html#cb207-1" tabindex="-1"></a><span class="do">## Scoring markers by pairwise comparisons using a block  factor (tissue)</span></span>
@@ -1625,7 +1628,7 @@ k-nearest neighbor graph, which is occasionally useful for downstream graph oper
 <span id="cb208-17"><a href="scrna-seq-data-analysis-overview.html#cb208-17" tabindex="-1"></a><span class="co">#&gt; Snap25      1.229693       4.40115      0.433556       0.882369</span></span>
 <span id="cb208-18"><a href="scrna-seq-data-analysis-overview.html#cb208-18" tabindex="-1"></a><span class="co">#&gt; Stmn3       0.614814       3.75383      0.204414       0.840670</span></span>
 <span id="cb208-19"><a href="scrna-seq-data-analysis-overview.html#cb208-19" tabindex="-1"></a><span class="co">#&gt; Ndrg4       0.664605       3.23414      0.240788       0.825395</span></span></code></pre></div>
-<p>We can also plot our top marker genes expression now coloured by the block factor we used, in this case “tissue”.</p>
+<p>We can also plot our top marker genes expression now coloured by the block factor we used, in this case <code>"tissue"</code>.</p>
 <div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="scrna-seq-data-analysis-overview.html#cb209-1" tabindex="-1"></a><span class="do">## In case we don´t have them as factors for the coloring</span></span>
 <span id="cb209-2"><a href="scrna-seq-data-analysis-overview.html#cb209-2" tabindex="-1"></a>sce.zeisel<span class="sc">$</span>tissue <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(sce.zeisel<span class="sc">$</span>tissue)</span>
 <span id="cb209-3"><a href="scrna-seq-data-analysis-overview.html#cb209-3" tabindex="-1"></a><span class="do">## Plot the top marker genes expression by tissue</span></span>
@@ -1634,22 +1637,22 @@ k-nearest neighbor graph, which is occasionally useful for downstream graph oper
 <span id="cb209-6"><a href="scrna-seq-data-analysis-overview.html#cb209-6" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;label&quot;</span>, <span class="at">colour_by =</span> <span class="st">&quot;tissue&quot;</span></span>
 <span id="cb209-7"><a href="scrna-seq-data-analysis-overview.html#cb209-7" tabindex="-1"></a>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/plot_markers_byblock-1.png" width="672" /></p>
-<p>The block= argument works for all effect sizes shown above and is robust to differences in the log-fold changes or variance between batches.</p>
+<p>The <code>block=</code> argument works for all effect sizes shown above and is robust to differences in the log-fold changes or variance between batches.</p>
 <p>However, it assumes that each pair of clusters is present in at least one batch. In scenarios where cells from two clusters never co-occur in the same batch, the associated pairwise comparison will be impossible and is ignored during calculation of summary statistics.</p>
 </div>
-<div id="deconvobuddies" class="section level3 hasAnchor" number="11.9.6">
-<h3><span class="header-section-number">11.9.6</span> Deconvobuddies<a href="scrna-seq-data-analysis-overview.html#deconvobuddies" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="deconvobuddies" class="section level3 hasAnchor" number="11.9.7">
+<h3><span class="header-section-number">11.9.7</span> Deconvobuddies<a href="scrna-seq-data-analysis-overview.html#deconvobuddies" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="scrna-seq-data-analysis-overview.html#cb210-1" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">&quot;BiocManager&quot;</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) {</span>
 <span id="cb210-2"><a href="scrna-seq-data-analysis-overview.html#cb210-2" tabindex="-1"></a>    <span class="fu">install.packages</span>(<span class="st">&quot;BiocManager&quot;</span>)</span>
 <span id="cb210-3"><a href="scrna-seq-data-analysis-overview.html#cb210-3" tabindex="-1"></a>}</span>
 <span id="cb210-4"><a href="scrna-seq-data-analysis-overview.html#cb210-4" tabindex="-1"></a></span>
 <span id="cb210-5"><a href="scrna-seq-data-analysis-overview.html#cb210-5" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">&quot;DeconvoBuddies&quot;</span>)</span></code></pre></div>
-<p><strong>findMarkers_1vAll</strong></p>
-<p>Calculate 1 vs. All standard fold change for each gene x cell type, wrapper function for scran::findMarkers</p>
+<p><strong>findMarkers_1vAll()</strong></p>
+<p>Calculate 1 vs. All standard fold change for each gene x cell type, wrapper function for <code>scran::findMarkers()</code></p>
 <p><a href="https://research.libd.org/DeconvoBuddies/reference/findMarkers_1vAll.html" class="uri">https://research.libd.org/DeconvoBuddies/reference/findMarkers_1vAll.html</a></p>
-<p><strong>get_mean_ratio2</strong></p>
-<p>Calculate the mean ratio value and rank for each gene for each cell type in the sce object, to identify effective marker genes</p>
-<p><a href="https://research.libd.org/DeconvoBuddies/reference/get_mean_ratio2.html" class="uri">https://research.libd.org/DeconvoBuddies/reference/get_mean_ratio2.html</a></p>
+<p><strong>get_mean_ratio()</strong></p>
+<p>Calculate the mean ratio value and rank for each gene for each cell type in the <code>sce</code> object, to identify effective marker genes</p>
+<p><a href="http://research.libd.org/DeconvoBuddies/reference/get_mean_ratio.html" class="uri">http://research.libd.org/DeconvoBuddies/reference/get_mean_ratio.html</a></p>
 </div>
 </div>
 <div id="cell-type-annotation" class="section level2 hasAnchor" number="11.10">
@@ -1795,7 +1798,7 @@ The SingleR method (Aran et al. 2019) for cell type annotation assigns labels t
 <span id="cb220-10"><a href="scrna-seq-data-analysis-overview.html#cb220-10" tabindex="-1"></a><span class="co">#&gt; colnames(259): mature.neutrophil CD14.positive..CD16.negative.classical.monocyte ...</span></span>
 <span id="cb220-11"><a href="scrna-seq-data-analysis-overview.html#cb220-11" tabindex="-1"></a><span class="co">#&gt;   epithelial.cell.of.umbilical.artery.1 dermis.lymphatic.vessel.endothelial.cell.1</span></span>
 <span id="cb220-12"><a href="scrna-seq-data-analysis-overview.html#cb220-12" tabindex="-1"></a><span class="co">#&gt; colData names(3): label.main label.fine label.ont</span></span></code></pre></div>
-<p>We call the <code>SingleR()</code> function to annotate each of our PBMCs with the main cell type labels from the Blueprint/ENCODE reference. This returns a DataFrame where each row corresponds to a cell in the test dataset and contains its label assignments. Alternatively, we could use the labels in ref$label.fine, which provide more resolution at the cost of speed and increased ambiguity in the assignments.</p>
+<p>We call the <code>SingleR()</code> function to annotate each of our PBMCs with the main cell type labels from the Blueprint/ENCODE reference. This returns a <code>DataFrame</code> where each row corresponds to a cell in the test dataset and contains its label assignments. Alternatively, we could use the labels in <code>ref$label.fine</code>, which provide more resolution at the cost of speed and increased ambiguity in the assignments.</p>
 <div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="scrna-seq-data-analysis-overview.html#cb221-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;SingleR&quot;</span>)</span>
 <span id="cb221-2"><a href="scrna-seq-data-analysis-overview.html#cb221-2" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb221-3"><a href="scrna-seq-data-analysis-overview.html#cb221-3" tabindex="-1"></a><span class="co">#&gt; Attaching package: &#39;SingleR&#39;</span></span>
@@ -1824,7 +1827,7 @@ The SingleR method (Aran et al. 2019) for cell type annotation assigns labels t
 <p><img src="_main_files/figure-html/assigned_vs_ann_heatmap-1.png" width="672" /></p>
 <p>This highlights some of the differences between reference-based annotation and unsupervised clustering. The former explicitly focuses on aspects of the data that are known to be interesting, simplifying the process of biological interpretation. However, the cost is that the downstream analysis is restricted by the diversity and resolution of the available labels, a problem that is largely avoided by de novo identification of clusters.</p>
 <p>Applying both strategies to examine the agreement (or lack thereof) between reference label and cluster assignments could work for you. Any inconsistencies are not necessarily problematic due to the conceptual differences between the two approaches; indeed, one could use those discrepancies as the basis for further investigation to discover novel factors of variation in the data.</p>
-<p><strong>We can also apply SingleR to single-cell reference datasets that are curated and supplied by the user. This is most obviously useful when we have an existing dataset that was previously (manually) annotated and we want to use that knowledge to annotate a new dataset in an automated manner.</strong></p>
+<p><strong>We can also apply <code>SingleR</code> to single-cell reference datasets that are curated and supplied by the user. This is most obviously useful when we have an existing dataset that was previously (manually) annotated and we want to use that knowledge to annotate a new dataset in an automated manner.</strong></p>
 </div>
 <div id="assigning-cell-labels-from-gene-sets" class="section level3 hasAnchor" number="11.10.4">
 <h3><span class="header-section-number">11.10.4</span> Assigning cell labels from gene sets<a href="scrna-seq-data-analysis-overview.html#assigning-cell-labels-from-gene-sets" class="anchor-section" aria-label="Anchor link to header"></a></h3>
