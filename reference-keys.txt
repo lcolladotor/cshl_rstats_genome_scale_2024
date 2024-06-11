@@ -132,7 +132,18 @@ adjusting-the-parameters
 hierarchical-clustering
 subclustering
 marker-gene-detection
+scoring-markers-by-pairwise-comparisons
+effect-sizes-for-pairwise-comparisons
+summaries-of-pairwise-effects
+choose-top-markers
+handling-blocking-factors
+deconvobuddies
 cell-type-annotation
+assigning-cell-labels-from-reference-data
+getting-ready-again
+using-existing-references
+assigning-cell-labels-from-gene-sets
+references-4
 introduction-to-spatial-transcriptomics
 visium-spatial-technology
 spatial-data-visualization
@@ -166,4 +177,4 @@ set-up-git-and-github
 choose-a-template
 edit-with-your-information
 deploy-the-page
-references-4
+references-5
