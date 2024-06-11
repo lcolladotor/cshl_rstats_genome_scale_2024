@@ -1,4 +1,4 @@
-## ----"initial_weekday_praise"----------------------------------------------
+## ----"initial_weekday_praise"-----------------------------------------------------------------------------------------------
 weekday_praise <- function(date = Sys.Date()) {
     date <- as.Date(date)
     date_weekday <- weekdays(date)
@@ -8,7 +8,7 @@ weekday_praise()
 weekday_praise("2024-06-09")
 
 
-## ----"weekday_praise_full_function"----------------------------------------
+## ----"weekday_praise_full_function"-----------------------------------------------------------------------------------------
 #' Praise a weekday
 #'
 #' Given a date, figure out which weekday it was, then write a positive
@@ -41,7 +41,7 @@ weekday_praise <- function(date = Sys.Date()) {
 }
 
 
-## ----"weekday_praise_tests"------------------------------------------------
+## ----"weekday_praise_tests"-------------------------------------------------------------------------------------------------
 library("testthat")
 
 ## Verify that we get the result we wanted

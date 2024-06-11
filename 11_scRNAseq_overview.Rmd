@@ -977,12 +977,12 @@ In the DataFrame for cluster "X", the columns contain
 ```{r, marker_genes_seizel1}
 library("scran")
 
-## Scoring markers by pairwise comparisons 
+## Scoring markers by pairwise comparisons
 marker.info <- scoreMarkers(sce.zeisel, colLabels(sce.zeisel))
 marker.info
 
 ## Statistics for cluster 1
-colnames(marker.info[["1"]]) 
+colnames(marker.info[["1"]])
 ```
 
 For each cluster, we can then rank candidate markers based on one of these effect size summaries
@@ -992,17 +992,19 @@ For each cluster, we can then rank candidate markers based on one of these effec
 chosen <- marker.info[["1"]]
 
 ## Rank candidate markers based on one of these effect size summaries
-ordered <- chosen[order(chosen$mean.AUC, decreasing=TRUE),]
-head(ordered[,1:4]) 
+ordered <- chosen[order(chosen$mean.AUC, decreasing = TRUE), ]
+head(ordered[, 1:4])
 ```
 
 ```{r, plot_markergenes1}
 library("scater")
 
 ## Plot the marker gene expression by label
-plotExpression(sce.zeisel, features=head(rownames(ordered)), 
-    x="label", colour_by="label")
-# Distribution of expression values across clusters for the top potential 
+plotExpression(sce.zeisel,
+    features = head(rownames(ordered)),
+    x = "label", colour_by = "label"
+)
+# Distribution of expression values across clusters for the top potential
 # marker genes (as determined by the mean AUC) for cluster 1
 ```
 Here, we deliberately use pairwise comparisons rather than comparing each cluster to the average of all other cells. The latter approach is sensitive to the population composition, which introduces an element of unpredictability to the marker sets due to variation in cell type abundances. 
@@ -1026,8 +1028,8 @@ In the context of marker detection, the area under the curve (AUC) quantifies ou
 ```{r, subset_auc}
 ## Subset the AUC from the candidate markers of cluster 1 info
 ## and rank (by AUC)
-auc.only <- chosen[,grepl("AUC", colnames(chosen))]
-auc.only[order(auc.only$mean.AUC,decreasing=TRUE),]
+auc.only <- chosen[, grepl("AUC", colnames(chosen))]
+auc.only[order(auc.only$mean.AUC, decreasing = TRUE), ]
 ```
 
 __Cohen’s *d* __
@@ -1045,8 +1047,8 @@ Cohen’s **d** is roughly analogous to the t-statistic in various two-sample t-
 ```{r, subset_cohens_d}
 ## Subset the "logFC.cohen" from the candidate markers of cluster 1 info
 ## and rank (by Cohen’s d)
-cohen.only <- chosen[,grepl("logFC.cohen", colnames(chosen))]
-cohen.only[order(cohen.only$mean.logFC.cohen,decreasing=TRUE),]
+cohen.only <- chosen[, grepl("logFC.cohen", colnames(chosen))]
+cohen.only[order(cohen.only$mean.logFC.cohen, decreasing = TRUE), ]
 ```
 
 **log-fold change**
@@ -1056,10 +1058,10 @@ Finally, we also compute the log-fold change in the proportion of cells with det
 *Note that a pseudo-count is added to avoid undefined log-fold changes when no cells express the gene in either group.*
 
 ```{r, subset_logFC}
-## Subset the "logFC.detected" from the candidate markers of cluster 1 info 
+## Subset the "logFC.detected" from the candidate markers of cluster 1 info
 ## and rank (by log-fold change)
-detect.only <- chosen[,grepl("logFC.detected", colnames(chosen))]
-detect.only[order(detect.only$mean.logFC.detected,decreasing=TRUE),]
+detect.only <- chosen[, grepl("logFC.detected", colnames(chosen))]
+detect.only[order(detect.only$mean.logFC.detected, decreasing = TRUE), ]
 ```
 
 The AUC or Cohen’s *d* is usually the best choice for general purpose marker detection, as they are effective regardless of the magnitude of the expression values. The log-fold change in the detected proportion is specifically useful for identifying binary changes in expression.
@@ -1092,10 +1094,10 @@ Now that we have them ranked, we can choose how many of them are interesting to 
 
 ```{r, oreder_markers_rank.logFC.cohen}
 ## Order the candidate markers by "rank.logFC.cohen" for each cluster
-ordered <- chosen[order(chosen$rank.logFC.cohen),]
+ordered <- chosen[order(chosen$rank.logFC.cohen), ]
 
-## Choose the top marker genes for each cluster 
-top.ranked <- ordered[ordered$rank.logFC.cohen <= 10,]
+## Choose the top marker genes for each cluster
+top.ranked <- ordered[ordered$rank.logFC.cohen <= 10, ]
 rownames(top.ranked) # Gene names
 ```
 
@@ -1103,8 +1105,10 @@ We can also plot the expression in a Heat Map:
 
 ```{r, top_markers_heatmap}
 ## Plot a heatmap for the expression of some top marker genes for each cluster
-plotGroupedHeatmap(sce.zeisel, features=rownames(top.ranked), group="label", 
-    center=TRUE, zlim=c(-3, 3))
+plotGroupedHeatmap(sce.zeisel,
+    features = rownames(top.ranked), group = "label",
+    center = TRUE, zlim = c(-3, 3)
+)
 ```
 ### Using a log-fold change threshold
 
@@ -1118,13 +1122,13 @@ To favor the detection of such genes, we can compute the effect sizes relative t
 
 ```{r, marker_genes_seizel2}
 ## Scoring markers by pairwise comparisons (effect sizes relative to a log-fold change)
-marker.info.lfc <- scoreMarkers(sce.zeisel, colLabels(sce.zeisel), lfc=2)
+marker.info.lfc <- scoreMarkers(sce.zeisel, colLabels(sce.zeisel), lfc = 2)
 
 ## Statistics for cluster 1
-chosen2 <- marker.info.lfc[["1"]] 
+chosen2 <- marker.info.lfc[["1"]]
 ## Rank info from cluster 1 by mean.AUC
-chosen2 <- chosen2[order(chosen2$mean.AUC, decreasing=TRUE),]
-chosen2[,c("self.average", "other.average", "mean.AUC")] # Check "self.average", "other.average", "mean.AUC"
+chosen2 <- chosen2[order(chosen2$mean.AUC, decreasing = TRUE), ]
+chosen2[, c("self.average", "other.average", "mean.AUC")] # Check "self.average", "other.average", "mean.AUC"
 ```
 We can also create something a little bit different. Here we have a dot plot of the top potential marker genes (as determined by the mean AUC) for cluster 1.
 
@@ -1134,7 +1138,7 @@ We can also create something a little bit different. Here we have a dot plot of 
 
 ```{r, plotDots_markers}
 ## Dot plot for the potential top markers for cluster 1
-plotDots(sce.zeisel, rownames(chosen2)[1:10], group="label")
+plotDots(sce.zeisel, rownames(chosen2)[1:10], group = "label")
 ```
 
 ### Handling blocking factors
@@ -1145,7 +1149,7 @@ To avoid these issues, we specify the blocking factor via the block= argument
 
 ```{r, add_block_factor}
 ## Scoring markers by pairwise comparisons using a block  factor (tissue)
-m.out <- scoreMarkers(sce.zeisel, colLabels(sce.zeisel), block=sce.zeisel$tissue)
+m.out <- scoreMarkers(sce.zeisel, colLabels(sce.zeisel), block = sce.zeisel$tissue)
 ```
 
 For each gene, each pairwise comparison between clusters is performed separately in each level of the blocking factor - in this case, the plate of origin. By comparing within each batch, we cancel out any batch effects so that they are not conflated with the biological differences between subpopulations. The effect sizes are then averaged across batches to obtain a single value per comparison, using a weighted mean that accounts for the number of cells involved in the comparison in each batch. 
@@ -1154,20 +1158,22 @@ A similar correction is applied to the mean log-expression and proportion of det
 
 ```{r, subset_clust1}
 ## Subset the info for cluster 1
-demo <- m.out[["1"]] 
+demo <- m.out[["1"]]
 ## Order by the log-expression (which had a correction using block=sex)
-ordered <- demo[order(demo$median.logFC.cohen, decreasing=TRUE),]
-ordered[,1:4]
+ordered <- demo[order(demo$median.logFC.cohen, decreasing = TRUE), ]
+ordered[, 1:4]
 ```
 
 We can also plot our top marker genes expression now coloured by the block factor we used, in this case "tissue".
 
 ```{r, plot_markers_byblock}
-## In case we don´t have them as factors for the coloring 
+## In case we don´t have them as factors for the coloring
 sce.zeisel$tissue <- as.factor(sce.zeisel$tissue)
 ## Plot the top marker genes expression by tissue
-plotExpression(sce.zeisel, features=rownames(ordered)[1:6],
-    x="label", colour_by="tissue")
+plotExpression(sce.zeisel,
+    features = rownames(ordered)[1:6],
+    x = "label", colour_by = "tissue"
+)
 ```
 
 The block= argument works for all effect sizes shown above and is robust to differences in the log-fold changes or variance between batches. 
@@ -1235,65 +1241,69 @@ We will use now one of the 10X PBMC datasets as our test. While will apply quali
 library("DropletTestFiles")
 raw.path <- getTestFile("tenx-2.1.0-pbmc4k/1.0.0/raw.tar.gz")
 out.path <- file.path(tempdir(), "pbmc4k")
-untar(raw.path, exdir=out.path)
+untar(raw.path, exdir = out.path)
 
 library("DropletUtils")
 fname <- file.path(out.path, "raw_gene_bc_matrices/GRCh38")
-sce.pbmc <- read10xCounts(fname, col.names=TRUE)
+sce.pbmc <- read10xCounts(fname, col.names = TRUE)
 
 library("scater")
 rownames(sce.pbmc) <- uniquifyFeatureNames(
-    rowData(sce.pbmc)$ID, rowData(sce.pbmc)$Symbol)
+    rowData(sce.pbmc)$ID, rowData(sce.pbmc)$Symbol
+)
 
 library("EnsDb.Hsapiens.v86")
-location <- mapIds(EnsDb.Hsapiens.v86, keys=rowData(sce.pbmc)$ID, 
-    column="SEQNAME", keytype="GENEID")
+location <- mapIds(EnsDb.Hsapiens.v86,
+    keys = rowData(sce.pbmc)$ID,
+    column = "SEQNAME", keytype = "GENEID"
+)
 
 ### QC
 set.seed(100)
 e.out <- emptyDrops(counts(sce.pbmc))
-sce.pbmc <- sce.pbmc[,which(e.out$FDR <= 0.001)]
+sce.pbmc <- sce.pbmc[, which(e.out$FDR <= 0.001)]
 unfiltered <- sce.pbmc
-stats <- perCellQCMetrics(sce.pbmc, subsets=list(Mito=which(location=="MT")))
-high.mito <- isOutlier(stats$subsets_Mito_percent, type="higher")
-sce.pbmc <- sce.pbmc[,!high.mito]
+stats <- perCellQCMetrics(sce.pbmc, subsets = list(Mito = which(location == "MT")))
+high.mito <- isOutlier(stats$subsets_Mito_percent, type = "higher")
+sce.pbmc <- sce.pbmc[, !high.mito]
 summary(high.mito)
 
-### Normalization 
+### Normalization
 library("scran")
 set.seed(1000)
 clusters <- quickCluster(sce.pbmc)
-sce.pbmc <- computeSumFactors(sce.pbmc, cluster=clusters)
+sce.pbmc <- computeSumFactors(sce.pbmc, cluster = clusters)
 sce.pbmc <- logNormCounts(sce.pbmc)
 summary(sizeFactors(sce.pbmc))
 
 ### Variance modelling
 set.seed(1001)
 dec.pbmc <- modelGeneVarByPoisson(sce.pbmc)
-top.pbmc <- getTopHVGs(dec.pbmc, prop=0.1)
+top.pbmc <- getTopHVGs(dec.pbmc, prop = 0.1)
 
 ### Dimensionality reduction
 set.seed(10000)
-sce.pbmc <- denoisePCA(sce.pbmc, subset.row=top.pbmc, technical=dec.pbmc)
+sce.pbmc <- denoisePCA(sce.pbmc, subset.row = top.pbmc, technical = dec.pbmc)
 set.seed(100000)
-sce.pbmc <- runTSNE(sce.pbmc, dimred="PCA")
+sce.pbmc <- runTSNE(sce.pbmc, dimred = "PCA")
 set.seed(1000000)
-sce.pbmc <- runUMAP(sce.pbmc, dimred="PCA")
+sce.pbmc <- runUMAP(sce.pbmc, dimred = "PCA")
 
 ### Clustering
-g <- buildSNNGraph(sce.pbmc, k=10, use.dimred = 'PCA')
+g <- buildSNNGraph(sce.pbmc, k = 10, use.dimred = "PCA")
 clust <- igraph::cluster_walktrap(g)$membership
 colLabels(sce.pbmc) <- factor(clust)
 table(colLabels(sce.pbmc))
-plotTSNE(sce.pbmc, colour_by="label")
+plotTSNE(sce.pbmc, colour_by = "label")
 
 ### Interpretation
-markers <- findMarkers(sce.pbmc, pval.type="some", direction="up")
+markers <- findMarkers(sce.pbmc, pval.type = "some", direction = "up")
 marker.set <- markers[["8"]]
-as.data.frame(marker.set[1:30,1:3])
-plotExpression(sce.pbmc, features=c("CD14", "CD68",
-    "MNDA", "FCGR3A"), x="label", colour_by="label")
-
+as.data.frame(marker.set[1:30, 1:3])
+plotExpression(sce.pbmc, features = c(
+    "CD14", "CD68",
+    "MNDA", "FCGR3A"
+), x = "label", colour_by = "label")
 ```
 
 ### Using existing references
@@ -1312,7 +1322,7 @@ We call the `SingleR()` function to annotate each of our PBMCs with the main cel
 ```{r, annotate_pbmc}
 library("SingleR")
 
-pred <- SingleR(test=sce.pbmc, ref=ref, labels=ref$label.main)
+pred <- SingleR(test = sce.pbmc, ref = ref, labels = ref$label.main)
 table(pred$labels)
 ```
 
@@ -1331,11 +1341,11 @@ We now compare the assignments with the clustering results to determine the iden
 *Interestingly, our clustering does not effectively distinguish between CD4+ and CD8+ T cell labels. This is probably due to the presence of other factors of heterogeneity within the T cell subpopulation (e.g., activation) that have a stronger influence on unsupervised methods than the a priori expected CD4+/CD8+ distinction.*
 
 ```{r, assigned_vs_ann_heatmap}
-tab <- table(Assigned=pred$pruned.labels, Cluster=colLabels(sce.pbmc))
+tab <- table(Assigned = pred$pruned.labels, Cluster = colLabels(sce.pbmc))
 
 # Adding a pseudo-count of 10 to avoid strong color jumps with just 1 cell.
 library(pheatmap)
-pheatmap(log2(tab+10), color=colorRampPalette(c("white", "blue"))(101))
+pheatmap(log2(tab + 10), color = colorRampPalette(c("white", "blue"))(101))
 ```
 
 This highlights some of the differences between reference-based annotation and unsupervised clustering. The former explicitly focuses on aspects of the data that are known to be interesting, simplifying the process of biological interpretation. However, the cost is that the downstream analysis is restricted by the diversity and resolution of the available labels, a problem that is largely avoided by de novo identification of clusters. 
@@ -1353,11 +1363,13 @@ A related strategy is to explicitly identify sets of marker genes that are highl
 ```{r, labels_from_genesets}
 library("scran")
 
-wilcox.z <- pairwiseWilcox(sce.zeisel, sce.zeisel$level1class, 
-    lfc=1, direction="up")
+wilcox.z <- pairwiseWilcox(sce.zeisel, sce.zeisel$level1class,
+    lfc = 1, direction = "up"
+)
 
 markers.z <- getTopMarkers(wilcox.z$statistics, wilcox.z$pairs,
-    pairwise=FALSE, n=50)
+    pairwise = FALSE, n = 50
+)
 
 lengths(markers.z)
 ```
@@ -1379,12 +1391,13 @@ library("GSEABase")
 library("AUCell")
 
 all.sets <- lapply(names(markers.z), function(x) {
-    GeneSet(markers.z[[x]], setName=x)        
+    GeneSet(markers.z[[x]], setName = x)
 })
 all.sets <- GeneSetCollection(all.sets)
 
 rankings <- AUCell_buildRankings(counts(sce.tasic),
-    plotStats=FALSE, verbose=FALSE)
+    plotStats = FALSE, verbose = FALSE
+)
 
 cell.aucs <- AUCell_calcAUC(all.sets, rankings)
 
@@ -1409,8 +1422,8 @@ In heterogeneous populations, the distribution for each label should be bimodal 
 The gap between these two peaks can be used to derive a threshold for whether a label is “active” for a particular cell. (In this case, we simply take the single highest-scoring label per cell as the labels should be mutually exclusive.) In populations where a particular cell type is expected, lack of clear bimodality for the corresponding label may indicate that its gene set is not sufficiently informative.
 
 ```{r, auc_explore_plots}
-par(mfrow=c(3,3))
-AUCell_exploreThresholds(cell.aucs, plotHist=TRUE, assign=TRUE) 
+par(mfrow = c(3, 3))
+AUCell_exploreThresholds(cell.aucs, plotHist = TRUE, assign = TRUE)
 ```
 
 Interpretation of the AUCell results is most straightforward when the marker sets are mutually exclusive, as shown above for the cell type markers. 
