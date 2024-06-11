@@ -1107,6 +1107,7 @@ plotGroupedHeatmap(sce.zeisel,
     center = TRUE, zlim = c(-3, 3)
 )
 ```
+
 ### Using a log-fold change threshold
 
 The Cohen’s *d* and AUC calculations consider both the magnitude of the difference between clusters as well as the variability within each cluster. 
@@ -1115,7 +1116,7 @@ If the variability is lower, it is possible for a gene to have a large effect si
 
 These genes tend to be somewhat uninformative for cell type identification despite their strong differential expression (e.g., ribosomal protein genes). We would prefer genes with larger log-fold changes between clusters, even if they have higher variability.
 
-To favor the detection of such genes, we can compute the effect sizes relative to a log-fold change threshold by setting lfc= in scoreMarkers(). 
+To favor the detection of such genes, we can compute the effect sizes relative to a log-fold change threshold by setting `lfc=` in `scoreMarkers()`. 
 
 ```{r, marker_genes_seizel2}
 ## Scoring markers by pairwise comparisons (effect sizes relative to a log-fold change)
@@ -1161,7 +1162,7 @@ ordered <- demo[order(demo$median.logFC.cohen, decreasing = TRUE), ]
 ordered[, 1:4]
 ```
 
-We can also plot our top marker genes expression now coloured by the block factor we used, in this case "tissue".
+We can also plot our top marker genes expression now coloured by the block factor we used, in this case `"tissue"`.
 
 ```{r, plot_markers_byblock}
 ## In case we don´t have them as factors for the coloring
@@ -1173,7 +1174,7 @@ plotExpression(sce.zeisel,
 )
 ```
 
-The block= argument works for all effect sizes shown above and is robust to differences in the log-fold changes or variance between batches. 
+The `block=` argument works for all effect sizes shown above and is robust to differences in the log-fold changes or variance between batches. 
 
 However, it assumes that each pair of clusters is present in at least one batch. In scenarios where cells from two clusters never co-occur in the same batch, the associated pairwise comparison will be impossible and is ignored during calculation of summary statistics.
 
@@ -1187,17 +1188,17 @@ if (!requireNamespace("BiocManager", quietly = TRUE)) {
 BiocManager::install("DeconvoBuddies")
 ```
 
-**findMarkers_1vAll**
+**findMarkers_1vAll()**
 
-Calculate 1 vs. All standard fold change for each gene x cell type, wrapper function for scran::findMarkers
+Calculate 1 vs. All standard fold change for each gene x cell type, wrapper function for `scran::findMarkers()`
 
 https://research.libd.org/DeconvoBuddies/reference/findMarkers_1vAll.html
 
-**get_mean_ratio2**
+**get_mean_ratio()**
 
-Calculate the mean ratio value and rank for each gene for each cell type in the sce object, to identify effective marker genes
+Calculate the mean ratio value and rank for each gene for each cell type in the `sce` object, to identify effective marker genes
 
-https://research.libd.org/DeconvoBuddies/reference/get_mean_ratio2.html
+http://research.libd.org/DeconvoBuddies/reference/get_mean_ratio.html
 
 ## Cell type annotation
 
@@ -1314,7 +1315,7 @@ ref <- BlueprintEncodeData()
 ref
 ```
 
-We call the `SingleR()` function to annotate each of our PBMCs with the main cell type labels from the Blueprint/ENCODE reference. This returns a DataFrame where each row corresponds to a cell in the test dataset and contains its label assignments. Alternatively, we could use the labels in ref$label.fine, which provide more resolution at the cost of speed and increased ambiguity in the assignments.
+We call the `SingleR()` function to annotate each of our PBMCs with the main cell type labels from the Blueprint/ENCODE reference. This returns a `DataFrame` where each row corresponds to a cell in the test dataset and contains its label assignments. Alternatively, we could use the labels in `ref$label.fine`, which provide more resolution at the cost of speed and increased ambiguity in the assignments.
 
 ```{r, annotate_pbmc}
 library("SingleR")
@@ -1349,7 +1350,7 @@ This highlights some of the differences between reference-based annotation and u
 
 Applying both strategies to examine the agreement (or lack thereof) between reference label and cluster assignments could work for you. Any inconsistencies are not necessarily problematic due to the conceptual differences between the two approaches; indeed, one could use those discrepancies as the basis for further investigation to discover novel factors of variation in the data.
 
-**We can also apply SingleR to single-cell reference datasets that are curated and supplied by the user. This is most obviously useful when we have an existing dataset that was previously (manually) annotated and we want to use that knowledge to annotate a new dataset in an automated manner.**
+**We can also apply `SingleR` to single-cell reference datasets that are curated and supplied by the user. This is most obviously useful when we have an existing dataset that was previously (manually) annotated and we want to use that knowledge to annotate a new dataset in an automated manner.**
 
 ### Assigning cell labels from gene sets
 
