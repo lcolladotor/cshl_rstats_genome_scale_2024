@@ -429,6 +429,7 @@ To start personalizing one of these templates, you need to create a new project.
 
 <iframe width="560" height="315" src="https://www.youtube.com/watch?v=Q6eRD8Nyxfk&list=PLNNI62fcZPdB3G8Nl87gUlAQTEe2EH5K4&index=43" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
+https://www.youtube.com/watch?v=Q6eRD8Nyxfk&list=PLNNI62fcZPdB3G8Nl87gUlAQTEe2EH5K4&index=43
 
 **Create your own website**:
 
