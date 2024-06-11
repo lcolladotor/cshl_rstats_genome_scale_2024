@@ -371,7 +371,7 @@ If it's version 8.6.0, you likely need to upgrade to version 8.8.0. For macOS us
 
 ```{bash, eval = FALSE}
 ## Install homebrew from https://brew.sh/
-brew install curl
+brew install curl pkg-config
 ```
 
 then install `curl` from source with:
