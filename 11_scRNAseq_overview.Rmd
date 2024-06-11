@@ -314,10 +314,7 @@ font-family: sans-serif;
 </style>
 
 <p class="exercise">
-**Optional:**:
- Create at least 1 QC plot using iSEE.
- 
- *Clue: Use the Column Data Plot 1 panel*
+**Optional:** Create at least 1 QC plot using iSEE. *Clue: Use the Column Data Plot 1 panel*
 </p>
 
 ```{r, eval=interactive()}
